@@ -9,6 +9,13 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
+  "devDependencies": {
+    "@nuxt/eslint": "^0.7.2",
+    "@nuxt/eslint-config": "^0.7.2",
+    "eslint": "^9.15.0",
+    "typescript": "^5.7.2",
+    "vite-plugin-eslint2": "^5.0.3"
+  },
   "dependencies": {
     "nuxt": "^3.14.1592",
     "vue": "latest",
