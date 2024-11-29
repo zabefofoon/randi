@@ -13,5 +13,8 @@
         "source.organizeImports": "explicit"
     },
     "editor.tabSize": 4,
-    "eslint.useFlatConfig": true
+    "eslint.useFlatConfig": true,
+    "stylelint.enable": true,
+    "stylelint.autoFixOnSave": true,
+    "stylelint.useLocal": true
 }
