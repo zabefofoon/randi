@@ -1,6 +1,14 @@
 <template>
     <main class="main">
-        <section class="snackbar-area">
+        <ClientOnly>
+            <Transition name="modal">
+                <BasicModal
+                    v-if="isShowBasicModal"
+                    @close="showBasicModal(false)" />
+            </Transition>
+        </ClientOnly>
+
+        <section class="area">
             <h2 class="title">Snackbars</h2>
             <div class="buttons-container">
                 <button
@@ -8,28 +16,39 @@
                     @click="
                         snackbarStore.showSnackbar({ message: 'showSnackbarWarn', type: 'success' })
                     ">
-                    ShowSnackbar Success
+                    Success
                 </button>
                 <button
                     class="snackbar-button"
                     @click="
                         snackbarStore.showSnackbar({ message: 'showSnackbarInfo', type: 'info' })
                     ">
-                    ShowSnackbar Info
+                    Info
                 </button>
                 <button
                     class="snackbar-button"
                     @click="
                         snackbarStore.showSnackbar({ message: 'showSnackbarWarn', type: 'warn' })
                     ">
-                    ShowSnackbar Warn
+                    Warn
                 </button>
                 <button
                     class="snackbar-button"
                     @click="
                         snackbarStore.showSnackbar({ message: 'showSnackbarError', type: 'error' })
                     ">
-                    ShowSnackbar Error
+                    Error
+                </button>
+            </div>
+        </section>
+
+        <section class="area">
+            <h2 class="title">UIPopup</h2>
+            <div class="buttons-container">
+                <button
+                    class="modal-button"
+                    @click="showBasicModal(true)">
+                    Open Modal
                 </button>
             </div>
         </section>
@@ -37,18 +56,40 @@
 </template>
 
 <script setup lang="ts">
+    const route = useRoute()
     const snackbarStore = useSnackbarStore()
+
+    const isShowBasicModal = ref(false)
+    const showBasicModal = (value = false): void => {
+        // INFO query[key] 추가시, filterModal.middleeware에 추가
+        navigateTo({
+            path: route.path,
+            query: { ...route.query, basicModal: value ? `${value}` : undefined },
+            replace: value === false,
+        })
+    }
+
+    watch(
+        () => route.query,
+        (query) => {
+            isShowBasicModal.value = query.basicModal === "true"
+        },
+        { deep: true }
+    )
 </script>
 
 <style lang="scss" scoped>
     .main {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
         padding: 40px;
 
         @include global.mobile {
             padding: 20px;
         }
 
-        .snackbar-area {
+        .area {
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 10px;
@@ -61,9 +102,10 @@
 
             .buttons-container {
                 display: flex;
-                gap: 4px;
+                gap: 8px;
 
-                .snackbar-button {
+                .snackbar-button,
+                .modal-button {
                     width: fit-content;
                     padding: 8px 12px;
                     border: 1px solid #ccc;

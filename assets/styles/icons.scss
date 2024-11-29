@@ -29,3 +29,7 @@
 .icon-error {
     @include generateIcon("../images/icons/icon_error.svg");
 }
+
+.icon-close {
+    @include generateIcon("../images/icons/icon_close.svg");
+}
