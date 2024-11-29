@@ -13,3 +13,19 @@
     mask-size: 100% 100%;
     background-color: currentColor;
 }
+
+.icon-info {
+    @include generateIcon("../images/icons/icon_info.svg");
+}
+
+.icon-warn {
+    @include generateIcon("../images/icons/icon_warn.svg");
+}
+
+.icon-success {
+    @include generateIcon("../images/icons/icon_success.svg");
+}
+
+.icon-error {
+    @include generateIcon("../images/icons/icon_error.svg");
+}
