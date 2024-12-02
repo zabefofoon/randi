@@ -2,6 +2,10 @@
 @use "icons.scss";
 @use "transitions.scss";
 
+* > * {
+    color: inherit;
+}
+
 body {
     &.scroll-lock {
         overflow-y: hidden;
@@ -32,4 +36,12 @@ body {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+.prevent-drag {
+    * {
+        user-select: none;
+        -webkit-user-drag: none; /* Safari 및 Chrome */
+        -webkit-touch-callout: none; /* iOS Safari에서 사용자 선택 메뉴를 방지 */
+    }
 }

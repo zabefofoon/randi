@@ -37,3 +37,15 @@
 .icon-arrow-down {
     @include generateIcon("../images/icons/icon_arrow_down.svg");
 }
+
+.icon-pause {
+    @include generateIcon(("../images/icons/icon_pause.svg"));
+}
+
+.icon-play {
+    @include generateIcon(("../images/icons/icon_play.svg"));
+}
+
+.icon-spinner {
+    @include generateIcon("../images/icons/icon_spinner.svg");
+}

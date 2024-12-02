@@ -96,7 +96,7 @@
                         <i
                             class="icon icon-arrow-down | text-2xl"
                             :style="{
-                                transform: isExpanded ? 'rotate(0deg)' : 'rotate(180deg)',
+                                transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
                             }"></i>
                     </button>
                 </template>
@@ -109,14 +109,52 @@
                 </template>
             </UIFolderable>
         </section>
+
+        <section class="area">
+            <h2 class="title">MusicPlayer</h2>
+            <div class="buttons-container">
+                <button
+                    class="button"
+                    @click="
+                        musicStore.addMusicToPlay({
+                            isrc: 'isrc1',
+                            music: 'https://cdn.zzal.studio/studioassets/musics/aicompany/KRMIM2472434.mp3',
+                            thumbnail: '',
+                            name: 'music1',
+                        })
+                    ">
+                    Music1
+                    <template v-if="musicStore.musicToPlay?.isrc === 'isrc1'">
+                        {{ musicStore.musicStatus }}
+                    </template>
+                </button>
+                <button
+                    class="button"
+                    @click="
+                        musicStore.addMusicToPlay({
+                            isrc: 'isrc2',
+                            music: 'https://cdn.zzal.studio/studioassets/musics/aicompany/KRMIM2472435.mp3',
+                            thumbnail: '',
+                            name: 'music2',
+                        })
+                    ">
+                    Music2
+                    <template v-if="musicStore.musicToPlay?.isrc === 'isrc2'">
+                        {{ musicStore.musicStatus }}
+                    </template>
+                </button>
+            </div>
+        </section>
     </main>
 </template>
 
 <script setup lang="ts">
+    import { I18N_COOKIE, I18N_COOKIE_MAX_AGE } from "~/const"
+
     const route = useRoute()
     const snackbarStore = useSnackbarStore()
+    const musicStore = useMusicStore()
     const i18n = useI18n()
-    const i18nUtil = useI18nUtil()
 
     const isShowBasicModal = ref(false)
     const showBasicModal = (value = false): void => {
@@ -129,8 +167,13 @@
     }
 
     const toggleLocale = (): void => {
-        if (i18n.locale.value === "ko") i18nUtil.changeLocale("en")
-        else i18nUtil.changeLocale("ko")
+        if (i18n.locale.value === "ko") {
+            i18n.setLocale("en")
+            useCookie(I18N_COOKIE, { maxAge: I18N_COOKIE_MAX_AGE }).value = "en"
+        } else {
+            i18n.setLocale("ko")
+            useCookie(I18N_COOKIE, { maxAge: I18N_COOKIE_MAX_AGE }).value = "ko"
+        }
     }
 
     watch(

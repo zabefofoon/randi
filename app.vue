@@ -3,10 +3,15 @@
     <NuxtPage />
     <ClientOnly>
         <AppSnackbarContainer />
+        <Transition name="music-container">
+            <AppMusicPlayerContainer v-if="musicStore.musicToPlay" />
+        </Transition>
     </ClientOnly>
 </template>
 <script lang="ts" setup>
     import { I18N_COOKIE } from "./const"
+
+    const musicStore = useMusicStore()
 
     const i18n = useI18n()
     const headers = useRequestHeaders()
