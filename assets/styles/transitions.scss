@@ -2,8 +2,7 @@
 .snackbar-move,
 .snackbar-enter-active,
 .snackbar-leave-active {
-    $snackbarDuration: 300ms;
-    transition: opacity $snackbarDuration ease, transform $snackbarDuration ease;
+    transition: opacity 300ms ease, transform 300ms ease;
 }
 
 .snackbar-enter-from,
@@ -63,3 +62,28 @@
     top: 10px !important;
 }
 /* dropdown */
+
+/* UIFolderable */
+.folderable-enter-active,
+.folderable-leave-active {
+    transition: clip-path 150ms ease, opacity 50ms ease;
+
+    .inner,
+    .inner {
+        transition: clip-path 150ms ease, opacity 50ms ease;
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+.folderable-enter-from,
+.folderable-leave-to {
+    position: relative;
+    .inner,
+    .inner {
+        position: absolute;
+        width: 100%;
+        clip-path: inset(0 0 100% 0);
+        opacity: 0;
+    }
+}
+/* UIFolderable */

@@ -33,3 +33,7 @@
 .icon-close {
     @include generateIcon("../images/icons/icon_close.svg");
 }
+
+.icon-arrow-down {
+    @include generateIcon("../images/icons/icon_arrow_down.svg");
+}

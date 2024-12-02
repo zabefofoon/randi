@@ -79,6 +79,36 @@
                 </UIDropdown>
             </div>
         </section>
+
+        <section class="area">
+            <h2 class="title">UIFoldable</h2>
+            <UIFolderable
+                class="folderable"
+                :model-value="true">
+                <template #title="{ expand, isExpanded }">
+                    <button
+                        class="expand-button"
+                        @click="expand()">
+                        <span class="expand-button-title">
+                            <template v-if="!isExpanded">Expand more</template>
+                            <template v-else>Expand less</template>
+                        </span>
+                        <i
+                            class="icon icon-arrow-down | text-2xl"
+                            :style="{
+                                transform: isExpanded ? 'rotate(0deg)' : 'rotate(180deg)',
+                            }"></i>
+                    </button>
+                </template>
+                <template #content>
+                    <ul class="folderable-contents">
+                        <li class="folderable-contents-item">list1</li>
+                        <li class="folderable-contents-item">list2</li>
+                        <li class="folderable-contents-item">list3</li>
+                    </ul>
+                </template>
+            </UIFolderable>
+        </section>
     </main>
 </template>
 
@@ -147,6 +177,33 @@
 
                 .dropdown-options {
                     padding: 8px 12px;
+                }
+            }
+
+            .folderable {
+                padding: 12px;
+                border: 1px solid #ccc;
+                border-radius: 10px;
+
+                .expand-button {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    width: 100%;
+
+                    .expand-button-title {
+                        font-size: 18px;
+                    }
+
+                    .icon-arrow-down {
+                        font-size: 20px;
+                    }
+                }
+
+                .folderable-contents {
+                    margin-top: 10px;
+                    list-style: disc;
+                    list-style-position: inside;
                 }
             }
         }
