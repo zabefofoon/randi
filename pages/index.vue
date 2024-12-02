@@ -61,6 +61,24 @@
                 </button>
             </div>
         </section>
+
+        <section class="area">
+            <h2 class="title">UIDropdown</h2>
+            <div class="buttons-container">
+                <UIDropdown>
+                    <template #button="{ showOptions }">
+                        <button
+                            class="button"
+                            @click="showOptions()">
+                            button
+                        </button>
+                    </template>
+                    <template #options>
+                        <div class="dropdown-options">options</div>
+                    </template>
+                </UIDropdown>
+            </div>
+        </section>
     </main>
 </template>
 
@@ -125,6 +143,10 @@
                     padding: 8px 12px;
                     border: 1px solid #ccc;
                     border-radius: 10px;
+                }
+
+                .dropdown-options {
+                    padding: 8px 12px;
                 }
             }
         }
