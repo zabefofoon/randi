@@ -5,4 +5,19 @@
         <AppSnackbarContainer />
     </ClientOnly>
 </template>
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+    import { I18N_COOKIE } from "./const"
+
+    const i18n = useI18n()
+    const headers = useRequestHeaders()
+    const initLocale = async (): Promise<void> => {
+        const preferLang = import.meta.client
+            ? window.navigator.language
+            : headers["accept-language"]?.split(",")?.[0] ?? "ko"
+
+        const savedLocaleInCookie = useCookie(I18N_COOKIE).value ?? preferLang
+        await i18n.setLocale(savedLocaleInCookie)
+    }
+
+    await initLocale()
+</script>

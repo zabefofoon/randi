@@ -7,7 +7,19 @@ export default defineNuxtConfig({
         "@nuxtjs/stylelint-module",
         "@pinia/nuxt",
         "@pinia-plugin-persistedstate/nuxt",
+        "@nuxtjs/i18n",
     ],
+    i18n: {
+        strategy: "no_prefix",
+        defaultLocale: "ko",
+        detectBrowserLanguage: false,
+        skipSettingLocaleOnNavigate: false,
+
+        compilation: {
+            strictMessage: false,
+        },
+        vueI18n: "./i18n/i18n.config.ts",
+    },
     eslint: {
         checker: true,
     },

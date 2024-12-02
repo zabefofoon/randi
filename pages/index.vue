@@ -1,39 +1,48 @@
 <template>
     <main class="main">
-        <ClientOnly>
-            <Transition name="modal">
-                <BasicModal
-                    v-if="isShowBasicModal"
-                    @close="showBasicModal(false)" />
-            </Transition>
-        </ClientOnly>
+        <Transition name="modal">
+            <BasicModal
+                v-if="isShowBasicModal"
+                @close="showBasicModal(false)" />
+        </Transition>
+
+        <section class="area">
+            <h2 class="title">I18n({{ i18n.locale.value }})</h2>
+            <div class="buttons-container">
+                <button
+                    class="button"
+                    @click="toggleLocale()">
+                    {{ i18n.t("change.lang") }}
+                </button>
+            </div>
+        </section>
 
         <section class="area">
             <h2 class="title">Snackbars</h2>
             <div class="buttons-container">
                 <button
-                    class="snackbar-button"
+                    class="button"
                     @click="
                         snackbarStore.showSnackbar({ message: 'showSnackbarWarn', type: 'success' })
                     ">
                     Success
                 </button>
                 <button
-                    class="snackbar-button"
+                    class="button"
                     @click="
                         snackbarStore.showSnackbar({ message: 'showSnackbarInfo', type: 'info' })
                     ">
                     Info
                 </button>
                 <button
-                    class="snackbar-button"
+                    class="button"
                     @click="
                         snackbarStore.showSnackbar({ message: 'showSnackbarWarn', type: 'warn' })
                     ">
                     Warn
                 </button>
                 <button
-                    class="snackbar-button"
+                    class="button"
                     @click="
                         snackbarStore.showSnackbar({ message: 'showSnackbarError', type: 'error' })
                     ">
@@ -46,7 +55,7 @@
             <h2 class="title">UIPopup</h2>
             <div class="buttons-container">
                 <button
-                    class="modal-button"
+                    class="button"
                     @click="showBasicModal(true)">
                     Open Modal
                 </button>
@@ -58,15 +67,22 @@
 <script setup lang="ts">
     const route = useRoute()
     const snackbarStore = useSnackbarStore()
+    const i18n = useI18n()
+    const i18nUtil = useI18nUtil()
 
     const isShowBasicModal = ref(false)
     const showBasicModal = (value = false): void => {
-        // INFO query[key] 추가시, filterModal.middleeware에 추가
+        // INFO query[key] 추가시, filterModal.middleware에 추가
         navigateTo({
             path: route.path,
             query: { ...route.query, basicModal: value ? `${value}` : undefined },
             replace: value === false,
         })
+    }
+
+    const toggleLocale = (): void => {
+        if (i18n.locale.value === "ko") i18nUtil.changeLocale("en")
+        else i18nUtil.changeLocale("ko")
     }
 
     watch(
@@ -104,8 +120,7 @@
                 display: flex;
                 gap: 8px;
 
-                .snackbar-button,
-                .modal-button {
+                .button {
                     width: fit-content;
                     padding: 8px 12px;
                     border: 1px solid #ccc;
