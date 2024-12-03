@@ -52,7 +52,7 @@
         </section>
 
         <section class="area">
-            <h2 class="title">UIPopup</h2>
+            <h2 class="title">UIModal</h2>
             <div class="buttons-container">
                 <button
                     class="button"
@@ -143,6 +143,47 @@
                         {{ musicStore.musicStatus }}
                     </template>
                 </button>
+            </div>
+        </section>
+        <section class="carousel-area">
+            <h2 class="title">Carousel</h2>
+            <h2 class="sub-title">Gap</h2>
+            <div class="carousel-row-gap-container">
+                <UICarousel
+                    :use-dots="true"
+                    gap="24px">
+                    <UICarouselSlide
+                        v-for="index in 3"
+                        :key="index"
+                        class="carousel-slide">
+                        <p class="carousel-item">carousel-slide-area</p>
+                    </UICarouselSlide>
+                </UICarousel>
+            </div>
+            <h2 class="sub-title">Slide</h2>
+            <div class="carousel-row-container">
+                <UICarousel :use-dots="true">
+                    <UICarouselSlide
+                        v-for="index in 3"
+                        :key="index"
+                        class="carousel-slide">
+                        <p class="carousel-item">carousel-slide-area</p>
+                    </UICarouselSlide>
+                </UICarousel>
+            </div>
+            <h2 class="sub-title">Direction</h2>
+            <div class="carousel-column-container">
+                <UICarousel
+                    class="vertical"
+                    :use-dots="true"
+                    vertical>
+                    <UICarouselSlide
+                        v-for="index in 3"
+                        :key="index"
+                        class="carousel-slide">
+                        <p class="carousel-item">carousel-slide-area</p>
+                    </UICarouselSlide>
+                </UICarousel>
             </div>
         </section>
     </main>
@@ -247,6 +288,97 @@
                     margin-top: 10px;
                     list-style: disc;
                     list-style-position: inside;
+                }
+            }
+        }
+
+        .carousel-area {
+            padding: 20px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+
+            .title {
+                margin-bottom: 12px;
+                font-size: 24px;
+                font-weight: 700;
+            }
+
+            .sub-title {
+                margin-bottom: 12px;
+                font-size: 18px;
+                font-weight: 500;
+            }
+
+            .carousel-row-gap-container {
+                .carousel-slide {
+                    .carousel-item {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 100%;
+                        height: 52px;
+                        background-color: #67a2e7;
+                    }
+                }
+            }
+
+            .carousel-row-container {
+                .carousel-slide {
+                    .carousel-item {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 100%;
+                        height: 52px;
+                        background-color: #67a2e7;
+                    }
+                }
+            }
+        }
+    }
+</style>
+<style lang="scss">
+    .carousel-column-container {
+        height: 55px;
+
+        .vertical {
+            height: 100%;
+
+            .embla-controls {
+                position: absolute !important;
+                top: 0;
+                left: 0;
+                height: 100%;
+
+                .embla-dots {
+                    position: absolute;
+                    top: 50%;
+                    right: 5px;
+                    bottom: unset;
+                    left: unset;
+                    flex-direction: column;
+                    gap: 5px;
+                    margin-top: 0;
+                    transform: translate(0, -50%);
+
+                    .embla-dot-selected {
+                        width: 5px !important;
+                        background: #fc452d !important;
+                    }
+                }
+            }
+
+            .carousel-slide {
+                width: 100%;
+
+                .carousel-item {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 100%;
+                    height: 55px;
+                    background-color: #67a2e7;
                 }
             }
         }
