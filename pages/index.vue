@@ -145,6 +145,7 @@
                 </button>
             </div>
         </section>
+
         <section class="carousel-area">
             <h2 class="title">Carousel</h2>
             <h2 class="sub-title">Gap</h2>
@@ -185,6 +186,18 @@
                     </UICarouselSlide>
                 </UICarousel>
             </div>
+        </section>
+
+        <section class="area">
+            <h2 class="title">UISpinner</h2>
+            <UISpinner />
+        </section>
+
+        <section class="area">
+            <h2 class="title">UISkeleton</h2>
+            <UISkeleton
+                width="100px"
+                height="100px" />
         </section>
     </main>
 </template>

@@ -140,10 +140,11 @@
                     position: absolute;
                     top: -6px;
                     right: -6px;
+                    display: flex;
                     height: fit-content;
                     padding: 12px;
                     color: black;
-                    border-radius: 9999px;
+
                     @include global.mobile {
                         right: 0;
                     }
