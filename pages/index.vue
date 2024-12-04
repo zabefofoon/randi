@@ -145,8 +145,7 @@
                 </button>
             </div>
         </section>
-
-        <section class="carousel-area">
+        <section class="area">
             <h2 class="title">Carousel</h2>
             <h2 class="sub-title">Gap</h2>
             <div class="carousel-row-gap-container">
@@ -199,16 +198,33 @@
                 width="100px"
                 height="100px" />
         </section>
+
+        <section class="area">
+            <h2 class="title">Global Loading</h2>
+            <div class="buttons-container">
+                <button
+                    class="button"
+                    @click="showGlobalLoading('cover')">
+                    Cover Loading
+                </button>
+                <button
+                    class="button"
+                    @click="showGlobalLoading('dim')">
+                    Dim Loading
+                </button>
+            </div>
+        </section>
     </main>
 </template>
 
 <script setup lang="ts">
-    import { I18N_COOKIE, I18N_COOKIE_MAX_AGE } from "~/const"
+    import { I18N_COOKIE, I18N_COOKIE_MAX_AGE, LOADING_COVER, LOADING_DIM } from "~/const"
 
     const route = useRoute()
     const snackbarStore = useSnackbarStore()
     const musicStore = useMusicStore()
     const i18n = useI18n()
+    const globalLoadingStore = useGlobalLoadingStore()
 
     const isShowBasicModal = ref(false)
     const showBasicModal = (value = false): void => {
@@ -218,6 +234,14 @@
             query: { ...route.query, basicModal: value ? `${value}` : undefined },
             replace: value === false,
         })
+    }
+
+    const showGlobalLoading = async (type: string): Promise<void> => {
+        if (type === "cover") {
+            await globalLoadingStore.withGlobalCoverLoading(LOADING_COVER, async () => {})
+        } else {
+            await globalLoadingStore.withGlobalDimLoading(LOADING_DIM, async () => {})
+        }
     }
 
     const toggleLocale = (): void => {
@@ -259,6 +283,12 @@
                 margin-bottom: 12px;
                 font-size: 24px;
                 font-weight: 700;
+            }
+
+            .sub-title {
+                margin-bottom: 12px;
+                font-size: 18px;
+                font-weight: 500;
             }
 
             .buttons-container {
@@ -303,25 +333,6 @@
                     list-style-position: inside;
                 }
             }
-        }
-
-        .carousel-area {
-            padding: 20px;
-            margin-top: 10px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-
-            .title {
-                margin-bottom: 12px;
-                font-size: 24px;
-                font-weight: 700;
-            }
-
-            .sub-title {
-                margin-bottom: 12px;
-                font-size: 18px;
-                font-weight: 500;
-            }
 
             .carousel-row-gap-container {
                 .carousel-slide {
@@ -351,6 +362,7 @@
         }
     }
 </style>
+
 <style lang="scss">
     .carousel-column-container {
         height: 55px;
