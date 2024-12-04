@@ -204,13 +204,18 @@
             <div class="buttons-container">
                 <button
                     class="button"
-                    @click="showGlobalLoading('cover')">
+                    @click="showGlobalCoverLoading()">
                     Cover Loading
                 </button>
                 <button
                     class="button"
-                    @click="showGlobalLoading('dim')">
-                    Dim Loading
+                    @click="showGlobalLoading(1000)">
+                    Dim 1000
+                </button>
+                <button
+                    class="button"
+                    @click="showGlobalLoading(5000)">
+                    Dim 5000
                 </button>
             </div>
         </section>
@@ -218,7 +223,7 @@
 </template>
 
 <script setup lang="ts">
-    import { I18N_COOKIE, I18N_COOKIE_MAX_AGE, LOADING_COVER, LOADING_DIM } from "~/const"
+    import { I18N_COOKIE, I18N_COOKIE_MAX_AGE, LOADING_COVER } from "~/const"
 
     const route = useRoute()
     const snackbarStore = useSnackbarStore()
@@ -236,12 +241,17 @@
         })
     }
 
-    const showGlobalLoading = async (type: string): Promise<void> => {
-        if (type === "cover") {
-            await globalLoadingStore.withGlobalCoverLoading(LOADING_COVER, async () => {})
-        } else {
-            await globalLoadingStore.withGlobalDimLoading(LOADING_DIM, async () => {})
-        }
+    const showGlobalCoverLoading = (): void => {
+        globalLoadingStore.withGlobalCoverLoading(LOADING_COVER, async () => {
+            await etcUtil.sleep(1000)
+        })
+    }
+
+    const showGlobalLoading = (duration = 1000): void => {
+        // INFO 확인용으로 만들어서 Key를 `DIM_${duration}`로 줬지만, 실사용시 const.ts에 key 등록
+        globalLoadingStore.withGlobalDimLoading(`DIM_${duration}`, async () => {
+            await etcUtil.sleep(duration)
+        })
     }
 
     const toggleLocale = (): void => {

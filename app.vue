@@ -10,17 +10,12 @@
     </ClientOnly>
 </template>
 <script lang="ts" setup>
-    import { I18N_COOKIE, LOADING_SSR } from "./const"
+    import { I18N_COOKIE } from "./const"
 
     const musicStore = useMusicStore()
-    const globalLoadingStore = useGlobalLoadingStore()
 
     const i18n = useI18n()
     const headers = useRequestHeaders()
-
-    onMounted(() => {
-        globalLoadingStore.deleteGlobalCoverLoading(LOADING_SSR)
-    })
 
     const initLocale = async (): Promise<void> => {
         const preferLang = import.meta.client

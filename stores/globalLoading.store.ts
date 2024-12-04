@@ -11,7 +11,7 @@ export const useGlobalLoadingStore = defineStore("globalLoading", () => {
 
     const globalDimLoadingMap = ref<Record<string, boolean>>({})
 
-    const isShowGlobalCoverSpinner = ref(false)
+    const isShowGlobalCoverSpinner = ref(true)
     const isShowGlobalDimSpinner = ref(false)
 
     const isGlobalCoverLoading = computed<boolean>(() =>

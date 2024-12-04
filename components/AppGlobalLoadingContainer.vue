@@ -1,10 +1,7 @@
 <template>
     <Transition name="fade">
         <div
-            v-if="
-                !route.name?.toString().startsWith('embedded-') &&
-                globalLoadingStore.isShowGlobalCoverSpinner
-            "
+            v-if="globalLoadingStore.isGlobalCoverLoading"
             class="loading-cover-container">
             <UISpinner class="loading" />
         </div>
@@ -12,7 +9,7 @@
 
     <Transition name="fade">
         <div
-            v-if="globalLoadingStore.isShowGlobalDimSpinner"
+            v-if="globalLoadingStore.isGlobalDimLoading"
             class="loading-dim-container">
             <UISpinner class="loading" />
         </div>
@@ -20,8 +17,13 @@
 </template>
 
 <script lang="ts" setup>
-    const route = useRoute()
+    import { LOADING_SSR } from "~/const"
+
     const globalLoadingStore = useGlobalLoadingStore()
+
+    onMounted(() => {
+        globalLoadingStore.deleteGlobalCoverLoading(LOADING_SSR)
+    })
 </script>
 
 <style lang="scss" scoped>

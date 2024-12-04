@@ -15,4 +15,3 @@ export const CAROUSEL_AUTOPLAY_DELAY = 4000
 export const GLOBAL_SPINNER_DELAY = 100
 export const LOADING_SSR = "ssr"
 export const LOADING_COVER = "loadingCover"
-export const LOADING_DIM = "loadingDim"
