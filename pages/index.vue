@@ -219,6 +219,13 @@
                 </button>
             </div>
         </section>
+
+        <section class="area">
+            <h2 class="title">Timer</h2>
+            <UITimer
+                :seconds="30"
+                @expired="expiredTimerHandler" />
+        </section>
     </main>
 </template>
 
@@ -262,6 +269,13 @@
             i18n.setLocale("ko")
             useCookie(I18N_COOKIE, { maxAge: I18N_COOKIE_MAX_AGE }).value = "ko"
         }
+    }
+
+    const expiredTimerHandler = (): void => {
+        snackbarStore.showSnackbar({
+            message: "인증 시간이 만료되었습니다. 다시 시도 해 주세요.",
+            type: "error",
+        })
     }
 
     watch(
