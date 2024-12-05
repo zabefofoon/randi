@@ -19,9 +19,7 @@
     }>()
 
     onMounted(() => {
-        if (props.seconds != null) {
-            timeLeft.value = Math.floor(props.seconds)
-        }
+        if (props.seconds != null) timeLeft.value = props.seconds
 
         stopwatchTimer = setInterval(() => stopwatchUpdateHandler(), 1000)
     })
@@ -34,7 +32,7 @@
         emit("update", timeLeft.value)
         timeLeft.value -= 1
 
-        if (timeLeft.value == 0) {
+        if (timeLeft.value <= 0) {
             clearInterval(stopwatchTimer)
             emit("expired")
             return
