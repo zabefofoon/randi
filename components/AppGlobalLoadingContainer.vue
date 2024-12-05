@@ -21,6 +21,10 @@
 
     const globalLoadingStore = useGlobalLoadingStore()
 
+    onServerPrefetch(() => {
+        globalLoadingStore.setGlobalCoverLoading(LOADING_SSR)
+    })
+
     onMounted(() => {
         globalLoadingStore.deleteGlobalCoverLoading(LOADING_SSR)
     })
