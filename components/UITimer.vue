@@ -20,7 +20,7 @@
 
     onMounted(() => {
         if (props.seconds != null) {
-            timeLeft.value = props.seconds
+            timeLeft.value = Math.floor(props.seconds)
         }
 
         stopwatchTimer = setInterval(() => stopwatchUpdateHandler(), 1000)
@@ -32,14 +32,13 @@
 
     const stopwatchUpdateHandler = (): void => {
         emit("update", timeLeft.value)
+        timeLeft.value -= 1
 
         if (timeLeft.value == 0) {
             clearInterval(stopwatchTimer)
             emit("expired")
             return
         }
-
-        timeLeft.value -= 1
     }
 
     const leftMinutes = computed<string>(() => {
@@ -50,9 +49,3 @@
         return stringUtil.toPaddedNumber(Math.floor(timeLeft.value % 60))
     })
 </script>
-
-<style lang="scss" module>
-    .index {
-        display: inline-flex;
-    }
-</style>
