@@ -11,3 +11,7 @@ export const MIN_MUSIC_SWIPE_X = 10
 export const MIN_MUSIC_SWIPE_Y = 5
 
 export const CAROUSEL_AUTOPLAY_DELAY = 4000
+
+export const GLOBAL_SPINNER_DELAY = 100
+export const LOADING_SSR = "ssr"
+export const LOADING_COVER = "loadingCover"

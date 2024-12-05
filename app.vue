@@ -1,4 +1,5 @@
 <template>
+    <AppGlobalLoadingContainer />
     <NuxtRouteAnnouncer />
     <NuxtPage />
     <ClientOnly>
@@ -15,6 +16,7 @@
 
     const i18n = useI18n()
     const headers = useRequestHeaders()
+
     const initLocale = async (): Promise<void> => {
         const preferLang = import.meta.client
             ? window.navigator.language

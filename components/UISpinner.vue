@@ -1,5 +1,5 @@
 <template>
-    <i class="spinner icon icon-spinner | leading-none"></i>
+    <i class="spinner icon icon-spinner"></i>
 </template>
 
 <style lang="scss" scoped>
