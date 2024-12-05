@@ -7,9 +7,9 @@
                 class="snackbar"
                 :class="snackbar.type">
                 <i
-                    class="icon | text-lg"
+                    class="icon"
                     :class="`icon-${snackbar.type}`"></i>
-                <span class="text-sm">
+                <span class="message">
                     {{ snackbar.message }}
                 </span>
             </div>
@@ -41,6 +41,10 @@
             border: 1px solid #ccc;
             border-radius: 10px;
             box-shadow: 0 0 15px rgb(120 120 120 / 30%);
+
+            .message {
+                font-size: 14px;
+            }
 
             &.success {
                 color: rgb(74 222 128);

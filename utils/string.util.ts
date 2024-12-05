@@ -17,4 +17,11 @@ export default {
 
         return minutesStr + ":" + secondsStr
     },
+
+    toPaddedNumber(value: number): string {
+        if (value < 0 || !Number.isInteger(value)) return ""
+
+        const stringValue: string = value.toString()
+        return value < 10 ? stringValue.padStart(2, "0") : stringValue
+    },
 }

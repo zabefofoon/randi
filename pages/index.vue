@@ -219,6 +219,21 @@
                 </button>
             </div>
         </section>
+
+        <section class="area">
+            <h2 class="title">Timer</h2>
+            <div class="buttons-container">
+                <button
+                    class="button"
+                    @click="startTimer(true)">
+                    <span v-if="!isStartedTimer">start</span>
+                    <UITimer
+                        v-else
+                        :seconds="5.5"
+                        @expired="expiredTimerHandler" />
+                </button>
+            </div>
+        </section>
     </main>
 </template>
 
@@ -262,6 +277,18 @@
             i18n.setLocale("ko")
             useCookie(I18N_COOKIE, { maxAge: I18N_COOKIE_MAX_AGE }).value = "ko"
         }
+    }
+
+    const isStartedTimer = ref(false)
+    const startTimer = (value: boolean): void => {
+        isStartedTimer.value = value
+    }
+    const expiredTimerHandler = (): void => {
+        startTimer(false)
+        snackbarStore.showSnackbar({
+            message: "인증 시간이 만료되었습니다. 다시 시도 해 주세요.",
+            type: "error",
+        })
     }
 
     watch(
