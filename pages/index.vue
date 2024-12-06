@@ -150,7 +150,9 @@
             <h2 class="sub-title">Gap</h2>
             <div class="carousel-row-gap-container">
                 <UICarousel
-                    :use-dots="true"
+                    loop
+                    use-dots
+                    autoplay
                     gap="24px">
                     <UICarouselSlide
                         v-for="index in 3"
@@ -162,7 +164,10 @@
             </div>
             <h2 class="sub-title">Slide</h2>
             <div class="carousel-row-container">
-                <UICarousel :use-dots="true">
+                <UICarousel
+                    loop
+                    use-dots
+                    autoplay>
                     <UICarouselSlide
                         v-for="index in 3"
                         :key="index"
@@ -175,8 +180,10 @@
             <div class="carousel-column-container">
                 <UICarousel
                     class="vertical"
-                    :use-dots="true"
-                    vertical>
+                    use-dots
+                    vertical
+                    loop
+                    autoplay>
                     <UICarouselSlide
                         v-for="index in 3"
                         :key="index"
