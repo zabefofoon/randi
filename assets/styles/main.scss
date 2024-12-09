@@ -5,6 +5,9 @@
 
 * > * {
     color: inherit;
+    // 폰트 추가시, 맨앞에 추가
+    font-family: system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
 }
 
 body {
