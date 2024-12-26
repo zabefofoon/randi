@@ -1,7 +1,7 @@
 <template>
     <div
-        ref="popupEl"
-        class="popup">
+        ref="modalEl"
+        class="modal">
         <div
             class="dim"
             :style="{ pointerEvents: enableDimClickClose ? 'auto' : 'none' }"
@@ -53,7 +53,7 @@
 
     const route = useRoute()
 
-    const popupEl = ref<HTMLDivElement>()
+    const modalEl = ref<HTMLDivElement>()
     const innerEl = ref<HTMLDivElement>()
 
     onMounted(() => {
@@ -75,12 +75,12 @@
 
     defineExpose({
         innerEl,
-        popupEl,
+        modalEl,
     })
 </script>
 
 <style lang="scss" scoped>
-    .popup {
+    .modal {
         position: fixed;
         bottom: 0;
         left: 0;

@@ -4,12 +4,12 @@
         <template #content>content</template>
         <template #buttons>
             <button
-                class="popup-button close"
+                class="modal-button close"
                 @click="emit('close')">
                 close
             </button>
             <button
-                class="popup-button done"
+                class="modal-button done"
                 @click="emit('close')">
                 done
             </button>
@@ -24,7 +24,7 @@
 </script>
 
 <style lang="scss" scoped>
-    .popup-button {
+    .modal-button {
         width: 100%;
         padding: 8px 0;
         border-radius: 10px;

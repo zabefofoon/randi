@@ -49,3 +49,8 @@ body {
         -webkit-touch-callout: none; /* iOS Safari에서 사용자 선택 메뉴를 방지 */
     }
 }
+.iphone-history-back {
+    .modal {
+        opacity: 0;
+    }
+}
