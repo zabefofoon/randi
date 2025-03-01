@@ -9,6 +9,5 @@ export default withNuxt({
         "vue/no-v-html": "off",
         "vue/no-multiple-template-root": "off",
         "vue/multi-word-component-names": "off",
-        "@typescript-eslint/explicit-function-return-type": "error",
     },
 })

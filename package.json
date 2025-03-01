@@ -19,6 +19,7 @@
         "@types/lodash.debounce": "^4.0.9",
         "eslint": "^9.15.0",
         "install": "^0.13.0",
+        "phaser": "^3.88.2",
         "postcss-html": "^1.7.0",
         "sass": "^1.81.0",
         "stylelint": "^16.10.0",

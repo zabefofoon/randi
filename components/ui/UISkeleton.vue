@@ -32,10 +32,10 @@
             content: "";
             background-image: linear-gradient(
                 90deg,
-                rgba(#fff, 0) 0,
-                rgba(#fff, 0.2) 20%,
-                rgba(#fff, 0.5) 60%,
-                rgba(#fff, 0)
+                rgb(255 255 255 / 0%) 0,
+                rgb(255 255 255 / 20%) 20%,
+                rgb(255 255 255 / 50%) 60%,
+                rgb(255 255 255 / 0%)
             );
             transform: translateX(-100%);
             animation: skeleton 3000ms infinite;

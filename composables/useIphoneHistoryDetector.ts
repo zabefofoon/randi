@@ -1,4 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export type IphoneHistoryDetector = ReturnType<typeof useIphoneHistoryDetector>
+
 export const useIphoneHistoryDetector = () => {
     const TIMER_DELAY = 500
 
