@@ -7,24 +7,36 @@
 <script lang="ts" setup>
     import Phaser from "phaser"
 
-    // Vue에서 DOM 요소를 참조하기 위한 ref
     const phaserContainer = ref<HTMLDivElement>()
 
-    // Phaser.Game 인스턴스 저장용
+    // Phaser.Game 인스턴스
     let game: Phaser.Game
-    let platforms: Phaser.Physics.Arcade.StaticGroup
+
+    // 전역 참조 (씬 내부에서 할당)
     let player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+    let enemy: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
     let cursors: Phaser.Types.Input.Keyboard.CursorKeys
-    let stars: Phaser.Physics.Arcade.Group
-    let bombs: Phaser.Physics.Arcade.Group
-    let score = 0
-    let scoreText: Phaser.GameObjects.Text
-    let gameOver = false
+    let pathIndex = 0
+    const path = [
+        { x: 100, y: 50 }, // 좌측 상단
+        { x: 100, y: 550 }, // 좌측 하단
+        { x: 700, y: 550 }, // 우측 하단
+        { x: 700, y: 50 }, // 우측 상단
+    ]
+
+    // 적 HP 및 이동
+    let enemyHP = 100
+
+    // 공격(탄환) 관련
+    let bullets: Phaser.Physics.Arcade.Group
+    let lastAttackTime = 0
+    const attackCoolDown = 1000 // 1초 간격
+    const bulletSpeed = 500 // 탄환 기본 이동 속도
+    const attackRange = 200
 
     onMounted(() => {
         if (!phaserContainer.value) return
 
-        // Phaser 게임 객체 생성
         game = new Phaser.Game({
             type: Phaser.AUTO,
             width: 800,
@@ -33,50 +45,45 @@
             physics: {
                 default: "arcade",
                 arcade: {
-                    gravity: { x: 0, y: 300 },
                     debug: true,
                 },
             },
             scene: {
                 preload(this: Phaser.Scene) {
                     this.load.image("sky", "/assets/images/sky.png")
-                    this.load.image("ground", "/assets/images/platform.png")
-                    this.load.image("star", "/assets/images/star.png")
-                    this.load.image("bomb", "/assets/images/bomb.png")
                     this.load.spritesheet("dude", "/assets/images/dude.png", {
                         frameWidth: 32,
                         frameHeight: 48,
                     })
+                    this.load.spritesheet("enemy", "/assets/images/dude.png", {
+                        frameWidth: 32,
+                        frameHeight: 48,
+                    })
+                    // 탄환 이미지 (예: star.png)
+                    this.load.image("bullet", "/assets/images/star.png")
                 },
                 create(this: Phaser.Scene) {
-                    // 화면 중앙에 로고 표시
+                    cursors = this.input.keyboard!.createCursorKeys()
                     this.add.image(400, 300, "sky")
 
-                    platforms = this.physics.add.staticGroup()
+                    // 플레이어
+                    player = this.physics.add.sprite(100, 450, "dude").setCollideWorldBounds(true)
 
-                    platforms.create(750, 220, "ground")
-                    platforms.create(50, 250, "ground")
-                    platforms.create(600, 400, "ground")
-                    platforms.create(400, 568, "ground").setScale(2).refreshBody()
+                    // 적(빨간 틴트)
+                    enemy = this.physics.add.sprite(100, 50, "enemy").setTint(0xff0000)
 
-                    player = this.physics.add.sprite(100, 450, "dude")
-
-                    player.setBounce(0.2)
-                    player.setCollideWorldBounds(true)
-
+                    // 애니메이션
                     this.anims.create({
                         key: "left",
                         frames: this.anims.generateFrameNumbers("dude", { start: 0, end: 3 }),
                         frameRate: 10,
                         repeat: -1,
                     })
-
                     this.anims.create({
                         key: "turn",
                         frames: [{ key: "dude", frame: 4 }],
                         frameRate: 20,
                     })
-
                     this.anims.create({
                         key: "right",
                         frames: this.anims.generateFrameNumbers("dude", { start: 5, end: 8 }),
@@ -84,102 +91,161 @@
                         repeat: -1,
                     })
 
-                    this.physics.add.collider(player, platforms)
+                    this.physics.moveTo(enemy, path[pathIndex].x, path[pathIndex].y, 160)
 
-                    cursors = this.input.keyboard!.createCursorKeys()
-
-                    stars = this.physics.add.group({
-                        key: "star",
-                        repeat: 11,
-                        setXY: { x: 12, y: 0, stepX: 70 },
-                    })
-
-                    stars.children.iterate((child) => {
-                        child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8))
-                        return true
-                    })
-
-                    this.physics.add.collider(stars, platforms)
-                    this.physics.add.overlap(
-                        player,
-                        stars,
-                        (_, star) => {
-                            star.disableBody(true, true)
-
-                            score += 10
-                            scoreText.setText("Score: " + score)
-
-                            if (stars.countActive(true) === 0) {
-                                stars.children.iterate((child) => {
-                                    child.enableBody(true, child.x, 0, true, true)
-                                    return true
-                                })
-
-                                var x =
-                                    player.x < 400
-                                        ? Phaser.Math.Between(400, 800)
-                                        : Phaser.Math.Between(0, 400)
-
-                                var bomb = bombs.create(x, 16, "bomb")
-                                bomb.setBounce(1)
-                                bomb.setCollideWorldBounds(true)
-                                bomb.setVelocity(Phaser.Math.Between(-200, 200), 20)
-                            }
-                        },
-                        undefined,
-                        this
-                    )
-
-                    scoreText = this.add.text(16, 16, "score: 0", {
-                        fontSize: "32px",
-                        color: "#fff",
-                    })
-
-                    bombs = this.physics.add.group()
-
-                    this.physics.add.collider(bombs, platforms)
-
-                    this.physics.add.collider(
-                        player,
-                        bombs,
-                        (player) => {
-                            this.physics.pause()
-
-                            player.setTint(0xff0000)
-
-                            player.anims.play("turn")
-
-                            gameOver = true
-                        },
-                        undefined,
-                        this
-                    )
+                    // ===== 탄환(bullet) 그룹 생성 =====
+                    bullets = this.physics.add.group({ collideWorldBounds: false })
+                    // 탄환과 적 겹치면 데미지 주는 overlap
+                    this.physics.add.overlap(bullets, enemy, bulletHitEnemy, undefined, this)
                 },
-                update(this: Phaser.Scene) {
-                    if (cursors.left.isDown) {
-                        player.setVelocityX(-160)
+                update(this: Phaser.Scene, time: number) {
+                    // 플레이어 이동
+                    handlePlayerMovement()
+                    // 적 이동
+                    handleEnemyMovement.call(this)
 
-                        player.anims.play("left", true)
-                    } else if (cursors.right.isDown) {
-                        player.setVelocityX(160)
+                    const distance = Phaser.Math.Distance.Between(
+                        player.x,
+                        player.y,
+                        enemy.x,
+                        enemy.y
+                    )
 
-                        player.anims.play("right", true)
-                    } else {
-                        player.setVelocityX(0)
+                    // 플레이어가 정지상태 && 쿨다운 → 발사
+                    const isPlayerIdle =
+                        player.body.velocity.x === 0 && player.body.velocity.y === 0
+                    const isCooltime = time > lastAttackTime + attackCoolDown
+                    const isInRange = distance <= attackRange
 
-                        player.anims.play("turn")
-                    }
+                    if (isPlayerIdle && isCooltime && isInRange) fireHomingBullet.call(this, time)
 
-                    if (cursors.up.isDown && player.body.touching.down) {
-                        player.setVelocityY(-330)
-                    }
+                    // === 호밍 로직: 각 탄환이 적 좌표를 향하도록 매 프레임 속도 업데이트 ===
+                    moveBulletToEnemy.call(this)
+
+                    // 화면 밖 탄환 제거
+                    bullets.children.each((bullet) => {
+                        const b = bullet as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+                        if (b.x < 0 || b.x > 800 || b.y < 0 || b.y > 600) b.destroy()
+                    })
                 },
             },
         })
     })
 
+    function moveBulletToEnemy() {
+        bullets.children.each((obj) => {
+            const bullet = obj as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+
+            if (!bullet.active) return
+
+            // 이미 파괴되었거나 적이 죽었다면 패스
+            if (!enemy.active) return
+
+            // 각도 계산
+            const angle = Phaser.Math.Angle.Between(bullet.x, bullet.y, enemy.x, enemy.y)
+            bullet.body.setVelocity(Math.cos(angle) * bulletSpeed, Math.sin(angle) * bulletSpeed)
+        })
+    }
+    /**
+     * 플레이어 이동 처리
+     */
+    function handlePlayerMovement() {
+        const speed = 160
+        let moving = false
+
+        if (cursors.left.isDown) {
+            player.setVelocityX(-speed)
+            player.anims.play("left", true)
+            moving = true
+        } else if (cursors.right.isDown) {
+            player.setVelocityX(speed)
+            player.anims.play("right", true)
+            moving = true
+        } else {
+            player.setVelocityX(0)
+        }
+
+        if (cursors.up.isDown) {
+            player.setVelocityY(-speed)
+            moving = true
+        } else if (cursors.down.isDown) {
+            player.setVelocityY(speed)
+            moving = true
+        } else if (!cursors.up.isDown && !cursors.down.isDown) {
+            player.setVelocityY(0)
+        }
+
+        if (!moving) {
+            player.anims.play("turn")
+        }
+    }
+
+    /**
+     * 적 경로 이동 처리
+     */
+    function handleEnemyMovement(this: Phaser.Scene) {
+        const dist = Phaser.Math.Distance.Between(
+            enemy.x,
+            enemy.y,
+            path[pathIndex].x,
+            path[pathIndex].y
+        )
+
+        if (dist < 5) {
+            enemy.x = path[pathIndex].x
+            enemy.y = path[pathIndex].y
+            pathIndex++
+            if (pathIndex >= path.length) pathIndex = 0
+        }
+        if (enemy.active) this.physics.moveTo(enemy, path[pathIndex].x, path[pathIndex].y, 160)
+    }
+
+    /**
+     * 호밍 탄환 발사
+     */
+    function fireHomingBullet(this: Phaser.Scene, currentTime: number) {
+        lastAttackTime = currentTime
+
+        // 플레이어 위치에서 탄환 생성
+        const bullet = bullets.create(
+            player.x,
+            player.y,
+            "bullet"
+        ) as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+        if (!bullet) return
+
+        bullet.setActive(true)
+        bullet.setVisible(true)
+
+        // 처음에 한 번 적 방향으로 설정
+        const angle = Phaser.Math.Angle.Between(bullet.x, bullet.y, enemy.x, enemy.y)
+        bullet.body.setVelocity(Math.cos(angle) * bulletSpeed, Math.sin(angle) * bulletSpeed)
+    }
+
+    /**
+     * 탄환과 적 겹쳤을 때
+     */
+    function bulletHitEnemy(
+        enemyObj: Phaser.GameObjects.GameObject,
+        bulletObj: Phaser.GameObjects.GameObject
+    ) {
+        const bullet = bulletObj as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+        const enemySprite = enemyObj as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+        // 적 HP 감소
+        enemyHP--
+
+        // 깜빡이는 효과
+        enemySprite.setTintFill(0xff0000)
+        setTimeout(() => enemySprite.setTint(0xff0000), 100)
+
+        // 탄환 제거
+        bullet.destroy()
+
+        // 적 HP가 0 이하라면 제거
+        if (enemyHP <= 0) enemySprite.destroy()
+    }
+
     onBeforeUnmount(() => {
-        // 컴포넌트가 언마운트될 때 게임 인스턴스 정리
         if (game) game.destroy(true)
     })
 </script>
