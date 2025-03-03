@@ -14,7 +14,13 @@
 
     // 전역 참조 (씬 내부에서 할당)
     let player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+
     let enemies: Phaser.Physics.Arcade.Group
+    // 기타 상수
+    const maxEnemies = 10 // 최대 2마리 생성
+    let remainnedEnemies = 0
+    let remainnedEnemiesCount: Phaser.GameObjects.Text
+    const enemyCountDeadline = 40
 
     let cursors: Phaser.Types.Input.Keyboard.CursorKeys
     const path = [
@@ -31,9 +37,15 @@
     const bulletSpeed = 500 // 탄환 기본 이동 속도
     const attackRange = 200
 
-    // 기타 상수
-    const maxEnemies = 10 // 최대 2마리 생성
-    let spawnedCount = 0 // 지금까지 스폰된 적 수
+    let remainnedTime = 3
+    const roundTime = 45
+    let remainnedTimeText: Phaser.GameObjects.Text
+
+    let life = 10
+    let gameover = false
+
+    let round = 0
+    let roundText: Phaser.GameObjects.Text
 
     onMounted(() => {
         if (!phaserContainer.value) return
@@ -66,14 +78,52 @@
                 create(this: Phaser.Scene) {
                     cursors = this.input.keyboard!.createCursorKeys()
                     this.add.image(400, 300, "sky")
+                    remainnedTimeText = this.add.text(
+                        400,
+                        0,
+                        `00:${String(remainnedTime).padStart(2, "0")}`,
+                        {
+                            color: "#fff",
+                            fontSize: 16,
+                        }
+                    )
+
+                    roundText = this.add.text(0, 0, `round ${round}`, {
+                        color: "#fff",
+                        fontSize: 16,
+                    })
 
                     // 플레이어
                     player = this.physics.add.sprite(100, 450, "dude").setCollideWorldBounds(true)
 
                     enemies = this.physics.add.group({ collideWorldBounds: false })
 
-                    // 1) 첫 번째 적 즉시 스폰
-                    spawnEnemies.call(this)
+                    this.time.addEvent({
+                        delay: 1000,
+                        repeat: -1,
+                        callback: () => {
+                            remainnedTime--
+                            if (remainnedTime === 1) spawnEnemies.call(this)
+
+                            if (remainnedTime < 1) {
+                                remainnedTime = roundTime
+                                round++
+                                roundText.setText(`round ${round}`)
+                            }
+
+                            remainnedTimeText.setText(
+                                `00:${String(remainnedTime).padStart(2, "0")}`
+                            )
+
+                            if (remainnedEnemies >= enemyCountDeadline) life--
+
+                            if (life < 1) {
+                                gameover = true
+                                console.log("gameover")
+                                this.physics.pause()
+                            }
+                        },
+                    })
 
                     // 애니메이션
                     this.anims.create({
@@ -97,10 +147,17 @@
                     // ===== 탄환(bullet) 그룹 생성 =====
                     bullets = this.physics.add.group({ collideWorldBounds: false })
                     this.physics.add.overlap(bullets, enemies, bulletHitEnemy, undefined, this)
+
+                    remainnedEnemiesCount = this.add.text(750, 0, `${0}/${enemyCountDeadline}`, {
+                        color: "#fff",
+                        fontSize: 16,
+                        align: "end",
+                    })
                 },
                 update(this: Phaser.Scene, time: number) {
                     // 플레이어 이동
                     handlePlayerMovement()
+
                     // 적 이동
 
                     enemies.children.each((obj) => {
@@ -250,10 +307,6 @@
      * 적 하나를 스폰하는 함수
      */
     function spawnEnemy(this: Phaser.Scene) {
-        if (spawnedCount >= maxEnemies) return // 이미 최대치면 스폰 안 함
-
-        spawnedCount++
-
         // 새 적 생성
         const enemy = enemies.create(
             100,
@@ -265,6 +318,8 @@
         // 각 적마다 HP와 pathIndex를 개별 관리
         enemy.setData("hp", 10)
         enemy.setData("pathIndex", 0)
+        remainnedEnemies++
+        remainnedEnemiesCount.setText(`${remainnedEnemies}/${enemyCountDeadline}`)
     }
 
     /**
@@ -343,7 +398,11 @@
         bullet.destroy()
 
         // 적 HP가 0 이하라면 제거
-        if (enemySprite.getData("hp") <= 0) enemySprite.destroy()
+        if (enemySprite.getData("hp") <= 0) {
+            enemySprite.destroy()
+            remainnedEnemies--
+            remainnedEnemiesCount.setText(`${remainnedEnemies}/${enemyCountDeadline}`)
+        }
     }
 
     onBeforeUnmount(() => {
