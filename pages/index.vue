@@ -47,6 +47,8 @@
     let round = 0
     let roundText: Phaser.GameObjects.Text
 
+    const maxAttackLength = 3
+
     onMounted(() => {
         if (!phaserContainer.value) return
 
@@ -169,21 +171,22 @@
                     const isPlayerIdle =
                         player.body.velocity.x === 0 && player.body.velocity.y === 0
                     const isCooltime = time > lastAttackTime + attackCoolDown
-                    const closestEnemy = getClosestEnemy(player, enemies)
+                    const closestEnemies = getClosestEnemies(player, enemies)
+                    if (isPlayerIdle && isCooltime) {
+                        if (closestEnemies.length) {
+                            closestEnemies.forEach((enemy) => {
+                                const distance = Phaser.Math.Distance.Between(
+                                    player.x,
+                                    player.y,
+                                    enemy.x,
+                                    enemy.y
+                                )
+                                const isInRange = distance <= attackRange
 
-                    if (closestEnemy && isPlayerIdle && isCooltime) {
-                        const distance = Phaser.Math.Distance.Between(
-                            player.x,
-                            player.y,
-                            closestEnemy.x,
-                            closestEnemy.y
-                        )
-                        const isInRange = distance <= attackRange
-
-                        if (isInRange) fireHomingBullet.call(this, time, closestEnemy)
+                                if (isInRange) fireHomingBullet.call(this, time, enemy)
+                            })
+                        }
                     }
-
-                    if (closestEnemy) moveBulletToEnemy.call(this, closestEnemy)
 
                     // 화면 밖 탄환 제거
                     bullets.children.each((obj) => {
@@ -220,43 +223,28 @@
     /**
      * 가장 가까운 Enemy 찾기 (옵션 구현)
      */
-    function getClosestEnemy(
+    function getClosestEnemies(
         source: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody,
         group: Phaser.Physics.Arcade.Group
-    ): Phaser.Types.Physics.Arcade.SpriteWithDynamicBody | null {
-        let closest: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody | null = null
-        let minDist = Infinity
+    ): Phaser.Types.Physics.Arcade.SpriteWithDynamicBody[] {
+        const enemies: {
+            enemy: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+            dist: number
+        }[] = []
 
         group.children.each((obj) => {
             const enemy = obj as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
             if (!enemy.active) return
 
             const dist = Phaser.Math.Distance.Between(source.x, source.y, enemy.x, enemy.y)
-            if (dist < minDist) {
-                minDist = dist
-                closest = enemy
-            }
+
+            enemies.push({ enemy, dist })
         })
-        return closest
+        enemies.sort((a, b) => a.dist - b.dist)
+
+        return enemies.slice(0, maxAttackLength).map((e) => e.enemy)
     }
 
-    function moveBulletToEnemy(
-        this: Phaser.Scene,
-        enemy: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
-    ) {
-        bullets.children.each((obj) => {
-            const bullet = obj as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
-
-            if (!bullet.active) return
-
-            // 이미 파괴되었거나 적이 죽었다면 패스
-            if (!enemy.active) return
-
-            // 각도 계산
-            const angle = Phaser.Math.Angle.Between(bullet.x, bullet.y, enemy.x, enemy.y)
-            bullet.body.setVelocity(Math.cos(angle) * bulletSpeed, Math.sin(angle) * bulletSpeed)
-        })
-    }
     /**
      * 플레이어 이동 처리
      */
