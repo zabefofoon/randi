@@ -32,22 +32,30 @@
 
     // 공격(탄환) 관련
     let bullets: Phaser.Physics.Arcade.Group
-    let lastAttackTime = 0
-    const attackCoolDown = 1000 // 1초 간격
+    let lastBulletAttackTime = 0
+    const bulletCoolDown = 1000 // 1초 간격
     const bulletSpeed = 500 // 탄환 기본 이동 속도
-    const attackRange = 150
+    const bulletAttackRange = 150
+    const bulletDamage = 1
+    const maxBulletAttackLength = 2
+
+    let weapon2s: Phaser.Physics.Arcade.Group
+    let lastWeapon2AttackTime = 0
+    const weapon2CoolDown = 1500 // 1초 간격
+    const weapon2Speed = 450 // 탄환 기본 이동 속도
+    const weapon2AttackRange = 150
+    const weapon2Damage = 5
+    const maxWeapon2AttackLength = 1
 
     const initialRemainnedTime = 3
     let remainnedTime = initialRemainnedTime
     const roundTime = 45
     let remainnedTimeText: Phaser.GameObjects.Text
 
-    const maxLife = 5
-
     let round = 0
     let roundText: Phaser.GameObjects.Text
 
-    const maxAttackLength = 3
+    const maxLife = 5
     let gameover = false
     onMounted(() => {
         if (!phaserContainer.value) return
@@ -74,8 +82,8 @@
                         frameWidth: 32,
                         frameHeight: 48,
                     })
-                    // 탄환 이미지 (예: star.png)
                     this.load.image("bullet", "/assets/images/star.png")
+                    this.load.image("weapon2", "/assets/images/star.png")
                 },
                 create(this: Phaser.Scene) {
                     cursors = this.input.keyboard!.createCursorKeys()
@@ -134,27 +142,14 @@
                     })
 
                     // 애니메이션
-                    this.anims.create({
-                        key: "left",
-                        frames: this.anims.generateFrameNumbers("dude", { start: 0, end: 3 }),
-                        frameRate: 10,
-                        repeat: -1,
-                    })
-                    this.anims.create({
-                        key: "turn",
-                        frames: [{ key: "dude", frame: 4 }],
-                        frameRate: 20,
-                    })
-                    this.anims.create({
-                        key: "right",
-                        frames: this.anims.generateFrameNumbers("dude", { start: 5, end: 8 }),
-                        frameRate: 10,
-                        repeat: -1,
-                    })
+                    createPlayerAnimation.call(this)
 
                     // ===== 탄환(bullet) 그룹 생성 =====
                     bullets = this.physics.add.group({ collideWorldBounds: false })
+                    weapon2s = this.physics.add.group({ collideWorldBounds: false })
+
                     this.physics.add.overlap(bullets, enemies, bulletHitEnemy, undefined, this)
+                    this.physics.add.overlap(weapon2s, enemies, weapon2HitEnemy, undefined, this)
 
                     remainnedEnemiesCount = this.add.text(750, 0, `${0}/${enemyCountDeadline}`, {
                         color: "#fff",
@@ -177,21 +172,50 @@
                     // 플레이어가 정지상태 && 쿨다운 → 발사
                     const isPlayerIdle =
                         player.body.velocity.x === 0 && player.body.velocity.y === 0
-                    const isCooltime = time > lastAttackTime + attackCoolDown
-                    const closestEnemies = getClosestEnemies(player, enemies)
-                    if (isPlayerIdle && isCooltime) {
-                        if (closestEnemies.length) {
-                            closestEnemies.forEach((enemy) => {
-                                const distance = Phaser.Math.Distance.Between(
-                                    player.x,
-                                    player.y,
-                                    enemy.x,
-                                    enemy.y
-                                )
-                                const isInRange = distance <= attackRange
 
-                                if (isInRange) fireHomingBullet.call(this, time, enemy)
-                            })
+                    if (isPlayerIdle) {
+                        const isBulletCooltime = time > lastBulletAttackTime + bulletCoolDown
+                        const isWeapon2Coolltime = time > lastWeapon2AttackTime + weapon2CoolDown
+
+                        if (isBulletCooltime) {
+                            const closestEnemies = getClosestEnemies(
+                                player,
+                                enemies,
+                                maxBulletAttackLength
+                            )
+
+                            if (closestEnemies.length) {
+                                closestEnemies.forEach((enemy) => {
+                                    const distance = Phaser.Math.Distance.Between(
+                                        player.x,
+                                        player.y,
+                                        enemy.x,
+                                        enemy.y
+                                    )
+                                    const isInRange = distance <= bulletAttackRange
+
+                                    if (isInRange) fireHomingBullet.call(this, time, enemy)
+                                })
+                            }
+                        } else if (isWeapon2Coolltime) {
+                            const closestEnemies = getClosestEnemies(
+                                player,
+                                enemies,
+                                maxWeapon2AttackLength
+                            )
+                            if (closestEnemies.length) {
+                                closestEnemies.forEach((enemy) => {
+                                    const distance = Phaser.Math.Distance.Between(
+                                        player.x,
+                                        player.y,
+                                        enemy.x,
+                                        enemy.y
+                                    )
+                                    const isInRange = distance <= weapon2AttackRange
+
+                                    if (isInRange) fireHomingWeapon2.call(this, time, enemy)
+                                })
+                            }
                         }
                     }
 
@@ -222,11 +246,57 @@
                             bullet.destroy()
                         }
                     })
+
+                    weapon2s.children.each((obj) => {
+                        const weapon2 = obj as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+                        if (!weapon2.active) return
+
+                        // bullet에 저장해둔 target(Enemy)을 따라가도록
+                        const target = weapon2.getData(
+                            "target"
+                        ) as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+                        if (!target || !target.active) return
+
+                        const angle = Phaser.Math.Angle.Between(
+                            weapon2.x,
+                            weapon2.y,
+                            target.x,
+                            target.y
+                        )
+                        weapon2.body.setVelocity(
+                            Math.cos(angle) * weapon2Speed,
+                            Math.sin(angle) * weapon2Speed
+                        )
+
+                        // 화면 밖으로 나가면 제거
+                        if (weapon2.x < 0 || weapon2.x > 800 || weapon2.y < 0 || weapon2.y > 600) {
+                            weapon2.destroy()
+                        }
+                    })
                 },
             },
         })
     })
-
+    function createPlayerAnimation(this: Phaser.Scene) {
+        // 애니메이션
+        this.anims.create({
+            key: "left",
+            frames: this.anims.generateFrameNumbers("dude", { start: 0, end: 3 }),
+            frameRate: 10,
+            repeat: -1,
+        })
+        this.anims.create({
+            key: "turn",
+            frames: [{ key: "dude", frame: 4 }],
+            frameRate: 20,
+        })
+        this.anims.create({
+            key: "right",
+            frames: this.anims.generateFrameNumbers("dude", { start: 5, end: 8 }),
+            frameRate: 10,
+            repeat: -1,
+        })
+    }
     function showGameOverUI(this: Phaser.Scene) {
         gameover = true
         // 화면 중앙에 "GAME OVER" 텍스트
@@ -309,7 +379,8 @@
      */
     function getClosestEnemies(
         source: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody,
-        group: Phaser.Physics.Arcade.Group
+        group: Phaser.Physics.Arcade.Group,
+        length: number
     ): Phaser.Types.Physics.Arcade.SpriteWithDynamicBody[] {
         const enemies: {
             enemy: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
@@ -326,7 +397,7 @@
         })
         enemies.sort((a, b) => a.dist - b.dist)
 
-        return enemies.slice(0, maxAttackLength).map((e) => e.enemy)
+        return enemies.slice(0, length).map((e) => e.enemy)
     }
 
     /**
@@ -432,7 +503,7 @@
         currentTime: number,
         enemy: Phaser.GameObjects.GameObject
     ) {
-        lastAttackTime = currentTime
+        lastBulletAttackTime = currentTime
 
         // 플레이어 위치에서 탄환 생성
         const bullet = bullets.create(
@@ -450,6 +521,31 @@
         // 처음에 한 번 적 방향으로 설정
         const angle = Phaser.Math.Angle.Between(bullet.x, bullet.y, enemy.x, enemy.y)
         bullet.body.setVelocity(Math.cos(angle) * bulletSpeed, Math.sin(angle) * bulletSpeed)
+    }
+
+    function fireHomingWeapon2(
+        this: Phaser.Scene,
+        currentTime: number,
+        enemy: Phaser.GameObjects.GameObject
+    ) {
+        lastWeapon2AttackTime = currentTime
+
+        // 플레이어 위치에서 탄환 생성
+        const weapon2 = weapon2s.create(
+            player.x,
+            player.y,
+            "weapon2"
+        ) as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+        if (!weapon2) return
+
+        weapon2.setActive(true)
+        weapon2.setVisible(true)
+
+        weapon2.setData("target", enemy)
+        weapon2.setTint(0x00ff00)
+        // 처음에 한 번 적 방향으로 설정
+        const angle = Phaser.Math.Angle.Between(weapon2.x, weapon2.y, enemy.x, enemy.y)
+        weapon2.body.setVelocity(Math.cos(angle) * weapon2Speed, Math.sin(angle) * weapon2Speed)
     }
 
     // 데미지 텍스트를 살짝 띄우는 함수
@@ -485,11 +581,41 @@
         const bullet = bulletObj as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
         const enemySprite = enemyObj as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
 
-        showDamageText.call(this, enemySprite.x, enemySprite.y - 30, 1)
+        showDamageText.call(this, enemySprite.x, enemySprite.y - 30, bulletDamage)
 
         // 적 HP 감소
         const currentHP = enemySprite.getData("hp") as number
-        enemySprite.setData("hp", currentHP - 1)
+        enemySprite.setData("hp", currentHP - bulletDamage)
+
+        // 깜빡이는 효과
+        enemySprite.setTintFill(0xff0000)
+        setTimeout(() => enemySprite.setTint(0xff0000), 100)
+
+        // 탄환 제거
+        bullet.destroy()
+
+        // 적 HP가 0 이하라면 제거
+        if (enemySprite.getData("hp") <= 0) {
+            const hpBar = enemySprite.getData("hpBar") as Phaser.GameObjects.Graphics
+            if (hpBar) hpBar.destroy()
+            enemySprite.destroy()
+            remainnedEnemies--
+            remainnedEnemiesCount.setText(`${remainnedEnemies}/${enemyCountDeadline}`)
+        }
+    }
+
+    function weapon2HitEnemy(
+        weapon2Obj: Phaser.GameObjects.GameObject,
+        enemyObj: Phaser.GameObjects.GameObject
+    ) {
+        const bullet = weapon2Obj as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+        const enemySprite = enemyObj as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+
+        showDamageText.call(this, enemySprite.x, enemySprite.y - 30, weapon2Damage)
+
+        // 적 HP 감소
+        const currentHP = enemySprite.getData("hp") as number
+        enemySprite.setData("hp", currentHP - weapon2Damage)
 
         // 깜빡이는 효과
         enemySprite.setTintFill(0xff0000)
