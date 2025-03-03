@@ -14,9 +14,9 @@
 
     // 전역 참조 (씬 내부에서 할당)
     let player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
-    let enemy: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+    let enemies: Phaser.Physics.Arcade.Group
+
     let cursors: Phaser.Types.Input.Keyboard.CursorKeys
-    let pathIndex = 0
     const path = [
         { x: 100, y: 50 }, // 좌측 상단
         { x: 100, y: 550 }, // 좌측 하단
@@ -24,15 +24,16 @@
         { x: 700, y: 50 }, // 우측 상단
     ]
 
-    // 적 HP 및 이동
-    let enemyHP = 100
-
     // 공격(탄환) 관련
     let bullets: Phaser.Physics.Arcade.Group
     let lastAttackTime = 0
     const attackCoolDown = 1000 // 1초 간격
     const bulletSpeed = 500 // 탄환 기본 이동 속도
     const attackRange = 200
+
+    // 기타 상수
+    const maxEnemies = 10 // 최대 2마리 생성
+    let spawnedCount = 0 // 지금까지 스폰된 적 수
 
     onMounted(() => {
         if (!phaserContainer.value) return
@@ -69,8 +70,10 @@
                     // 플레이어
                     player = this.physics.add.sprite(100, 450, "dude").setCollideWorldBounds(true)
 
-                    // 적(빨간 틴트)
-                    enemy = this.physics.add.sprite(100, 50, "enemy").setTint(0xff0000)
+                    enemies = this.physics.add.group({ collideWorldBounds: false })
+
+                    // 1) 첫 번째 적 즉시 스폰
+                    spawnEnemies.call(this)
 
                     // 애니메이션
                     this.anims.create({
@@ -91,48 +94,99 @@
                         repeat: -1,
                     })
 
-                    this.physics.moveTo(enemy, path[pathIndex].x, path[pathIndex].y, 160)
-
                     // ===== 탄환(bullet) 그룹 생성 =====
                     bullets = this.physics.add.group({ collideWorldBounds: false })
-                    // 탄환과 적 겹치면 데미지 주는 overlap
-                    this.physics.add.overlap(bullets, enemy, bulletHitEnemy, undefined, this)
+                    this.physics.add.overlap(bullets, enemies, bulletHitEnemy, undefined, this)
                 },
                 update(this: Phaser.Scene, time: number) {
                     // 플레이어 이동
                     handlePlayerMovement()
                     // 적 이동
-                    handleEnemyMovement.call(this)
 
-                    const distance = Phaser.Math.Distance.Between(
-                        player.x,
-                        player.y,
-                        enemy.x,
-                        enemy.y
-                    )
+                    enemies.children.each((obj) => {
+                        const enemy = obj as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+                        moveEnemyAlongPath.call(this, enemy)
+                    })
 
                     // 플레이어가 정지상태 && 쿨다운 → 발사
                     const isPlayerIdle =
                         player.body.velocity.x === 0 && player.body.velocity.y === 0
                     const isCooltime = time > lastAttackTime + attackCoolDown
-                    const isInRange = distance <= attackRange
+                    const closestEnemy = getClosestEnemy(player, enemies)
 
-                    if (isPlayerIdle && isCooltime && isInRange) fireHomingBullet.call(this, time)
+                    if (closestEnemy && isPlayerIdle && isCooltime) {
+                        const distance = Phaser.Math.Distance.Between(
+                            player.x,
+                            player.y,
+                            closestEnemy.x,
+                            closestEnemy.y
+                        )
+                        const isInRange = distance <= attackRange
 
-                    // === 호밍 로직: 각 탄환이 적 좌표를 향하도록 매 프레임 속도 업데이트 ===
-                    moveBulletToEnemy.call(this)
+                        if (isInRange) fireHomingBullet.call(this, time, closestEnemy)
+                    }
+
+                    if (closestEnemy) moveBulletToEnemy.call(this, closestEnemy)
 
                     // 화면 밖 탄환 제거
-                    bullets.children.each((bullet) => {
-                        const b = bullet as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
-                        if (b.x < 0 || b.x > 800 || b.y < 0 || b.y > 600) b.destroy()
+                    bullets.children.each((obj) => {
+                        const bullet = obj as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+                        if (!bullet.active) return
+
+                        // bullet에 저장해둔 target(Enemy)을 따라가도록
+                        const target = bullet.getData(
+                            "target"
+                        ) as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+                        if (!target || !target.active) return
+
+                        const angle = Phaser.Math.Angle.Between(
+                            bullet.x,
+                            bullet.y,
+                            target.x,
+                            target.y
+                        )
+                        bullet.body.setVelocity(
+                            Math.cos(angle) * bulletSpeed,
+                            Math.sin(angle) * bulletSpeed
+                        )
+
+                        // 화면 밖으로 나가면 제거
+                        if (bullet.x < 0 || bullet.x > 800 || bullet.y < 0 || bullet.y > 600) {
+                            bullet.destroy()
+                        }
                     })
                 },
             },
         })
     })
 
-    function moveBulletToEnemy() {
+    /**
+     * 가장 가까운 Enemy 찾기 (옵션 구현)
+     */
+    function getClosestEnemy(
+        source: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody,
+        group: Phaser.Physics.Arcade.Group
+    ): Phaser.Types.Physics.Arcade.SpriteWithDynamicBody | null {
+        let closest: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody | null = null
+        let minDist = Infinity
+
+        group.children.each((obj) => {
+            const enemy = obj as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+            if (!enemy.active) return
+
+            const dist = Phaser.Math.Distance.Between(source.x, source.y, enemy.x, enemy.y)
+            if (dist < minDist) {
+                minDist = dist
+                closest = enemy
+            }
+        })
+        return closest
+    }
+
+    function moveBulletToEnemy(
+        this: Phaser.Scene,
+        enemy: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+    ) {
         bullets.children.each((obj) => {
             const bullet = obj as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
 
@@ -180,22 +234,61 @@
         }
     }
 
+    function spawnEnemies(this: Phaser.Scene) {
+        // Phaser의 타이머 이벤트
+        // delay: 1000ms (1초), repeat: 19 → 총 20회(처음 + 19번 반복)
+        this.time.addEvent({
+            delay: 1000,
+            repeat: maxEnemies - 1,
+            callback: () => {
+                spawnEnemy.call(this)
+            },
+        })
+    }
+
+    /**
+     * 적 하나를 스폰하는 함수
+     */
+    function spawnEnemy(this: Phaser.Scene) {
+        if (spawnedCount >= maxEnemies) return // 이미 최대치면 스폰 안 함
+
+        spawnedCount++
+
+        // 새 적 생성
+        const enemy = enemies.create(
+            100,
+            50,
+            "enemy"
+        ) as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+        enemy.setTint(0xff0000)
+
+        // 각 적마다 HP와 pathIndex를 개별 관리
+        enemy.setData("hp", 10)
+        enemy.setData("pathIndex", 0)
+    }
+
     /**
      * 적 경로 이동 처리
      */
-    function handleEnemyMovement(this: Phaser.Scene) {
+    function moveEnemyAlongPath(
+        this: Phaser.Scene,
+        enemy: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+    ) {
+        let pathIndex = enemy.getData("pathIndex") as number
+        if (pathIndex == null) return
+
         const dist = Phaser.Math.Distance.Between(
             enemy.x,
             enemy.y,
             path[pathIndex].x,
             path[pathIndex].y
         )
-
         if (dist < 5) {
             enemy.x = path[pathIndex].x
             enemy.y = path[pathIndex].y
-            pathIndex++
-            if (pathIndex >= path.length) pathIndex = 0
+            let nextIndex = pathIndex + 1
+            if (nextIndex >= path.length) nextIndex = 0
+            enemy.setData("pathIndex", nextIndex)
         }
         if (enemy.active) this.physics.moveTo(enemy, path[pathIndex].x, path[pathIndex].y, 160)
     }
@@ -203,7 +296,11 @@
     /**
      * 호밍 탄환 발사
      */
-    function fireHomingBullet(this: Phaser.Scene, currentTime: number) {
+    function fireHomingBullet(
+        this: Phaser.Scene,
+        currentTime: number,
+        enemy: Phaser.GameObjects.GameObject
+    ) {
         lastAttackTime = currentTime
 
         // 플레이어 위치에서 탄환 생성
@@ -217,6 +314,8 @@
         bullet.setActive(true)
         bullet.setVisible(true)
 
+        bullet.setData("target", enemy)
+
         // 처음에 한 번 적 방향으로 설정
         const angle = Phaser.Math.Angle.Between(bullet.x, bullet.y, enemy.x, enemy.y)
         bullet.body.setVelocity(Math.cos(angle) * bulletSpeed, Math.sin(angle) * bulletSpeed)
@@ -226,13 +325,15 @@
      * 탄환과 적 겹쳤을 때
      */
     function bulletHitEnemy(
-        enemyObj: Phaser.GameObjects.GameObject,
-        bulletObj: Phaser.GameObjects.GameObject
+        bulletObj: Phaser.GameObjects.GameObject,
+        enemyObj: Phaser.GameObjects.GameObject
     ) {
         const bullet = bulletObj as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
         const enemySprite = enemyObj as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+
         // 적 HP 감소
-        enemyHP--
+        const currentHP = enemySprite.getData("hp") as number
+        enemySprite.setData("hp", currentHP - 1)
 
         // 깜빡이는 효과
         enemySprite.setTintFill(0xff0000)
@@ -242,7 +343,7 @@
         bullet.destroy()
 
         // 적 HP가 0 이하라면 제거
-        if (enemyHP <= 0) enemySprite.destroy()
+        if (enemySprite.getData("hp") <= 0) enemySprite.destroy()
     }
 
     onBeforeUnmount(() => {
