@@ -24,10 +24,10 @@
 
     let cursors: Phaser.Types.Input.Keyboard.CursorKeys
     const path = [
-        { x: 100, y: 50 }, // 좌측 상단
-        { x: 100, y: 550 }, // 좌측 하단
-        { x: 700, y: 550 }, // 우측 하단
-        { x: 700, y: 50 }, // 우측 상단
+        { x: 50, y: 50 }, // 좌측 상단
+        { x: 50, y: 500 }, // 좌측 하단
+        { x: 750, y: 500 }, // 우측 하단
+        { x: 750, y: 50 }, // 우측 상단
     ]
 
     // 공격(탄환) 관련
@@ -35,20 +35,20 @@
     let lastAttackTime = 0
     const attackCoolDown = 1000 // 1초 간격
     const bulletSpeed = 500 // 탄환 기본 이동 속도
-    const attackRange = 200
+    const attackRange = 150
 
-    let remainnedTime = 3
+    const initialRemainnedTime = 3
+    let remainnedTime = initialRemainnedTime
     const roundTime = 45
     let remainnedTimeText: Phaser.GameObjects.Text
 
-    let life = 10
-    let gameover = false
+    const maxLife = 5
 
     let round = 0
     let roundText: Phaser.GameObjects.Text
 
     const maxAttackLength = 3
-
+    let gameover = false
     onMounted(() => {
         if (!phaserContainer.value) return
 
@@ -96,7 +96,11 @@
                     })
 
                     // 플레이어
-                    player = this.physics.add.sprite(100, 450, "dude").setCollideWorldBounds(true)
+                    player = this.physics.add.sprite(400, 300, "dude").setCollideWorldBounds(true)
+
+                    player.setData("maxHp", maxLife)
+                    player.setData("hp", maxLife)
+                    player.setData("hpBar", this.add.graphics())
 
                     enemies = this.physics.add.group({ collideWorldBounds: false })
 
@@ -117,12 +121,14 @@
                                 `00:${String(remainnedTime).padStart(2, "0")}`
                             )
 
-                            if (remainnedEnemies >= enemyCountDeadline) life--
+                            const playerHP = player.getData("hp") as number
+                            if (remainnedEnemies >= enemyCountDeadline) {
+                                player.setData("hp", playerHP - 1)
+                            }
 
-                            if (life < 1) {
-                                gameover = true
-                                console.log("gameover")
+                            if (playerHP < 1) {
                                 this.physics.pause()
+                                showGameOverUI.call(this)
                             }
                         },
                     })
@@ -157,9 +163,10 @@
                     })
                 },
                 update(this: Phaser.Scene, time: number) {
+                    if (gameover) return
                     // 플레이어 이동
                     handlePlayerMovement()
-
+                    updatePlayerHpBar(player)
                     // 적 이동
                     enemies.children.each((obj) => {
                         const enemy = obj as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
@@ -219,6 +226,64 @@
             },
         })
     })
+
+    function showGameOverUI(this: Phaser.Scene) {
+        gameover = true
+        // 화면 중앙에 "GAME OVER" 텍스트
+        const gameOverText = this.add.text(400, 250, "GAME OVER", {
+            fontSize: "40px",
+            color: "#ff0000",
+        })
+        gameOverText.setOrigin(0.5)
+
+        // 아래쪽에 "다시하기" 버튼 텍스트
+        const retryButton = this.add.text(400, 350, "다시하기", {
+            fontSize: "24px",
+            color: "#ffffff",
+            backgroundColor: "#000000",
+        })
+        retryButton.setOrigin(0.5)
+        retryButton.setPadding(10, 10)
+        retryButton.setInteractive()
+
+        this.anims.remove("right") // "right" 라는 키 애니메이션 제거
+        this.anims.remove("left")
+        this.anims.remove("turn")
+        this.time.removeAllEvents()
+
+        // 버튼 클릭 이벤트
+        retryButton.on("pointerdown", () => {
+            // 씬을 재시작하거나, 새로 시작
+            remainnedTime = initialRemainnedTime
+            remainnedEnemies = 0
+            gameover = false
+            this.time.removeAllEvents()
+            this.scene.restart()
+            // or this.scene.start('GameScene');
+        })
+
+        // 게임 진행 멈추기(물리, 애니메이션 등)
+        this.physics.pause()
+    }
+
+    function updatePlayerHpBar(player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody) {
+        const hp = player.getData("hp")
+        const maxHp = player.getData("maxHp")
+        const hpBar = player.getData("hpBar") as Phaser.GameObjects.Graphics
+        if (!hpBar) return
+
+        // 위치나 스타일 초기화
+        hpBar.clear()
+
+        // 예시: 체력바 배경
+        hpBar.fillStyle(0x000000)
+        hpBar.fillRect(player.x - 16, player.y - 30, 32, 4) // width 32, height 4
+
+        // 남은 체력 비율만큼 색 채우기
+        const hpPercent = hp / maxHp
+        hpBar.fillStyle(0xff0000)
+        hpBar.fillRect(player.x - 16, player.y - 30, 32 * hpPercent, 4)
+    }
 
     function updateEnemyHpBar(enemy: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody) {
         const hp = enemy.getData("hp")
@@ -316,8 +381,8 @@
     function spawnEnemy(this: Phaser.Scene) {
         // 새 적 생성
         const enemy = enemies.create(
-            100,
-            50,
+            path[0].x,
+            path[0].y,
             "enemy"
         ) as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
         enemy.setTint(0xff0000)
@@ -340,7 +405,7 @@
         this: Phaser.Scene,
         enemy: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
     ) {
-        let pathIndex = enemy.getData("pathIndex") as number
+        const pathIndex = enemy.getData("pathIndex") as number
         if (pathIndex == null) return
 
         const dist = Phaser.Math.Distance.Between(
