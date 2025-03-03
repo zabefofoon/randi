@@ -20,7 +20,7 @@
     const maxEnemies = 10 // 최대 2마리 생성
     let remainnedEnemies = 0
     let remainnedEnemiesCount: Phaser.GameObjects.Text
-    const enemyCountDeadline = 40
+    const enemyCountDeadline = 30
 
     let cursors: Phaser.Types.Input.Keyboard.CursorKeys
     const path = [
@@ -161,10 +161,10 @@
                     handlePlayerMovement()
 
                     // 적 이동
-
                     enemies.children.each((obj) => {
                         const enemy = obj as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
                         moveEnemyAlongPath.call(this, enemy)
+                        updateEnemyHpBar.call(this, enemy)
                     })
 
                     // 플레이어가 정지상태 && 쿨다운 → 발사
@@ -219,6 +219,25 @@
             },
         })
     })
+
+    function updateEnemyHpBar(enemy: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody) {
+        const hp = enemy.getData("hp")
+        const maxHp = enemy.getData("maxHp")
+        const hpBar = enemy.getData("hpBar") as Phaser.GameObjects.Graphics
+        if (!hpBar) return
+
+        // 위치나 스타일 초기화
+        hpBar.clear()
+
+        // 예시: 체력바 배경
+        hpBar.fillStyle(0x000000)
+        hpBar.fillRect(enemy.x - 16, enemy.y - 30, 32, 4) // width 32, height 4
+
+        // 남은 체력 비율만큼 색 채우기
+        const hpPercent = hp / maxHp
+        hpBar.fillStyle(0xff0000)
+        hpBar.fillRect(enemy.x - 16, enemy.y - 30, 32 * hpPercent, 4)
+    }
 
     /**
      * 가장 가까운 Enemy 찾기 (옵션 구현)
@@ -306,6 +325,10 @@
         // 각 적마다 HP와 pathIndex를 개별 관리
         enemy.setData("hp", 10)
         enemy.setData("pathIndex", 0)
+        enemy.setData("maxHp", 10)
+        const hpBar = this.add.graphics()
+        enemy.setData("hpBar", hpBar)
+
         remainnedEnemies++
         remainnedEnemiesCount.setText(`${remainnedEnemies}/${enemyCountDeadline}`)
     }
@@ -364,6 +387,29 @@
         bullet.body.setVelocity(Math.cos(angle) * bulletSpeed, Math.sin(angle) * bulletSpeed)
     }
 
+    // 데미지 텍스트를 살짝 띄우는 함수
+    function showDamageText(this: Phaser.Scene, x: number, y: number, damageValue: number) {
+        // “-10” 처럼 표시
+        const dmgText = this.add.text(x, y, `-${damageValue}`, {
+            fontSize: "14px",
+            color: "#ff4444",
+            fontStyle: "bold",
+        })
+        dmgText.setOrigin(0.5)
+
+        // 트윈으로 서서히 떠오르며 사라지는 연출
+        this.tweens.add({
+            targets: dmgText,
+            y: y - 20, // 위로 30px 이동
+            alpha: 0, // 투명도 0이 됨
+            duration: 800, // 0.8초 동안
+            ease: "Sine.easeOut",
+            onComplete: () => {
+                dmgText.destroy()
+            },
+        })
+    }
+
     /**
      * 탄환과 적 겹쳤을 때
      */
@@ -373,6 +419,8 @@
     ) {
         const bullet = bulletObj as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
         const enemySprite = enemyObj as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+
+        showDamageText.call(this, enemySprite.x, enemySprite.y - 30, 1)
 
         // 적 HP 감소
         const currentHP = enemySprite.getData("hp") as number
@@ -387,6 +435,8 @@
 
         // 적 HP가 0 이하라면 제거
         if (enemySprite.getData("hp") <= 0) {
+            const hpBar = enemySprite.getData("hpBar") as Phaser.GameObjects.Graphics
+            if (hpBar) hpBar.destroy()
             enemySprite.destroy()
             remainnedEnemies--
             remainnedEnemiesCount.setText(`${remainnedEnemies}/${enemyCountDeadline}`)
