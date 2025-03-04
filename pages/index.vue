@@ -6,6 +6,17 @@
 
 <script lang="ts" setup>
     import Phaser from "phaser"
+    import {
+        Material1,
+        Material2,
+        Material3,
+        Material4,
+        Material5,
+        Material6,
+        Material7,
+        Material8,
+        type Material,
+    } from "~/models/Material"
     import { Bullet, type Weapon } from "~/models/Weapon"
 
     const phaserContainer = ref<HTMLDivElement>()
@@ -18,7 +29,6 @@
 
     let enemies: Phaser.Physics.Arcade.Group
     // 기타 상수
-    const maxEnemies = 10 // 최대 2마리 생성
     let remainnedEnemies = 0
     let remainnedEnemiesCount: Phaser.GameObjects.Text
     const enemyCountDeadline = 30
@@ -32,6 +42,19 @@
     ]
 
     const weapons: Weapon[] = [Bullet.of()]
+    const materials: Record<
+        Material["name"],
+        { length: number; textObj?: Phaser.GameObjects.Text; info: Material }
+    > = {
+        Material1: { length: 0, textObj: undefined, info: new Material1() },
+        Material2: { length: 0, textObj: undefined, info: new Material2() },
+        Material3: { length: 0, textObj: undefined, info: new Material3() },
+        Material4: { length: 0, textObj: undefined, info: new Material4() },
+        Material5: { length: 0, textObj: undefined, info: new Material5() },
+        Material6: { length: 0, textObj: undefined, info: new Material6() },
+        Material7: { length: 0, textObj: undefined, info: new Material7() },
+        Material8: { length: 0, textObj: undefined, info: new Material8() },
+    }
 
     const initialRemainnedTime = 3
     let remainnedTime = initialRemainnedTime
@@ -43,6 +66,10 @@
 
     const maxLife = 5
     let gameover = false
+    let paused = false
+
+    let gachaChance = 3
+
     onMounted(() => {
         if (!phaserContainer.value) return
 
@@ -102,12 +129,14 @@
                         delay: 1000,
                         repeat: -1,
                         callback: () => {
+                            if (paused) return
+
                             remainnedTime--
-                            if (remainnedTime === 1) spawnEnemies.call(this)
 
                             if (remainnedTime < 1) {
                                 remainnedTime = roundTime
                                 round++
+                                gachaChance += 3
                                 roundText.setText(`round ${round}`)
                             }
 
@@ -124,6 +153,8 @@
                                 this.physics.pause()
                                 showGameOverUI.call(this)
                             }
+
+                            if (remainnedTime === 1 || remainnedTime > 36) spawnEnemy.call(this)
                         },
                     })
 
@@ -148,9 +179,28 @@
                         fontSize: 16,
                         align: "end",
                     })
+
+                    const weaponSelectButton = this.add.text(780, 580, "재료 선택", {
+                        fontSize: "18px",
+                        color: "#fff",
+                        backgroundColor: "#000",
+                        padding: { x: 10, y: 5 },
+                    })
+                    weaponSelectButton.setOrigin(1, 1)
+                    weaponSelectButton.setInteractive()
+
+                    weaponSelectButton.on("pointerdown", () => {
+                        // 게임을 일시 정지 (물리 및 타이머 등)
+                        this.physics.pause()
+                        // 또는 씬 전체를 일시 정지: this.scene.pause()
+
+                        // 재료 선택 UI(컨테이너)를 생성하여 표시
+                        showMaterialSelectionUI.call(this)
+                    })
                 },
                 update(this: Phaser.Scene, time: number) {
                     if (gameover) return
+                    if (paused) return
                     // 플레이어 이동
                     handlePlayerMovement()
                     updatePlayerHpBar(player)
@@ -200,6 +250,104 @@
             },
         })
     })
+
+    function showMaterialSelectionUI(this: Phaser.Scene) {
+        paused = true
+        // 전체 화면을 덮는 투명 오버레이 생성 (클릭 이벤트를 잡기 위함)
+        const overlay = this.add.rectangle(400, 300, 800, 600, 0x000000, 0).setInteractive()
+
+        // 재료 선택 패널 컨테이너 생성 (화면 중앙에 배치)
+        const panel = this.add.container(400, 300)
+
+        // 패널 배경 (반투명 검정 사각형)
+        const bg = this.add.rectangle(0, 0, 700, 500, 0x000000, 0.8)
+        panel.add(bg)
+
+        // 타이틀 텍스트
+        const title = this.add.text(-130, -200, "재료 선택", { fontSize: "24px", color: "#fff" })
+        panel.add(title)
+
+        // 2행 4열 그리드에 재료 이미지 배치 (패널 내부)
+        const materialsPerRow = 4
+        const spacingX = 150
+        const spacingY = 150
+        // 컨테이너 로컬 좌표 기준: 중앙에서 왼쪽으로, 위로 오프셋
+        const startX = -((materialsPerRow - 1) * spacingX) / 2
+        const startY = -50 // 패널 중앙에서 약간 위쪽에 배치
+
+        Object.entries(materials).forEach(([name, value], index) => {
+            const row = Math.floor(index / materialsPerRow)
+            const col = index % materialsPerRow
+            const x = startX + col * spacingX
+            const y = startY + row * spacingY
+            const materialImage = this.add.image(x, y, name).setScale(0.5).setInteractive()
+            panel.add(materialImage)
+
+            const materialText = this.add.text(x, y + 40, `${name}`, {
+                fontSize: "14px",
+                color: "#fff",
+            })
+            materialText.setOrigin(0.5)
+            panel.add(materialText)
+
+            const descriptionText = this.add.text(x, y + 60, `${value.info.description}`, {
+                fontSize: "12px",
+                color: "#fff",
+            })
+            descriptionText.setOrigin(0.5)
+            panel.add(descriptionText)
+
+            const lengthText = this.add.text(x, y + 80, `${value.length}개`, {
+                fontSize: "14px",
+                color: "#fff",
+            })
+
+            lengthText.setOrigin(0.5)
+            panel.add(lengthText)
+            value.textObj = lengthText
+        })
+
+        // 재료 뽑기 버튼 (기존 로직)
+        const gachaButton = this.add.text(0, -150, "재료 뽑기", { fontSize: "24px", color: "#fff" })
+        gachaButton.setInteractive()
+        gachaButton.on("pointerdown", () => {
+            gachaChance--
+            if (gachaChance < 0) {
+                gachaChance = 0
+                return
+            }
+            // 재료 뽑기 로직(랜덤 재료 증가)
+            const randomIndex = Phaser.Math.Between(0, 7)
+            const selectedMaterialKey = Object.keys(materials)[randomIndex] as Material["name"]
+            materials[selectedMaterialKey].length++
+            materials[selectedMaterialKey].textObj?.setText(
+                `${materials[selectedMaterialKey].length}개`
+            )
+            console.log("랜덤 뽑기: ", randomIndex)
+        })
+        panel.add(gachaButton)
+
+        // 오버레이에 클릭 이벤트: 패널 외부를 클릭하면 UI 제거 후 게임 재개
+        overlay.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
+            // 패널의 경계 계산 (패널은 중앙(400,300)이고, 크기가 700x500)
+            const panelLeft = 400 - 350
+            const panelRight = 400 + 350
+            const panelTop = 300 - 250
+            const panelBottom = 300 + 250
+            if (
+                pointer.x < panelLeft ||
+                pointer.x > panelRight ||
+                pointer.y < panelTop ||
+                pointer.y > panelBottom
+            ) {
+                panel.destroy()
+                overlay.destroy()
+                this.physics.resume()
+                paused = false
+            }
+        })
+    }
+
     function createPlayerAnimation(this: Phaser.Scene) {
         // 애니메이션
         this.anims.create({
@@ -355,18 +503,6 @@
         if (!moving) {
             player.anims.play("turn")
         }
-    }
-
-    function spawnEnemies(this: Phaser.Scene) {
-        // Phaser의 타이머 이벤트
-        // delay: 1000ms (1초), repeat: 19 → 총 20회(처음 + 19번 반복)
-        this.time.addEvent({
-            delay: 1000,
-            repeat: maxEnemies - 1,
-            callback: () => {
-                spawnEnemy.call(this)
-            },
-        })
     }
 
     /**
