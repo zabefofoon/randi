@@ -7,6 +7,9 @@ export abstract class Weapon {
     damage = 0
     targetLength = 0
     lastAttackTime = 0
+    splashRange = 0
+    stun = 0
+    slow = 0
 
     constructor(weapon: ClassToRaw<Weapon>) {
         Object.assign(this, weapon)
@@ -86,6 +89,9 @@ export class Bullet extends Weapon {
             damage: 1,
             targetLength: 1,
             lastAttackTime: 0,
+            splashRange: 0,
+            stun: 0, // 1000이어야 1초
+            slow: 0, // 0.1이면 10%
             group,
         })
     }
@@ -105,6 +111,9 @@ export class Knife extends Weapon {
             damage: 5,
             targetLength: 1,
             lastAttackTime: 0,
+            splashRange: 0,
+            stun: 0,
+            slow: 0,
             group,
         })
     }

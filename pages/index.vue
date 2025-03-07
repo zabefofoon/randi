@@ -136,7 +136,8 @@
                             if (remainnedTime < 1) {
                                 remainnedTime = roundTime
                                 round++
-                                gachaChance += 3
+
+                                if (round !== 1) gachaChance += 3
                                 roundText.setText(`round ${round}`)
                             }
 
@@ -154,7 +155,7 @@
                                 showGameOverUI.call(this)
                             }
 
-                            if (remainnedTime === 1 || remainnedTime > 36) spawnEnemy.call(this)
+                            if (46 > remainnedTime && remainnedTime > 35) spawnEnemy.call(this)
                         },
                     })
 
@@ -535,9 +536,23 @@
         this: Phaser.Scene,
         enemy: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
     ) {
+        if (enemy.getData("stunned")) return
+
         const pathIndex = enemy.getData("pathIndex") as number
         if (pathIndex == null) return
 
+        // 기본 이동 속도
+        const baseSpeed = 160
+        // 플레이어와 적 사이의 거리를 측정
+        const distanceToPlayer = Phaser.Math.Distance.Between(enemy.x, enemy.y, player.x, player.y)
+        // 플레이어가 가까우면 느리게 이동: 예시로, 200픽셀 이내면 속도를 50%로 줄임
+        const slowRange = 200
+        const speed =
+            distanceToPlayer < slowRange
+                ? baseSpeed * (1 - weapons.reduce((acc, current) => acc + current.slow, 0))
+                : baseSpeed
+
+        const target = path[pathIndex]
         const dist = Phaser.Math.Distance.Between(
             enemy.x,
             enemy.y,
@@ -545,13 +560,13 @@
             path[pathIndex].y
         )
         if (dist < 5) {
-            enemy.x = path[pathIndex].x
-            enemy.y = path[pathIndex].y
+            enemy.x = target.x
+            enemy.y = target.y
             let nextIndex = pathIndex + 1
             if (nextIndex >= path.length) nextIndex = 0
             enemy.setData("pathIndex", nextIndex)
         }
-        if (enemy.active) this.physics.moveTo(enemy, path[pathIndex].x, path[pathIndex].y, 160)
+        if (enemy.active) this.physics.moveTo(enemy, target.x, target.y, speed)
     }
 
     // 데미지 텍스트를 살짝 띄우는 함수
@@ -598,6 +613,25 @@
         enemySprite.setTintFill(0xff0000)
         setTimeout(() => enemySprite.setTint(0xff0000), 100)
 
+        applySplashDamage(
+            this,
+            weapon.x,
+            weapon.y,
+            weaponData.splashRange,
+            weaponData.damage,
+            enemies
+        )
+
+        if (!enemySprite.getData("stunned")) {
+            enemySprite.setData("stunned", true)
+            // 즉시 적 이동을 멈춤
+            enemySprite.body.setVelocity(0, 0)
+            // 300ms 후에 정지 상태 해제
+            this.time.delayedCall(weaponData.stun, () => {
+                enemySprite.setData("stunned", false)
+            })
+        }
+
         // 탄환 제거
         weapon.destroy()
 
@@ -609,6 +643,46 @@
             remainnedEnemies--
             remainnedEnemiesCount.setText(`${remainnedEnemies}/${enemyCountDeadline}`)
         }
+    }
+
+    function applySplashDamage(
+        scene: Phaser.Scene,
+        centerX: number,
+        centerY: number,
+        splashRadius: number,
+        damage: number,
+        enemyGroup: Phaser.Physics.Arcade.Group
+    ) {
+        // enemyGroup 내 모든 적 순회
+        enemyGroup.children.each((obj) => {
+            const enemy = obj as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+            if (!enemy.active) return
+
+            const dist = Phaser.Math.Distance.Between(centerX, centerY, enemy.x, enemy.y)
+            if (dist <= splashRadius) {
+                // 만약 거리 비례 데미지를 적용하고 싶다면:
+                const effectiveDamage = +(damage * (1 - dist / splashRadius)).toFixed(2)
+                // enemy.takeDamage(effectiveDamage);
+
+                // 단순히 데미지 적용:
+                const currentHP = enemy.getData("hp") as number
+                enemy.setData("hp", currentHP - effectiveDamage)
+
+                // 피격 이펙트 및 데미지 텍스트 표시 (예: showDamageText 함수 사용)
+                showDamageText.call(scene, enemy.x, enemy.y - 30, effectiveDamage)
+
+                // 깜빡임 효과
+                enemy.setTintFill(0xff0000)
+                setTimeout(() => enemy.clearTint(), 100)
+
+                // HP가 0 이하이면 제거
+                if (enemy.getData("hp") <= 0) {
+                    const hpBar = enemy.getData("hpBar") as Phaser.GameObjects.Graphics
+                    if (hpBar) hpBar.destroy()
+                    enemy.destroy()
+                }
+            }
+        })
     }
 
     onBeforeUnmount(() => {
