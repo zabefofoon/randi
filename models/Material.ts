@@ -8,6 +8,8 @@ export abstract class Material {
         | "Material6"
         | "Material7"
         | "Material8"
+
+    description: string
     physicalDamage: number // 물리 데미지
     magicalDamage: number // 마법 데미지
     range: number // 공격 범위
@@ -16,7 +18,6 @@ export abstract class Material {
     cooltime: number // 쿨타임
     armorPenetration: number // 물리관통력 적의 물리 방어력 무시
     magicPenetration: number // 마법관통력 적의 마법 방어력 무시
-    description: string
 
     constructor(material: ClassToRaw<Material>) {
         this.name = material.name

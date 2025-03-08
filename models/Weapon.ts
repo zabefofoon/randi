@@ -1,14 +1,20 @@
+import type { Material } from "./Material"
+
 export abstract class Weapon {
     group?: Phaser.Physics.Arcade.Group
     name = ""
-    cooldown = 0
+    description = ""
     speed = 0
-    range = 0
-    damage = 0
-    targetLength = 0
     lastAttackTime = 0
-    splashRange = 0
+
+    nexts: { name: string; materials: { name: Material["name"]; length: number }[] }[] = []
+
+    damage = 0
+    range = 0
     stun = 0
+    splash = 0
+    cooltime = 0
+    targetLength = 0
     slow = 0
 
     constructor(weapon: ClassToRaw<Weapon>) {
@@ -16,7 +22,7 @@ export abstract class Weapon {
     }
 
     checkIsCooltime(time: number) {
-        return time > this.lastAttackTime + this.cooldown
+        return time > this.lastAttackTime + this.cooltime
     }
 
     /**
@@ -83,16 +89,54 @@ export class Bullet extends Weapon {
     constructor(group?: Phaser.Physics.Arcade.Group) {
         super({
             name: "Bullet",
-            cooldown: 1000,
+            description: "일반 탄환 무기. 빠른 연사와 적당한 데미지를 가집니다.",
+            cooltime: 1000,
             speed: 500,
             range: 150,
             damage: 1,
             targetLength: 1,
             lastAttackTime: 0,
-            splashRange: 0,
+            splash: 0,
             stun: 0, // 1000이어야 1초
             slow: 0, // 0.1이면 10%
             group,
+            nexts: [
+                {
+                    name: "Bullet2-1",
+                    materials: [
+                        {
+                            name: "Material1",
+                            length: 2,
+                        },
+                        {
+                            name: "Material2",
+                            length: 2,
+                        },
+                        {
+                            name: "Material3",
+                            length: 2,
+                        },
+                    ],
+                },
+                {
+                    name: "Bullet2-2",
+                    materials: [
+                        {
+                            name: "Material1",
+                            length: 2,
+                        },
+                    ],
+                },
+                {
+                    name: "Bullet2-3",
+                    materials: [
+                        {
+                            name: "Material1",
+                            length: 2,
+                        },
+                    ],
+                },
+            ],
         })
     }
 
@@ -105,16 +149,18 @@ export class Knife extends Weapon {
     constructor(group?: Phaser.Physics.Arcade.Group) {
         super({
             name: "Knife",
-            cooldown: 1000,
+            description: "근접 무기. 데미지는 크지만 사정거리가 짧습니다.",
+            cooltime: 1000,
             speed: 500,
             range: 50,
             damage: 5,
             targetLength: 1,
             lastAttackTime: 0,
-            splashRange: 0,
+            splash: 0,
             stun: 0,
             slow: 0,
             group,
+            nexts: [],
         })
     }
 
