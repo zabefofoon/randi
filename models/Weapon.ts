@@ -153,7 +153,7 @@ export class Knife extends Weapon {
             cooltime: 1000,
             speed: 500,
             range: 50,
-            damage: 5,
+            damage: 3,
             targetLength: 1,
             lastAttackTime: 0,
             splash: 0,
@@ -166,5 +166,53 @@ export class Knife extends Weapon {
 
     static of(group?: Phaser.Physics.Arcade.Group) {
         return new Knife(group)
+    }
+}
+
+export class Wand extends Weapon {
+    constructor(group?: Phaser.Physics.Arcade.Group) {
+        super({
+            name: "Wand",
+            description: "동시에 두마리 공격",
+            cooltime: 2000,
+            speed: 500,
+            range: 300,
+            damage: 1,
+            targetLength: 2,
+            lastAttackTime: 0,
+            splash: 0,
+            stun: 0,
+            slow: 0,
+            group,
+            nexts: [],
+        })
+    }
+
+    static of(group?: Phaser.Physics.Arcade.Group) {
+        return new Wand(group)
+    }
+}
+
+export class Ring extends Weapon {
+    constructor(group?: Phaser.Physics.Arcade.Group) {
+        super({
+            name: "Ring",
+            description: "동시에 두마리 공격",
+            cooltime: 2000,
+            speed: 500,
+            range: 300,
+            damage: 1,
+            targetLength: 2,
+            lastAttackTime: 0,
+            splash: 0,
+            stun: 0,
+            slow: 0,
+            group,
+            nexts: [],
+        })
+    }
+
+    static of(group?: Phaser.Physics.Arcade.Group) {
+        return new Ring(group)
     }
 }
