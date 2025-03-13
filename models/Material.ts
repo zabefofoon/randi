@@ -1,3 +1,7 @@
+export type Materials = Record<
+    Material["name"],
+    { length: number; textObj?: Phaser.GameObjects.Text; info: Material }
+>
 export abstract class Material {
     name:
         | "Material1"

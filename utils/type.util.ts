@@ -8,7 +8,8 @@ type WritableKeysOf<T> = {
 type WritablePart<T> = Pick<T, WritableKeysOf<T>>
 
 type NonFunctionPropertyNames<T> = {
-    [K in keyof T]: T[K] extends Function ? never : K
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [K in keyof T]: T[K] extends (...args: any[]) => any ? never : K
 }[keyof T]
 
 type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>

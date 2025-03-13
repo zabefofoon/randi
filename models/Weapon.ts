@@ -1,4 +1,55 @@
+import type { Enemies, Enemy } from "./Enemies"
 import type { Material } from "./Material"
+import type { Player } from "./Player"
+
+export class Weapons {
+    weapons: (Weapon | undefined)[] = [undefined, undefined, undefined, undefined]
+    scene: Phaser.Scene
+    enemies: Enemies
+
+    constructor(scene: Phaser.Scene, enemies: Enemies) {
+        this.scene = scene
+        this.enemies = enemies
+    }
+
+    addWeapon(index: number, weapon: Weapon) {
+        this.weapons[index] = weapon
+        const w = this.weapons[index]
+        if (!w) return
+
+        w.group = this.scene.physics.add.group({ collideWorldBounds: false })
+
+        this.scene.physics.add.overlap(
+            w.group,
+            this.enemies.group,
+            (weaponObj, enemyObj) => this.weaponHitEnemy(weaponObj, enemyObj, weapon),
+            undefined,
+            this
+        )
+    }
+
+    weaponHitEnemy(
+        weaponObj:
+            | Phaser.Physics.Arcade.Body
+            | Phaser.Physics.Arcade.StaticBody
+            | Phaser.Types.Physics.Arcade.GameObjectWithBody
+            | Phaser.Tilemaps.Tile,
+        enemyObj:
+            | Phaser.Physics.Arcade.Body
+            | Phaser.Physics.Arcade.StaticBody
+            | Phaser.Types.Physics.Arcade.GameObjectWithBody
+            | Phaser.Tilemaps.Tile,
+        weaponData: Weapon
+    ) {
+        const weapon = weaponObj as Phaser.Physics.Arcade.Sprite
+        const enemy = enemyObj as Enemy
+        this.enemies.takeDamage(enemy, weaponData)
+        this.enemies.applySplashDamage(weapon.x, weapon.y, weaponData.splash, weaponData.damage)
+
+        // 탄환 제거
+        weaponObj.destroy()
+    }
+}
 
 export abstract class Weapon {
     group?: Phaser.Physics.Arcade.Group
@@ -28,11 +79,7 @@ export abstract class Weapon {
     /**
      * 호밍 탄환 발사
      */
-    fireHomingWeapon(
-        currentTime: number,
-        player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody,
-        enemy: Phaser.GameObjects.GameObject
-    ) {
+    fireHomingWeapon(currentTime: number, player: Player, enemy: Enemy) {
         this.lastAttackTime = currentTime
 
         // 플레이어 위치에서 탄환 생성
@@ -54,7 +101,7 @@ export abstract class Weapon {
     }
 
     followEnemy() {
-        this.group?.children.each((obj) => {
+        this.group?.getChildren().forEach((obj) => {
             const weaponObj = obj as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
             if (!weaponObj.active) return
 
@@ -73,7 +120,7 @@ export abstract class Weapon {
     }
 
     destroyWhenOutOfMap() {
-        this.group?.children.each((obj) => {
+        this.group?.getChildren().forEach((obj) => {
             const weaponObj = obj as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
             if (!weaponObj.active) return
 

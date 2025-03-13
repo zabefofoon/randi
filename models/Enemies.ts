@@ -1,3 +1,4 @@
+import type { Player } from "./Player"
 import type { Weapon } from "./Weapon"
 
 export class Enemies {
@@ -98,10 +99,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.pathes = paths
     }
 
-    moveEnemyAlongPath(
-        player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody,
-        weapons: (Weapon | undefined)[]
-    ) {
+    moveEnemyAlongPath(player: Player, weapons: (Weapon | undefined)[]) {
         if (this.getData("stunned")) return
 
         const pathIndex = this.getData("pathIndex") as number
@@ -190,7 +188,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
         if (!this.getData("stunned")) {
             this.setData("stunned", true)
             // 즉시 적 이동을 멈춤
-            this.body?.setVelocity(0, 0)
+            this.body?.velocity.set(0, 0)
             // 300ms 후에 정지 상태 해제
             this.scene.time.delayedCall(stun, () => {
                 this.setData("stunned", false)
