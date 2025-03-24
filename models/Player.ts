@@ -111,5 +111,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
             frameRate: 10,
             repeat: -1,
         })
+
+        return this
     }
 }

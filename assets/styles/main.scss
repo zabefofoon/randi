@@ -1,7 +1,10 @@
-@use "normalize.scss";
 @use "icons.scss";
 @use "transitions.scss";
 @use "carousel.scss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 * > * {
     color: inherit;

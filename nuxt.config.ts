@@ -9,8 +9,9 @@ export default defineNuxtConfig({
         "@nuxt/eslint",
         "@nuxtjs/stylelint-module",
         "@pinia/nuxt",
-        "@pinia-plugin-persistedstate/nuxt",
+        "pinia-plugin-persistedstate/nuxt",
         "@nuxtjs/i18n",
+        "@nuxtjs/tailwindcss",
     ],
     i18n: {
         strategy: "no_prefix",
@@ -21,7 +22,10 @@ export default defineNuxtConfig({
         compilation: {
             strictMessage: false,
         },
-        vueI18n: "./i18n/i18n.config.ts",
+        bundle: {
+            optimizeTranslationDirective: false,
+        },
+        vueI18n: "~/i18n/i18n.config.ts",
     },
     eslint: {
         checker: true,

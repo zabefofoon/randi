@@ -1,6 +1,6 @@
 import type { Enemies } from "./Enemies"
 import type { Material, Materials } from "./Material"
-import { Knife, Ring, Wand, Weapons, type Weapon } from "./Weapon"
+import { Knife, Ring, Wand, type Weapon, type Weapons } from "./Weapon"
 
 export class UIManager {
     scene: Phaser.Scene

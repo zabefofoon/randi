@@ -10,13 +10,15 @@
         "postinstall": "nuxt prepare"
     },
     "devDependencies": {
-        "@nuxt/eslint": "^0.7.2",
+        "@intlify/message-compiler": "^11.1.2",
+        "@nuxt/eslint": "^0.7.6",
         "@nuxt/eslint-config": "^0.7.2",
         "@nuxtjs/i18n": "^9.1.0",
         "@nuxtjs/stylelint-module": "^5.2.0",
-        "@pinia-plugin-persistedstate/nuxt": "^1.2.1",
-        "@pinia/nuxt": "^0.8.0",
+        "@nuxtjs/tailwindcss": "^6.13.2",
+        "@pinia/nuxt": "^0.10.1",
         "@types/lodash.debounce": "^4.0.9",
+        "@typescript-eslint/typescript-estree": "^8.27.0",
         "eslint": "^9.15.0",
         "install": "^0.13.0",
         "phaser": "^3.88.2",
@@ -38,7 +40,8 @@
         "embla-carousel-vue": "^8.5.1",
         "lodash.debounce": "^4.0.8",
         "nuxt": "^3.14.1592",
-        "pinia": "^2.2.8",
+        "pinia": "^3.0.1",
+        "pinia-plugin-persistedstate": "^4.2.0",
         "vue": "latest",
         "vue-router": "latest"
     },
