@@ -38,10 +38,13 @@
     "dependencies": {
         "embla-carousel-autoplay": "^8.5.1",
         "embla-carousel-vue": "^8.5.1",
+        "gsap": "^3.12.7",
         "lodash.debounce": "^4.0.8",
         "nuxt": "^3.14.1592",
         "pinia": "^3.0.1",
         "pinia-plugin-persistedstate": "^4.2.0",
+        "scrollmagic": "^2.0.8",
+        "scrollmagic-plugin-gsap": "^1.0.4",
         "vue": "latest",
         "vue-router": "latest"
     },
