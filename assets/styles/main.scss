@@ -7,53 +7,67 @@
 @tailwind utilities;
 
 * > * {
-    color: inherit;
-    // 폰트 추가시, 맨앞에 추가
-    font-family: system-ui, sans-serif;
-    -webkit-font-smoothing: antialiased;
+  color: inherit;
+  // 폰트 추가시, 맨앞에 추가
+  font-family: "Noto Sans KR", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-optical-sizing: auto;
+  font-style: normal;
 }
 
 body {
-    &.scroll-lock {
-        overflow-y: hidden;
+  &.scroll-lock {
+    overflow-y: hidden;
 
-        touch-action: none;
-        -webkit-overflow-scrolling: none;
-        overscroll-behavior: none;
-    }
+    touch-action: none;
+    -webkit-overflow-scrolling: none;
+    overscroll-behavior: none;
+  }
+}
+
+.gasoek-one-regular {
+  font-family: "Gasoek One", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+
+  * {
+    font-family: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+  }
 }
 
 /* width */
 ::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
+  width: 4px;
+  height: 4px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+  background: #f1f1f1;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: gray;
-    border-radius: 100px;
+  background: gray;
+  border-radius: 100px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+  background: #555;
 }
 
 .prevent-drag {
-    * {
-        user-select: none;
-        -webkit-user-drag: none; /* Safari 및 Chrome */
-        -webkit-touch-callout: none; /* iOS Safari에서 사용자 선택 메뉴를 방지 */
-    }
+  * {
+    user-select: none;
+    -webkit-user-drag: none; /* Safari 및 Chrome */
+    -webkit-touch-callout: none; /* iOS Safari에서 사용자 선택 메뉴를 방지 */
+  }
 }
 .iphone-history-back {
-    .modal {
-        opacity: 0;
-    }
+  .modal {
+    opacity: 0;
+  }
 }

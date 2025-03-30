@@ -1,51 +1,59 @@
 @mixin generateIcon($src) {
-    -webkit-mask-image: url($src);
-    mask-image: url($src);
+  -webkit-mask-image: url($src);
+  mask-image: url($src);
 }
 
 .icon {
-    display: inline-block;
-    width: 1em;
-    height: 1em;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-size: 100% 100%;
-    mask-size: 100% 100%;
-    background-color: currentColor;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  background-color: currentColor;
 }
 
 .icon-info {
-    @include generateIcon("../images/icons/icon_info.svg");
+  @include generateIcon("../images/icons/icon_info.svg");
 }
 
 .icon-warn {
-    @include generateIcon("../images/icons/icon_warn.svg");
+  @include generateIcon("../images/icons/icon_warn.svg");
 }
 
 .icon-success {
-    @include generateIcon("../images/icons/icon_success.svg");
+  @include generateIcon("../images/icons/icon_success.svg");
 }
 
 .icon-error {
-    @include generateIcon("../images/icons/icon_error.svg");
+  @include generateIcon("../images/icons/icon_error.svg");
 }
 
 .icon-close {
-    @include generateIcon("../images/icons/icon_close.svg");
+  @include generateIcon("../images/icons/icon_close.svg");
 }
 
 .icon-arrow-down {
-    @include generateIcon("../images/icons/icon_arrow_down.svg");
+  @include generateIcon("../images/icons/icon_arrow_down.svg");
+}
+
+.icon-chevron-right {
+  @include generateIcon("../images/icons/icon_chevron_right.svg");
 }
 
 .icon-pause {
-    @include generateIcon(("../images/icons/icon_pause.svg"));
+  @include generateIcon(("../images/icons/icon_pause.svg"));
 }
 
 .icon-play {
-    @include generateIcon(("../images/icons/icon_play.svg"));
+  @include generateIcon(("../images/icons/icon_play.svg"));
 }
 
 .icon-spinner {
-    @include generateIcon("../images/icons/icon_spinner.svg");
+  @include generateIcon("../images/icons/icon_spinner.svg");
+}
+
+.icon-fullscreen {
+  @include generateIcon("../images/icons/icon_fullscreen.svg");
 }
