@@ -25,7 +25,7 @@
         <div class="flex flex-col | mt-[2cqw] | font-bold text-[2cqw] text-white">
           <button
             class="button | flex items-center | relative"
-            @click="emit('next', 'game')">
+            @click="emit('next', 'inGame')">
             <i class="icon icon-chevron-right | absolute left-0 -translate-x-full | hidden"></i>
             Game Start
           </button>
@@ -43,14 +43,13 @@
           </button>
         </div>
       </main>
-      <VirtualJoystick class="md:hidden | absolute bottom-[12px] left-[12px]" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 const emit = defineEmits<{
-  (e: "next", scene: "game" | "collection" | "setting"): void
+  (e: "next", scene: "inGame" | "collection" | "setting"): void
 }>()
 
 const fullScreen = async () => {

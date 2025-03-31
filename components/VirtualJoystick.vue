@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 const joyStickWrapEl = ref<HTMLDivElement>()
-const activeIndex = ref<number>()
+const activeIndex = defineModel<number>()
 
 onMounted(() => {
   window.addEventListener("touchend", handleTouchend)
@@ -84,7 +84,7 @@ const getPos = (el: Element) => {
 .joy-stick-wrap {
   width: 100px;
   height: 100px;
-  border: 1px solid rgb(100 100 100 / 20%);
+  border: 1px solid rgb(255 255 255 / 80%);
   border-radius: 999px;
 
   .button {
@@ -105,7 +105,7 @@ const getPos = (el: Element) => {
     left: 50%;
     width: 30px;
     height: 30px;
-    background: rgb(100 100 100 / 20%);
+    background: rgb(255 255 255 / 80%);
     border-radius: 999px;
     transition: left 150ms ease, top 150ms ease;
     transform: translate(-50%, -50%);

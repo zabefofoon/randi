@@ -1,12 +1,12 @@
 <template>
-    <div>
-        <LazyLobby
-            v-if="currentSene === 'lobby'"
-            @next="currentSene = 'ingame'" />
-        <LazyInGame v-if="currentSene === 'ingame'" />
-    </div>
+  <div>
+    <Lobby
+      v-if="currentSene === 'lobby'"
+      @next="currentSene = $event" />
+    <InGame v-if="currentSene === 'inGame'" />
+  </div>
 </template>
 
 <script lang="ts" setup>
-    const currentSene = ref<"lobby" | "ingame">("lobby")
+const currentSene = ref<"lobby" | "inGame" | "collection" | "setting">("lobby")
 </script>
