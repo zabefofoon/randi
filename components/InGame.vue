@@ -1,16 +1,22 @@
 <template>
   <div class="w-screen h-screen | flex items-center justify-center | bg-black">
+    <ModalWeapons
+      v-if="isShowWeaponsPopup"
+      @close="isShowWeaponsPopup = false" />
+    <ModalMaterials
+      v-if="isShowMaterialsPopup"
+      v-model:gacha-chance="gachaChance"
+      :materials="materials"
+      @close="isShowMaterialsPopup = false" />
     <div class="content | relative | aspect-video max-w-full max-h-full | bg-white">
       <main class="relative | w-full h-full | flex flex-col justify-center items-center">
-        <div class="absolute top-[0.5cqw] left-[0.5cqw] | text-[1.5cqw] text-white">
-          ROUND {{ round }}
+        <div
+          class="w-full | flex items-center justify-between | px-[0.5cqw] | absolute top-[0.5cqw] | text-[1.5cqw] text-white">
+          <div>ROUND {{ round }}</div>
+          <div>00:{{ `${remainnedTime}`.padStart(2, "0") }}</div>
+          <div>{{ remainnedEnemies }} / {{ enemyCountDeadline }}</div>
         </div>
-        <div class="absolute top-[0.5cqw] left-1/2 -translate-x-1/2 | text-[1.5cqw] text-white">
-          00:{{ `${remainnedTime}`.padStart(2, "0") }}
-        </div>
-        <div class="absolute top-[0.5cqw] right-[0.5cqw] | text-[1.5cqw] text-white">
-          {{ remainnedEnemies }} / {{ enemyCountDeadline }}
-        </div>
+
         <div
           ref="phaserContainer"
           class="w-full h-full mx-auto"></div>
@@ -18,6 +24,28 @@
         <VirtualJoystick
           v-model="activeJoystick"
           class="absolute bottom-[12px] left-[12px]" />
+
+        <div
+          class="flex justify-end gap-[1cqw] | w-full | px-[0.5cqw] | absolute bottom-[0.5cqw] | text-white text-[1.5cqw]">
+          <button
+            class="bg-black | px-[1.5cqw] py-[0.5cqw] | rounded-full | leading-none"
+            @click="isShowWeaponsPopup = true">
+            무기뽑기
+          </button>
+          <button
+            class="relative | bg-black | px-[1.5cqw] py-[0.5cqw] | rounded-full | leading-none"
+            @click="isShowMaterialsPopup = true">
+            재료뽑기
+            <div
+              v-if="gachaChance > 0"
+              class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2">
+              <span
+                class="grid place-items-center | w-[2cqw] aspect-square | rounded-full | bg-red-500 | text-[1cqw]">
+                {{ gachaChance }}
+              </span>
+            </div>
+          </button>
+        </div>
       </main>
     </div>
   </div>
@@ -53,7 +81,7 @@ let enemies: Enemies
 
 let cursors: Phaser.Types.Input.Keyboard.CursorKeys
 let weapons: Weapons
-const materials: Materials = {
+const materials = ref<Materials>({
   Material1: { length: 0, textObj: undefined, info: new Material1() },
   Material2: { length: 0, textObj: undefined, info: new Material2() },
   Material3: { length: 0, textObj: undefined, info: new Material3() },
@@ -62,7 +90,7 @@ const materials: Materials = {
   Material6: { length: 0, textObj: undefined, info: new Material6() },
   Material7: { length: 0, textObj: undefined, info: new Material7() },
   Material8: { length: 0, textObj: undefined, info: new Material8() },
-}
+})
 
 const initialRemainnedTime = 3
 const roundTime = 45
@@ -72,8 +100,14 @@ const round = ref(0)
 const remainnedTime = ref(initialRemainnedTime)
 const remainnedEnemies = ref(0)
 const activeJoystick = ref<number>()
-let uiManager: UIManager
 
+const isShowMaterialsPopup = ref(false)
+const isShowWeaponsPopup = ref(false)
+
+const gachaChance = ref(3)
+
+let uiManager: UIManager
+let scene: Phaser.Scene
 onMounted(() => {
   if (!phaserContainer.value) return
 
@@ -107,6 +141,7 @@ onMounted(() => {
         this.load.image("Bullet", "/assets/images/star.png")
       },
       create(this: Phaser.Scene) {
+        scene = this
         resizeBackground(this)
         this.scale.on("resize", () => resizeBackground(this))
 
@@ -123,17 +158,6 @@ onMounted(() => {
 
         // ===== 탄환(bullet) 그룹 생성 =====
         weapons.addWeapon(0, Bullet.of())
-
-        this.add
-          .text(780, 580, "재료 뽑기", {
-            fontSize: "18px",
-            color: "#fff",
-            backgroundColor: "#000",
-            padding: { x: 10, y: 5 },
-          })
-          .setOrigin(1, 1)
-          .setInteractive()
-          .on("pointerdown", () => uiManager.showMaterialSelectionUI(materials))
 
         this.add
           .text(660, 580, "무기 뽑기", {
@@ -159,6 +183,7 @@ onMounted(() => {
 
               if (round.value !== 1) {
                 this.data.set("gachaChance", this.data.get("gachaChance") + 3)
+                gachaChance.value = gachaChance.value + 3
               }
             }
 
@@ -264,6 +289,25 @@ watch(activeJoystick, (value) => {
       cursors.right.isDown = true
       cursors.up.isDown = true
       break
+  }
+})
+
+watch(isShowMaterialsPopup, (value) => {
+  if (value) {
+    scene.data.set("paused", true)
+    scene.physics.pause()
+  } else {
+    scene.data.set("paused", false)
+    scene.physics.resume()
+  }
+})
+watch(isShowWeaponsPopup, (value) => {
+  if (value) {
+    scene.data.set("paused", true)
+    scene.physics.pause()
+  } else {
+    scene.data.set("paused", false)
+    scene.physics.resume()
   }
 })
 </script>
