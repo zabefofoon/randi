@@ -19,7 +19,7 @@
           <span class="text-orange-500">Y</span>
           <span class="text-blue-500">L</span>
           <span class="text-green-500">O</span>
-          <sapn class="text-violet-500">N</sapn> MASK<br />
+          <span class="text-violet-500">N</span> MASK<br />
           RANDOM DEFENCE
         </h1>
         <div class="flex flex-col | mt-[2cqw] | font-bold text-[2cqw] text-white">

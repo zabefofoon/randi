@@ -20,7 +20,6 @@ export class Enemies {
       { x: 750, y: 50 },
     ]
     this.baseSpeed = 160
-    this.remainnedEnemies.value = 0
   }
   get children() {
     return this.group.getChildren() as Enemy[]
@@ -38,9 +37,7 @@ export class Enemies {
     enemy.takeDamage(weapon.damage, weapon.stun)
 
     // 적 HP가 0 이하라면 제거
-    if (!enemy.getData("hp")) {
-      this.remainnedEnemies.value--
-    }
+    if (!enemy.getData("hp")) this.remainnedEnemies--
   }
 
   applySplashDamage(centerX: number, centerY: number, splashRadius: number, damage: number) {
@@ -56,9 +53,7 @@ export class Enemies {
       }
 
       // 적 HP가 0 이하라면 제거
-      if (!enemy.getData("hp")) {
-        this.remainnedEnemies.value--
-      }
+      if (!enemy.getData("hp")) this.remainnedEnemies--
     })
   }
 }

@@ -8,9 +8,10 @@
       <div class="flex flex-col items-center justify-center | text-white">
         <div class="grid grid-cols-4 | gap-[1cqw]">
           <figure
-            v-for="material in materials"
+            v-for="(material, index) in materials"
+            :key="material.info.name"
             class="flex flex-col items-center | py-[1cqw]">
-            <img src="https://picsum.photos/32?id=1" />
+            <img :src="`https://picsum.photos/32?id=${index}`" />
             <figcaption class="flex flex-col items-center">
               <span>{{ material.info.name }}</span>
               <span>{{ material.info.description }}</span>

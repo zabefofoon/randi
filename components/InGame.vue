@@ -2,6 +2,8 @@
   <div class="w-screen h-screen | flex items-center justify-center | bg-black">
     <ModalWeapons
       v-if="isShowWeaponsPopup"
+      :weapons="weapons"
+      :materials="materials"
       @close="isShowWeaponsPopup = false" />
     <ModalMaterials
       v-if="isShowMaterialsPopup"
@@ -80,7 +82,8 @@ let enemies: Enemies
 // 기타 상수
 
 let cursors: Phaser.Types.Input.Keyboard.CursorKeys
-let weapons: Weapons
+
+const weapons = ref<Weapons>()
 const materials = ref<Materials>({
   Material1: { length: 0, textObj: undefined, info: new Material1() },
   Material2: { length: 0, textObj: undefined, info: new Material2() },
@@ -153,22 +156,11 @@ onMounted(() => {
         player = new Player(this, 400, 300, "dude")
         player.createPlayerAnimation()
         enemies = new Enemies(this, remainnedEnemies)
-        weapons = new Weapons(this, enemies)
+        weapons.value = new Weapons(this, enemies)
         // 애니메이션
 
         // ===== 탄환(bullet) 그룹 생성 =====
-        weapons.addWeapon(0, Bullet.of())
-
-        this.add
-          .text(660, 580, "무기 뽑기", {
-            fontSize: "18px",
-            color: "#fff",
-            backgroundColor: "#000",
-            padding: { x: 10, y: 5 },
-          })
-          .setOrigin(1, 1)
-          .setInteractive()
-          .on("pointerdown", () => uiManager.showWeaponsSelectionUI(materials, weapons))
+        weapons.value.addWeapon(0, Bullet.of())
 
         this.time.addEvent({
           delay: 1000,
@@ -210,13 +202,13 @@ onMounted(() => {
 
         // 적 이동
         enemies.children.forEach((enemy) => {
-          enemy.moveEnemyAlongPath(player, weapons.weapons)
+          enemy.moveEnemyAlongPath(player, weapons.value.weapons)
           enemy.updateEnemyHpBar()
         })
 
         // 플레이어가 정지상태 && 쿨다운 → 발사
         if (player.isIdle) {
-          weapons.weapons.forEach((weapon) => {
+          weapons.value.weapons.forEach((weapon) => {
             if (weapon?.checkIsCooltime(time))
               player.getClosestEnemies(enemies, weapon.targetLength).forEach((enemy) => {
                 const distance = Phaser.Math.Distance.Between(player.x, player.y, enemy.x, enemy.y)
@@ -226,7 +218,7 @@ onMounted(() => {
           })
         }
 
-        weapons.weapons.forEach((weapon) => {
+        weapons.value.weapons.forEach((weapon) => {
           if (!weapon) return
           weapon.followEnemy()
           weapon.destroyWhenOutOfMap()
