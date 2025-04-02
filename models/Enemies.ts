@@ -12,12 +12,15 @@ export class Enemies {
     this.scene = scene
     // 적 그룹 생성
     this.group = scene.physics.add.group({ collideWorldBounds: false })
-    // 예시로 어떤 경로와 속도를 사용할지 지정
+
+    const gameWidth = scene.scale.width
+    const gameHeight = scene.scale.height
+
     this.pathes = [
-      { x: 50, y: 50 },
-      { x: 50, y: 500 },
-      { x: 750, y: 500 },
-      { x: 750, y: 50 },
+      { x: gameWidth * 0.15, y: gameHeight * 0.2 },
+      { x: gameWidth * 0.15, y: gameHeight * 0.8 },
+      { x: gameWidth * 0.85, y: gameHeight * 0.8 },
+      { x: gameWidth * 0.85, y: gameHeight * 0.2 },
     ]
     this.baseSpeed = 160
   }

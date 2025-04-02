@@ -3,7 +3,9 @@
     <Lobby
       v-if="currentSene === 'lobby'"
       @next="currentSene = $event" />
-    <InGame v-if="currentSene === 'inGame'" />
+    <InGame
+      v-if="currentSene === 'inGame'"
+      @next="currentScene = $event" />
   </div>
 </template>
 

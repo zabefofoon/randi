@@ -1,5 +1,8 @@
 <template>
   <div class="w-screen h-screen | flex items-center justify-center | bg-black">
+    <ModalGameOver
+      v-if="isShowGameOverPopup"
+      @close="isShowGameOverPopup = false" />
     <ModalWeapons
       v-if="isShowWeaponsPopup"
       :weapons="weapons"
@@ -67,8 +70,11 @@ import {
   type Materials,
 } from "~/models/Material"
 import { Player } from "~/models/Player"
-import { UIManager } from "~/models/UIManager"
 import { Bullet, Weapons } from "~/models/Weapon"
+
+const emit = defineEmits<{
+  (e: "next", scene: string): void
+}>()
 
 const phaserContainer = ref<HTMLDivElement>()
 
@@ -106,18 +112,18 @@ const activeJoystick = ref<number>()
 
 const isShowMaterialsPopup = ref(false)
 const isShowWeaponsPopup = ref(false)
+const isShowGameOverPopup = ref(false)
 
 const gachaChance = ref(3)
 
-let uiManager: UIManager
 let scene: Phaser.Scene
 onMounted(() => {
   if (!phaserContainer.value) return
 
   game = new Phaser.Game({
     type: Phaser.AUTO,
-    width: 1280,
-    height: 720,
+    width: 960,
+    height: 540,
     parent: phaserContainer.value,
     scale: {
       mode: Phaser.Scale.FIT, // 내부 캔버스를 "비율 유지"하면서 컨테이너에 맞춤
@@ -149,7 +155,6 @@ onMounted(() => {
         this.scale.on("resize", () => resizeBackground(this))
 
         this.data.set("gachaChance", 3)
-        uiManager = new UIManager(this)
         cursors = this.input.keyboard!.createCursorKeys()
 
         // 플레이어
@@ -185,7 +190,7 @@ onMounted(() => {
             if (playerHP < 1) {
               this.physics.pause()
               this.data.set("gameover", true)
-              uiManager.showGameOverUI(enemies, initialRemainnedTime)
+              isShowGameOverPopup.value = true
             }
 
             if (46 > remainnedTime.value && remainnedTime.value > 35) enemies.spawnEnemy()
@@ -300,6 +305,14 @@ watch(isShowWeaponsPopup, (value) => {
   } else {
     scene.data.set("paused", false)
     scene.physics.resume()
+  }
+})
+watch(isShowGameOverPopup, (value) => {
+  if (value) {
+    scene.data.set("paused", true)
+    scene.physics.pause()
+  } else {
+    emit("next", "result")
   }
 })
 </script>
