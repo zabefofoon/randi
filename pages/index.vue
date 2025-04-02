@@ -1,14 +1,17 @@
 <template>
   <div>
     <Lobby
-      v-if="currentSene === 'lobby'"
-      @next="currentSene = $event" />
+      v-if="currentScene === 'lobby'"
+      @next="currentScene = $event" />
     <InGame
-      v-if="currentSene === 'inGame'"
+      v-if="currentScene === 'inGame'"
+      @next="currentScene = $event" />
+    <Result
+      v-if="currentScene === 'result'"
       @next="currentScene = $event" />
   </div>
 </template>
 
 <script lang="ts" setup>
-const currentSene = ref<"lobby" | "inGame" | "collection" | "setting">("lobby")
+const currentScene = ref<"lobby" | "inGame" | "collection" | "result" | "setting">("result")
 </script>

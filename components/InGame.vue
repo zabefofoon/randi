@@ -73,7 +73,7 @@ import { Player } from "~/models/Player"
 import { Bullet, Weapons } from "~/models/Weapon"
 
 const emit = defineEmits<{
-  (e: "next", scene: string): void
+  (e: "next", scene: "result"): void
 }>()
 
 const phaserContainer = ref<HTMLDivElement>()
@@ -103,7 +103,7 @@ const materials = ref<Materials>({
 
 const initialRemainnedTime = 3
 const roundTime = 45
-const enemyCountDeadline = 30
+const enemyCountDeadline = 29
 
 const round = ref(0)
 const remainnedTime = ref(initialRemainnedTime)

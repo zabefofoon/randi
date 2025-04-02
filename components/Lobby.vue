@@ -1,8 +1,6 @@
 <template>
   <div class="w-screen h-screen | flex items-center justify-center | bg-black">
     <div class="content | relative | aspect-video max-w-full max-h-full | bg-white">
-      <!-- <button @click="emit('next')">Next</button> -->
-
       <main
         class="relative | w-full h-full | flex flex-col justify-center items-center | bg-purple-950">
         <button
