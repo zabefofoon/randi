@@ -13,5 +13,5 @@
 </template>
 
 <script lang="ts" setup>
-const currentScene = ref<"lobby" | "inGame" | "collection" | "result" | "setting">("result")
+const currentScene = ref<"lobby" | "inGame" | "collection" | "result" | "setting">("lobby")
 </script>

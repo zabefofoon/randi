@@ -22,6 +22,17 @@
           <div>{{ remainnedEnemies }} / {{ enemyCountDeadline }}</div>
         </div>
 
+        <div class="absolute top-[10cqh] left-[1cqw]">
+          <div class="flex flex-col | gap-[0.5cqh]">
+            <div
+              v-for="material in materials"
+              :key="material.info.name"
+              class="text-[1.2cqw] text-white">
+              {{ material.info.name }} x {{ material.length }}
+            </div>
+          </div>
+        </div>
+
         <div
           ref="phaserContainer"
           class="w-full h-full mx-auto"></div>
@@ -91,14 +102,14 @@ let cursors: Phaser.Types.Input.Keyboard.CursorKeys
 
 const weapons = ref<Weapons>()
 const materials = ref<Materials>({
-  Material1: { length: 0, textObj: undefined, info: new Material1() },
-  Material2: { length: 0, textObj: undefined, info: new Material2() },
-  Material3: { length: 0, textObj: undefined, info: new Material3() },
-  Material4: { length: 0, textObj: undefined, info: new Material4() },
-  Material5: { length: 0, textObj: undefined, info: new Material5() },
-  Material6: { length: 0, textObj: undefined, info: new Material6() },
-  Material7: { length: 0, textObj: undefined, info: new Material7() },
-  Material8: { length: 0, textObj: undefined, info: new Material8() },
+  힘: { length: 0, textObj: undefined, info: new Material1() },
+  지식: { length: 0, textObj: undefined, info: new Material2() },
+  교양: { length: 0, textObj: undefined, info: new Material3() },
+  카리스마: { length: 0, textObj: undefined, info: new Material4() },
+  건강: { length: 0, textObj: undefined, info: new Material5() },
+  민첩: { length: 0, textObj: undefined, info: new Material6() },
+  운: { length: 0, textObj: undefined, info: new Material7() },
+  지혜: { length: 0, textObj: undefined, info: new Material8() },
 })
 
 const initialRemainnedTime = 3
@@ -161,7 +172,7 @@ onMounted(() => {
         player = new Player(this, 400, 300, "dude")
         player.createPlayerAnimation()
         enemies = new Enemies(this, remainnedEnemies)
-        weapons.value = new Weapons(this, enemies)
+        weapons.value = new Weapons(this, enemies, materials.value)
         // 애니메이션
 
         // ===== 탄환(bullet) 그룹 생성 =====
@@ -193,7 +204,8 @@ onMounted(() => {
               isShowGameOverPopup.value = true
             }
 
-            if (46 > remainnedTime.value && remainnedTime.value > 35) enemies.spawnEnemy()
+            if (46 > remainnedTime.value && remainnedTime.value > 35)
+              enemies.spawnEnemy(round.value)
           },
         })
       },
@@ -207,23 +219,32 @@ onMounted(() => {
 
         // 적 이동
         enemies.children.forEach((enemy) => {
-          enemy.moveEnemyAlongPath(player, weapons.value.weapons)
+          enemy.moveEnemyAlongPath(player, weapons.value!.weapons)
           enemy.updateEnemyHpBar()
         })
 
         // 플레이어가 정지상태 && 쿨다운 → 발사
         if (player.isIdle) {
-          weapons.value.weapons.forEach((weapon) => {
-            if (weapon?.checkIsCooltime(time))
+          weapons.value!.weapons.forEach((weapon) => {
+            if (
+              weapon?.checkIsCooltime(
+                time,
+                materials.value["민첩"].info.cooltime * materials.value["민첩"].length * 100
+              )
+            )
               player.getClosestEnemies(enemies, weapon.targetLength).forEach((enemy) => {
                 const distance = Phaser.Math.Distance.Between(player.x, player.y, enemy.x, enemy.y)
 
-                if (distance <= weapon.range) weapon.fireHomingWeapon(time, player, enemy)
+                if (
+                  distance <=
+                  weapon.range + materials.value["교양"].length * materials.value["교양"].info.range
+                )
+                  weapon.fireHomingWeapon(time, player, enemy)
               })
           })
         }
 
-        weapons.value.weapons.forEach((weapon) => {
+        weapons.value!.weapons.forEach((weapon) => {
           if (!weapon) return
           weapon.followEnemy()
           weapon.destroyWhenOutOfMap()

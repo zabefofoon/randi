@@ -6,7 +6,7 @@
     @close="emit('close')">
     <template #content>
       <div class="flex flex-col items-center justify-center | text-white">
-        <div class="grid grid-cols-4 | gap-[1cqw]">
+        <div class="grid grid-cols-4 gap-[1cqw]">
           <figure
             v-for="(weapon, index) in weapons.weapons"
             :key="index"
@@ -14,9 +14,9 @@
             @click="selectedIndex = index">
             <img
               src="https://picsum.photos/32?id=1"
-              class="border border-transparent"
+              class="border border-transparent | w-[5cqw] aspect-square"
               :class="[{ '!border-orange-500': selectedIndex === index }]" />
-            <figcaption>
+            <figcaption class="text-[1.5cqw]">
               {{ weapon?.name ?? "????" }}
             </figcaption>
           </figure>
@@ -24,30 +24,56 @@
         <div
           v-if="selectedWeapon"
           class="mt-[1cqw]">
-          <h3>
+          <h3 class="text-center text-[1.5cqw]">
             {{ selectedWeapon.description }}
           </h3>
-          <div>
-            <div v-if="selectedWeapon.damage">- 데미지: {{ selectedWeapon.damage }}</div>
-            <div v-if="selectedWeapon.range">- 공격거리: {{ selectedWeapon.range }}</div>
-            <div v-if="selectedWeapon.splash">- 스플래쉬: {{ selectedWeapon.splash }}</div>
-            <div v-if="selectedWeapon.cooltime">- 쿨타임: {{ selectedWeapon.cooltime }}</div>
-            <div v-if="selectedWeapon.targetLength">
+          <div class="mt-[0.5cqw] | grid grid-cols-4 gap-[1cqw] text-[1.5cqw]">
+            <div
+              v-if="selectedWeapon.damage"
+              class="text-center">
+              - 데미지: {{ selectedWeapon.damage }}
+            </div>
+            <div
+              v-if="selectedWeapon.range"
+              class="text-center">
+              - 공격거리: {{ selectedWeapon.range }}
+            </div>
+            <div
+              v-if="selectedWeapon.splash"
+              class="text-center">
+              - 스플래쉬: {{ selectedWeapon.splash }}
+            </div>
+            <div
+              v-if="selectedWeapon.cooltime"
+              class="text-center">
+              - 쿨타임: {{ selectedWeapon.cooltime }}
+            </div>
+            <div
+              v-if="selectedWeapon.targetLength"
+              class="text-center">
               - 공격갯수: {{ selectedWeapon.targetLength }}
             </div>
-            <div v-if="selectedWeapon.stun">- 스턴: {{ selectedWeapon.stun }}</div>
-            <div v-if="selectedWeapon.slow">- 슬로우: {{ selectedWeapon.slow }}</div>
+            <div
+              v-if="selectedWeapon.stun"
+              class="text-center">
+              - 스턴: {{ selectedWeapon.stun }}
+            </div>
+            <div
+              v-if="selectedWeapon.slow"
+              class="text-center">
+              - 슬로우: {{ selectedWeapon.slow }}
+            </div>
           </div>
           <div class="flex flex-col | w-full | mt-[1cqw]">
             <button
               v-for="item in selectedWeapon.nexts"
               :key="item.name"
-              class="mt-[1cqw]">
-              <div>
+              class="mt-[1cqw] | bg-[rgba(0_0_0_/_50%)] | py-[0.5cqw] | rounded-full">
+              <div class="text-[1.5cqw]">
                 {{ item.name }}
                 <span>조합</span>
               </div>
-              <div class="flex justify-center">
+              <div class="flex justify-center | text-[1.2cqw]">
                 (
                 <div
                   v-for="(material, index) in item.materials"
@@ -61,14 +87,15 @@
             </button>
           </div>
         </div>
-        <div v-else>
-          <button
-            class="flex flex-col"
-            @click="gachaWeapon">
-            <span>뽑기</span>
-            <span>(랜덤 {{ selectedIndex * 4 }}개 필요)</span>
-          </button>
-        </div>
+        <button
+          v-else
+          class="mt-[1cqw] | flex flex-col gap-[0.5cqw]"
+          @click="gachaWeapon">
+          <span class="bg-[rgba(0_0_0_/_50%)] | py-[0.5cqw] | rounded-full | text-[1.5cqw]">
+            뽑기
+          </span>
+          <span class="text-[1.2cqw]">(랜덤 {{ selectedIndex * 6 }}개 필요)</span>
+        </button>
       </div>
     </template>
   </UIModal>
@@ -94,7 +121,7 @@ const selectedWeapon = computed(() => {
 })
 
 const gachaWeapon = () => {
-  const needLength = selectedIndex.value * 4
+  const needLength = selectedIndex.value * 6
   const totalLength = Object.values(props.materials)
     .map(({ length }) => length)
     .reduce((acc, current) => acc + current, 0)

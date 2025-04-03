@@ -163,10 +163,6 @@ defineExpose({
       height: 100%;
       overflow: auto;
 
-      @include global.mobile {
-        padding: 0 16px 40px;
-      }
-
       .content {
         margin-bottom: 20px;
         font-size: 14px;

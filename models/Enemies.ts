@@ -1,4 +1,5 @@
 import Phaser from "phaser"
+import type { Materials } from "./Material"
 import type { Player } from "./Player"
 import type { Weapon } from "./Weapon"
 export class Enemies {
@@ -27,49 +28,52 @@ export class Enemies {
   get children() {
     return this.group.getChildren() as Enemy[]
   }
-  spawnEnemy() {
+  spawnEnemy(round: number) {
     const { x, y } = this.pathes[0]
 
     // 새 적 생성
-    this.group.add(new Enemy(this.scene, x, y, "enemy", this.pathes))
+    this.group.add(new Enemy(this.scene, x, y, "enemy", this.pathes, round))
 
     this.remainnedEnemies.value++
   }
 
-  takeDamage(enemy: Enemy, weapon: Weapon) {
-    enemy.takeDamage(weapon.damage, weapon.stun)
+  takeDamage(enemy: Enemy, weapon: Weapon, materials: Materials) {
+    enemy.takeDamage(weapon, materials)
 
     // 적 HP가 0 이하라면 제거
-    if (!enemy.getData("hp")) this.remainnedEnemies--
+    if (!enemy.getData("hp")) (this.remainnedEnemies as unknown as number)--
   }
 
-  applySplashDamage(centerX: number, centerY: number, splashRadius: number, damage: number) {
+  applySplashDamage(centerX: number, centerY: number, weaponData: Weapon, materials: Materials) {
     // enemyGroup 내 모든 적 순회
     this.children.forEach((enemy) => {
       if (!enemy.active) return
 
       const dist = Phaser.Math.Distance.Between(centerX, centerY, enemy.x, enemy.y)
-      if (dist <= splashRadius) {
+      if (dist <= weaponData.splash + materials["건강"].length * materials["건강"].info.splash) {
         // 만약 거리 비례 데미지를 적용하고 싶다면:
-        const effectiveDamage = +(damage * (1 - dist / splashRadius)).toFixed(2)
-        enemy.takeDamage(effectiveDamage)
+
+        enemy.takeDamage(weaponData, materials, dist)
       }
 
       // 적 HP가 0 이하라면 제거
-      if (!enemy.getData("hp")) this.remainnedEnemies--
+      if (!enemy.getData("hp")) (this.remainnedEnemies as unknown as number)--
     })
   }
 }
 
 export class Enemy extends Phaser.Physics.Arcade.Sprite {
   pathes: { x: number; y: number }[]
+  physicalDefence = 0
+  magicalDefence = 0
 
   constructor(
     scene: Phaser.Scene,
     x: number,
     y: number,
     key: string,
-    paths: { x: number; y: number }[]
+    paths: { x: number; y: number }[],
+    round: number
   ) {
     super(scene, x, y, key)
 
@@ -77,12 +81,31 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     scene.physics.add.existing(this)
 
     this.setTint(0xff0000)
-      .setData("hp", 10)
+      .setData("hp", this.fibonacci(round) * 10)
       .setData("pathIndex", 0)
-      .setData("maxHp", 10)
+      .setData("maxHp", this.fibonacci(round) * 10)
       .setData("hpBar", this.scene.add.graphics())
 
+    this.physicalDefence = round
+    this.magicalDefence = round
+
     this.pathes = paths
+  }
+
+  private fibonacci(index: number): number {
+    if (index < 2) return index // index가 0이거나 1이면 그대로 반환
+
+    let prev = 0 // 0번째 피보나치 수
+    let current = 1 // 1번째 피보나치 수
+
+    // 2번째부터 index번째까지 반복
+    for (let i = 2; i <= index; i++) {
+      const next = prev + current
+      prev = current
+      current = next
+    }
+
+    return current
   }
 
   moveEnemyAlongPath(player: Player, weapons: (Weapon | undefined)[]) {
@@ -161,8 +184,45 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     })
   }
 
-  takeDamage(damage: number, stun = 0) {
+  takeDamage(weaponData: Weapon, materials: Materials, distInSplash?: number) {
     const currentHP = this.getData("hp") as number
+
+    const _physicalDamage =
+      distInSplash === undefined
+        ? this.calculateReducedDamage(
+            weaponData.physicalDamage +
+              materials["힘"].info.physicalDamage * materials["힘"].length,
+            this.physicalDefence,
+            weaponData.physicalPenetration +
+              materials["운"].info.armorPenetration * materials["운"].length
+          )
+        : this.calculateReducedDamage(
+            +(weaponData.physicalDamage * (1 - distInSplash / weaponData.splash)).toFixed(2) +
+              materials["힘"].info.physicalDamage * materials["힘"].length,
+            this.physicalDefence,
+            weaponData.physicalPenetration +
+              materials["운"].info.armorPenetration * materials["운"].length
+          )
+
+    const _magicalDamage =
+      distInSplash === undefined
+        ? this.calculateReducedDamage(
+            weaponData.magicalDamage +
+              materials["지식"].info.physicalDamage * materials["지식"].length,
+            this.magicalDefence,
+            weaponData.magicalDamage +
+              materials["지혜"].info.armorPenetration * materials["지혜"].length
+          )
+        : this.calculateReducedDamage(
+            +(weaponData.magicalDamage * (1 - distInSplash / weaponData.splash)).toFixed(2) +
+              materials["지식"].info.physicalDamage * materials["지식"].length,
+            this.magicalDefence,
+            weaponData.magicalDamage +
+              materials["지혜"].info.armorPenetration * materials["지혜"].length
+          )
+
+    const damage = _physicalDamage + _magicalDamage
+
     this.setData("hp", currentHP - damage)
 
     // 깜빡이는 효과
@@ -175,10 +235,14 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       this.setData("stunned", true)
       // 즉시 적 이동을 멈춤
       this.body?.velocity.set(0, 0)
+
       // 300ms 후에 정지 상태 해제
-      this.scene.time.delayedCall(stun, () => {
-        this.setData("stunned", false)
-      })
+      this.scene.time.delayedCall(
+        weaponData.stun + materials["카리스마"].length * (materials["카리스마"].info.stun * 100),
+        () => {
+          this.setData("stunned", false)
+        }
+      )
     }
 
     // 적 HP가 0 이하라면 제거
@@ -187,5 +251,16 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       if (hpBar) hpBar.destroy()
       this.destroy()
     }
+  }
+
+  calculateReducedDamage(damage: number, defense: number, penetration = 0): number {
+    const k = 100
+    const maxReduction = 0.8
+
+    // 관통 적용: 방어력 감소
+    const reducedDefense = Math.max(0, defense - penetration)
+
+    const reductionRate = Math.min(reducedDefense / (reducedDefense + k), maxReduction)
+    return damage ? Math.max(1, Math.floor(damage * (1 - reductionRate))) : damage
   }
 }
