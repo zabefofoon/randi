@@ -81,16 +81,17 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     scene.add.existing(this)
     scene.physics.add.existing(this)
 
-    this.setTint(0xff0000)
-      .setData("hp", this.fibonacci(round) * 10)
+    this.setData("hp", this.fibonacci(round) * 10)
       .setData("pathIndex", 0)
       .setData("maxHp", this.fibonacci(round) * 10)
       .setData("hpBar", this.scene.add.graphics())
-
+      .setScale(0.75)
     this.physicalDefence = round
     this.magicalDefence = round
 
     this.pathes = paths
+
+    this.anims.play("enemy-walk")
   }
 
   private fibonacci(index: number): number {
@@ -138,6 +139,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       this.y = target.y
       let nextIndex = pathIndex + 1
       if (nextIndex >= this.pathes.length) nextIndex = 0
+      this.setFlipX([0, 3].includes(nextIndex))
       this.setData("pathIndex", nextIndex)
     }
     if (this.active) this.scene.physics.moveTo(this, target.x, target.y, speed)
@@ -228,7 +230,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     // 깜빡이는 효과
     this.setTintFill(0xff0000)
-    this.scene.time.delayedCall(100, () => this.setTint(0xff0000))
+    this.scene.time.delayedCall(100, () => this.clearTint())
 
     this.showDamageText(damage)
 

@@ -154,9 +154,9 @@ onMounted(() => {
           frameWidth: 32,
           frameHeight: 48,
         })
-        scene.load.spritesheet("enemy", "/assets/images/dude.png", {
-          frameWidth: 32,
-          frameHeight: 48,
+        scene.load.spritesheet("enemy", "/assets/images/zombie_work.png", {
+          frameWidth: 96,
+          frameHeight: 96,
         })
         scene.load.image("star", "/assets/images/star.png")
         scene.load.image("Gun", "/assets/images/star.png")
@@ -174,6 +174,13 @@ onMounted(() => {
         enemies = new Enemies(scene, remainnedEnemies)
         weapons.value = new Weapons(scene, enemies, materials.value)
         // 애니메이션
+
+        scene.anims.create({
+          key: "enemy-walk",
+          frames: scene.anims.generateFrameNumbers("enemy", { start: 0, end: 7 }), // 프레임 범위는 이미지에 맞게
+          frameRate: 7, // 초당 몇 프레임
+          repeat: -1, // 반복
+        })
 
         const walls = scene.physics.add.staticGroup()
         walls.create(160, 130, "").setOrigin(0, 0).setDisplaySize(10, 120).refreshBody()
@@ -208,7 +215,7 @@ onMounted(() => {
             }
 
             const playerHP = player.getData("hp") as number
-            if (remainnedEnemies.value >= enemyCountDeadline) player.setData("hp", playerHP - 1)
+            if (remainnedEnemies.value > enemyCountDeadline) player.setData("hp", playerHP - 1)
 
             if (playerHP < 1) {
               scene.physics.pause()
