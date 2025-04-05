@@ -166,7 +166,6 @@ onMounted(() => {
         resizeBackground(scene)
         scene.scale.on("resize", () => resizeBackground(scene))
 
-        scene.data.set("gachaChance", 3)
         cursors = scene.input.keyboard!.createCursorKeys()
 
         // 플레이어
@@ -175,6 +174,18 @@ onMounted(() => {
         enemies = new Enemies(scene, remainnedEnemies)
         weapons.value = new Weapons(scene, enemies, materials.value)
         // 애니메이션
+
+        const walls = scene.physics.add.staticGroup()
+        walls.create(160, 130, "").setOrigin(0, 0).setDisplaySize(10, 120).refreshBody()
+        walls.create(160, 300, "").setOrigin(0, 0).setDisplaySize(10, 100).refreshBody()
+        walls.create(160, 400, "").setOrigin(0, 0).setDisplaySize(280, 10).refreshBody()
+        walls.create(525, 400, "").setOrigin(0, 0).setDisplaySize(275, 10).refreshBody()
+        walls.create(790, 300, "").setOrigin(0, 0).setDisplaySize(10, 100).refreshBody()
+        walls.create(790, 130, "").setOrigin(0, 0).setDisplaySize(10, 120).refreshBody()
+        walls.create(160, 130, "").setOrigin(0, 0).setDisplaySize(275, 10).refreshBody()
+        walls.create(520, 130, "").setOrigin(0, 0).setDisplaySize(275, 10).refreshBody()
+
+        scene.physics.add.collider(player, walls)
 
         // ===== 탄환(Gun) 그룹 생성 =====
         weapons.value.addWeapon(0, Gun.of())
@@ -231,36 +242,27 @@ onMounted(() => {
             (acc, current) => acc + (current?.allCooltime ?? 0),
             0
           )
-          const materialCooldowns =
-            materials.value["민첩"].info.cooltime * materials.value["민첩"].length
-
-          const allTargetLength = weapons.value!.weapons.reduce(
-            (acc, current) => acc + (current?.allTargetLength ?? 0),
-            0
-          )
-
           weapons.value!.weapons.forEach((weapon) => {
             if (
-              weapon?.checkIsCooltime(time, Math.min(99, (materialCooldowns + allCooltimes) * 100))
-            ) {
-              player
-                .getClosestEnemies(enemies, weapon.targetLength + allTargetLength)
-                .forEach((enemy) => {
-                  const distance = Phaser.Math.Distance.Between(
-                    player.x,
-                    player.y,
-                    enemy.x,
-                    enemy.y
-                  )
+              weapon?.checkIsCooltime(
+                time,
+                Math.min(
+                  99,
+                  (materials.value["민첩"].info.cooltime * materials.value["민첩"].length +
+                    allCooltimes) *
+                    100
+                )
+              )
+            )
+              player.getClosestEnemies(enemies, weapon.targetLength).forEach((enemy) => {
+                const distance = Phaser.Math.Distance.Between(player.x, player.y, enemy.x, enemy.y)
 
-                  if (
-                    distance <=
-                    weapon.range +
-                      materials.value["교양"].length * materials.value["교양"].info.range
-                  )
-                    weapon.fireHomingWeapon(time, player, enemy)
-                })
-            }
+                if (
+                  distance <=
+                  weapon.range + materials.value["교양"].length * materials.value["교양"].info.range
+                )
+                  weapon.fireHomingWeapon(time, player, enemy)
+              })
           })
         }
 
