@@ -150,9 +150,13 @@ onMounted(() => {
       preload(this: Phaser.Scene) {
         const scene = this
         scene.load.image("sky", "/assets/images/sky.png")
-        scene.load.spritesheet("dude", "/assets/images/dude.png", {
-          frameWidth: 32,
-          frameHeight: 48,
+        scene.load.spritesheet("playerIdle", "/assets/images/player_idle.png", {
+          frameWidth: 128,
+          frameHeight: 128,
+        })
+        scene.load.spritesheet("playerWork", "/assets/images/player_work.png", {
+          frameWidth: 128,
+          frameHeight: 128,
         })
         scene.load.spritesheet("enemy", "/assets/images/zombie_work.png", {
           frameWidth: 96,
@@ -169,7 +173,7 @@ onMounted(() => {
         cursors = scene.input.keyboard!.createCursorKeys()
 
         // 플레이어
-        player = new Player(scene, 400, 300, "dude")
+        player = new Player(scene, 400, 300, "playerIdle")
         player.createPlayerAnimation()
         enemies = new Enemies(scene, remainnedEnemies)
         weapons.value = new Weapons(scene, enemies, materials.value)
