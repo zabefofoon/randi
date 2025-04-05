@@ -39,7 +39,7 @@
 
         <VirtualJoystick
           v-model="activeJoystick"
-          class="absolute bottom-[12px] left-[12px]" />
+          class="absolute bottom-[3cqw] left-[3cqw]" />
 
         <div
           class="flex justify-end gap-[1cqw] | w-full | px-[0.5cqw] | absolute bottom-[0.5cqw] | text-white text-[1.5cqw]">
@@ -81,7 +81,7 @@ import {
   type Materials,
 } from "~/models/Material"
 import { Player } from "~/models/Player"
-import { Bullet, Weapons } from "~/models/Weapon"
+import { Gun, Weapons } from "~/models/Weapon"
 
 const emit = defineEmits<{
   (e: "next", scene: "result"): void
@@ -102,14 +102,14 @@ let cursors: Phaser.Types.Input.Keyboard.CursorKeys
 
 const weapons = ref<Weapons>()
 const materials = ref<Materials>({
-  힘: { length: 0, textObj: undefined, info: new Material1() },
-  지식: { length: 0, textObj: undefined, info: new Material2() },
-  교양: { length: 0, textObj: undefined, info: new Material3() },
-  카리스마: { length: 0, textObj: undefined, info: new Material4() },
-  건강: { length: 0, textObj: undefined, info: new Material5() },
-  민첩: { length: 0, textObj: undefined, info: new Material6() },
-  운: { length: 0, textObj: undefined, info: new Material7() },
-  지혜: { length: 0, textObj: undefined, info: new Material8() },
+  힘: { length: 0, info: new Material1() },
+  지식: { length: 0, info: new Material2() },
+  교양: { length: 0, info: new Material3() },
+  카리스마: { length: 0, info: new Material4() },
+  건강: { length: 0, info: new Material5() },
+  민첩: { length: 0, info: new Material6() },
+  운: { length: 0, info: new Material7() },
+  지혜: { length: 0, info: new Material8() },
 })
 
 const initialRemainnedTime = 3
@@ -148,41 +148,42 @@ onMounted(() => {
     },
     scene: {
       preload(this: Phaser.Scene) {
-        this.load.image("sky", "/assets/images/sky.png")
-        this.load.spritesheet("dude", "/assets/images/dude.png", {
+        const scene = this
+        scene.load.image("sky", "/assets/images/sky.png")
+        scene.load.spritesheet("dude", "/assets/images/dude.png", {
           frameWidth: 32,
           frameHeight: 48,
         })
-        this.load.spritesheet("enemy", "/assets/images/dude.png", {
+        scene.load.spritesheet("enemy", "/assets/images/dude.png", {
           frameWidth: 32,
           frameHeight: 48,
         })
-        this.load.image("star", "/assets/images/star.png")
-        this.load.image("Bullet", "/assets/images/star.png")
+        scene.load.image("star", "/assets/images/star.png")
+        scene.load.image("Gun", "/assets/images/star.png")
       },
       create(this: Phaser.Scene) {
         scene = this
-        resizeBackground(this)
-        this.scale.on("resize", () => resizeBackground(this))
+        resizeBackground(scene)
+        scene.scale.on("resize", () => resizeBackground(scene))
 
-        this.data.set("gachaChance", 3)
-        cursors = this.input.keyboard!.createCursorKeys()
+        scene.data.set("gachaChance", 3)
+        cursors = scene.input.keyboard!.createCursorKeys()
 
         // 플레이어
-        player = new Player(this, 400, 300, "dude")
+        player = new Player(scene, 400, 300, "dude")
         player.createPlayerAnimation()
-        enemies = new Enemies(this, remainnedEnemies)
-        weapons.value = new Weapons(this, enemies, materials.value)
+        enemies = new Enemies(scene, remainnedEnemies)
+        weapons.value = new Weapons(scene, enemies, materials.value)
         // 애니메이션
 
-        // ===== 탄환(bullet) 그룹 생성 =====
-        weapons.value.addWeapon(0, Bullet.of())
+        // ===== 탄환(Gun) 그룹 생성 =====
+        weapons.value.addWeapon(0, Gun.of())
 
-        this.time.addEvent({
+        scene.time.addEvent({
           delay: 1000,
           repeat: -1,
           callback: () => {
-            if (this.data.get("paused")) return
+            if (scene.data.get("paused")) return
 
             remainnedTime.value--
             if (remainnedTime.value < 0) {
@@ -190,7 +191,7 @@ onMounted(() => {
               remainnedTime.value = roundTime
 
               if (round.value !== 1) {
-                this.data.set("gachaChance", this.data.get("gachaChance") + 3)
+                scene.data.set("gachaChance", scene.data.get("gachaChance") + 3)
                 gachaChance.value = gachaChance.value + 3
               }
             }
@@ -199,8 +200,8 @@ onMounted(() => {
             if (remainnedEnemies.value >= enemyCountDeadline) player.setData("hp", playerHP - 1)
 
             if (playerHP < 1) {
-              this.physics.pause()
-              this.data.set("gameover", true)
+              scene.physics.pause()
+              scene.data.set("gameover", true)
               isShowGameOverPopup.value = true
             }
 
@@ -210,8 +211,9 @@ onMounted(() => {
         })
       },
       update(this: Phaser.Scene, time: number) {
-        if (this.data.get("gameover")) return
-        if (this.data.get("paused")) return
+        const scene = this
+        if (scene.data.get("gameover")) return
+        if (scene.data.get("paused")) return
 
         // 플레이어 이동
         player.handlePlayerMovement(cursors)
@@ -225,22 +227,40 @@ onMounted(() => {
 
         // 플레이어가 정지상태 && 쿨다운 → 발사
         if (player.isIdle) {
+          const allCooltimes = weapons.value!.weapons.reduce(
+            (acc, current) => acc + (current?.allCooltime ?? 0),
+            0
+          )
+          const materialCooldowns =
+            materials.value["민첩"].info.cooltime * materials.value["민첩"].length
+
+          const allTargetLength = weapons.value!.weapons.reduce(
+            (acc, current) => acc + (current?.allTargetLength ?? 0),
+            0
+          )
+
           weapons.value!.weapons.forEach((weapon) => {
             if (
-              weapon?.checkIsCooltime(
-                time,
-                materials.value["민첩"].info.cooltime * materials.value["민첩"].length * 100
-              )
-            )
-              player.getClosestEnemies(enemies, weapon.targetLength).forEach((enemy) => {
-                const distance = Phaser.Math.Distance.Between(player.x, player.y, enemy.x, enemy.y)
+              weapon?.checkIsCooltime(time, Math.min(99, (materialCooldowns + allCooltimes) * 100))
+            ) {
+              player
+                .getClosestEnemies(enemies, weapon.targetLength + allTargetLength)
+                .forEach((enemy) => {
+                  const distance = Phaser.Math.Distance.Between(
+                    player.x,
+                    player.y,
+                    enemy.x,
+                    enemy.y
+                  )
 
-                if (
-                  distance <=
-                  weapon.range + materials.value["교양"].length * materials.value["교양"].info.range
-                )
-                  weapon.fireHomingWeapon(time, player, enemy)
-              })
+                  if (
+                    distance <=
+                    weapon.range +
+                      materials.value["교양"].length * materials.value["교양"].info.range
+                  )
+                    weapon.fireHomingWeapon(time, player, enemy)
+                })
+            }
           })
         }
 

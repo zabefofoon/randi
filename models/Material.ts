@@ -1,7 +1,4 @@
-export type Materials = Record<
-  Material["name"],
-  { length: number; textObj?: Phaser.GameObjects.Text; info: Material }
->
+export type Materials = Record<Material["name"], { length: number; info: Material }>
 export abstract class Material {
   name: "힘" | "지식" | "교양" | "카리스마" | "건강" | "민첩" | "운" | "지혜"
 

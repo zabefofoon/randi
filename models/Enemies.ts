@@ -41,7 +41,8 @@ export class Enemies {
     enemy.takeDamage(weapon, materials)
 
     // 적 HP가 0 이하라면 제거
-    if (!enemy.getData("hp")) (this.remainnedEnemies as unknown as number)--
+    if (!enemy.getData("hp") || enemy.getData("hp") < 0)
+      (this.remainnedEnemies as unknown as number)--
   }
 
   applySplashDamage(centerX: number, centerY: number, weaponData: Weapon, materials: Materials) {

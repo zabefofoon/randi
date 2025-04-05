@@ -8,8 +8,8 @@
       :key="index"
       class="button"
       :style="{
-        top: `calc(50% - 40px * cos(calc((${index} - 1) * 360deg / 8)))`,
-        left: `calc(50% - 40px * sin(calc((${index} - 1) * 360deg / 8)))`,
+        top: `calc(50% - 30px * cos(calc((${index} - 1) * 360deg / 8)))`,
+        left: `calc(50% - 30px * sin(calc((${index} - 1) * 360deg / 8)))`,
       }"
       :data-index="index"
       :class="{ active: activeIndex === index }"
@@ -56,9 +56,9 @@ const handleTouchmove = (event: TouchEvent) => {
     })
     .reduce((prev, curr) => (prev.distance < curr.distance ? prev : curr))
 
-  if (distance > 15 && nearist.distance > 15) {
+  if (distance > 10 && nearist.distance > 10) {
     activeIndex.value = nearist.el.dataset.index ? +nearist.el.dataset.index : undefined
-  } else if (distance <= 15) activeIndex.value = undefined
+  } else if (distance <= 10) activeIndex.value = undefined
 
   const el = document.elementFromPoint(clientX, clientY) as HTMLButtonElement
   if (el?.tagName === "BUTTON") {
@@ -91,8 +91,8 @@ const getPos = (el: Element) => {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     border: 0;
     border-radius: 999px;
     outline: 0;

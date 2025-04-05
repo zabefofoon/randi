@@ -29,9 +29,24 @@
           </h3>
           <div class="mt-[0.5cqw] | grid grid-cols-4 gap-[1cqw] text-[1.5cqw]">
             <div
-              v-if="selectedWeapon.damage"
+              v-if="selectedWeapon.physicalDamage"
               class="text-center">
-              - 데미지: {{ selectedWeapon.damage }}
+              - 물리데미지: {{ selectedWeapon.physicalDamage }}
+            </div>
+            <div
+              v-if="selectedWeapon.magicalDamage"
+              class="text-center">
+              - 마법데미지: {{ selectedWeapon.magicalDamage }}
+            </div>
+            <div
+              v-if="selectedWeapon.physicalPenetration"
+              class="text-center">
+              - 물리관통력: {{ selectedWeapon.physicalPenetration }}
+            </div>
+            <div
+              v-if="selectedWeapon.magicalPenetration"
+              class="text-center">
+              - 마법관통력: {{ selectedWeapon.magicalPenetration }}
             </div>
             <div
               v-if="selectedWeapon.range"
@@ -68,7 +83,8 @@
             <button
               v-for="item in selectedWeapon.nexts"
               :key="item.name"
-              class="mt-[1cqw] | bg-[rgba(0_0_0_/_50%)] | py-[0.5cqw] | rounded-full">
+              class="mt-[1cqw] | bg-[rgba(0_0_0_/_50%)] | py-[0.5cqw] | rounded-full"
+              @click="getNextWeapon(item)">
               <div class="text-[1.5cqw]">
                 {{ item.name }}
                 <span>조합</span>
@@ -94,7 +110,7 @@
           <span class="bg-[rgba(0_0_0_/_50%)] | py-[0.5cqw] | rounded-full | text-[1.5cqw]">
             뽑기
           </span>
-          <span class="text-[1.2cqw]">(랜덤 {{ selectedIndex * 6 }}개 필요)</span>
+          <span class="text-[1.2cqw]">(랜덤 {{ needLength }}개 필요)</span>
         </button>
       </div>
     </template>
@@ -103,7 +119,22 @@
 
 <script setup lang="ts">
 import type { Material, Materials } from "~/models/Material"
-import { Knife, Ring, Wand, type Weapons } from "~/models/Weapon"
+import {
+  Book,
+  CutterKnife,
+  DoubleGun,
+  Hammer,
+  Knife,
+  MagicGun,
+  Ring,
+  ShotGun,
+  SpringBook,
+  SushiKnife,
+  ThickBook,
+  ThinBook,
+  type WeaponNext,
+  type Weapons,
+} from "~/models/Weapon"
 
 const props = defineProps<{
   weapons: Weapons
@@ -115,24 +146,23 @@ const emit = defineEmits<{
 }>()
 
 const selectedIndex = ref(0)
-
+const needLength = computed(() => selectedIndex.value * 4)
 const selectedWeapon = computed(() => {
   return props.weapons.weapons[selectedIndex.value]
 })
 
 const gachaWeapon = () => {
-  const needLength = selectedIndex.value * 6
   const totalLength = Object.values(props.materials)
     .map(({ length }) => length)
     .reduce((acc, current) => acc + current, 0)
 
-  if (totalLength >= needLength) {
+  if (totalLength >= needLength.value) {
     if (selectedIndex.value === 1) props.weapons.addWeapon(selectedIndex.value, Knife.of())
-    if (selectedIndex.value === 2) props.weapons.addWeapon(selectedIndex.value, Wand.of())
+    if (selectedIndex.value === 2) props.weapons.addWeapon(selectedIndex.value, Book.of())
     if (selectedIndex.value === 3) props.weapons.addWeapon(selectedIndex.value, Ring.of())
 
     let doneCount = 0
-    while (doneCount < needLength) {
+    while (doneCount < needLength.value) {
       const randomIndex = Phaser.Math.Between(0, 7)
       const selectedMaterialKey = Object.keys(props.materials)[randomIndex] as Material["name"]
 
@@ -143,5 +173,25 @@ const gachaWeapon = () => {
       }
     }
   }
+}
+
+const getNextWeapon = (item: WeaponNext) => {
+  const isGettable = item.materials.every(
+    (material) => props.materials[material.name].length >= material.length
+  )
+  if (!isGettable) return
+  item.materials.forEach((material) => {
+    props.materials[material.name].length -= material.length
+  })
+  console.log(item)
+  if (item.name === "일반쌍권총") props.weapons.addWeapon(0, DoubleGun.of())
+  if (item.name === "마법권총") props.weapons.addWeapon(0, MagicGun.of())
+  if (item.name === "산탄총") props.weapons.addWeapon(0, ShotGun.of())
+  if (item.name === "커터칼") props.weapons.addWeapon(1, CutterKnife.of())
+  if (item.name === "회칼") props.weapons.addWeapon(1, SushiKnife.of())
+  if (item.name === "망치") props.weapons.addWeapon(1, Hammer.of())
+  if (item.name === "두꺼운책") props.weapons.addWeapon(2, ThickBook.of())
+  if (item.name === "얇은책") props.weapons.addWeapon(2, ThinBook.of())
+  if (item.name === "스프링책") props.weapons.addWeapon(2, SpringBook.of())
 }
 </script>
