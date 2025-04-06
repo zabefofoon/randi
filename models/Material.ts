@@ -89,7 +89,7 @@ export class Material4 extends Material {
       cooltime: 0,
       armorPenetration: 0,
       magicPenetration: 0,
-      description: "스턴 지속시간 + 0.1",
+      description: "스턴  0.1초",
     })
   }
 }
@@ -106,7 +106,7 @@ export class Material5 extends Material {
       cooltime: 0,
       armorPenetration: 0,
       magicPenetration: 0,
-      description: "스플래시 범위 + 1",
+      description: "스플래시 + 1",
     })
   }
 }

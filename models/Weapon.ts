@@ -288,11 +288,11 @@ export class ShotGun extends Weapon {
       group,
       level: 3,
       name: "산탄총",
-      description: "느린 연사를 가지지만 적당한 데미지를 가지며, 주변 적도 데미지를 받습니다.",
-      cooltime: 2000,
+      description: "적당한 데미지를 가지며, 주변 적도 데미지를 받습니다.",
+      cooltime: 1000,
       speed: 500,
       range: 100,
-      physicalDamage: 6,
+      physicalDamage: 8,
       magicalDamage: 0,
       physicalPenetration: 3,
       magicalPenetration: 0,
@@ -473,14 +473,14 @@ export class Hammer extends Weapon {
 export class Book extends Weapon {
   constructor(group?: Phaser.Physics.Arcade.Group) {
     super({
-      level: 1,
+      level: 2,
       name: "공책",
       description: "강력한 마법공격",
       cooltime: 2000,
       speed: 500,
       range: 300,
       physicalDamage: 0,
-      magicalDamage: 4,
+      magicalDamage: 6,
       physicalPenetration: 0,
       magicalPenetration: 0,
       targetLength: 1,
@@ -495,7 +495,7 @@ export class Book extends Weapon {
         {
           name: "두꺼운책",
           description: "적을 동시에 두명 공격. 가지고만 있어도 전체 연사속도가 빨라집니다.",
-          level: 2,
+          level: 3,
           materials: [
             {
               name: "운",
@@ -509,7 +509,7 @@ export class Book extends Weapon {
         },
         {
           name: "얇은책",
-          level: 2,
+          level: 3,
           description: "적을 동시에 두명 공격. 가지고만 있어도 적의 이동속도가 느려집니다.",
           materials: [
             {
@@ -545,14 +545,14 @@ export class Book extends Weapon {
 export class ThickBook extends Weapon {
   constructor(group?: Phaser.Physics.Arcade.Group) {
     super({
-      level: 2,
+      level: 3,
       name: "두꺼운책",
       description: "적을 동시에 두명 공격. 가지고만 있어도 전체 연사속도가 빨라집니다.",
       cooltime: 2000,
       speed: 500,
       range: 300,
       physicalDamage: 2,
-      magicalDamage: 4,
+      magicalDamage: 8,
       physicalPenetration: 0,
       magicalPenetration: 0,
       targetLength: 2,
@@ -575,14 +575,14 @@ export class ThickBook extends Weapon {
 export class ThinBook extends Weapon {
   constructor(group?: Phaser.Physics.Arcade.Group) {
     super({
-      level: 2,
+      level: 3,
       name: "얇은책",
       description: "적을 동시에 두명 공격. 가지고만 있어도 적의 이동속도가 느려집니다.",
       cooltime: 2000,
       speed: 500,
       range: 300,
       physicalDamage: 0,
-      magicalDamage: 6,
+      magicalDamage: 10,
       physicalPenetration: 0,
       magicalPenetration: 0,
       targetLength: 2,
@@ -612,7 +612,7 @@ export class SpringBook extends Weapon {
       speed: 500,
       range: 300,
       physicalDamage: 0,
-      magicalDamage: 6,
+      magicalDamage: 10,
       physicalPenetration: 0,
       magicalPenetration: 0,
       targetLength: 2,
@@ -628,7 +628,7 @@ export class SpringBook extends Weapon {
   }
 
   static of(group?: Phaser.Physics.Arcade.Group) {
-    return new ThinBook(group)
+    return new SpringBook(group)
   }
 }
 

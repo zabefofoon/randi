@@ -5,12 +5,14 @@
       @close="isShowGameOverPopup = false" />
     <ModalWeapons
       v-if="isShowWeaponsPopup"
+      v-model:selected-index="selectedWeaponIndex"
       :weapons="weapons"
       :materials="materials"
       @close="isShowWeaponsPopup = false" />
     <ModalMaterials
       v-if="isShowMaterialsPopup"
       v-model:gacha-chance="gachaChance"
+      v-model:select-chance="selectChance"
       :materials="materials"
       @close="isShowMaterialsPopup = false" />
     <div class="content | relative | aspect-video max-w-full max-h-full | bg-white">
@@ -22,13 +24,20 @@
           <div>{{ remainnedEnemies }} / {{ enemyCountDeadline }}</div>
         </div>
 
-        <div class="absolute top-[10cqh] left-[1cqw]">
-          <div class="flex flex-col | gap-[0.5cqh]">
+        <div class="absolute top-[10cqh] left-[0.5cqw]">
+          <div class="flex flex-col items-start | gap-[0.2cqh]">
             <div
-              v-for="material in materials"
+              v-for="(material, index) in materials"
               :key="material.info.name"
-              class="text-[1.2cqw] text-white">
-              {{ material.info.name }} x {{ material.length }}
+              class="flex items-center | bg-black rounded-lg | pr-[0.5cqw]">
+              <div
+                class="stat-sprites w-[1.5cqw] aspect-square"
+                :class="`sprite-${Object.keys(materials).findIndex(
+                  (item) => item === index
+                )}`"></div>
+              <span class="text-[1cqw] text-white">
+                {{ material.info.name }} {{ material.length }}
+              </span>
             </div>
           </div>
         </div>
@@ -41,26 +50,50 @@
           v-model="activeJoystick"
           class="absolute bottom-[3cqw] left-[3cqw]" />
 
-        <div
-          class="flex justify-end gap-[1cqw] | w-full | px-[0.5cqw] | absolute bottom-[0.5cqw] | text-white text-[1.5cqw]">
+        <div class="flex items-center gap-[1cqw] | absolute bottom-[2cqw] right-[2cqw]">
+          <!-- 무기버튼 -->
           <button
-            class="bg-black | px-[1.5cqw] py-[0.5cqw] | rounded-full | leading-none"
-            @click="isShowWeaponsPopup = true">
-            무기뽑기
+            class="flex items-center gap-[0.5cqw] bg-orange-700 | h-fit pr-[1.5cqw] pl-[0.5cqw] py-[0.2cqw] | rounded-lg border-black border-[0.14cqw]">
+            <div class="stat-sprites gambling | w-[3cqw] aspect-square"></div>
+            <span class="block text-white | text-[1.8cqw] font-bold text-outline leading-none">
+              도박
+            </span>
           </button>
+          <!-- 무기버튼 -->
+
+          <!-- 무기버튼 -->
           <button
-            class="relative | bg-black | px-[1.5cqw] py-[0.5cqw] | rounded-full | leading-none"
+            class="flex items-center gap-[0.5cqw] bg-blue-950 | h-fit pr-[1.5cqw] pl-[0.5cqw] py-[0.2cqw] | rounded-lg border-black border-[0.14cqw]"
+            @click="isShowWeaponsPopup = true">
+            <div class="stat-sprites weapons | w-[3cqw] aspect-square"></div>
+            <span class="block text-white | text-[1.8cqw] font-bold text-outline leading-none">
+              무기
+            </span>
+          </button>
+          <!-- 무기버튼 -->
+
+          <!-- 스텟버튼 -->
+          <button
+            class="flex items-center gap-[0.5cqw] | relative | h-fit pr-[1.5cqw] pl-[0.5cqw] py-[0.2cqw] | rounded-lg border-black border-[0.14cqw]"
+            :class="{
+              'bg-amber-500': selectChance > 0,
+              'bg-blue-950': selectChance <= 0,
+            }"
             @click="isShowMaterialsPopup = true">
-            재료뽑기
+            <div class="stat-sprites stats | w-[3cqw] aspect-square"></div>
+            <span class="block | text-white text-[1.8cqw] font-bold text-outline leading-none">
+              스텟
+            </span>
             <div
-              v-if="gachaChance > 0"
+              v-if="gachaChance + selectChance > 0"
               class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2">
               <span
-                class="grid place-items-center | w-[2cqw] aspect-square | rounded-full | bg-red-500 | text-[1cqw]">
-                {{ gachaChance }}
+                class="text-white | grid place-items-center | w-[2.2cqw] aspect-square | rounded-full | bg-red-500 | text-outline text-[1.2cqw] font-bold | border-black border-[0.14cqw]">
+                {{ selectChance ? selectChance : gachaChance }}
               </span>
             </div>
           </button>
+          <!-- 스텟버튼 -->
         </div>
       </main>
     </div>
@@ -125,8 +158,10 @@ const isShowMaterialsPopup = ref(false)
 const isShowWeaponsPopup = ref(false)
 const isShowGameOverPopup = ref(false)
 
-const gachaChance = ref(3)
+const gachaChance = ref(2)
+const selectChance = ref(1)
 
+const selectedWeaponIndex = ref(0)
 let scene: Phaser.Scene
 onMounted(() => {
   if (!phaserContainer.value) return
@@ -212,10 +247,7 @@ onMounted(() => {
               round.value++
               remainnedTime.value = roundTime
 
-              if (round.value !== 1) {
-                scene.data.set("gachaChance", scene.data.get("gachaChance") + 3)
-                gachaChance.value = gachaChance.value + 3
-              }
+              if (round.value !== 1) gachaChance.value = gachaChance.value + 3
             }
 
             const playerHP = player.getData("hp") as number
@@ -370,7 +402,7 @@ watch(isShowGameOverPopup, (value) => {
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .content {
   @media (aspect-ratio >= 16 / 9) {
     width: auto;
@@ -380,6 +412,30 @@ watch(isShowGameOverPopup, (value) => {
   @media (aspect-ratio <= 16 / 9) {
     width: 100%;
     height: auto;
+  }
+
+  .stat-sprites {
+    background: url("/assets/images/stats_sprite.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    @for $i from 0 through 7 {
+      &.sprite-#{$i} {
+        background-position: #{-1.5 * $i}cqw 0;
+      }
+    }
+
+    &.stats {
+      background-position: -27cqw 0;
+    }
+
+    &.weapons {
+      background-position: -24cqw 0;
+    }
+
+    &.gambling {
+      background-position: -30cqw 0;
+    }
   }
 }
 </style>

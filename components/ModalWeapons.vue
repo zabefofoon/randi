@@ -2,24 +2,27 @@
   <UIModal
     enable-dim-click-close
     hide-close-button
-    inner-class="!max-w-[50cqw] | !bg-[rgba(0_0_0_/_50%)]"
+    inner-class="!max-w-[50cqw] | !bg-transparent"
     @close="emit('close')">
     <template #content>
-      <div class="flex flex-col items-center justify-center | text-white">
-        <div class="grid grid-cols-4 gap-[1cqw]">
+      <div class="flex items-center gap-[1cqw]">
+        <div class="flex flex-col gap-[1cqw] | flex-shrink-0">
           <figure
             v-for="(weapon, index) in weapons.weapons"
             :key="index"
-            class="flex flex-col items-center | py-[1cqw]"
+            class="flex flex-col items-center"
             @click="selectedIndex = index">
             <img
               src="https://picsum.photos/32?id=1"
-              class="border border-transparent | w-[5cqw] aspect-square"
-              :class="[{ '!border-orange-500': selectedIndex === index }]" />
-            <figcaption
-              class="text-outline | text-[1.5cqw] font-bold"
+              class="border-[0.2cqw] | w-[5cqw] aspect-square | rounded-lg"
               :class="{
-                'text-white': weapon?.level === 1,
+                'border-orange-500': selectedIndex === index,
+                'border-black': selectedIndex !== index,
+              }" />
+            <figcaption
+              class="text-outline text-[1.5cqw] font-bold"
+              :class="{
+                'text-white': !weapon || weapon?.level === 1,
                 'text-purple-600': weapon?.level === 2,
                 'text-yellow-400': weapon?.level === 3,
                 'text-fuchsia-400': weapon?.level === 4,
@@ -31,106 +34,78 @@
           </figure>
         </div>
         <div
-          v-if="selectedWeapon"
-          class="mt-[1cqw]">
-          <h3 class="text-outline | text-center text-[1.5cqw] font-bold">
-            {{ selectedWeapon.description }}
-          </h3>
-          <div class="mt-[0.5cqw] | grid grid-cols-4 gap-[0.5cqw] text-[1.2cqw]">
+          class="w-full | flex flex-col items-center justify-center | p-[1cqw] | bg-blue-950 | text-white | rounded-lg border-black border-[0.2cqw]">
+          <div>
+            <h3 class="text-outline text-[1.5cqw] font-bold">
+              {{ selectedWeapon?.description ?? "????" }}
+            </h3>
             <div
-              v-if="selectedWeapon.physicalDamage"
-              class="text-center">
-              물리데미지: {{ selectedWeapon.physicalDamage }}
+              v-if="selectedWeapon"
+              class="mt-[0.5cqw] | grid grid-cols-4 gap-[0.5cqw] text-[1.2cqw]">
+              <div v-if="selectedWeapon.physicalDamage">
+                · 물리데미지: {{ selectedWeapon.physicalDamage }}
+              </div>
+              <div v-if="selectedWeapon.magicalDamage">
+                · 마법데미지: {{ selectedWeapon.magicalDamage }}
+              </div>
+              <div v-if="selectedWeapon.physicalPenetration">
+                · 물리관통력: {{ selectedWeapon.physicalPenetration }}
+              </div>
+              <div v-if="selectedWeapon.magicalPenetration">
+                · 마법관통력: {{ selectedWeapon.magicalPenetration }}
+              </div>
+              <div v-if="selectedWeapon.range">· 공격거리: {{ selectedWeapon.range }}</div>
+              <div v-if="selectedWeapon.splash">· 스플래쉬: {{ selectedWeapon.splash }}</div>
+              <div v-if="selectedWeapon.cooltime">· 쿨타임: {{ selectedWeapon.cooltime }}</div>
+              <div v-if="selectedWeapon.targetLength">
+                · 공격갯수: {{ selectedWeapon.targetLength }}
+              </div>
+              <div v-if="selectedWeapon.stun">· 스턴: {{ selectedWeapon.stun }}</div>
+              <div v-if="selectedWeapon.slow">· 슬로우: {{ selectedWeapon.slow }}</div>
             </div>
-            <div
-              v-if="selectedWeapon.magicalDamage"
-              class="text-center">
-              마법데미지: {{ selectedWeapon.magicalDamage }}
-            </div>
-            <div
-              v-if="selectedWeapon.physicalPenetration"
-              class="text-center">
-              물리관통력: {{ selectedWeapon.physicalPenetration }}
-            </div>
-            <div
-              v-if="selectedWeapon.magicalPenetration"
-              class="text-center">
-              마법관통력: {{ selectedWeapon.magicalPenetration }}
-            </div>
-            <div
-              v-if="selectedWeapon.range"
-              class="text-center">
-              공격거리: {{ selectedWeapon.range }}
-            </div>
-            <div
-              v-if="selectedWeapon.splash"
-              class="text-center">
-              스플래쉬: {{ selectedWeapon.splash }}
-            </div>
-            <div
-              v-if="selectedWeapon.cooltime"
-              class="text-center">
-              쿨타임: {{ selectedWeapon.cooltime }}
-            </div>
-            <div
-              v-if="selectedWeapon.targetLength"
-              class="text-center">
-              공격갯수: {{ selectedWeapon.targetLength }}
-            </div>
-            <div
-              v-if="selectedWeapon.stun"
-              class="text-center">
-              스턴: {{ selectedWeapon.stun }}
-            </div>
-            <div
-              v-if="selectedWeapon.slow"
-              class="text-center">
-              - 슬로우: {{ selectedWeapon.slow }}
-            </div>
-          </div>
-          <div class="flex flex-col | w-full | mt-[1cqw]">
-            <button
-              v-for="item in selectedWeapon.nexts"
-              :key="item.name"
-              class="flex flex-col gap-[0.2cqw] | mt-[1cqw] | bg-[rgba(0_0_0_/_50%)] | py-[0.5cqw] | rounded-full"
-              @click="getNextWeapon(item)">
-              <div
-                class="text-outline text-[1.5cqw] font-bold"
+            <div class="flex flex-col | w-full | mt-[1cqw]">
+              <button
+                v-for="item in selectedWeapon?.nexts"
+                :key="item.name"
+                class="select-none flex flex-col gap-[0.2cqw] | mt-[1cqw] | px-[1cqw] py-[0.5cqw] | border-black border-[0.2cqw] rounded-lg"
                 :class="{
-                  'text-white': item.level === 1,
-                  'text-purple-600': item.level === 2,
-                  'text-yellow-400': item.level === 3,
-                  'text-fuchsia-400': item.level === 4,
-                  'text-red-400': item.level === 5,
-                  'text-blue-500': item.level === 6,
-                }">
-                {{ item.name }}
-                <span>조합</span>
-              </div>
-              <div class="text-[1.1cqw]">{{ item.description }}</div>
-              <div class="flex justify-center | text-[1.1cqw]">
-                (
-                <div
-                  v-for="(material, index) in item.materials"
-                  :key="material.name"
-                  class="flex gap-[0.2cqw]">
-                  <span v-if="index !== 0">&nbsp;+</span>
-                  <span>{{ material.name }} {{ material.length }}개</span>
+                  'bg-white': item.level === 1,
+                  'bg-purple-600': item.level === 2,
+                  'bg-yellow-500': item.level === 3,
+                  'bg-fuchsia-400': item.level === 4,
+                  'bg-red-400': item.level === 5,
+                  'bg-blue-500': item.level === 6,
+                }"
+                @click="getNextWeapon(item)">
+                <div class="flex items-center gap-[0.5cqw]">
+                  <span class="text-outline text-[1.5cqw] font-bold">· {{ item.name }} 조합</span>
+                  <div class="flex justify-center | text-[1.1cqw]">
+                    (
+                    <div
+                      v-for="(material, index) in item.materials"
+                      :key="material.name"
+                      class="flex gap-[0.2cqw]">
+                      <span v-if="index !== 0">&nbsp;+</span>
+                      <span>{{ material.name }} {{ material.length }}개</span>
+                    </div>
+                    )
+                  </div>
                 </div>
-                )
-              </div>
-            </button>
+                <div class="text-[1.1cqw] text-left">{{ item.description }}</div>
+              </button>
+            </div>
           </div>
+          <button
+            v-if="!selectedWeapon"
+            class="mt-[1cqw] | flex flex-col gap-[0.5cqw]"
+            @click="gachaWeapon">
+            <span
+              class="bg-orange-700 | py-[0.5cqw] | border-black border-[0.2cqw] rounded-lg | text-[1.5cqw] font-bold text-outline">
+              뽑기
+            </span>
+            <span class="text-[1.2cqw]">(랜덤 {{ needLength }}개 필요)</span>
+          </button>
         </div>
-        <button
-          v-else
-          class="mt-[1cqw] | flex flex-col gap-[0.5cqw]"
-          @click="gachaWeapon">
-          <span class="bg-[rgba(0_0_0_/_50%)] | py-[0.5cqw] | rounded-full | text-[1.5cqw]">
-            뽑기
-          </span>
-          <span class="text-[1.2cqw]">(랜덤 {{ needLength }}개 필요)</span>
-        </button>
       </div>
     </template>
   </UIModal>
@@ -167,7 +142,7 @@ const emit = defineEmits<{
   (e: "close"): void
 }>()
 
-const selectedIndex = ref(0)
+const selectedIndex = defineModel("selectedIndex", { default: 0 })
 const needLength = computed(() => selectedIndex.value * 4)
 const selectedWeapon = computed(() => {
   return props.weapons.weapons[selectedIndex.value]
@@ -216,7 +191,7 @@ const getNextWeapon = (item: WeaponNext) => {
   if (item.name === "얇은책") props.weapons.addWeapon(2, ThinBook.of())
   if (item.name === "스프링책") props.weapons.addWeapon(2, SpringBook.of())
   if (item.name === "더블반지") props.weapons.addWeapon(3, DoubleRing.of())
-  if (item.name === "은도금") props.weapons.addWeapon(3, SilverPlateRing.of())
+  if (item.name === "은도금반지") props.weapons.addWeapon(3, SilverPlateRing.of())
   if (item.name === "꽃반지") props.weapons.addWeapon(3, FlowerRing.of())
 }
 </script>

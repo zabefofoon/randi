@@ -73,7 +73,7 @@ body {
 }
 
 .text-outline {
-  --outline-width: 2px;
+  --outline-width: 0.15cqw;
   text-shadow: var(--outline-width) var(--outline-width) 0 #000,
     calc(var(--outline-width) * -1) calc(var(--outline-width) * -1) 0 #000,
     var(--outline-width) calc(var(--outline-width) * -1) 0 #000,

@@ -168,7 +168,6 @@ defineExpose({
       overflow: auto;
 
       .content {
-        margin-bottom: 20px;
         font-size: 14px;
       }
     }
