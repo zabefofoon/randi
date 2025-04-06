@@ -102,11 +102,11 @@ export class Material5 extends Material {
       magicalDamage: 0,
       range: 0,
       stun: 0,
-      splash: 1,
+      splash: 5,
       cooltime: 0,
       armorPenetration: 0,
       magicPenetration: 0,
-      description: "스플래시 + 1",
+      description: "스플래시 + 5",
     })
   }
 }

@@ -43,7 +43,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   handlePlayerMovement(cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
-    const speed = 160
+    const speed = 120
     let moving = false
 
     if (cursors.left.isDown) {

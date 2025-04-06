@@ -52,8 +52,6 @@ export class Enemies {
 
       const dist = Phaser.Math.Distance.Between(centerX, centerY, enemy.x, enemy.y)
       if (dist <= weaponData.splash + materials["건강"].length * materials["건강"].info.splash) {
-        // 만약 거리 비례 데미지를 적용하고 싶다면:
-
         enemy.takeDamage(weaponData, materials, dist)
       }
 
@@ -117,7 +115,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     if (pathIndex == null) return
 
     // 기본 이동 속도
-    const baseSpeed = 160
+    const baseSpeed = 120
     // 플레이어와 적 사이의 거리를 측정
     const distanceToPlayer = Phaser.Math.Distance.Between(this.x, this.y, player.x, player.y)
     // 플레이어가 가까우면 느리게 이동: 예시로, 200픽셀 이내면 속도를 50%로 줄임
@@ -204,7 +202,15 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
               materials["운"].info.armorPenetration * materials["운"].length
           )
         : this.calculateReducedDamage(
-            +(weaponData.physicalDamage * (1 - distInSplash / weaponData.splash)).toFixed(2) +
+            +(
+              weaponData.physicalDamage *
+              Math.max(
+                1,
+                1 -
+                  distInSplash /
+                    (weaponData.splash + materials["건강"].length * materials["건강"].info.splash)
+              )
+            ).toFixed(2) +
               materials["힘"].info.physicalDamage * materials["힘"].length,
             this.physicalDefence,
             weaponData.physicalPenetration +
@@ -221,12 +227,21 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
               materials["지혜"].info.armorPenetration * materials["지혜"].length
           )
         : this.calculateReducedDamage(
-            +(weaponData.magicalDamage * (1 - distInSplash / weaponData.splash)).toFixed(2) +
+            +(
+              weaponData.magicalDamage *
+              Math.max(
+                1,
+                1 -
+                  distInSplash /
+                    (weaponData.splash + materials["건강"].length * materials["건강"].info.splash)
+              )
+            ).toFixed(2) +
               materials["지식"].info.magicalDamage * materials["지식"].length,
             this.magicalDefence,
             weaponData.magicalDamage +
               materials["지혜"].info.armorPenetration * materials["지혜"].length
           )
+
     const damage = _physicalDamage + _magicalDamage
 
     this.setData("hp", currentHP - damage)
