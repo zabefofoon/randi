@@ -16,7 +16,16 @@
               src="https://picsum.photos/32?id=1"
               class="border border-transparent | w-[5cqw] aspect-square"
               :class="[{ '!border-orange-500': selectedIndex === index }]" />
-            <figcaption class="text-[1.5cqw]">
+            <figcaption
+              class="text-outline | text-[1.5cqw] font-bold"
+              :class="{
+                'text-white': weapon?.level === 1,
+                'text-purple-600': weapon?.level === 2,
+                'text-yellow-400': weapon?.level === 3,
+                'text-fuchsia-400': weapon?.level === 4,
+                'text-red-400': weapon?.level === 5,
+                'text-blue-500': weapon?.level === 6,
+              }">
               {{ weapon?.name ?? "????" }}
             </figcaption>
           </figure>
@@ -24,54 +33,54 @@
         <div
           v-if="selectedWeapon"
           class="mt-[1cqw]">
-          <h3 class="text-center text-[1.5cqw]">
+          <h3 class="text-outline | text-center text-[1.5cqw] font-bold">
             {{ selectedWeapon.description }}
           </h3>
-          <div class="mt-[0.5cqw] | grid grid-cols-4 gap-[1cqw] text-[1.5cqw]">
+          <div class="mt-[0.5cqw] | grid grid-cols-4 gap-[0.5cqw] text-[1.2cqw]">
             <div
               v-if="selectedWeapon.physicalDamage"
               class="text-center">
-              - 물리데미지: {{ selectedWeapon.physicalDamage }}
+              물리데미지: {{ selectedWeapon.physicalDamage }}
             </div>
             <div
               v-if="selectedWeapon.magicalDamage"
               class="text-center">
-              - 마법데미지: {{ selectedWeapon.magicalDamage }}
+              마법데미지: {{ selectedWeapon.magicalDamage }}
             </div>
             <div
               v-if="selectedWeapon.physicalPenetration"
               class="text-center">
-              - 물리관통력: {{ selectedWeapon.physicalPenetration }}
+              물리관통력: {{ selectedWeapon.physicalPenetration }}
             </div>
             <div
               v-if="selectedWeapon.magicalPenetration"
               class="text-center">
-              - 마법관통력: {{ selectedWeapon.magicalPenetration }}
+              마법관통력: {{ selectedWeapon.magicalPenetration }}
             </div>
             <div
               v-if="selectedWeapon.range"
               class="text-center">
-              - 공격거리: {{ selectedWeapon.range }}
+              공격거리: {{ selectedWeapon.range }}
             </div>
             <div
               v-if="selectedWeapon.splash"
               class="text-center">
-              - 스플래쉬: {{ selectedWeapon.splash }}
+              스플래쉬: {{ selectedWeapon.splash }}
             </div>
             <div
               v-if="selectedWeapon.cooltime"
               class="text-center">
-              - 쿨타임: {{ selectedWeapon.cooltime }}
+              쿨타임: {{ selectedWeapon.cooltime }}
             </div>
             <div
               v-if="selectedWeapon.targetLength"
               class="text-center">
-              - 공격갯수: {{ selectedWeapon.targetLength }}
+              공격갯수: {{ selectedWeapon.targetLength }}
             </div>
             <div
               v-if="selectedWeapon.stun"
               class="text-center">
-              - 스턴: {{ selectedWeapon.stun }}
+              스턴: {{ selectedWeapon.stun }}
             </div>
             <div
               v-if="selectedWeapon.slow"
@@ -83,13 +92,23 @@
             <button
               v-for="item in selectedWeapon.nexts"
               :key="item.name"
-              class="mt-[1cqw] | bg-[rgba(0_0_0_/_50%)] | py-[0.5cqw] | rounded-full"
+              class="flex flex-col gap-[0.2cqw] | mt-[1cqw] | bg-[rgba(0_0_0_/_50%)] | py-[0.5cqw] | rounded-full"
               @click="getNextWeapon(item)">
-              <div class="text-[1.5cqw]">
+              <div
+                class="text-outline text-[1.5cqw] font-bold"
+                :class="{
+                  'text-white': item.level === 1,
+                  'text-purple-600': item.level === 2,
+                  'text-yellow-400': item.level === 3,
+                  'text-fuchsia-400': item.level === 4,
+                  'text-red-400': item.level === 5,
+                  'text-blue-500': item.level === 6,
+                }">
                 {{ item.name }}
                 <span>조합</span>
               </div>
-              <div class="flex justify-center | text-[1.2cqw]">
+              <div class="text-[1.1cqw]">{{ item.description }}</div>
+              <div class="flex justify-center | text-[1.1cqw]">
                 (
                 <div
                   v-for="(material, index) in item.materials"
@@ -123,11 +142,14 @@ import {
   Book,
   CutterKnife,
   DoubleGun,
+  DoubleRing,
+  FlowerRing,
   Hammer,
   Knife,
   MagicGun,
   Ring,
   ShotGun,
+  SilverPlateRing,
   SpringBook,
   SushiKnife,
   ThickBook,
@@ -183,7 +205,7 @@ const getNextWeapon = (item: WeaponNext) => {
   item.materials.forEach((material) => {
     props.materials[material.name].length -= material.length
   })
-  console.log(item)
+
   if (item.name === "일반쌍권총") props.weapons.addWeapon(0, DoubleGun.of())
   if (item.name === "마법권총") props.weapons.addWeapon(0, MagicGun.of())
   if (item.name === "산탄총") props.weapons.addWeapon(0, ShotGun.of())
@@ -193,5 +215,8 @@ const getNextWeapon = (item: WeaponNext) => {
   if (item.name === "두꺼운책") props.weapons.addWeapon(2, ThickBook.of())
   if (item.name === "얇은책") props.weapons.addWeapon(2, ThinBook.of())
   if (item.name === "스프링책") props.weapons.addWeapon(2, SpringBook.of())
+  if (item.name === "더블반지") props.weapons.addWeapon(3, DoubleRing.of())
+  if (item.name === "은도금") props.weapons.addWeapon(3, SilverPlateRing.of())
+  if (item.name === "꽃반지") props.weapons.addWeapon(3, FlowerRing.of())
 }
 </script>

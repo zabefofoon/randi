@@ -15,6 +15,8 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       .setData("hp", this.maxLife)
       .setData("hpBar", scene.add.graphics())
       .setScale(0.75)
+
+    this.body?.setSize(50, 88).setOffset(36, 48)
   }
 
   get isIdle() {

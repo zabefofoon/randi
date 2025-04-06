@@ -5,6 +5,8 @@ import type { Player } from "./Player"
 export interface WeaponNext {
   name: string
   materials: { name: Material["name"]; length: number }[]
+  description: string
+  level: number
 }
 
 export class Weapons {
@@ -82,6 +84,7 @@ export abstract class Weapon {
   magicalDamage = 0
 
   allCooltime = 0
+  level = 0
 
   constructor(weapon: ClassToRaw<Weapon>) {
     Object.assign(this, weapon)
@@ -100,7 +103,7 @@ export abstract class Weapon {
     // 플레이어 위치에서 탄환 생성
     const weapon = this.group?.create(
       player.x,
-      player.y,
+      player.y + 20,
       this.name
     ) as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
     if (!weapon) return
@@ -151,6 +154,7 @@ export class Gun extends Weapon {
   constructor(group?: Phaser.Physics.Arcade.Group) {
     super({
       group,
+      level: 1,
       name: "일반권총",
       description: "빠른 연사와 적당한 데미지를 가집니다.",
       cooltime: 1000,
@@ -170,6 +174,8 @@ export class Gun extends Weapon {
       nexts: [
         {
           name: "일반쌍권총",
+          level: 2,
+          description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
           materials: [
             {
               name: "힘",
@@ -183,6 +189,8 @@ export class Gun extends Weapon {
         },
         {
           name: "마법권총",
+          level: 2,
+          description: "빠른 연사와 적당한 데미지를 가지며, 적을 느리게 합니다.",
           materials: [
             {
               name: "지식",
@@ -196,6 +204,8 @@ export class Gun extends Weapon {
         },
         {
           name: "산탄총",
+          level: 3,
+          description: "느린 연사를 가지지만 적당한 데미지를 가지며, 주변 적도 데미지를 받습니다.",
           materials: [
             {
               name: "건강",
@@ -216,6 +226,7 @@ export class DoubleGun extends Weapon {
   constructor(group?: Phaser.Physics.Arcade.Group) {
     super({
       group,
+      level: 2,
       name: "일반쌍권총",
       description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
       cooltime: 1000,
@@ -245,6 +256,7 @@ export class MagicGun extends Weapon {
   constructor(group?: Phaser.Physics.Arcade.Group) {
     super({
       group,
+      level: 2,
       name: "마법권총",
       description: "빠른 연사와 적당한 데미지를 가지며, 적을 느리게 합니다.",
       cooltime: 1000,
@@ -274,6 +286,7 @@ export class ShotGun extends Weapon {
   constructor(group?: Phaser.Physics.Arcade.Group) {
     super({
       group,
+      level: 3,
       name: "산탄총",
       description: "느린 연사를 가지지만 적당한 데미지를 가지며, 주변 적도 데미지를 받습니다.",
       cooltime: 2000,
@@ -286,7 +299,7 @@ export class ShotGun extends Weapon {
       targetLength: 1,
       allTargetLength: 0,
       lastAttackTime: 0,
-      splash: 50,
+      splash: 100,
       stun: 0, // 1000이어야 1초
       slow: 0, // 0.1이면 10%
       allCooltime: 0, // 0.01이 1%
@@ -302,6 +315,7 @@ export class ShotGun extends Weapon {
 export class Knife extends Weapon {
   constructor(group?: Phaser.Physics.Arcade.Group) {
     super({
+      level: 1,
       name: "식도",
       description: "근접 무기. 데미지는 크지만 사정거리가 짧습니다.",
       cooltime: 1000,
@@ -322,6 +336,8 @@ export class Knife extends Weapon {
       nexts: [
         {
           name: "커터칼",
+          level: 2,
+          description: "근접 무기. 데미지는 작지만 연사가 빠릅니다.",
           materials: [
             {
               name: "민첩",
@@ -331,6 +347,8 @@ export class Knife extends Weapon {
         },
         {
           name: "회칼",
+          level: 2,
+          description: "근접 무기. 근처 적도 데미지를 받습니다",
           materials: [
             {
               name: "힘",
@@ -344,6 +362,8 @@ export class Knife extends Weapon {
         },
         {
           name: "망치",
+          level: 3,
+          description: "근접 무기. 데미지가 강력합니다",
           materials: [
             {
               name: "힘",
@@ -363,6 +383,7 @@ export class Knife extends Weapon {
 export class CutterKnife extends Weapon {
   constructor(group?: Phaser.Physics.Arcade.Group) {
     super({
+      level: 2,
       name: "커터칼",
       description: "근접 무기. 데미지는 작지만 연사가 빠릅니다.",
       cooltime: 500,
@@ -392,6 +413,7 @@ export class CutterKnife extends Weapon {
 export class SushiKnife extends Weapon {
   constructor(group?: Phaser.Physics.Arcade.Group) {
     super({
+      level: 2,
       name: "회칼",
       description: "근접 무기. 근처 적도 데미지를 받습니다",
       cooltime: 1000,
@@ -404,7 +426,7 @@ export class SushiKnife extends Weapon {
       targetLength: 1,
       allTargetLength: 0,
       lastAttackTime: 0,
-      splash: 50,
+      splash: 100,
       stun: 0,
       slow: 0,
       allCooltime: 0, // 0.01이 1%
@@ -421,11 +443,12 @@ export class SushiKnife extends Weapon {
 export class Hammer extends Weapon {
   constructor(group?: Phaser.Physics.Arcade.Group) {
     super({
+      level: 3,
       name: "망치",
       description: "근접 무기. 데미지가 강력합니다",
       cooltime: 1000,
       speed: 500,
-      range: 50,
+      range: 75,
       physicalDamage: 10,
       magicalDamage: 0,
       physicalPenetration: 1,
@@ -450,6 +473,7 @@ export class Hammer extends Weapon {
 export class Book extends Weapon {
   constructor(group?: Phaser.Physics.Arcade.Group) {
     super({
+      level: 1,
       name: "공책",
       description: "강력한 마법공격",
       cooltime: 2000,
@@ -470,6 +494,8 @@ export class Book extends Weapon {
       nexts: [
         {
           name: "두꺼운책",
+          description: "적을 동시에 두명 공격. 가지고만 있어도 전체 연사속도가 빨라집니다.",
+          level: 2,
           materials: [
             {
               name: "운",
@@ -483,6 +509,8 @@ export class Book extends Weapon {
         },
         {
           name: "얇은책",
+          level: 2,
+          description: "적을 동시에 두명 공격. 가지고만 있어도 적의 이동속도가 느려집니다.",
           materials: [
             {
               name: "카리스마",
@@ -496,6 +524,8 @@ export class Book extends Weapon {
         },
         {
           name: "스프링책",
+          level: 3,
+          description: "적을 동시에 두명 공격. 공격당한 적은 스턴에 빠집니다.",
           materials: [
             {
               name: "지혜",
@@ -515,6 +545,7 @@ export class Book extends Weapon {
 export class ThickBook extends Weapon {
   constructor(group?: Phaser.Physics.Arcade.Group) {
     super({
+      level: 2,
       name: "두꺼운책",
       description: "적을 동시에 두명 공격. 가지고만 있어도 전체 연사속도가 빨라집니다.",
       cooltime: 2000,
@@ -544,6 +575,7 @@ export class ThickBook extends Weapon {
 export class ThinBook extends Weapon {
   constructor(group?: Phaser.Physics.Arcade.Group) {
     super({
+      level: 2,
       name: "얇은책",
       description: "적을 동시에 두명 공격. 가지고만 있어도 적의 이동속도가 느려집니다.",
       cooltime: 2000,
@@ -573,6 +605,7 @@ export class ThinBook extends Weapon {
 export class SpringBook extends Weapon {
   constructor(group?: Phaser.Physics.Arcade.Group) {
     super({
+      level: 3,
       name: "스프링책",
       description: "적을 동시에 두명 공격. 공격당한 적은 스턴에 빠집니다.",
       cooltime: 2000,
@@ -602,6 +635,7 @@ export class SpringBook extends Weapon {
 export class Ring extends Weapon {
   constructor(group?: Phaser.Physics.Arcade.Group) {
     super({
+      level: 2,
       name: "반지",
       description: "마법공격",
       cooltime: 2000,
@@ -622,6 +656,8 @@ export class Ring extends Weapon {
       nexts: [
         {
           name: "더블반지",
+          level: 3,
+          description: "마법공격. 가지고만 있어도 전체 쿨타임이 15% 감소합니다.",
           materials: [
             {
               name: "민첩",
@@ -631,6 +667,8 @@ export class Ring extends Weapon {
         },
         {
           name: "은도금반지",
+          level: 3,
+          description: "마법공격. 주변 적들도 같이 공격합니다.",
           materials: [
             {
               name: "교양",
@@ -640,6 +678,8 @@ export class Ring extends Weapon {
         },
         {
           name: "꽃반지",
+          level: 3,
+          description: "모든 무기의 공격 갯수를 한개씩 증가시킵니다.",
           materials: [
             {
               name: "운",
@@ -659,6 +699,7 @@ export class Ring extends Weapon {
 export class DoubleRing extends Weapon {
   constructor(group?: Phaser.Physics.Arcade.Group) {
     super({
+      level: 3,
       name: "더블반지",
       description: "마법공격. 가지고만 있어도 전체 쿨타임이 15% 감소합니다.",
       cooltime: 2000,
@@ -681,13 +722,14 @@ export class DoubleRing extends Weapon {
   }
 
   static of(group?: Phaser.Physics.Arcade.Group) {
-    return new Ring(group)
+    return new DoubleRing(group)
   }
 }
 
 export class SilverPlateRing extends Weapon {
   constructor(group?: Phaser.Physics.Arcade.Group) {
     super({
+      level: 3,
       name: "은도금반지",
       description: "마법공격. 주변 적들도 같이 공격합니다.",
       cooltime: 2000,
@@ -700,7 +742,7 @@ export class SilverPlateRing extends Weapon {
       targetLength: 1,
       allTargetLength: 0,
       lastAttackTime: 0,
-      splash: 50,
+      splash: 75,
       stun: 0,
       slow: 0,
       allCooltime: 0, // 0.01이 1%
@@ -710,13 +752,14 @@ export class SilverPlateRing extends Weapon {
   }
 
   static of(group?: Phaser.Physics.Arcade.Group) {
-    return new Ring(group)
+    return new SilverPlateRing(group)
   }
 }
 
 export class FlowerRing extends Weapon {
   constructor(group?: Phaser.Physics.Arcade.Group) {
     super({
+      level: 3,
       name: "꽃반지",
       description: "모든 무기의 공격 갯수를 한개씩 증가시킵니다.",
       cooltime: 2000,
@@ -739,6 +782,6 @@ export class FlowerRing extends Weapon {
   }
 
   static of(group?: Phaser.Physics.Arcade.Group) {
-    return new Ring(group)
+    return new FlowerRing(group)
   }
 }

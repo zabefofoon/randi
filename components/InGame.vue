@@ -223,7 +223,6 @@ onMounted(() => {
 
             if (playerHP < 1) {
               scene.physics.pause()
-              scene.data.set("gameover", true)
               isShowGameOverPopup.value = true
             }
 
@@ -234,7 +233,6 @@ onMounted(() => {
       },
       update(this: Phaser.Scene, time: number) {
         const scene = this
-        if (scene.data.get("gameover")) return
         if (scene.data.get("paused")) return
 
         // 플레이어 이동
@@ -243,7 +241,7 @@ onMounted(() => {
 
         // 적 이동
         enemies.children.forEach((enemy) => {
-          enemy.moveEnemyAlongPath(player, weapons.value!.weapons)
+          enemy.moveEnemyAlongPath(player, weapons.value!.weapons, materials.value)
           enemy.updateEnemyHpBar()
         })
 
@@ -266,13 +264,14 @@ onMounted(() => {
               )
             )
               player.getClosestEnemies(enemies, weapon.targetLength).forEach((enemy) => {
-                const distance = Phaser.Math.Distance.Between(player.x, player.y, enemy.x, enemy.y)
-
-                if (
-                  distance <=
-                  weapon.range + materials.value["교양"].length * materials.value["교양"].info.range
+                const distance = Phaser.Math.Distance.Between(
+                  player.x,
+                  player.y + 20,
+                  enemy.x,
+                  enemy.y
                 )
-                  weapon.fireHomingWeapon(time, player, enemy)
+
+                if (distance <= weapon.range) weapon.fireHomingWeapon(time, player, enemy)
               })
           })
         }

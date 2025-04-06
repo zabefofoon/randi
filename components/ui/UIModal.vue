@@ -130,6 +130,10 @@ defineExpose({
       font-size: 32px;
       font-weight: bold;
 
+      &:empty {
+        display: none;
+      }
+
       @include global.mobile {
         padding: 0 16px;
       }
@@ -173,6 +177,10 @@ defineExpose({
       display: flex;
       gap: 10px;
       width: 100%;
+
+      &:empty {
+        display: none;
+      }
     }
   }
 }

@@ -110,7 +110,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     return current
   }
 
-  moveEnemyAlongPath(player: Player, weapons: (Weapon | undefined)[]) {
+  moveEnemyAlongPath(player: Player, weapons: (Weapon | undefined)[], materials: Materials) {
     if (this.getData("stunned")) return
 
     const pathIndex = this.getData("pathIndex") as number
@@ -122,9 +122,13 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     const distanceToPlayer = Phaser.Math.Distance.Between(this.x, this.y, player.x, player.y)
     // 플레이어가 가까우면 느리게 이동: 예시로, 200픽셀 이내면 속도를 50%로 줄임
     const slowRange = 200
+
+    const weaponSlows = weapons.reduce((acc, current) => acc + (current?.slow ?? 0), 0)
+    const materialSlows = materials["교양"].length / 100
+
     const speed =
       distanceToPlayer < slowRange
-        ? baseSpeed * (1 - weapons.reduce((acc, current) => acc + (current?.slow ?? 0), 0))
+        ? baseSpeed * (1 - Math.min(0.9, weaponSlows + materialSlows))
         : baseSpeed
 
     const target = this.pathes[pathIndex]
@@ -211,19 +215,18 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       distInSplash === undefined
         ? this.calculateReducedDamage(
             weaponData.magicalDamage +
-              materials["지식"].info.physicalDamage * materials["지식"].length,
+              materials["지식"].info.magicalDamage * materials["지식"].length,
             this.magicalDefence,
             weaponData.magicalDamage +
               materials["지혜"].info.armorPenetration * materials["지혜"].length
           )
         : this.calculateReducedDamage(
             +(weaponData.magicalDamage * (1 - distInSplash / weaponData.splash)).toFixed(2) +
-              materials["지식"].info.physicalDamage * materials["지식"].length,
+              materials["지식"].info.magicalDamage * materials["지식"].length,
             this.magicalDefence,
             weaponData.magicalDamage +
               materials["지혜"].info.armorPenetration * materials["지혜"].length
           )
-
     const damage = _physicalDamage + _magicalDamage
 
     this.setData("hp", currentHP - damage)

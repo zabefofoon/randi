@@ -72,7 +72,7 @@ export class Material3 extends Material {
       cooltime: 0,
       armorPenetration: 0,
       magicPenetration: 0,
-      description: "범위 + 1",
+      description: "슬로우 1%",
     })
   }
 }
