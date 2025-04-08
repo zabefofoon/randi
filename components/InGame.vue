@@ -25,18 +25,18 @@
         </div>
 
         <div class="absolute top-[10cqh] left-[0.5cqw]">
-          <div class="flex flex-col items-start | gap-[0.2cqh]">
+          <div class="grid grid-cols-2 items-start | gap-[0.2cqh]">
             <div
               v-for="(material, index) in materials"
               :key="material.info.name"
               class="flex items-center | bg-black rounded-lg | pr-[0.5cqw]">
               <div
-                class="stat-sprites w-[1.5cqw] aspect-square"
+                class="stat-sprites w-[3cqw] aspect-square"
                 :class="`sprite-${Object.keys(materials).findIndex(
                   (item) => item === index
                 )}`"></div>
-              <span class="text-[1cqw] text-white">
-                {{ material.info.name }} {{ material.length }}
+              <span class="text-[2cqw] text-white">
+                {{ material.length }}
               </span>
             </div>
           </div>
@@ -167,6 +167,8 @@ onMounted(() => {
   if (!phaserContainer.value) return
 
   game = new Phaser.Game({
+    pixelArt: true,
+    antialias: false,
     type: Phaser.AUTO,
     width: 960,
     height: 540,
@@ -178,12 +180,15 @@ onMounted(() => {
     physics: {
       default: "arcade",
       arcade: {
-        debug: true,
+        debug: false,
       },
     },
     scene: {
       preload(this: Phaser.Scene) {
         const scene = this
+        scene.load.image("tiles", "/assets/images/mainlevbuild2.png")
+        scene.load.tilemapTiledJSON("map", "/assets/jsons/map.json")
+
         scene.load.image("sky", "/assets/images/sky.png")
         scene.load.spritesheet("playerIdle", "/assets/images/player_idle.png", {
           frameWidth: 128,
@@ -202,8 +207,14 @@ onMounted(() => {
       },
       create(this: Phaser.Scene) {
         scene = this
-        resizeBackground(scene)
-        scene.scale.on("resize", () => resizeBackground(scene))
+
+        const map = scene.make.tilemap({ key: "map" })
+        const tileset = map.addTilesetImage("mainlevbuild2", "tiles")
+        const tileset2 = map.addTilesetImage("mainlevbuild2", "tiles")
+        const tileset3 = map.addTilesetImage("mainlevbuild2", "tiles")
+        if (tileset) map.createLayer("layer1", tileset, 0, 0)
+        if (tileset2) map.createLayer("layer2", tileset2, 0, 0)
+        if (tileset3) map.createLayer("layer3", tileset3, 0, 0)
 
         cursors = scene.input.keyboard!.createCursorKeys()
 
@@ -212,8 +223,8 @@ onMounted(() => {
         player.createPlayerAnimation()
         enemies = new Enemies(scene, remainnedEnemies)
         weapons.value = new Weapons(scene, enemies, materials.value)
-        // 애니메이션
 
+        // 애니메이션
         scene.anims.create({
           key: "enemy-walk",
           frames: scene.anims.generateFrameNumbers("enemy", { start: 0, end: 7 }), // 프레임 범위는 이미지에 맞게
@@ -222,14 +233,19 @@ onMounted(() => {
         })
 
         const walls = scene.physics.add.staticGroup()
-        walls.create(160, 130, "").setOrigin(0, 0).setDisplaySize(10, 120).refreshBody()
-        walls.create(160, 300, "").setOrigin(0, 0).setDisplaySize(10, 100).refreshBody()
-        walls.create(160, 400, "").setOrigin(0, 0).setDisplaySize(280, 10).refreshBody()
-        walls.create(525, 400, "").setOrigin(0, 0).setDisplaySize(275, 10).refreshBody()
-        walls.create(790, 300, "").setOrigin(0, 0).setDisplaySize(10, 100).refreshBody()
-        walls.create(790, 130, "").setOrigin(0, 0).setDisplaySize(10, 120).refreshBody()
-        walls.create(160, 130, "").setOrigin(0, 0).setDisplaySize(275, 10).refreshBody()
-        walls.create(520, 130, "").setOrigin(0, 0).setDisplaySize(275, 10).refreshBody()
+        walls.create(160, 130, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(10, 90).refreshBody()
+        walls.create(160, 310, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(10, 90).refreshBody()
+        walls.create(160, 390, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(270, 10).refreshBody()
+        walls.create(525, 390, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(290, 10).refreshBody()
+        walls.create(805, 300, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(10, 100).refreshBody()
+        walls.create(805, 130, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(10, 120).refreshBody()
+        walls.create(160, 130, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(275, 10).refreshBody()
+        walls.create(530, 130, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(285, 10).refreshBody()
+
+        walls.create(33, 30, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(895, 10).refreshBody()
+        walls.create(33, 30, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(10, 480).refreshBody()
+        walls.create(918, 30, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(10, 480).refreshBody()
+        walls.create(33, 499, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(895, 10).refreshBody()
 
         scene.physics.add.collider(player, walls)
 
@@ -317,20 +333,6 @@ onMounted(() => {
     },
   })
 })
-
-const resizeBackground = (scene: Phaser.Scene) => {
-  const gameWidth = scene.scale.width
-  const gameHeight = scene.scale.height
-
-  // bg가 이미 만들어져 있다고 가정
-  // 없으면 한번만 생성하거나, 전역에 두고 관리
-  if (!scene.bg) {
-    scene.bg = scene.add.image(0, 0, "sky").setOrigin(0, 0)
-  }
-
-  // 다시 화면 크기에 맞춰 사이즈 조정
-  scene.bg.setDisplaySize(gameWidth, gameHeight)
-}
 
 onBeforeUnmount(() => {
   if (game) game.destroy(true)
@@ -421,7 +423,7 @@ watch(isShowGameOverPopup, (value) => {
 
     @for $i from 0 through 7 {
       &.sprite-#{$i} {
-        background-position: #{-1.5 * $i}cqw 0;
+        background-position: #{-3 * $i}cqw 0;
       }
     }
 
