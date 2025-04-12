@@ -19,20 +19,20 @@ export class Enemies {
 
     this.pathes = [
       { x: gameWidth * 0.15, y: gameHeight * 0.2 },
-      { x: gameWidth * 0.15, y: gameHeight * 0.8 },
-      { x: gameWidth * 0.85, y: gameHeight * 0.8 },
-      { x: gameWidth * 0.85, y: gameHeight * 0.2 },
+      { x: gameWidth * 0.15, y: gameHeight * 0.78 },
+      { x: gameWidth * 0.87, y: gameHeight * 0.78 },
+      { x: gameWidth * 0.87, y: gameHeight * 0.18 },
     ]
     this.baseSpeed = 160
   }
   get children() {
     return this.group.getChildren() as Enemy[]
   }
-  spawnEnemy(round: number) {
+  spawnEnemy(round: number, coins: Ref<number>) {
     const { x, y } = this.pathes[0]
 
     // 새 적 생성
-    this.group.add(new Enemy(this.scene, x, y, "enemy", this.pathes, round))
+    this.group.add(new Enemy(this.scene, x, y, "enemy", this.pathes, round, coins))
 
     this.remainnedEnemies.value++
   }
@@ -41,8 +41,9 @@ export class Enemies {
     enemy.takeDamage(weapon, materials)
 
     // 적 HP가 0 이하라면 제거
-    if (!enemy.getData("hp") || enemy.getData("hp") < 0)
-      (this.remainnedEnemies as unknown as number)--
+    if (!enemy.getData("hp") || enemy.getData("hp") < 0) {
+      ;(this.remainnedEnemies as unknown as number)--
+    }
   }
 
   applySplashDamage(centerX: number, centerY: number, weaponData: Weapon, materials: Materials) {
@@ -72,20 +73,21 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     y: number,
     key: string,
     paths: { x: number; y: number }[],
-    round: number
+    private round: number,
+    private coins: Ref<number>
   ) {
     super(scene, x, y, key)
 
     scene.add.existing(this)
     scene.physics.add.existing(this)
 
-    this.setData("hp", this.fibonacci(round) * 10)
+    this.setData("hp", this.fibonacci(this.round) * 10)
       .setData("pathIndex", 0)
-      .setData("maxHp", this.fibonacci(round) * 10)
+      .setData("maxHp", this.fibonacci(this.round) * 10)
       .setData("hpBar", this.scene.add.graphics())
       .setScale(0.75)
-    this.physicalDefence = round
-    this.magicalDefence = round
+    this.physicalDefence = this.round
+    this.magicalDefence = this.round
 
     this.pathes = paths
 
@@ -268,6 +270,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     // 적 HP가 0 이하라면 제거
     if (this.getData("hp") <= 0) {
+      ;(this.coins as unknown as number) += this.round
       const hpBar = this.getData("hpBar") as Phaser.GameObjects.Graphics
       if (hpBar) hpBar.destroy()
       this.destroy()

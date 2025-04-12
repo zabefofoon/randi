@@ -3,6 +3,13 @@
     <ModalGameOver
       v-if="isShowGameOverPopup"
       @close="isShowGameOverPopup = false" />
+    <ModalGamble
+      v-if="isShowGamblePopup"
+      v-model:selected-index="selectedGambleIndex"
+      v-model:coins="coins"
+      :weapons="weapons"
+      :materials="materials"
+      @close="isShowGamblePopup = false" />
     <ModalWeapons
       v-if="isShowWeaponsPopup"
       v-model:selected-index="selectedWeaponIndex"
@@ -18,27 +25,47 @@
     <div class="content | relative | aspect-video max-w-full max-h-full | bg-white">
       <main class="relative | w-full h-full | flex flex-col justify-center items-center">
         <div
-          class="w-full | flex items-center justify-between | px-[0.5cqw] | absolute top-[0.5cqw] | text-[1.5cqw] text-white">
-          <div>ROUND {{ round }}</div>
-          <div>00:{{ `${remainnedTime}`.padStart(2, "0") }}</div>
-          <div>{{ remainnedEnemies }} / {{ enemyCountDeadline }}</div>
+          class="w-full | flex flex-col gap-[0.5cqh] | px-[0.5cqw] | absolute top-[0.5cqw] | text-white font-bold">
+          <div class="flex items-center gap-[1cqw] | bg-black w-fit | px-[0.5cqw] rounded-lg">
+            <span class="text-[1.5cqw]">ROUND {{ round }}</span>
+            <span class="text-[1.2cqw]">00:{{ `${remainnedTime}`.padStart(2, "0") }}</span>
+          </div>
+          <div class="text-[1.5cqw] bg-black w-fit | px-[0.5cqw] rounded-lg">
+            <span
+              :class="{
+                'text-red-500': remainnedEnemies > enemyCountDeadline,
+              }"
+              >{{ remainnedEnemies }}</span
+            >
+            / {{ enemyCountDeadline }}
+          </div>
         </div>
 
-        <div class="absolute top-[10cqh] left-[0.5cqw]">
+        <div class="absolute top-[0.5cqw] right-[0.5cqw]">
           <div class="grid grid-cols-2 items-start | gap-[0.2cqh]">
             <div
               v-for="(material, index) in materials"
               :key="material.info.name"
               class="flex items-center | bg-black rounded-lg | pr-[0.5cqw]">
               <div
-                class="stat-sprites w-[3cqw] aspect-square"
-                :class="`sprite-${Object.keys(materials).findIndex(
-                  (item) => item === index
-                )}`"></div>
-              <span class="text-[2cqw] text-white">
+                class="stat-sprites | w-[3cqw] aspect-square"
+                :style="{
+                  backgroundPosition: etcUtil.getSpritePosition(
+                    Object.keys(materials).findIndex((item) => item === index)
+                  ),
+                }"></div>
+              <span class="text-[1.8cqw] text-white">
                 {{ material.length }}
               </span>
             </div>
+          </div>
+          <div class="bg-black mt-[0.2cqh] | flex items-center justify-between | pr-[0.5cqw]">
+            <div
+              class="stat-sprites coin | w-[3cqw] aspect-square"
+              :style="{
+                backgroundPosition: etcUtil.getSpritePosition(11),
+              }"></div>
+            <span class="text-[1.3cqw] text-white"> {{ stringUtil.attachComma(coins) }} </span>
           </div>
         </div>
 
@@ -53,8 +80,13 @@
         <div class="flex items-center gap-[1cqw] | absolute bottom-[2cqw] right-[2cqw]">
           <!-- 무기버튼 -->
           <button
-            class="flex items-center gap-[0.5cqw] bg-orange-700 | h-fit pr-[1.5cqw] pl-[0.5cqw] py-[0.2cqw] | rounded-lg border-black border-[0.14cqw]">
-            <div class="stat-sprites gambling | w-[3cqw] aspect-square"></div>
+            class="flex items-center gap-[0.5cqw] bg-orange-700 | h-fit pr-[1.5cqw] pl-[0.5cqw] py-[0.2cqw] | rounded-lg border-black border-[0.14cqw]"
+            @click="isShowGamblePopup = true">
+            <div
+              class="stat-sprites | w-[3cqw] aspect-square"
+              :style="{
+                backgroundPosition: etcUtil.getSpritePosition(10),
+              }"></div>
             <span class="block text-white | text-[1.8cqw] font-bold text-outline leading-none">
               도박
             </span>
@@ -65,7 +97,11 @@
           <button
             class="flex items-center gap-[0.5cqw] bg-blue-950 | h-fit pr-[1.5cqw] pl-[0.5cqw] py-[0.2cqw] | rounded-lg border-black border-[0.14cqw]"
             @click="isShowWeaponsPopup = true">
-            <div class="stat-sprites weapons | w-[3cqw] aspect-square"></div>
+            <div
+              class="stat-sprites | w-[3cqw] aspect-square"
+              :style="{
+                backgroundPosition: etcUtil.getSpritePosition(8),
+              }"></div>
             <span class="block text-white | text-[1.8cqw] font-bold text-outline leading-none">
               무기
             </span>
@@ -80,7 +116,11 @@
               'bg-blue-950': selectChance <= 0,
             }"
             @click="isShowMaterialsPopup = true">
-            <div class="stat-sprites stats | w-[3cqw] aspect-square"></div>
+            <div
+              class="stat-sprites | w-[3cqw] aspect-square"
+              :style="{
+                backgroundPosition: etcUtil.getSpritePosition(9),
+              }"></div>
             <span class="block | text-white text-[1.8cqw] font-bold text-outline leading-none">
               스텟
             </span>
@@ -157,11 +197,14 @@ const activeJoystick = ref<number>()
 const isShowMaterialsPopup = ref(false)
 const isShowWeaponsPopup = ref(false)
 const isShowGameOverPopup = ref(false)
+const isShowGamblePopup = ref(false)
 
 const gachaChance = ref(2)
 const selectChance = ref(1)
+const coins = ref(10)
 
 const selectedWeaponIndex = ref(0)
+const selectedGambleIndex = ref(0)
 let scene: Phaser.Scene
 onMounted(() => {
   if (!phaserContainer.value) return
@@ -275,7 +318,7 @@ onMounted(() => {
             }
 
             if (46 > remainnedTime.value && remainnedTime.value > 35)
-              enemies.spawnEnemy(round.value)
+              enemies.spawnEnemy(round.value, coins)
           },
         })
       },
@@ -394,6 +437,15 @@ watch(isShowWeaponsPopup, (value) => {
     scene.physics.resume()
   }
 })
+watch(isShowGamblePopup, (value) => {
+  if (value) {
+    scene.data.set("paused", true)
+    scene.physics.pause()
+  } else {
+    scene.data.set("paused", false)
+    scene.physics.resume()
+  }
+})
 watch(isShowGameOverPopup, (value) => {
   if (value) {
     scene.data.set("paused", true)
@@ -414,30 +466,6 @@ watch(isShowGameOverPopup, (value) => {
   @media (aspect-ratio <= 16 / 9) {
     width: 100%;
     height: auto;
-  }
-
-  .stat-sprites {
-    background: url("/assets/images/stats_sprite.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-
-    @for $i from 0 through 7 {
-      &.sprite-#{$i} {
-        background-position: #{-3 * $i}cqw 0;
-      }
-    }
-
-    &.stats {
-      background-position: -27cqw 0;
-    }
-
-    &.weapons {
-      background-position: -24cqw 0;
-    }
-
-    &.gambling {
-      background-position: -30cqw 0;
-    }
   }
 }
 </style>

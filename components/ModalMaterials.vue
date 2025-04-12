@@ -17,7 +17,11 @@
             @click="select(Object.keys(materials).findIndex((item) => item === index))">
             <div
               class="stat-sprites w-[5cqw] aspect-square"
-              :class="`sprite-${Object.keys(materials).findIndex((item) => item === index)}`"></div>
+              :style="{
+                backgroundPosition: etcUtil.getSpritePosition(
+                  Object.keys(materials).findIndex((item) => item === index)
+                ),
+              }"></div>
             <figcaption class="flex flex-col items-center">
               <span class="text-outline text-[1.5cqw] font-bold">{{ material.info.name }}</span>
               <span class="text-[1.1cqw]">{{ material.info.description }}</span>
@@ -113,18 +117,6 @@ const select = (index: number) => {
 
 .pop-animate {
   animation: pop-rotate 400ms ease;
-}
-
-.stat-sprites {
-  background: url("/assets/images/stats_sprite.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-
-  @for $i from 0 through 7 {
-    &.sprite-#{$i} {
-      background-position: #{-5 * $i}cqw 0;
-    }
-  }
 }
 
 @keyframes pop-rotate {

@@ -73,9 +73,15 @@ body {
 }
 
 .text-outline {
-  --outline-width: 0.15cqw;
-  text-shadow: var(--outline-width) var(--outline-width) 0 #000,
-    calc(var(--outline-width) * -1) calc(var(--outline-width) * -1) 0 #000,
-    var(--outline-width) calc(var(--outline-width) * -1) 0 #000,
-    calc(var(--outline-width) * -1) var(--outline-width) 0 #000;
+  --outline-width: 0.12vw;
+  text-shadow: var(--outline-width) var(--outline-width) 1px #000,
+    calc(var(--outline-width) * -1) calc(var(--outline-width) * -1) 1px #000,
+    var(--outline-width) calc(var(--outline-width) * -1) 1px #000,
+    calc(var(--outline-width) * -1) var(--outline-width) 1px #000;
+}
+
+.stat-sprites {
+  background: url("/assets/images/stats_sprite.png");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
