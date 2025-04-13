@@ -1,4 +1,5 @@
 import type { Enemies, Enemy } from "./Enemies"
+import type { Enforces } from "./Enforces"
 import type { Material, Materials } from "./Material"
 import type { Player } from "./Player"
 
@@ -14,11 +15,13 @@ export class Weapons {
   scene: Phaser.Scene
   enemies: Enemies
   materials: Materials
+  enforces: Enforces
 
-  constructor(scene: Phaser.Scene, enemies: Enemies, materials: Materials) {
+  constructor(scene: Phaser.Scene, enemies: Enemies, materials: Materials, enforces: Enforces) {
     this.scene = scene
     this.enemies = enemies
     this.materials = materials
+    this.enforces = enforces
   }
 
   addWeapon(index: number, weapon: Weapon) {
@@ -52,8 +55,8 @@ export class Weapons {
   ) {
     const weapon = weaponObj as Phaser.Physics.Arcade.Sprite
     const enemy = enemyObj as Enemy
-    this.enemies.takeDamage(enemy, weaponData, this.materials)
-    this.enemies.applySplashDamage(weapon.x, weapon.y, weaponData, this.materials)
+    this.enemies.takeDamage(enemy, weaponData, this.materials, this.enforces)
+    this.enemies.applySplashDamage(weapon.x, weapon.y, weaponData, this.materials, this.enforces)
 
     // 탄환 제거
     weaponObj.destroy()

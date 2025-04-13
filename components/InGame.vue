@@ -9,6 +9,7 @@
       v-model:coins="coins"
       :weapons="weapons"
       :materials="materials"
+      :enforces="enforces"
       @close="isShowGamblePopup = false" />
     <ModalWeapons
       v-if="isShowWeaponsPopup"
@@ -42,31 +43,55 @@
         </div>
 
         <div class="absolute top-[0.5cqw] right-[0.5cqw]">
+          <!-- 스텟표시 -->
           <div class="grid grid-cols-2 items-start | gap-[0.2cqh]">
             <div
               v-for="(material, index) in materials"
               :key="material.info.name"
               class="flex items-center | bg-black rounded-lg | pr-[0.5cqw]">
               <div
-                class="stat-sprites | w-[3cqw] aspect-square"
+                class="stat-sprites | w-[2.5cqw] aspect-square"
                 :style="{
                   backgroundPosition: etcUtil.getSpritePosition(
                     Object.keys(materials).findIndex((item) => item === index)
                   ),
                 }"></div>
-              <span class="text-[1.8cqw] text-white">
+              <span class="text-[1.5cqw] text-white">
                 {{ material.length }}
               </span>
             </div>
           </div>
-          <div class="bg-black mt-[0.2cqh] | flex items-center justify-between | pr-[0.5cqw]">
+          <!-- 스텟표시 -->
+
+          <!-- 강화표시 -->
+          <div class="mt-[0.2cqh] | flex flex-col gap-[0.2cqh]">
             <div
-              class="stat-sprites coin | w-[3cqw] aspect-square"
+              v-for="(enforce, index) in enforces?.items"
+              :key="enforce.name"
+              class="bg-black | flex items-center justify-between | pr-[0.5cqw]">
+              <div
+                class="stat-sprites coin | w-[2.5cqw] aspect-square"
+                :style="{
+                  backgroundPosition: etcUtil.getSpritePosition(12 + index),
+                }"></div>
+              <span class="text-[1.3cqw] text-white">
+                {{ stringUtil.attachComma(enforce.length) }}
+              </span>
+            </div>
+          </div>
+          <!-- 강화표시 -->
+
+          <!-- 코인표시 -->
+          <div
+            class="bg-black mt-[0.2cqh] | flex items-center justify-between | pr-[0.5cqw] rounded-lg">
+            <div
+              class="stat-sprites coin | w-[2.5cqw] aspect-square"
               :style="{
                 backgroundPosition: etcUtil.getSpritePosition(11),
               }"></div>
             <span class="text-[1.3cqw] text-white"> {{ stringUtil.attachComma(coins) }} </span>
           </div>
+          <!-- 코인표시 -->
         </div>
 
         <div
@@ -142,6 +167,7 @@
 
 <script lang="ts" setup>
 import { Enemies } from "~/models/Enemies"
+import { Enforces } from "~/models/Enforces"
 import {
   Material1,
   Material2,
@@ -172,7 +198,7 @@ let enemies: Enemies
 // 기타 상수
 
 let cursors: Phaser.Types.Input.Keyboard.CursorKeys
-
+const enforces = ref<Enforces>()
 const weapons = ref<Weapons>()
 const materials = ref<Materials>({
   힘: { length: 0, info: new Material1() },
@@ -201,7 +227,7 @@ const isShowGamblePopup = ref(false)
 
 const gachaChance = ref(2)
 const selectChance = ref(1)
-const coins = ref(10)
+const coins = ref()
 
 const selectedWeaponIndex = ref(0)
 const selectedGambleIndex = ref(0)
@@ -265,7 +291,8 @@ onMounted(() => {
         player = new Player(scene, 400, 300, "playerIdle")
         player.createPlayerAnimation()
         enemies = new Enemies(scene, remainnedEnemies)
-        weapons.value = new Weapons(scene, enemies, materials.value)
+        enforces.value = new Enforces()
+        weapons.value = new Weapons(scene, enemies, materials.value, enforces.value)
 
         // 애니메이션
         scene.anims.create({
@@ -349,7 +376,8 @@ onMounted(() => {
                 Math.min(
                   99,
                   (materials.value["민첩"].info.cooltime * materials.value["민첩"].length +
-                    allCooltimes) *
+                    allCooltimes +
+                    enforces.value!.aditionnalCooldown / 100) *
                     100
                 )
               )

@@ -1,4 +1,5 @@
 import Phaser from "phaser"
+import type { Enforces } from "./Enforces"
 import type { Materials } from "./Material"
 import type { Player } from "./Player"
 import type { Weapon } from "./Weapon"
@@ -37,8 +38,8 @@ export class Enemies {
     this.remainnedEnemies.value++
   }
 
-  takeDamage(enemy: Enemy, weapon: Weapon, materials: Materials) {
-    enemy.takeDamage(weapon, materials)
+  takeDamage(enemy: Enemy, weapon: Weapon, materials: Materials, enforces: Enforces) {
+    enemy.takeDamage(weapon, materials, enforces)
 
     // 적 HP가 0 이하라면 제거
     if (!enemy.getData("hp") || enemy.getData("hp") < 0) {
@@ -46,14 +47,20 @@ export class Enemies {
     }
   }
 
-  applySplashDamage(centerX: number, centerY: number, weaponData: Weapon, materials: Materials) {
+  applySplashDamage(
+    centerX: number,
+    centerY: number,
+    weaponData: Weapon,
+    materials: Materials,
+    enforces: Enforces
+  ) {
     // enemyGroup 내 모든 적 순회
     this.children.forEach((enemy) => {
       if (!enemy.active) return
 
       const dist = Phaser.Math.Distance.Between(centerX, centerY, enemy.x, enemy.y)
       if (dist <= weaponData.splash + materials["건강"].length * materials["건강"].info.splash) {
-        enemy.takeDamage(weaponData, materials, dist)
+        enemy.takeDamage(weaponData, materials, enforces, dist)
       }
 
       // 적 HP가 0 이하라면 제거
@@ -191,29 +198,37 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     })
   }
 
-  takeDamage(weaponData: Weapon, materials: Materials, distInSplash?: number) {
+  takeDamage(weaponData: Weapon, materials: Materials, enforces: Enforces, distInSplash?: number) {
     const currentHP = this.getData("hp") as number
 
     const _physicalDamage =
       distInSplash === undefined
         ? this.calculateReducedDamage(
-            weaponData.physicalDamage +
-              materials["힘"].info.physicalDamage * materials["힘"].length,
+            numberUtil.addPercent(
+              weaponData.physicalDamage +
+                materials["힘"].info.physicalDamage * materials["힘"].length +
+                enforces.getAditionnalPlus("physical"),
+              enforces.getAditionnalPercent("physical")
+            ),
             this.physicalDefence,
             weaponData.physicalPenetration +
               materials["운"].info.armorPenetration * materials["운"].length
           )
         : this.calculateReducedDamage(
-            +(
-              weaponData.physicalDamage *
-              Math.max(
-                1,
-                1 -
-                  distInSplash /
-                    (weaponData.splash + materials["건강"].length * materials["건강"].info.splash)
-              )
-            ).toFixed(2) +
-              materials["힘"].info.physicalDamage * materials["힘"].length,
+            numberUtil.addPercent(
+              +(
+                weaponData.physicalDamage *
+                Math.max(
+                  1,
+                  1 -
+                    distInSplash /
+                      (weaponData.splash + materials["건강"].length * materials["건강"].info.splash)
+                )
+              ).toFixed(2) +
+                materials["힘"].info.physicalDamage * materials["힘"].length +
+                enforces.getAditionnalPlus("physical"),
+              enforces.getAditionnalPercent("physical")
+            ),
             this.physicalDefence,
             weaponData.physicalPenetration +
               materials["운"].info.armorPenetration * materials["운"].length
@@ -222,23 +237,31 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     const _magicalDamage =
       distInSplash === undefined
         ? this.calculateReducedDamage(
-            weaponData.magicalDamage +
-              materials["지식"].info.magicalDamage * materials["지식"].length,
+            numberUtil.addPercent(
+              weaponData.magicalDamage +
+                materials["지식"].info.magicalDamage * materials["지식"].length +
+                enforces.getAditionnalPlus("magical"),
+              enforces.getAditionnalPercent("magical")
+            ),
             this.magicalDefence,
             weaponData.magicalDamage +
               materials["지혜"].info.armorPenetration * materials["지혜"].length
           )
         : this.calculateReducedDamage(
-            +(
-              weaponData.magicalDamage *
-              Math.max(
-                1,
-                1 -
-                  distInSplash /
-                    (weaponData.splash + materials["건강"].length * materials["건강"].info.splash)
-              )
-            ).toFixed(2) +
-              materials["지식"].info.magicalDamage * materials["지식"].length,
+            numberUtil.addPercent(
+              +(
+                weaponData.magicalDamage *
+                Math.max(
+                  1,
+                  1 -
+                    distInSplash /
+                      (weaponData.splash + materials["건강"].length * materials["건강"].info.splash)
+                )
+              ).toFixed(2) +
+                materials["지식"].info.magicalDamage * materials["지식"].length +
+                enforces.getAditionnalPlus("magical"),
+              enforces.getAditionnalPercent("magical")
+            ),
             this.magicalDefence,
             weaponData.magicalDamage +
               materials["지혜"].info.armorPenetration * materials["지혜"].length

@@ -142,7 +142,7 @@ const emit = defineEmits<{
   (e: "close"): void
 }>()
 
-const selectedIndex = defineModel("selectedIndex", { default: 0 })
+const selectedIndex = defineModel<number>("selectedIndex", { default: 0 })
 const needLength = computed(() => selectedIndex.value * 4)
 const selectedWeapon = computed(() => {
   return props.weapons.weapons[selectedIndex.value]

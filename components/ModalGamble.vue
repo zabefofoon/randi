@@ -33,6 +33,10 @@
           <ModalGambleMoneyPannel
             v-if="selectedIndex === 0"
             v-model:coins="coins" />
+          <ModalGambleEnforcePannel
+            v-else-if="selectedIndex === 1"
+            v-model:coins="coins"
+            :enforces="enforces" />
           <div
             v-else
             class="w-full">
@@ -67,12 +71,14 @@
 </template>
 
 <script setup lang="ts">
+import type { Enforces } from "~/models/Enforces"
 import type { Materials } from "~/models/Material"
 import type { Weapons } from "~/models/Weapon"
 
 defineProps<{
   weapons: Weapons
   materials: Materials
+  enforces: Enforces
 }>()
 
 const emit = defineEmits<{

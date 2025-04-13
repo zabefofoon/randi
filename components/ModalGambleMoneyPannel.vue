@@ -48,6 +48,7 @@ const gachaAnimated = (unit: 10 | 100 | 1000) => {
   setTimeout(() => {
     isAnimating = false
     coins.value = Math.max(0, coins.value + Number(numbers.value))
+    if (coins.value < 0) coins.value = 0
   }, 500)
 
   const finalValue = Phaser.Math.Between(-5 * unit, 5 * unit)
