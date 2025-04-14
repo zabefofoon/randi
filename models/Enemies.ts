@@ -285,9 +285,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       // 300ms 후에 정지 상태 해제
       this.scene.time.delayedCall(
         weaponData.stun + materials["카리스마"].length * (materials["카리스마"].info.stun * 100),
-        () => {
-          this.setData("stunned", false)
-        }
+        () => this.setData("stunned", false)
       )
     }
 

@@ -16,4 +16,4 @@ export const GLOBAL_SPINNER_DELAY = 100
 export const LOADING_SSR = "ssr"
 export const LOADING_COVER = "loadingCover"
 
-export const SPRITE_LENGTH = 14
+export const SPRITE_LENGTH = 16

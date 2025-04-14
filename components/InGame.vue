@@ -99,6 +99,7 @@
           class="w-full h-full mx-auto"></div>
 
         <VirtualJoystick
+          v-if="isTouchDevice"
           v-model="activeJoystick"
           class="absolute bottom-[3cqw] left-[3cqw]" />
 
@@ -227,11 +228,15 @@ const isShowGamblePopup = ref(false)
 
 const gachaChance = ref(2)
 const selectChance = ref(1)
-const coins = ref()
+const coins = ref(20)
 
 const selectedWeaponIndex = ref(0)
 const selectedGambleIndex = ref(0)
 let scene: Phaser.Scene
+
+const isTouchDevice =
+  "ontouchstart" in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0
+
 onMounted(() => {
   if (!phaserContainer.value) return
 

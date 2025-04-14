@@ -37,33 +37,10 @@
             v-else-if="selectedIndex === 1"
             v-model:coins="coins"
             :enforces="enforces" />
-          <div
+          <ModalGambleStatPannel
             v-else
-            class="w-full">
-            <div class="flex items-center gap-[0.5cqw] | w-full | mt-[1cqw]">
-              <button
-                class="flex-1 select-none flex flex-col items-center gap-[0.2cqw] | mt-[1cqw] | px-[1cqw] py-[0.5cqw] | border-black border-[0.2cqw] rounded-lg bg-purple-600">
-                <div class="flex items-center justify-center gap-[0.5cqw]">
-                  <span class="text-outline text-[1.5cqw] font-bold">10원 도박</span>
-                </div>
-                <div class="text-outline text-[1.1cqw] text-left">-50원 ~ 50원</div>
-              </button>
-              <button
-                class="flex-1 select-none flex flex-col items-center gap-[0.2cqw] | mt-[1cqw] | px-[1cqw] py-[0.5cqw] | border-black border-[0.2cqw] rounded-lg bg-yellow-400">
-                <div class="flex items-center justify-center gap-[0.5cqw]">
-                  <span class="text-outline text-[1.5cqw] font-bold">100원 도박</span>
-                </div>
-                <div class="text-outline text-[1.1cqw] text-left">-500원 ~ 500원</div>
-              </button>
-              <button
-                class="flex-1 select-none flex flex-col items-center gap-[0.2cqw] | mt-[1cqw] | px-[1cqw] py-[0.5cqw] | border-black border-[0.2cqw] rounded-lg bg-orange-700">
-                <div class="flex items-center justify-center gap-[0.5cqw]">
-                  <span class="text-outline text-[1.5cqw] font-bold">1000원 도박</span>
-                </div>
-                <div class="text-outline text-[1.1cqw] text-left">-5000원 ~ 5000원</div>
-              </button>
-            </div>
-          </div>
+            v-model:coins="coins"
+            :materials="materials" />
         </div>
       </div>
     </template>
