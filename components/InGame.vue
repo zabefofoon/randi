@@ -233,6 +233,7 @@ const coins = ref(20)
 const selectedWeaponIndex = ref(0)
 const selectedGambleIndex = ref(0)
 let scene: Phaser.Scene
+let isBossRemained = false
 
 const isTouchDevice =
   "ontouchstart" in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0
@@ -326,7 +327,12 @@ onMounted(() => {
 
         // ===== 탄환(Gun) 그룹 생성 =====
         weapons.value.addWeapon(0, Gun.of())
-
+        scene.events.on("boss-die", () => {
+          isBossRemained = false
+          selectChance.value += 1
+          gachaChance.value += 2
+          coins.value += round.value * 10
+        })
         scene.time.addEvent({
           delay: 1000,
           repeat: -1,
@@ -339,6 +345,10 @@ onMounted(() => {
               remainnedTime.value = roundTime
 
               if (round.value !== 1) gachaChance.value = gachaChance.value + 3
+              if (isBossRemained) {
+                scene.physics.pause()
+                isShowGameOverPopup.value = true
+              }
             }
 
             const playerHP = player.getData("hp") as number
@@ -351,6 +361,11 @@ onMounted(() => {
 
             if (46 > remainnedTime.value && remainnedTime.value > 35)
               enemies.spawnEnemy(round.value, coins)
+            if (round.value >= 10 && round.value % 10 === 0 && remainnedTime.value === 45)
+              setTimeout(() => {
+                enemies.spawnBoss(round.value, coins)
+                isBossRemained = true
+              }, 500)
           },
         })
       },

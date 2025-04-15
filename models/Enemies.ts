@@ -29,11 +29,21 @@ export class Enemies {
   get children() {
     return this.group.getChildren() as Enemy[]
   }
+
   spawnEnemy(round: number, coins: Ref<number>) {
     const { x, y } = this.pathes[0]
 
     // 새 적 생성
-    this.group.add(new Enemy(this.scene, x, y, "enemy", this.pathes, round, coins))
+    this.group.add(new Enemy(this.scene, x, y, false, "enemy", this.pathes, round, coins))
+
+    this.remainnedEnemies.value++
+  }
+
+  spawnBoss(round: number, coins: Ref<number>) {
+    const { x, y } = this.pathes[0]
+
+    // 새 적 생성
+    this.group.add(new Enemy(this.scene, x, y, true, "enemy", this.pathes, round, coins))
 
     this.remainnedEnemies.value++
   }
@@ -78,6 +88,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     scene: Phaser.Scene,
     x: number,
     y: number,
+    public isBoss: boolean,
     key: string,
     paths: { x: number; y: number }[],
     private round: number,
@@ -87,14 +98,18 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     scene.add.existing(this)
     scene.physics.add.existing(this)
+    const hp = this.isBoss ? this.fibonacci(this.round) * 10 * 2 : this.fibonacci(this.round) * 10
 
-    this.setData("hp", this.fibonacci(this.round) * 10)
+    this.setData("hp", hp)
       .setData("pathIndex", 0)
-      .setData("maxHp", this.fibonacci(this.round) * 10)
+      .setData("maxHp", hp)
       .setData("hpBar", this.scene.add.graphics())
       .setScale(0.75)
-    this.physicalDefence = this.round
-    this.magicalDefence = this.round
+
+    if (this.isBoss) this.setTint(0xff0000)
+
+    this.physicalDefence = this.isBoss ? numberUtil.addPercent(this.round, 10) : this.round
+    this.magicalDefence = this.isBoss ? numberUtil.addPercent(this.round, 10) : this.round
 
     this.pathes = paths
 
@@ -124,7 +139,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     if (pathIndex == null) return
 
     // 기본 이동 속도
-    const baseSpeed = 120
+    const baseSpeed = this.isBoss ? 80 : 120
     // 플레이어와 적 사이의 거리를 측정
     const distanceToPlayer = Phaser.Math.Distance.Between(this.x, this.y, player.x, player.y)
     // 플레이어가 가까우면 느리게 이동: 예시로, 200픽셀 이내면 속도를 50%로 줄임
@@ -273,7 +288,10 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     // 깜빡이는 효과
     this.setTintFill(0xff0000)
-    this.scene.time.delayedCall(100, () => this.clearTint())
+    this.scene.time.delayedCall(100, () => {
+      this.clearTint()
+      if (this.isBoss) this.setTint(0xff0000)
+    })
 
     this.showDamageText(damage)
 
@@ -291,6 +309,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     // 적 HP가 0 이하라면 제거
     if (this.getData("hp") <= 0) {
+      if (this.isBoss) this.scene.events.emit("boss-die")
       ;(this.coins as unknown as number) += this.round
       const hpBar = this.getData("hpBar") as Phaser.GameObjects.Graphics
       if (hpBar) hpBar.destroy()
