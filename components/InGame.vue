@@ -169,6 +169,7 @@
 <script lang="ts" setup>
 import { Enemies } from "~/models/Enemies"
 import { Enforces } from "~/models/Enforces"
+import { Gun } from "~/models/Gun"
 import {
   Material1,
   Material2,
@@ -181,7 +182,7 @@ import {
   type Materials,
 } from "~/models/Material"
 import { Player } from "~/models/Player"
-import { Gun, Weapons } from "~/models/Weapon"
+import { Weapons } from "~/models/Weapon"
 
 const emit = defineEmits<{
   (e: "next", scene: "result"): void
@@ -202,14 +203,14 @@ let cursors: Phaser.Types.Input.Keyboard.CursorKeys
 const enforces = ref<Enforces>()
 const weapons = ref<Weapons>()
 const materials = ref<Materials>({
-  힘: { length: 0, info: new Material1() },
-  지식: { length: 0, info: new Material2() },
-  교양: { length: 0, info: new Material3() },
-  카리스마: { length: 0, info: new Material4() },
-  건강: { length: 0, info: new Material5() },
-  민첩: { length: 0, info: new Material6() },
-  운: { length: 0, info: new Material7() },
-  지혜: { length: 0, info: new Material8() },
+  힘: { length: 100, info: new Material1() },
+  지식: { length: 100, info: new Material2() },
+  교양: { length: 100, info: new Material3() },
+  카리스마: { length: 100, info: new Material4() },
+  건강: { length: 100, info: new Material5() },
+  민첩: { length: 100, info: new Material6() },
+  운: { length: 100, info: new Material7() },
+  지혜: { length: 100, info: new Material8() },
 })
 
 const initialRemainnedTime = 3

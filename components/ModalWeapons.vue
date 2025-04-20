@@ -66,19 +66,21 @@
             <div class="flex flex-col | w-full | mt-[1cqw]">
               <button
                 v-for="item in selectedWeapon?.nexts"
-                :key="item.name"
+                :key="item.cls.meta?.name"
                 class="select-none flex flex-col gap-[0.2cqw] | mt-[1cqw] | px-[1cqw] py-[0.5cqw] | border-black border-[0.2cqw] rounded-lg"
                 :class="{
-                  'bg-white': item.level === 1,
-                  'bg-purple-600': item.level === 2,
-                  'bg-yellow-500': item.level === 3,
-                  'bg-fuchsia-400': item.level === 4,
-                  'bg-red-400': item.level === 5,
-                  'bg-blue-500': item.level === 6,
+                  'bg-white': item.cls.meta?.level === 1,
+                  'bg-purple-600': item.cls.meta?.level === 2,
+                  'bg-yellow-500': item.cls.meta?.level === 3,
+                  'bg-fuchsia-400': item.cls.meta?.level === 4,
+                  'bg-red-400': item.cls.meta?.level === 5,
+                  'bg-blue-500': item.cls.meta?.level === 6,
                 }"
                 @click="getNextWeapon(item)">
                 <div class="flex items-center gap-[0.5cqw]">
-                  <span class="text-outline text-[1.5cqw] font-bold">· {{ item.name }} 조합</span>
+                  <span class="text-outline text-[1.5cqw] font-bold"
+                    >· {{ item.cls.meta?.name }} 조합</span
+                  >
                   <div class="flex justify-center | text-[1.1cqw]">
                     (
                     <div
@@ -91,7 +93,7 @@
                     )
                   </div>
                 </div>
-                <div class="text-[1.1cqw] text-left">{{ item.description }}</div>
+                <div class="text-[1.1cqw] text-left">{{ item.cls.meta?.description }}</div>
               </button>
             </div>
           </div>
@@ -112,26 +114,11 @@
 </template>
 
 <script setup lang="ts">
+import { Book } from "~/models/Book"
+import { ButterKnife } from "~/models/Knife"
 import type { Material, Materials } from "~/models/Material"
-import {
-  Book,
-  CutterKnife,
-  DoubleGun,
-  DoubleRing,
-  FlowerRing,
-  Hammer,
-  Knife,
-  MagicGun,
-  Ring,
-  ShotGun,
-  SilverPlateRing,
-  SpringBook,
-  SushiKnife,
-  ThickBook,
-  ThinBook,
-  type WeaponNext,
-  type Weapons,
-} from "~/models/Weapon"
+import { Ring } from "~/models/Ring"
+import type { NextInfo, Weapons } from "~/models/Weapon"
 
 const props = defineProps<{
   weapons: Weapons
@@ -154,7 +141,7 @@ const gachaWeapon = () => {
     .reduce((acc, current) => acc + current, 0)
 
   if (totalLength >= needLength.value) {
-    if (selectedIndex.value === 1) props.weapons.addWeapon(selectedIndex.value, Knife.of())
+    if (selectedIndex.value === 1) props.weapons.addWeapon(selectedIndex.value, ButterKnife.of())
     if (selectedIndex.value === 2) props.weapons.addWeapon(selectedIndex.value, Book.of())
     if (selectedIndex.value === 3) props.weapons.addWeapon(selectedIndex.value, Ring.of())
 
@@ -172,7 +159,7 @@ const gachaWeapon = () => {
   }
 }
 
-const getNextWeapon = (item: WeaponNext) => {
+const getNextWeapon = (item: NextInfo) => {
   const isGettable = item.materials.every(
     (material) => props.materials[material.name].length >= material.length
   )
@@ -180,18 +167,6 @@ const getNextWeapon = (item: WeaponNext) => {
   item.materials.forEach((material) => {
     props.materials[material.name].length -= material.length
   })
-
-  if (item.name === "일반쌍권총") props.weapons.addWeapon(0, DoubleGun.of())
-  if (item.name === "마법권총") props.weapons.addWeapon(0, MagicGun.of())
-  if (item.name === "산탄총") props.weapons.addWeapon(0, ShotGun.of())
-  if (item.name === "커터칼") props.weapons.addWeapon(1, CutterKnife.of())
-  if (item.name === "회칼") props.weapons.addWeapon(1, SushiKnife.of())
-  if (item.name === "망치") props.weapons.addWeapon(1, Hammer.of())
-  if (item.name === "두꺼운책") props.weapons.addWeapon(2, ThickBook.of())
-  if (item.name === "얇은책") props.weapons.addWeapon(2, ThinBook.of())
-  if (item.name === "스프링책") props.weapons.addWeapon(2, SpringBook.of())
-  if (item.name === "더블반지") props.weapons.addWeapon(3, DoubleRing.of())
-  if (item.name === "은도금반지") props.weapons.addWeapon(3, SilverPlateRing.of())
-  if (item.name === "꽃반지") props.weapons.addWeapon(3, FlowerRing.of())
+  props.weapons.addWeapon(selectedIndex.value, new item.cls())
 }
 </script>
