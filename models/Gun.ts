@@ -19,6 +19,7 @@ export class Gun extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    spritePosition: etcUtil.getWeaponSpritePosition(0, 0),
   }
 
   constructor() {
@@ -64,6 +65,7 @@ export class ShotGun extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    spritePosition: etcUtil.getWeaponSpritePosition(0, 1),
   }
 
   constructor() {
@@ -106,6 +108,7 @@ export class DoubleGun extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    spritePosition: etcUtil.getWeaponSpritePosition(0, 2),
   }
 
   constructor() {
@@ -148,6 +151,7 @@ export class MagicGun extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    spritePosition: etcUtil.getWeaponSpritePosition(0, 3),
   }
 
   constructor() {
@@ -190,6 +194,7 @@ export class AirGun extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    spritePosition: etcUtil.getWeaponSpritePosition(0, 4),
   }
 
   constructor() {
@@ -232,6 +237,7 @@ export class MachineGun extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    spritePosition: etcUtil.getWeaponSpritePosition(0, 5),
   }
 
   constructor() {
@@ -274,6 +280,7 @@ export class FingerGun extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    spritePosition: etcUtil.getWeaponSpritePosition(0, 6),
   }
 
   constructor() {
@@ -316,6 +323,7 @@ export class BubbleGun extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    spritePosition: etcUtil.getWeaponSpritePosition(0, 7),
   }
 
   constructor() {
@@ -343,7 +351,7 @@ export class BubbleGun extends Weapon {
 export class TazerGun extends Weapon {
   static readonly meta: WeaponOptions = {
     level: 4,
-    name: "전긴충격기",
+    name: "전기충격기",
     description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
     cooltime: 1000,
     speed: 500,
@@ -358,6 +366,7 @@ export class TazerGun extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    spritePosition: etcUtil.getWeaponSpritePosition(0, 8),
   }
 
   constructor() {
@@ -400,6 +409,7 @@ export class PulseGun extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    spritePosition: etcUtil.getWeaponSpritePosition(0, 9),
   }
 
   constructor() {
@@ -442,6 +452,7 @@ export class Firework extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    spritePosition: etcUtil.getWeaponSpritePosition(0, 10),
   }
 
   constructor() {
@@ -484,6 +495,7 @@ export class SilentKiller extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    spritePosition: etcUtil.getWeaponSpritePosition(0, 11),
   }
 
   constructor() {
@@ -526,6 +538,7 @@ export class DrillGun extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    spritePosition: etcUtil.getWeaponSpritePosition(0, 12),
   }
 
   constructor() {
@@ -568,6 +581,7 @@ export class PepperSpray extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    spritePosition: etcUtil.getWeaponSpritePosition(0, 13),
   }
 
   constructor() {
@@ -606,6 +620,7 @@ export class EyeGun extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    spritePosition: etcUtil.getWeaponSpritePosition(0, 14),
   }
 
   constructor() {
@@ -644,6 +659,7 @@ export class GrenadeLauncher extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    spritePosition: etcUtil.getWeaponSpritePosition(0, 15),
   }
 
   constructor() {
@@ -682,6 +698,7 @@ export class SilverBulletGun extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    spritePosition: etcUtil.getWeaponSpritePosition(0, 16),
   }
 
   constructor() {
@@ -705,7 +722,7 @@ export class SilverBulletGun extends Weapon {
 export class PlasmaGun extends Weapon {
   static readonly meta: WeaponOptions = {
     level: 5,
-    name: "은탄총",
+    name: "플라즈마총",
     description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
     cooltime: 1000,
     speed: 500,
@@ -720,6 +737,7 @@ export class PlasmaGun extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    spritePosition: etcUtil.getWeaponSpritePosition(0, 17),
   }
 
   constructor() {
@@ -758,6 +776,7 @@ export class Cannon extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    spritePosition: etcUtil.getWeaponSpritePosition(0, 18),
   }
 
   constructor() {
@@ -796,6 +815,7 @@ export class BlessedRevolver extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    spritePosition: etcUtil.getWeaponSpritePosition(0, 19),
   }
 
   constructor() {
@@ -834,6 +854,7 @@ export class CursedRevolver extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    spritePosition: etcUtil.getWeaponSpritePosition(0, 20),
   }
 
   constructor() {
@@ -850,6 +871,74 @@ export class CursedRevolver extends Weapon {
 
   static of() {
     return new CursedRevolver()
+  }
+}
+
+// level 6
+export class HeartBreaker extends Weapon {
+  static readonly meta: WeaponOptions = {
+    level: 6,
+    name: "하트브레이커",
+    description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
+    cooltime: 1000,
+    speed: 500,
+    range: 150,
+    physicalDamage: 4,
+    magicalDamage: 0,
+    physicalPenetration: 1,
+    magicalPenetration: 0,
+    targetLength: 2,
+    allTargetLength: 0,
+    splash: 0,
+    stun: 0, // 1000이어야 1초
+    slow: 0, // 0.1이면 10%
+    allCooltime: 0, // 0.01이 1%
+    spritePosition: etcUtil.getWeaponSpritePosition(0, 21),
+  }
+
+  constructor() {
+    super({
+      ...HeartBreaker.meta,
+      nexts: [],
+    })
+  }
+
+  static of() {
+    return new HeartBreaker()
+  }
+}
+
+// level 6
+export class RadiationBeam extends Weapon {
+  static readonly meta: WeaponOptions = {
+    level: 6,
+    name: "방사능총",
+    description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
+    cooltime: 1000,
+    speed: 500,
+    range: 150,
+    physicalDamage: 4,
+    magicalDamage: 0,
+    physicalPenetration: 1,
+    magicalPenetration: 0,
+    targetLength: 2,
+    allTargetLength: 0,
+    splash: 0,
+    stun: 0, // 1000이어야 1초
+    slow: 0, // 0.1이면 10%
+    allCooltime: 0, // 0.01이 1%
+    spritePosition: etcUtil.getWeaponSpritePosition(0, 22),
+  }
+
+  constructor() {
+    super({
+      ...RadiationBeam.meta,
+      nexts: [],
+    })
+  }
+
+  static of() {
+    return new RadiationBeam()
   }
 }
 
@@ -872,6 +961,7 @@ export class Missile extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    spritePosition: etcUtil.getWeaponSpritePosition(0, 23),
   }
 
   constructor() {
@@ -905,6 +995,7 @@ export class Booger extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    spritePosition: etcUtil.getWeaponSpritePosition(0, 24),
   }
 
   constructor() {
@@ -916,71 +1007,5 @@ export class Booger extends Weapon {
 
   static of() {
     return new Booger()
-  }
-}
-
-// level 6
-export class RadiationBeam extends Weapon {
-  static readonly meta: WeaponOptions = {
-    level: 6,
-    name: "방사능총",
-    description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
-    cooltime: 1000,
-    speed: 500,
-    range: 150,
-    physicalDamage: 4,
-    magicalDamage: 0,
-    physicalPenetration: 1,
-    magicalPenetration: 0,
-    targetLength: 2,
-    allTargetLength: 0,
-    splash: 0,
-    stun: 0, // 1000이어야 1초
-    slow: 0, // 0.1이면 10%
-    allCooltime: 0, // 0.01이 1%
-  }
-
-  constructor() {
-    super({
-      ...RadiationBeam.meta,
-      nexts: [],
-    })
-  }
-
-  static of() {
-    return new RadiationBeam()
-  }
-}
-
-// level 6
-export class HeartBreaker extends Weapon {
-  static readonly meta: WeaponOptions = {
-    level: 6,
-    name: "하트브레이커",
-    description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
-    cooltime: 1000,
-    speed: 500,
-    range: 150,
-    physicalDamage: 4,
-    magicalDamage: 0,
-    physicalPenetration: 1,
-    magicalPenetration: 0,
-    targetLength: 2,
-    allTargetLength: 0,
-    splash: 0,
-    stun: 0, // 1000이어야 1초
-    slow: 0, // 0.1이면 10%
-    allCooltime: 0, // 0.01이 1%
-  }
-
-  constructor() {
-    super({
-      ...HeartBreaker.meta,
-      nexts: [],
-    })
-  }
-
-  static of() {
-    return new HeartBreaker()
   }
 }

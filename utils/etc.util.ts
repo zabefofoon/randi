@@ -24,4 +24,8 @@ export default {
   getSpritePosition(index: number): string {
     return `calc(100% * ${index} / ${SPRITE_LENGTH}) 0`
   },
+
+  getWeaponSpritePosition(row: number, column: number): string {
+    return `calc(100% * ${column} / 24) calc(100% * ${row} / 3)`
+  },
 }

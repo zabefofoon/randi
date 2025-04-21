@@ -70,7 +70,7 @@
               :key="enforce.name"
               class="bg-black | flex items-center justify-between | pr-[0.5cqw]">
               <div
-                class="stat-sprites coin | w-[2.5cqw] aspect-square"
+                class="stat-sprites | w-[2.5cqw] aspect-square"
                 :style="{
                   backgroundPosition: etcUtil.getSpritePosition(12 + index),
                 }"></div>
@@ -85,13 +85,32 @@
           <div
             class="bg-black mt-[0.2cqh] | flex items-center justify-between | pr-[0.5cqw] rounded-lg">
             <div
-              class="stat-sprites coin | w-[2.5cqw] aspect-square"
+              class="stat-sprites | w-[2.5cqw] aspect-square"
               :style="{
                 backgroundPosition: etcUtil.getSpritePosition(11),
               }"></div>
             <span class="text-[1.3cqw] text-white"> {{ stringUtil.attachComma(coins) }} </span>
           </div>
           <!-- 코인표시 -->
+        </div>
+
+        <div class="absolute top-1/2 right-[1cqw] | flex flex-col gap-[0.5cqw]">
+          <div
+            v-for="(weapon, index) in weapons?.weapons.filter((weapon) => weapon)"
+            :key="`${weapon?.name}_${index}`"
+            class="rounded-lg"
+            :class="{
+              'bg-white': !weapon || weapon?.level === 1,
+              'bg-blue-500': weapon?.level === 2,
+              'bg-purple-600': weapon?.level === 3,
+              'bg-yellow-400': weapon?.level === 4,
+              'bg-fuchsia-400': weapon?.level === 5,
+              'bg-red-400': weapon?.level === 6,
+            }">
+            <div
+              class="weapon-sprites | w-[4cqw] aspect-square"
+              :style="{ 'background-position': weapon?.spritePosition }"></div>
+          </div>
         </div>
 
         <div
@@ -103,7 +122,7 @@
           v-model="activeJoystick"
           class="absolute bottom-[3cqw] left-[3cqw]" />
 
-        <div class="flex items-center gap-[1cqw] | absolute bottom-[2cqw] right-[2cqw]">
+        <div class="flex items-center gap-[1cqw] | absolute bottom-[2cqw] right-[1cqw]">
           <!-- 무기버튼 -->
           <button
             class="flex items-center gap-[0.5cqw] bg-orange-700 | h-fit pr-[1.5cqw] pl-[0.5cqw] py-[0.2cqw] | rounded-lg border-black border-[0.14cqw]"
@@ -300,7 +319,7 @@ onMounted(() => {
         enemies = new Enemies(scene, remainnedEnemies)
         enforces.value = new Enforces()
         weapons.value = new Weapons(scene, enemies, materials.value, enforces.value)
-
+        console.log(weapons.value)
         // 애니메이션
         scene.anims.create({
           key: "enemy-walk",

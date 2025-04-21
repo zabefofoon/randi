@@ -19,6 +19,7 @@ export class Book extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    spritePosition: etcUtil.getWeaponSpritePosition(2, 0),
   }
 
   constructor() {
@@ -64,6 +65,7 @@ export class ThickBook extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    spritePosition: etcUtil.getWeaponSpritePosition(2, 1),
   }
 
   constructor() {
@@ -112,6 +114,7 @@ export class ThinBook extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    spritePosition: etcUtil.getWeaponSpritePosition(2, 2),
   }
 
   constructor() {
@@ -160,6 +163,7 @@ export class SpringBook extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    spritePosition: etcUtil.getWeaponSpritePosition(2, 3),
   }
 
   constructor() {
@@ -208,6 +212,7 @@ export class TextBook extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    spritePosition: etcUtil.getWeaponSpritePosition(2, 4),
   }
 
   constructor() {
@@ -256,6 +261,7 @@ export class Map extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    spritePosition: etcUtil.getWeaponSpritePosition(2, 5),
   }
 
   constructor() {
@@ -304,6 +310,7 @@ export class PictureBook extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    spritePosition: etcUtil.getWeaponSpritePosition(2, 6),
   }
 
   constructor() {
@@ -352,6 +359,7 @@ export class MagicBook extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    spritePosition: etcUtil.getWeaponSpritePosition(2, 7),
   }
 
   constructor() {
@@ -394,6 +402,7 @@ export class MobilePhone extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    spritePosition: etcUtil.getWeaponSpritePosition(2, 8),
   }
 
   constructor() {
@@ -436,6 +445,7 @@ export class Regulations extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    spritePosition: etcUtil.getWeaponSpritePosition(2, 9),
   }
 
   constructor() {
@@ -478,6 +488,7 @@ export class WorkBook extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    spritePosition: etcUtil.getWeaponSpritePosition(2, 10),
   }
 
   constructor() {
@@ -520,6 +531,7 @@ export class TreasureMap extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    spritePosition: etcUtil.getWeaponSpritePosition(2, 11),
   }
 
   constructor() {
@@ -558,6 +570,7 @@ export class EvacuationMap extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    spritePosition: etcUtil.getWeaponSpritePosition(2, 12),
   }
 
   constructor() {
@@ -600,6 +613,7 @@ export class Diary extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    spritePosition: etcUtil.getWeaponSpritePosition(2, 13),
   }
 
   constructor() {
@@ -638,6 +652,7 @@ export class Menu extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    spritePosition: etcUtil.getWeaponSpritePosition(2, 14),
   }
 
   constructor() {
@@ -676,6 +691,7 @@ export class Revelation extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    spritePosition: etcUtil.getWeaponSpritePosition(2, 15),
   }
 
   constructor() {
@@ -714,6 +730,7 @@ export class Labtop extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    spritePosition: etcUtil.getWeaponSpritePosition(2, 16),
   }
 
   constructor() {
@@ -752,6 +769,7 @@ export class AnswerSheet extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    spritePosition: etcUtil.getWeaponSpritePosition(2, 17),
   }
 
   constructor() {
@@ -790,6 +808,7 @@ export class LawBook extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    spritePosition: etcUtil.getWeaponSpritePosition(2, 18),
   }
 
   constructor() {
@@ -828,6 +847,7 @@ export class HellMap extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    spritePosition: etcUtil.getWeaponSpritePosition(2, 19),
   }
 
   constructor() {
@@ -866,6 +886,7 @@ export class OrderForm extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    spritePosition: etcUtil.getWeaponSpritePosition(2, 20),
   }
 
   constructor() {
@@ -904,6 +925,7 @@ export class Grimoire extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    spritePosition: etcUtil.getWeaponSpritePosition(2, 21),
   }
 
   constructor() {
@@ -937,6 +959,7 @@ export class TabletPC extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    spritePosition: etcUtil.getWeaponSpritePosition(2, 22),
   }
 
   constructor() {
@@ -955,7 +978,7 @@ export class TabletPC extends Weapon {
 export class Constitution extends Weapon {
   static readonly meta: WeaponOptions = {
     level: 6,
-    name: "헌법",
+    name: "지옥의법",
     description: "강력한 마법공격",
     cooltime: 1000,
     speed: 500,
@@ -970,6 +993,7 @@ export class Constitution extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    spritePosition: etcUtil.getWeaponSpritePosition(2, 23),
   }
 
   constructor() {
@@ -1003,6 +1027,7 @@ export class Counterfeit extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    spritePosition: etcUtil.getWeaponSpritePosition(2, 24),
   }
 
   constructor() {

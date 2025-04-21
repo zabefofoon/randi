@@ -81,7 +81,13 @@ body {
 }
 
 .stat-sprites {
-  background: url("/assets/images/stats_sprite.png");
+  background: url("/assets/images/stats_sprite.webp");
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.weapon-sprites {
+  background: url("/assets/images/weapons_sprite.webp");
+  background-repeat: no-repeat;
+  background-size: 2500% 400%;
 }

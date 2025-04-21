@@ -12,22 +12,41 @@
             :key="index"
             class="flex flex-col items-center"
             @click="selectedIndex = index">
-            <img
-              src="https://picsum.photos/32?id=1"
-              class="border-[0.2cqw] | w-[5cqw] aspect-square | rounded-lg"
+            <div
+              class="rounded-lg"
               :class="{
-                'border-orange-500': selectedIndex === index,
-                'border-black': selectedIndex !== index,
-              }" />
+                'bg-white': !weapon || weapon?.level === 1,
+                'bg-blue-500': weapon?.level === 2,
+                'bg-purple-600': weapon?.level === 3,
+                'bg-yellow-400': weapon?.level === 4,
+                'bg-fuchsia-400': weapon?.level === 5,
+                'bg-red-400': weapon?.level === 6,
+              }">
+              <div
+                class="box-content border-[0.2cqw] | w-[5cqw] aspect-square | rounded-lg | grid place-content-center"
+                :class="{
+                  'weapon-sprites': weapon,
+                  'border-orange-500': selectedIndex === index,
+                  'border-black': selectedIndex !== index,
+                }"
+                :style="{ 'background-position': weapon?.spritePosition }">
+                <span
+                  v-if="!weapon"
+                  class="font-bold text-[3cqw]"
+                  >?</span
+                >
+              </div>
+            </div>
+
             <figcaption
               class="text-outline text-[1.5cqw] font-bold"
               :class="{
                 'text-white': !weapon || weapon?.level === 1,
-                'text-purple-600': weapon?.level === 2,
-                'text-yellow-400': weapon?.level === 3,
-                'text-fuchsia-400': weapon?.level === 4,
-                'text-red-400': weapon?.level === 5,
-                'text-blue-500': weapon?.level === 6,
+                'text-blue-500': weapon?.level === 2,
+                'text-purple-600': weapon?.level === 3,
+                'text-yellow-400': weapon?.level === 4,
+                'text-fuchsia-400': weapon?.level === 5,
+                'text-red-400': weapon?.level === 6,
               }">
               {{ weapon?.name ?? "????" }}
             </figcaption>
@@ -36,6 +55,18 @@
         <div
           class="w-full | flex flex-col items-center justify-center | p-[1cqw] | bg-blue-950 | text-white | rounded-lg border-black border-[0.2cqw]">
           <div>
+            <h2
+              class="text-outline text-[2cqw] font-bold | mb-[0.5cqw]"
+              :class="{
+                'text-white': !selectedWeapon || selectedWeapon?.level === 1,
+                'text-blue-500': selectedWeapon?.level === 2,
+                'text-purple-600': selectedWeapon?.level === 3,
+                'text-yellow-400': selectedWeapon?.level === 4,
+                'text-fuchsia-400': selectedWeapon?.level === 5,
+                'text-red-400': selectedWeapon?.level === 6,
+              }">
+              {{ selectedWeapon?.name ?? "????" }}
+            </h2>
             <h3 class="text-outline text-[1.5cqw] font-bold">
               {{ selectedWeapon?.description ?? "????" }}
             </h3>
@@ -67,33 +98,49 @@
               <button
                 v-for="item in selectedWeapon?.nexts"
                 :key="item.cls.meta?.name"
-                class="select-none flex flex-col gap-[0.2cqw] | mt-[1cqw] | px-[1cqw] py-[0.5cqw] | border-black border-[0.2cqw] rounded-lg"
+                class="select-none flex items-center gap-[1cqw] | mt-[1cqw] | px-[1cqw] py-[0.2cqw] | border-black border-[0.2cqw] rounded-lg"
                 :class="{
                   'bg-white': item.cls.meta?.level === 1,
-                  'bg-purple-600': item.cls.meta?.level === 2,
-                  'bg-yellow-500': item.cls.meta?.level === 3,
-                  'bg-fuchsia-400': item.cls.meta?.level === 4,
-                  'bg-red-400': item.cls.meta?.level === 5,
-                  'bg-blue-500': item.cls.meta?.level === 6,
+                  'bg-blue-500': item.cls.meta?.level === 2,
+                  'bg-purple-600': item.cls.meta?.level === 3,
+                  'bg-yellow-500': item.cls.meta?.level === 4,
+                  'bg-fuchsia-400': item.cls.meta?.level === 5,
+                  'bg-red-400': item.cls.meta?.level === 6,
                 }"
                 @click="getNextWeapon(item)">
-                <div class="flex items-center gap-[0.5cqw]">
-                  <span class="text-outline text-[1.5cqw] font-bold"
-                    >· {{ item.cls.meta?.name }} 조합</span
-                  >
-                  <div class="flex justify-center | text-[1.1cqw]">
-                    (
-                    <div
-                      v-for="(material, index) in item.materials"
-                      :key="material.name"
-                      class="flex gap-[0.2cqw]">
-                      <span v-if="index !== 0">&nbsp;+</span>
-                      <span>{{ material.name }} {{ material.length }}개</span>
-                    </div>
-                    )
-                  </div>
+                <div
+                  :class="{
+                    'bg-white': item.cls.meta?.level === 1,
+                    'bg-blue-600': item.cls.meta?.level === 2,
+                    'bg-purple-700': item.cls.meta?.level === 3,
+                    'bg-yellow-600': item.cls.meta?.level === 4,
+                    'bg-fuchsia-500': item.cls.meta?.level === 5,
+                    'bg-red-500': item.cls.meta?.level === 6,
+                  }">
+                  <div
+                    class="weapon-sprites | bg-red-500 | w-[3.5cqw] aspect-square | rounded-lg border-black border-[0.2cqw]"
+                    :style="{ 'background-position': item.cls.meta.spritePosition }"></div>
                 </div>
-                <div class="text-[1.1cqw] text-left">{{ item.cls.meta?.description }}</div>
+
+                <div class="flex flex-col gap-[0.2cqw]">
+                  <div class="flex items-center gap-[0.5cqw]">
+                    <span class="text-outline text-[1.5cqw] font-bold"
+                      >· {{ item.cls.meta?.name }} 조합</span
+                    >
+                    <div class="flex justify-center | text-[1.1cqw]">
+                      (
+                      <div
+                        v-for="(material, index) in item.materials"
+                        :key="material.name"
+                        class="flex gap-[0.2cqw]">
+                        <span v-if="index !== 0">&nbsp;+</span>
+                        <span>{{ material.name }} {{ material.length }}개</span>
+                      </div>
+                      )
+                    </div>
+                  </div>
+                  <div class="text-[1.1cqw] text-left">{{ item.cls.meta?.description }}</div>
+                </div>
               </button>
             </div>
           </div>

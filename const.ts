@@ -17,3 +17,5 @@ export const LOADING_SSR = "ssr"
 export const LOADING_COVER = "loadingCover"
 
 export const SPRITE_LENGTH = 16
+
+export const WEAPON_LENGTH = 100

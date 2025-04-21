@@ -26,6 +26,7 @@ export interface WeaponOptions {
   stun: number
   slow: number
   allCooltime: number
+  spritePosition: string
 
   nexts?: NextInfo[] // 방식 ❶
 }
@@ -114,6 +115,7 @@ export abstract class Weapon implements WeaponOptions {
 
   allCooltime = 0
   level = 0
+  spritePosition = etcUtil.getWeaponSpritePosition(0, 0)
 
   constructor(weapon: WeaponOptions) {
     Object.assign(this, weapon)
