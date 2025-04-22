@@ -98,7 +98,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     scene.add.existing(this)
     scene.physics.add.existing(this)
-    const hp = this.isBoss ? this.fibonacci(this.round) * 10 * 2 : this.fibonacci(this.round) * 10
+    const hp = this.isBoss ? this.increaseHP(this.round) * 10 * 2 : this.increaseHP(this.round) * 10
 
     this.setData("hp", hp)
       .setData("pathIndex", 0)
@@ -116,20 +116,8 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.anims.play("enemy-walk")
   }
 
-  private fibonacci(index: number): number {
-    if (index < 2) return index // index가 0이거나 1이면 그대로 반환
-
-    let prev = 0 // 0번째 피보나치 수
-    let current = 1 // 1번째 피보나치 수
-
-    // 2번째부터 index번째까지 반복
-    for (let i = 2; i <= index; i++) {
-      const next = prev + current
-      prev = current
-      current = next
-    }
-
-    return current
+  private increaseHP(index: number): number {
+    return (Math.pow(index * 2, 2) + 10) / 10
   }
 
   moveEnemyAlongPath(player: Player, weapons: (Weapon | undefined)[], materials: Materials) {

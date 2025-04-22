@@ -98,7 +98,7 @@
           <div
             v-for="(weapon, index) in weapons?.weapons.filter((weapon) => weapon)"
             :key="`${weapon?.name}_${index}`"
-            class="rounded-lg"
+            class="rounded-lg | border-black border-[0.25cqw]"
             :class="{
               'bg-white': !weapon || weapon?.level === 1,
               'bg-blue-500': weapon?.level === 2,
@@ -108,7 +108,7 @@
               'bg-red-400': weapon?.level === 6,
             }">
             <div
-              class="weapon-sprites | w-[4cqw] aspect-square"
+              class="weapon-sprites | w-[4cqw] aspect-square | rounded-lg"
               :style="{ 'background-position': weapon?.spritePosition }"></div>
           </div>
         </div>
@@ -125,7 +125,7 @@
         <div class="flex items-center gap-[1cqw] | absolute bottom-[2cqw] right-[1cqw]">
           <!-- 무기버튼 -->
           <button
-            class="flex items-center gap-[0.5cqw] bg-orange-700 | h-fit pr-[1.5cqw] pl-[0.5cqw] py-[0.2cqw] | rounded-lg border-black border-[0.14cqw]"
+            class="flex items-center gap-[0.5cqw] bg-orange-700 | h-fit pr-[1.5cqw] pl-[0.5cqw] py-[0.2cqw] | rounded-lg border-black border-[0.2cqw]"
             @click="isShowGamblePopup = true">
             <div
               class="stat-sprites | w-[3cqw] aspect-square"
@@ -140,7 +140,7 @@
 
           <!-- 무기버튼 -->
           <button
-            class="flex items-center gap-[0.5cqw] bg-blue-950 | h-fit pr-[1.5cqw] pl-[0.5cqw] py-[0.2cqw] | rounded-lg border-black border-[0.14cqw]"
+            class="flex items-center gap-[0.5cqw] bg-blue-950 | h-fit pr-[1.5cqw] pl-[0.5cqw] py-[0.2cqw] | rounded-lg border-black border-[0.2cqw]"
             @click="isShowWeaponsPopup = true">
             <div
               class="stat-sprites | w-[3cqw] aspect-square"
@@ -155,7 +155,7 @@
 
           <!-- 스텟버튼 -->
           <button
-            class="flex items-center gap-[0.5cqw] | relative | h-fit pr-[1.5cqw] pl-[0.5cqw] py-[0.2cqw] | rounded-lg border-black border-[0.14cqw]"
+            class="flex items-center gap-[0.5cqw] | relative | h-fit pr-[1.5cqw] pl-[0.5cqw] py-[0.2cqw] | rounded-lg border-black border-[0.2cqw]"
             :class="{
               'bg-amber-500': selectChance > 0,
               'bg-blue-950': selectChance <= 0,
@@ -222,14 +222,14 @@ let cursors: Phaser.Types.Input.Keyboard.CursorKeys
 const enforces = ref<Enforces>()
 const weapons = ref<Weapons>()
 const materials = ref<Materials>({
-  힘: { length: 100, info: new Material1() },
-  지식: { length: 100, info: new Material2() },
-  교양: { length: 100, info: new Material3() },
-  카리스마: { length: 100, info: new Material4() },
-  건강: { length: 100, info: new Material5() },
-  민첩: { length: 100, info: new Material6() },
-  운: { length: 100, info: new Material7() },
-  지혜: { length: 100, info: new Material8() },
+  힘: { length: 0, info: new Material1() },
+  지식: { length: 0, info: new Material2() },
+  교양: { length: 0, info: new Material3() },
+  카리스마: { length: 0, info: new Material4() },
+  건강: { length: 0, info: new Material5() },
+  민첩: { length: 0, info: new Material6() },
+  운: { length: 0, info: new Material7() },
+  지혜: { length: 0, info: new Material8() },
 })
 
 const initialRemainnedTime = 3

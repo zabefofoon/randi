@@ -44,7 +44,6 @@
             </div>
           </button>
           <button
-            v-else
             class="grid place-items-center | relative bg-orange-700 | mt-[2cqw] px-[2cqw] py-[0.5cqw] | border-black border-[0.14cqw] rounded-lg | leading-none"
             @click="gacha">
             <span class="text-outline text-[1.7cqw] font-bold">랜덤뽑기</span>

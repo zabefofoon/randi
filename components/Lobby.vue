@@ -70,6 +70,14 @@ const fullScreen = async () => {
     console.warn("해당 브라우저에서는 Screen Orientation API를 지원하지 않습니다.")
   }
 }
+
+onMounted(() => {
+  console.log(
+    Array.from({ length: 100 }, (_, index) => {
+      return Math.pow(index * 2, 2) + 10
+    })
+  )
+})
 </script>
 <style lang="scss" scoped>
 .content {
