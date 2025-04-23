@@ -32,6 +32,8 @@
 <script setup lang="ts">
 const coins = defineModel<number>("coins", { default: 0 })
 
+const gamblings = defineModel<number>("gamblings", { default: 0 })
+
 const units: (10 | 100 | 1000)[] = [10, 100, 1000]
 const numbers = ref("-----")
 let isAnimating = false
@@ -45,6 +47,7 @@ const formatSigned = (value: number) => {
 const gachaAnimated = (unit: 10 | 100 | 1000) => {
   if (isAnimating) return
   coins.value -= unit
+  gamblings.value++
   setTimeout(() => {
     isAnimating = false
     coins.value = Math.max(0, coins.value + Number(numbers.value))

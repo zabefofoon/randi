@@ -10,7 +10,7 @@
         <button
           class="flex items-center | bg-red-500 | border-black border-[0.25cqw] | mt-[2cqw] px-[2cqw] py-[1cqw] | rounded-full"
           @click="emit('close')">
-          <span class="font-bold leading-none text-outline text-[1.5cqw]">나가기</span>
+          <span class="font-bold leading-none text-outline text-[1.5cqw]">보상받기</span>
         </button>
       </div>
     </template>

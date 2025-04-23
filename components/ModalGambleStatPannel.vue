@@ -60,6 +60,8 @@ const props = defineProps<{
   materials: Materials
 }>()
 const coins = defineModel<number>("coins", { default: 0 })
+const gamblings = defineModel<number>("gamblings", { default: 0 })
+
 const cardEls = ref<HTMLDivElement[]>()
 const results = ref<number[]>([-1, -1, -1, -1, -1])
 const needCoins = 200
@@ -84,6 +86,7 @@ const gacha = async () => {
   animating = true
   coins.value = coins.value - needCoins
   if (coins.value < 0) coins.value = 0
+  gamblings.value++
 
   cardEls.value.forEach((el) => el.classList.remove("active"))
   await etcUtil.sleep(300)

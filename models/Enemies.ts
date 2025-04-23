@@ -298,6 +298,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     // 적 HP가 0 이하라면 제거
     if (this.getData("hp") <= 0) {
       if (this.isBoss) this.scene.events.emit("boss-die")
+      else this.scene.events.emit("enemy-die")
       ;(this.coins as unknown as number) += this.round
       const hpBar = this.getData("hpBar") as Phaser.GameObjects.Graphics
       if (hpBar) hpBar.destroy()

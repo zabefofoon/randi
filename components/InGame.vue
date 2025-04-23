@@ -7,6 +7,7 @@
       v-if="isShowGamblePopup"
       v-model:selected-index="selectedGambleIndex"
       v-model:coins="coins"
+      v-model:gamblings="gamblings"
       :weapons="weapons"
       :materials="materials"
       :enforces="enforces"
@@ -26,12 +27,11 @@
     <div class="content | relative | aspect-video max-w-full max-h-full | bg-white">
       <main class="relative | w-full h-full | flex flex-col justify-center items-center">
         <div
-          class="w-full | flex flex-col gap-[0.5cqh] | px-[0.5cqw] | absolute top-[0.5cqw] | text-white font-bold">
+          class="w-full | flex items-center gap-[0.5cqh] | px-[0.5cqw] | absolute top-[0.5cqw] | text-white font-bold">
           <div class="flex items-center gap-[1cqw] | bg-black w-fit | px-[0.5cqw] rounded-lg">
-            <span class="text-[1.5cqw]">ROUND {{ round }}</span>
-            <span class="text-[1.2cqw]">00:{{ `${remainnedTime}`.padStart(2, "0") }}</span>
+            <span class="text-[1.5cqw]">Lv. {{ round }}</span>
           </div>
-          <div class="text-[1.5cqw] bg-black w-fit | px-[0.5cqw] rounded-lg">
+          <div class="text-[1.2cqw] bg-black w-fit | px-[0.5cqw] rounded-lg">
             <span
               :class="{
                 'text-red-500': remainnedEnemies > enemyCountDeadline,
@@ -42,13 +42,17 @@
           </div>
         </div>
 
-        <div class="absolute top-[0.5cqw] right-[0.5cqw]">
+        <div class="absolute top-[0.5cqw] left-1/2 -translate-x-1/2">
+          <span class="text-white text-[1.2cqw]">00:{{ `${remainnedTime}`.padStart(2, "0") }}</span>
+        </div>
+
+        <div class="absolute top-1/2 left-[0.5cqw] -translate-y-1/2">
           <!-- 스텟표시 -->
-          <div class="grid grid-cols-2 items-start | gap-[0.2cqh]">
+          <div class="grid grid-cols-1 items-start | gap-[0.2cqh]">
             <div
               v-for="(material, index) in materials"
               :key="material.info.name"
-              class="flex items-center | bg-black rounded-lg | pr-[0.5cqw]">
+              class="flex items-center | bg-black rounded-lg">
               <div
                 class="stat-sprites | w-[2.5cqw] aspect-square"
                 :style="{
@@ -68,19 +72,21 @@
             <div
               v-for="(enforce, index) in enforces?.items"
               :key="enforce.name"
-              class="bg-black | flex items-center justify-between | pr-[0.5cqw]">
+              class="flex items-center | bg-black rounded-lg">
               <div
                 class="stat-sprites | w-[2.5cqw] aspect-square"
                 :style="{
                   backgroundPosition: etcUtil.getSpritePosition(12 + index),
                 }"></div>
-              <span class="text-[1.3cqw] text-white">
+              <span class="text-[1.5cqw] text-white">
                 {{ stringUtil.attachComma(enforce.length) }}
               </span>
             </div>
           </div>
           <!-- 강화표시 -->
+        </div>
 
+        <div class="absolute top-[0.5cqw] right-[1cqw]">
           <!-- 코인표시 -->
           <div
             class="bg-black mt-[0.2cqh] | flex items-center justify-between | pr-[0.5cqw] rounded-lg">
@@ -94,7 +100,7 @@
           <!-- 코인표시 -->
         </div>
 
-        <div class="absolute top-1/2 right-[1cqw] | flex flex-col gap-[0.5cqw]">
+        <div class="absolute top-1/2 right-[1cqw] -translate-y-1/2 | flex flex-col gap-[0.5cqw]">
           <div
             v-for="(weapon, index) in weapons?.weapons.filter((weapon) => weapon)"
             :key="`${weapon?.name}_${index}`"
@@ -201,11 +207,13 @@ import {
   type Materials,
 } from "~/models/Material"
 import { Player } from "~/models/Player"
-import { Weapons } from "~/models/Weapon"
+import { Weapon, Weapons } from "~/models/Weapon"
 
 const emit = defineEmits<{
   (e: "next", scene: "result"): void
 }>()
+
+const rewordsStore = useRewordsStore()
 
 const phaserContainer = ref<HTMLDivElement>()
 
@@ -249,6 +257,8 @@ const isShowGamblePopup = ref(false)
 const gachaChance = ref(2)
 const selectChance = ref(1)
 const coins = ref(20)
+const killed = ref(0)
+const gamblings = ref(0)
 
 const selectedWeaponIndex = ref(0)
 const selectedGambleIndex = ref(0)
@@ -352,6 +362,9 @@ onMounted(() => {
           selectChance.value += 1
           gachaChance.value += 2
           coins.value += round.value * 10
+        })
+        scene.events.on("enemy-die", () => {
+          killed.value++
         })
         scene.time.addEvent({
           delay: 1000,
@@ -519,6 +532,18 @@ watch(isShowGameOverPopup, (value) => {
     scene.data.set("paused", true)
     scene.physics.pause()
   } else {
+    rewordsStore.setRewords({
+      rounds: round.value,
+      killed: killed.value,
+      materials: Object.values(materials.value).reduce((acc, current) => acc + current.length, 0),
+      weapons:
+        weapons.value?.weapons
+          .filter((weapon): weapon is Weapon => !!weapon)
+          .reduce((acc, current) => acc + current.level, 0) ?? 0,
+      coins: coins.value,
+      enforces: enforces.value?.items.reduce((acc, current) => acc + current.length, 0) ?? 0,
+      gamblings: gamblings.value,
+    })
     emit("next", "result")
   }
 })

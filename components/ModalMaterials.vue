@@ -3,6 +3,7 @@
     enable-dim-click-close
     hide-close-button
     inner-class="!w-fit !max-w-[unset] | !bg-blue-950"
+    content-wrap-class="!overflow-hidden"
     @close="emit('close')">
     <template #content>
       <div

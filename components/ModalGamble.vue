@@ -32,14 +32,17 @@
           class="w-full | flex flex-col items-center justify-center | p-[1cqw] | bg-blue-950 | text-white | rounded-lg border-black border-[0.2cqw]">
           <ModalGambleMoneyPannel
             v-if="selectedIndex === 0"
-            v-model:coins="coins" />
+            v-model:coins="coins"
+            v-model:gamblings="gamblings" />
           <ModalGambleEnforcePannel
             v-else-if="selectedIndex === 1"
             v-model:coins="coins"
+            v-model:gamblings="gamblings"
             :enforces="enforces" />
           <ModalGambleStatPannel
             v-else
             v-model:coins="coins"
+            v-model:gamblings="gamblings"
             :materials="materials" />
         </div>
       </div>
@@ -64,6 +67,7 @@ const emit = defineEmits<{
 
 const selectedIndex = defineModel<number>("selectedIndex", { default: 0 })
 const coins = defineModel<number>("coins", { default: 0 })
+const gamblings = defineModel<number>("gamblings", { default: 0 })
 
 const menus = [
   {

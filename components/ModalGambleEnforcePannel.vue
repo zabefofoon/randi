@@ -48,6 +48,8 @@ const props = defineProps<{
 }>()
 
 const coins = defineModel<number>("coins", { default: 0 })
+const gamblings = defineModel<number>("gamblings", { default: 0 })
+
 const cardEl = ref<HTMLDivElement[]>()
 
 const gacha = (enforce: EnforceItem, index: number) => {
@@ -55,7 +57,7 @@ const gacha = (enforce: EnforceItem, index: number) => {
 
   coins.value = coins.value - props.enforces.getExpense(enforce)
   if (coins.value < 0) coins.value = 0
-
+  gamblings.value++
   const random = Phaser.Math.Between(0, 1)
 
   const el = cardEl.value[index]
