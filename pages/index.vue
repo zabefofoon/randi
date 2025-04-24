@@ -3,6 +3,9 @@
     <Lobby
       v-if="currentScene === 'lobby'"
       @next="currentScene = $event" />
+    <SelectCharacter
+      v-if="currentScene === 'select'"
+      @next="currentScene = $event" />
     <InGame
       v-if="currentScene === 'inGame'"
       @next="currentScene = $event" />
@@ -13,5 +16,7 @@
 </template>
 
 <script lang="ts" setup>
-const currentScene = ref<"lobby" | "inGame" | "collection" | "result" | "setting">("lobby")
+const currentScene = ref<"lobby" | "select" | "inGame" | "collection" | "result" | "setting">(
+  "lobby"
+)
 </script>

@@ -1,4 +1,4 @@
-import { SPRITE_LENGTH } from "~/const"
+import { PROFILES_LENGTH, SPRITE_LENGTH } from "~/const"
 
 export default {
   sleep(ms = 100): Promise<false> {
@@ -23,6 +23,10 @@ export default {
 
   getSpritePosition(index: number): string {
     return `calc(100% * ${index} / ${SPRITE_LENGTH}) 0`
+  },
+
+  getProfileSpritePosition(index: number): string {
+    return `calc(100% * ${index} / ${PROFILES_LENGTH}) 0`
   },
 
   getWeaponSpritePosition(row: number, column: number): string {

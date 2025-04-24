@@ -145,7 +145,7 @@ const emit = defineEmits<{
   (e: "next", scene: "lobby"): void
 }>()
 
-const rewordsStore = useRewordsStore()
+const gameStore = useGameStore()
 
 const rounds = ref(0)
 const killed = ref(0)
@@ -157,25 +157,25 @@ const gamblings = ref(0)
 const total = ref(0)
 
 onMounted(async () => {
-  const _total = Object.values(rewordsStore.rewords).reduce((acc, current) => acc + current, 0)
+  const _total = Object.values(gameStore.rewords).reduce((acc, current) => acc + current, 0)
   localStorage.setItem(LOCAL_MONEY, `${_total}`)
 
   await etcUtil.sleep(300)
 
   const duration = 500
-  transitionNumberInterval(rounds, rewordsStore.rewords.rounds, duration)
+  transitionNumberInterval(rounds, gameStore.rewords.rounds, duration)
   await etcUtil.sleep(duration / 2)
-  transitionNumberInterval(killed, rewordsStore.rewords.killed, duration)
+  transitionNumberInterval(killed, gameStore.rewords.killed, duration)
   await etcUtil.sleep(duration / 2)
-  transitionNumberInterval(materials, rewordsStore.rewords.materials, duration)
+  transitionNumberInterval(materials, gameStore.rewords.materials, duration)
   await etcUtil.sleep(duration / 2)
-  transitionNumberInterval(weapons, rewordsStore.rewords.weapons, duration)
+  transitionNumberInterval(weapons, gameStore.rewords.weapons, duration)
   await etcUtil.sleep(duration / 2)
-  transitionNumberInterval(coins, rewordsStore.rewords.coins, duration)
+  transitionNumberInterval(coins, gameStore.rewords.coins, duration)
   await etcUtil.sleep(duration / 2)
-  transitionNumberInterval(enforces, rewordsStore.rewords.enforces, duration)
+  transitionNumberInterval(enforces, gameStore.rewords.enforces, duration)
   await etcUtil.sleep(duration / 2)
-  transitionNumberInterval(gamblings, rewordsStore.rewords.gamblings, duration)
+  transitionNumberInterval(gamblings, gameStore.rewords.gamblings, duration)
 
   await etcUtil.sleep(duration)
 

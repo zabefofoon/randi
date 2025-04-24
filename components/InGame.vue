@@ -43,7 +43,31 @@
         </div>
 
         <div class="absolute top-[0.5cqw] left-1/2 -translate-x-1/2">
-          <span class="text-white text-[1.2cqw]">00:{{ `${remainnedTime}`.padStart(2, "0") }}</span>
+          <span class="text-white text-[1.5cqw]">00:{{ `${remainnedTime}`.padStart(2, "0") }}</span>
+        </div>
+
+        <div class="absolute top-[0.5cqw] right-[1cqw] | flex items-center gap-[0.5cqw]">
+          <!-- 코인표시 -->
+          <div
+            class="bg-black mt-[0.2cqh] | flex items-center justify-between | pr-[0.5cqw] rounded-lg">
+            <div
+              class="stat-sprites | w-[2.5cqw] aspect-square"
+              :style="{
+                backgroundPosition: etcUtil.getSpritePosition(17),
+              }"></div>
+            <span class="text-[1.3cqw] text-white"> {{ stringUtil.attachComma(killed) }} </span>
+          </div>
+
+          <div
+            class="bg-black mt-[0.2cqh] | flex items-center justify-between | pr-[0.5cqw] rounded-lg">
+            <div
+              class="stat-sprites | w-[2.5cqw] aspect-square"
+              :style="{
+                backgroundPosition: etcUtil.getSpritePosition(11),
+              }"></div>
+            <span class="text-[1.3cqw] text-white"> {{ stringUtil.attachComma(coins) }} </span>
+          </div>
+          <!-- 코인표시 -->
         </div>
 
         <div class="absolute top-1/2 left-[0.5cqw] -translate-y-1/2">
@@ -52,15 +76,15 @@
             <div
               v-for="(material, index) in materials"
               :key="material.info.name"
-              class="flex items-center | bg-black rounded-lg">
+              class="flex items-center | bg-black rounded-lg | pr-[0.5cqw]">
               <div
-                class="stat-sprites | w-[2.5cqw] aspect-square"
+                class="stat-sprites | w-[3cqw] aspect-square"
                 :style="{
                   backgroundPosition: etcUtil.getSpritePosition(
                     Object.keys(materials).findIndex((item) => item === index)
                   ),
                 }"></div>
-              <span class="text-[1.5cqw] text-white">
+              <span class="text-[1.3cqw] text-white">
                 {{ material.length }}
               </span>
             </div>
@@ -72,32 +96,18 @@
             <div
               v-for="(enforce, index) in enforces?.items"
               :key="enforce.name"
-              class="flex items-center | bg-black rounded-lg">
+              class="flex items-center | bg-black rounded-lg | pr-[0.5cqw]">
               <div
-                class="stat-sprites | w-[2.5cqw] aspect-square"
+                class="stat-sprites | w-[3cqw] aspect-square"
                 :style="{
                   backgroundPosition: etcUtil.getSpritePosition(12 + index),
                 }"></div>
-              <span class="text-[1.5cqw] text-white">
+              <span class="text-[1.3cqw] text-white">
                 {{ stringUtil.attachComma(enforce.length) }}
               </span>
             </div>
           </div>
           <!-- 강화표시 -->
-        </div>
-
-        <div class="absolute top-[0.5cqw] right-[1cqw]">
-          <!-- 코인표시 -->
-          <div
-            class="bg-black mt-[0.2cqh] | flex items-center justify-between | pr-[0.5cqw] rounded-lg">
-            <div
-              class="stat-sprites | w-[2.5cqw] aspect-square"
-              :style="{
-                backgroundPosition: etcUtil.getSpritePosition(11),
-              }"></div>
-            <span class="text-[1.3cqw] text-white"> {{ stringUtil.attachComma(coins) }} </span>
-          </div>
-          <!-- 코인표시 -->
         </div>
 
         <div class="absolute top-1/2 right-[1cqw] -translate-y-1/2 | flex flex-col gap-[0.5cqw]">
@@ -207,13 +217,13 @@ import {
   type Materials,
 } from "~/models/Material"
 import { Player } from "~/models/Player"
-import { Weapon, Weapons } from "~/models/Weapon"
+import { Weapons, type Weapon } from "~/models/Weapon"
 
 const emit = defineEmits<{
   (e: "next", scene: "result"): void
 }>()
 
-const rewordsStore = useRewordsStore()
+const gameStore = useGameStore()
 
 const phaserContainer = ref<HTMLDivElement>()
 
@@ -532,7 +542,7 @@ watch(isShowGameOverPopup, (value) => {
     scene.data.set("paused", true)
     scene.physics.pause()
   } else {
-    rewordsStore.setRewords({
+    gameStore.setRewords({
       rounds: round.value,
       killed: killed.value,
       materials: Object.values(materials.value).reduce((acc, current) => acc + current.length, 0),

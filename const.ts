@@ -20,4 +20,6 @@ export const SPRITE_LENGTH = 18
 
 export const WEAPON_LENGTH = 100
 
+export const PROFILES_LENGTH = 1
+
 export const LOCAL_MONEY = "currentMoney"

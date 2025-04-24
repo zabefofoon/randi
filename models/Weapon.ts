@@ -7,9 +7,7 @@ export interface MaterialReq {
   name: string
   length: number
 }
-
 export interface WeaponOptions {
-  /** ↓ Lv·이름·스탯 등 모든 공통 메타 */
   level: number
   name: string
   description: string
@@ -27,14 +25,12 @@ export interface WeaponOptions {
   slow: number
   allCooltime: number
   spritePosition: string
-
-  nexts?: NextInfo[] // 방식 ❶
+  nexts?: NextInfo[]
 }
 
-/** 방식 ❶에서 사용할 타입 */
 export interface NextInfo {
-  cls: typeof Weapon // 진화할 클래스
-  materials: MaterialReq[] // 필요 재료
+  cls: typeof Weapon
+  materials: MaterialReq[]
 }
 
 export class Weapons {
