@@ -6,11 +6,6 @@
         src="/assets/images/main.webp" />
       <main
         class="backdrop-blur-anim | relative | w-full h-full | flex flex-col justify-center items-center">
-        <button
-          class="absolute top-[1cqw] right-[1cqw] | border rounded-full p-1 | bg-white"
-          @click="fullScreen">
-          <i class="icon icon-fullscreen | block text-black text-[1.5cqw]"></i>
-        </button>
         <h1
           class="fade-up | gasoek-one-regular | relative z-[1] | leading-none text-center text-[5cqw] font-bold text-outline text-white">
           <span class="text-red-500">N</span>
@@ -42,27 +37,6 @@
 const emit = defineEmits<{
   (e: "next", scene: "inGame" | "select" | "collection"): void
 }>()
-
-const fullScreen = async () => {
-  if (document.documentElement.requestFullscreen) {
-    await document.documentElement.requestFullscreen()
-  } else if (document.documentElement.webkitRequestFullscreen) {
-    // 구형 Safari 등
-    await document.documentElement.webkitRequestFullscreen()
-  }
-
-  // 2) 가로 모드 고정 (Screen Orientation API)
-  if (screen.orientation && screen.orientation.lock) {
-    try {
-      await screen.orientation.lock("landscape")
-      console.log("화면을 가로로 고정했습니다.")
-    } catch (err) {
-      console.warn("가로 고정에 실패했습니다.", err)
-    }
-  } else {
-    console.warn("해당 브라우저에서는 Screen Orientation API를 지원하지 않습니다.")
-  }
-}
 
 onMounted(() => {
   console.log(
