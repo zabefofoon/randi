@@ -3,6 +3,16 @@
     <div
       class="content | relative | grid place-items-center | aspect-video max-w-full max-h-full | text-white overflow-hidden">
       <div class="pattern | absolute top-0 left-0 z-[0] | w-full h-full | opacity-40"></div>
+      <div class="absolute right-[1cqw] top-[1cqw] | flex items-center">
+        <div
+          class="stat-sprites | w-[2.5cqw] aspect-square"
+          :style="{
+            backgroundPosition: etcUtil.getSpritePosition(11),
+          }"></div>
+        <span class="text-outline font-bold text-[1.5cqw] -mt-[0.2cqw]">
+          {{ stringUtil.attachComma(currentMoney) }}
+        </span>
+      </div>
       <div class="flex gap-[1cqw] | relative z-[1] | w-3/4 h-4/5 overflow-hidden">
         <div
           class="w-full h-full | flex flex-col items-center gap-[1cqw] | p-[1cqw] | bg-blue-950 | rounded-lg border-black border-[0.2cqw]">
@@ -45,7 +55,7 @@
             </UICarouselSlide>
           </UICarousel>
           <div
-            class="rounded-lg border-black border-[0.2cqw] | w-full h-full | flex flex-col items-center justify-center gap-[1cqw] text-center">
+            class="w-full h-full | flex flex-col items-center justify-center gap-[1cqw] text-center">
             <span
               class="text-outline text-[2.8cqw] font-bold"
               v-html="gameStore.selectedCharacter?.meta?.name ?? '????'">
@@ -80,10 +90,18 @@
 </template>
 
 <script setup lang="ts">
+import { LOCAL_MONEY } from "~/const"
+
 const emit = defineEmits<{
   (e: "next", scene: "inGame" | "lobby"): void
 }>()
 const gameStore = useGameStore()
+
+const currentMoney = ref(0)
+onMounted(() => {
+  const localMoney = localStorage.getItem(LOCAL_MONEY)
+  currentMoney.value = localMoney ? +localMoney : 0
+})
 </script>
 
 <style lang="scss" scoped>

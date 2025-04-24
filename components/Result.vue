@@ -23,7 +23,7 @@
                     }"></div>
                   <span>라운드 점수</span>
                 </div>
-                <div class="">
+                <div>
                   {{ stringUtil.attachComma(rounds) }}
                 </div>
               </div>
@@ -36,7 +36,7 @@
                     }"></div>
                   <span>처치한 적</span>
                 </div>
-                <div class="">
+                <div>
                   {{ stringUtil.attachComma(killed) }}
                 </div>
               </div>
@@ -49,7 +49,7 @@
                     }"></div>
                   <span>스텟 점수</span>
                 </div>
-                <div class="">
+                <div>
                   {{ stringUtil.attachComma(materials) }}
                 </div>
               </div>
@@ -62,7 +62,7 @@
                     }"></div>
                   <span>무기 점수</span>
                 </div>
-                <div class="">
+                <div>
                   {{ stringUtil.attachComma(weapons) }}
                 </div>
               </div>
@@ -75,7 +75,7 @@
                     }"></div>
                   <span>골드 점수</span>
                 </div>
-                <div class="">
+                <div>
                   {{ stringUtil.attachComma(coins) }}
                 </div>
               </div>
@@ -88,7 +88,7 @@
                     }"></div>
                   <span>강화 점수</span>
                 </div>
-                <div class="">
+                <div>
                   {{ stringUtil.attachComma(enforces) }}
                 </div>
               </div>
@@ -101,7 +101,7 @@
                     }"></div>
                   <span>도박 점수</span>
                 </div>
-                <div class="">
+                <div>
                   {{ stringUtil.attachComma(gamblings) }}
                 </div>
               </div>
@@ -157,8 +157,10 @@ const gamblings = ref(0)
 const total = ref(0)
 
 onMounted(async () => {
+  const localMoney = localStorage.getItem(LOCAL_MONEY)
+  const currentMoney = localMoney ? +localMoney : 0
   const _total = Object.values(gameStore.rewords).reduce((acc, current) => acc + current, 0)
-  localStorage.setItem(LOCAL_MONEY, `${_total}`)
+  localStorage.setItem(LOCAL_MONEY, `${currentMoney + _total}`)
 
   await etcUtil.sleep(300)
 

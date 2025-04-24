@@ -304,7 +304,6 @@ onMounted(() => {
         scene.load.image("tiles", "/assets/images/mainlevbuild2.png")
         scene.load.tilemapTiledJSON("map", "/assets/jsons/map.json")
 
-        scene.load.image("sky", "/assets/images/sky.png")
         scene.load.spritesheet("playerIdle", "/assets/images/player_idle.png", {
           frameWidth: 128,
           frameHeight: 128,
@@ -317,8 +316,6 @@ onMounted(() => {
           frameWidth: 96,
           frameHeight: 96,
         })
-        scene.load.image("star", "/assets/images/star.png")
-        scene.load.image("Gun", "/assets/images/star.png")
       },
       create(this: Phaser.Scene) {
         scene = this
