@@ -398,8 +398,8 @@ onMounted(() => {
         walls.create(160, 310, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(10, 90).refreshBody()
         walls.create(160, 390, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(270, 10).refreshBody()
         walls.create(525, 390, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(290, 10).refreshBody()
-        walls.create(805, 300, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(10, 100).refreshBody()
-        walls.create(805, 130, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(10, 120).refreshBody()
+        walls.create(805, 315, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(10, 90).refreshBody()
+        walls.create(805, 130, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(10, 80).refreshBody()
         walls.create(160, 130, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(275, 10).refreshBody()
         walls.create(530, 130, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(285, 10).refreshBody()
 
@@ -411,7 +411,7 @@ onMounted(() => {
         scene.physics.add.collider(player, walls)
 
         // ===== 탄환(Gun) 그룹 생성 =====
-        weapons.value.addWeapon(0, Gun.of())
+        weapons.value.addWeapon(0, Gun.of().setIndex(0))
         scene.events.on("boss-die", () => {
           isBossRemained = false
           selectChance.value += 1

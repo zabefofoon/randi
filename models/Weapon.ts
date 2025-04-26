@@ -25,6 +25,7 @@ export interface WeaponOptions {
   slow: number
   allCooltime: number
   spritePosition: string
+  index: number
   nexts?: NextInfo[]
 }
 
@@ -112,7 +113,7 @@ export abstract class Weapon implements WeaponOptions {
   allCooltime = 0
   level = 0
   spritePosition = etcUtil.getWeaponSpritePosition(0, 0)
-
+  index = 0
   constructor(weapon: WeaponOptions) {
     Object.assign(this, weapon)
   }
@@ -128,20 +129,20 @@ export abstract class Weapon implements WeaponOptions {
     this.lastAttackTime = currentTime
 
     // 플레이어 위치에서 탄환 생성
-    const weapon = this.group?.create(
+    const bullet = this.group?.create(
       player.x,
       player.y,
       "bullet"
     ) as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
-    if (!weapon) return
+    if (!bullet) return
 
-    weapon.setScale(0.1).setActive(true).setVisible(true).setData("target", enemy).setDepth(1)
+    bullet.setScale(0.1).setActive(true).setVisible(true).setData("target", enemy).setDepth(1)
 
-    if (weaponIndex === 1) weapon.setAlpha(0)
+    if (weaponIndex === 1) bullet.setAlpha(0)
 
     // 처음에 한 번 적 방향으로 설정
-    const angle = Phaser.Math.Angle.Between(weapon.x, weapon.y, enemy.x, enemy.y)
-    weapon.body.setVelocity(Math.cos(angle) * this.speed, Math.sin(angle) * this.speed)
+    const angle = Phaser.Math.Angle.Between(bullet.x, bullet.y, enemy.x, enemy.y)
+    bullet.body.setVelocity(Math.cos(angle) * this.speed, Math.sin(angle) * this.speed)
   }
 
   followEnemy() {
@@ -169,9 +170,14 @@ export abstract class Weapon implements WeaponOptions {
       if (!weaponObj.active) return
 
       // 화면 밖으로 나가면 제거
-      if (weaponObj.x < 0 || weaponObj.x > 800 || weaponObj.y < 0 || weaponObj.y > 600) {
+      if (weaponObj.x < 0 || weaponObj.x > 960 || weaponObj.y < 0 || weaponObj.y > 540) {
         weaponObj.destroy()
       }
     })
+  }
+
+  setIndex(index: number) {
+    this.index = index
+    return this
   }
 }

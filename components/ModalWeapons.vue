@@ -214,6 +214,6 @@ const getNextWeapon = (item: NextInfo) => {
   item.materials.forEach((material) => {
     props.materials[material.name].length -= material.length
   })
-  props.weapons.addWeapon(selectedIndex.value, new item.cls())
+  props.weapons.addWeapon(selectedIndex.value, new item.cls().setIndex(selectedIndex.value))
 }
 </script>

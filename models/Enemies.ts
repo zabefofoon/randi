@@ -178,11 +178,11 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     hpBar.fillRect(this.x - 16, this.y - 30, 32 * hpPercent, 4)
   }
 
-  showDamageText(damageValue: number) {
+  showDamageText(damageValue: number, weapon: Weapon) {
     // “-10” 처럼 표시
     const dmgText = this.scene.add
-      .text(this.x, this.y, `-${damageValue}`, {
-        fontSize: "14px",
+      .text(this.x, this.y - weapon.index * 8, `-${damageValue}`, {
+        fontSize: "18px",
         color: "#ff4444",
         fontStyle: "bold",
       })
@@ -191,7 +191,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     // 트윈으로 서서히 떠오르며 사라지는 연출
     this.scene.tweens.add({
       targets: dmgText,
-      y: this.y - 20, // 위로 30px 이동
+      y: this.y - 20 - weapon.index * 8, // 위로 30px 이동
       alpha: 0, // 투명도 0이 됨
       duration: 800, // 0.8초 동안
       ease: "Sine.easeOut",
@@ -281,7 +281,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       if (this.isBoss) this.setTint(0xff0000)
     })
 
-    this.showDamageText(damage)
+    this.showDamageText(damage, weaponData)
 
     if (!this.getData("stunned")) {
       this.setData("stunned", true)
