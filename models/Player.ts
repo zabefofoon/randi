@@ -2,6 +2,7 @@ import type { Enemies, Enemy } from "./Enemies"
 
 export class Player extends Phaser.Physics.Arcade.Sprite {
   maxLife = 5
+  knife!: Phaser.GameObjects.Sprite // ← 추가
 
   constructor(scene: Phaser.Scene, x: number, y: number, key: string) {
     super(scene, x, y, key)
@@ -17,10 +18,25 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       .setScale(0.6)
 
     this.body?.setSize(50, 120).setOffset(40, 0)
+
+    this.knife = scene.add
+      .sprite(x, y, "knife-sprite", 0)
+      .setScale(1.5)
+      .setDepth(this.depth + 1) // 항상 위쪽 레이어
   }
 
   get isIdle() {
     return this.body?.velocity.x === 0 && this.body.velocity.y === 0
+  }
+
+  /** 매 프레임 플레이어 위치에 칼을 붙인다 */
+  override preUpdate(time: number, delta: number) {
+    super.preUpdate(time, delta)
+    this.knife.setTint(0xffffff)
+    const offsetX = this.flipX ? 12 : -12
+    const offsetY = 0
+    this.knife.setPosition(this.x + offsetX, this.y + offsetY)
+    this.knife.setFlipX(!this.flipX) // 플레이어가 반전되면 칼도 반전
   }
 
   updatePlayerHpBar() {
@@ -100,15 +116,22 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     // 애니메이션
     this.scene.anims.create({
       key: "turn",
-      frames: this.anims.generateFrameNumbers("playerIdle", { start: 0, end: 5 }),
-      frameRate: 7,
+      frames: this.anims.generateFrameNumbers("playerIdle", { start: 0, end: 3 }),
+      frameRate: 3,
       repeat: -1,
     })
     this.scene.anims.create({
       key: "work",
-      frames: this.anims.generateFrameNumbers("playerWork", { start: 0, end: 9 }),
+      frames: this.anims.generateFrameNumbers("playerWork", { start: 0, end: 7 }),
       frameRate: 7,
       repeat: -1,
+    })
+
+    this.scene.anims.create({
+      key: "knife-animation",
+      frames: this.anims.generateFrameNumbers("knife-sprite", { start: 0, end: 8 }),
+      frameRate: 9,
+      repeat: 0,
     })
 
     return this

@@ -302,6 +302,10 @@ onMounted(() => {
     scene: {
       preload(this: Phaser.Scene) {
         const scene = this
+        scene.load.spritesheet("knife-sprite", "/assets/images/knife_sprite.png", {
+          frameWidth: 100,
+          frameHeight: 100,
+        })
         scene.load.image("tiles", "/assets/images/mainlevbuild2.png")
         scene.load.tilemapTiledJSON("map", "/assets/jsons/map.json")
 
@@ -442,7 +446,7 @@ onMounted(() => {
             (acc, current) => acc + (current?.allCooltime ?? 0),
             0
           )
-          weapons.value!.weapons.forEach((weapon) => {
+          weapons.value!.weapons.forEach((weapon, index) => {
             if (
               weapon?.checkIsCooltime(
                 time,
@@ -463,7 +467,17 @@ onMounted(() => {
                   enemy.y
                 )
 
-                if (distance <= weapon.range) weapon.fireHomingWeapon(time, player, enemy)
+                if (distance <= weapon.range) {
+                  weapon.fireHomingWeapon(time, player, enemy)
+                  if (index === 1) {
+                    if (!player.knife.anims.isPlaying) {
+                      player.knife.play("knife-animation")
+                      player.knife.once("animationcomplete-knife-animation", () => {
+                        player.knife.setFrame(0)
+                      })
+                    }
+                  }
+                }
               })
           })
         }
