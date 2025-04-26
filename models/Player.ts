@@ -14,9 +14,9 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       .setData("maxHp", this.maxLife)
       .setData("hp", this.maxLife)
       .setData("hpBar", scene.add.graphics())
-      .setScale(0.75)
+      .setScale(0.6)
 
-    this.body?.setSize(50, 88).setOffset(36, 48)
+    this.body?.setSize(50, 120).setOffset(40, 0)
   }
 
   get isIdle() {
@@ -34,12 +34,12 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 
     // 예시: 체력바 배경
     hpBar.fillStyle(0x000000)
-    hpBar.fillRect(this.x - 16, this.y - 30, 32, 4) // width 32, height 4
+    hpBar.fillRect(this.x - 16, this.y - 55, 32, 4) // width 32, height 4
 
     // 남은 체력 비율만큼 색 채우기
     const hpPercent = hp / maxHp
     hpBar.fillStyle(0xff0000)
-    hpBar.fillRect(this.x - 16, this.y - 30, 32 * hpPercent, 4)
+    hpBar.fillRect(this.x - 16, this.y - 55, 32 * hpPercent, 4)
   }
 
   handlePlayerMovement(cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
@@ -49,12 +49,12 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     if (cursors.left.isDown) {
       this.setVelocityX(-speed)
       this.anims.play("work", true)
-      this.setFlipX(true)
+      this.setFlipX(false)
       moving = true
     } else if (cursors.right.isDown) {
       this.setVelocityX(speed)
       this.anims.play("work", true)
-      this.setFlipX(false)
+      this.setFlipX(true)
       moving = true
     } else if (!cursors.left.isDown && !cursors.right.isDown) {
       this.setVelocityX(0)
@@ -101,13 +101,13 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.scene.anims.create({
       key: "turn",
       frames: this.anims.generateFrameNumbers("playerIdle", { start: 0, end: 5 }),
-      frameRate: 10,
+      frameRate: 7,
       repeat: -1,
     })
     this.scene.anims.create({
       key: "work",
       frames: this.anims.generateFrameNumbers("playerWork", { start: 0, end: 9 }),
-      frameRate: 10,
+      frameRate: 7,
       repeat: -1,
     })
 

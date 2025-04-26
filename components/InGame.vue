@@ -202,6 +202,7 @@
 </template>
 
 <script lang="ts" setup>
+import { NylonMask, TrunkKing } from "~/models/Character"
 import { Enemies } from "~/models/Enemies"
 import { Enforces } from "~/models/Enforces"
 import { Gun } from "~/models/Gun"
@@ -304,14 +305,26 @@ onMounted(() => {
         scene.load.image("tiles", "/assets/images/mainlevbuild2.png")
         scene.load.tilemapTiledJSON("map", "/assets/jsons/map.json")
 
-        scene.load.spritesheet("playerIdle", "/assets/images/player_idle.png", {
-          frameWidth: 128,
-          frameHeight: 128,
-        })
-        scene.load.spritesheet("playerWork", "/assets/images/player_work.png", {
-          frameWidth: 128,
-          frameHeight: 128,
-        })
+        if (gameStore.selectedCharacter === NylonMask) {
+          scene.load.spritesheet("playerIdle", "/assets/images/player_idle2.png", {
+            frameWidth: 128,
+            frameHeight: 128,
+          })
+          scene.load.spritesheet("playerWork", "/assets/images/player_work2.png", {
+            frameWidth: 128,
+            frameHeight: 128,
+          })
+        } else if (gameStore.selectedCharacter === TrunkKing) {
+          scene.load.spritesheet("playerIdle", "/assets/images/player_idle3.png", {
+            frameWidth: 128,
+            frameHeight: 128,
+          })
+          scene.load.spritesheet("playerWork", "/assets/images/player2_work.png", {
+            frameWidth: 128,
+            frameHeight: 128,
+          })
+        }
+
         scene.load.spritesheet("enemy", "/assets/images/zombie_work.png", {
           frameWidth: 96,
           frameHeight: 96,

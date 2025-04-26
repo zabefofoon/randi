@@ -130,7 +130,7 @@ export abstract class Weapon implements WeaponOptions {
     // 플레이어 위치에서 탄환 생성
     const weapon = this.group?.create(
       player.x,
-      player.y + 20,
+      player.y,
       this.name
     ) as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
     if (!weapon) return
