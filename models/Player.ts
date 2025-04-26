@@ -2,7 +2,10 @@ import type { Enemies, Enemy } from "./Enemies"
 
 export class Player extends Phaser.Physics.Arcade.Sprite {
   maxLife = 5
-  knife!: Phaser.GameObjects.Sprite // ← 추가
+  knife!: Phaser.GameObjects.Sprite
+  gun!: Phaser.GameObjects.Sprite
+  book!: Phaser.GameObjects.Sprite
+  ring!: Phaser.GameObjects.Sprite
 
   constructor(scene: Phaser.Scene, x: number, y: number, key: string) {
     super(scene, x, y, key)
@@ -16,12 +19,28 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       .setData("hp", this.maxLife)
       .setData("hpBar", scene.add.graphics())
       .setScale(0.6)
+      .setDepth(2)
 
     this.body?.setSize(50, 120).setOffset(40, 0)
+
+    this.gun = scene.add
+      .sprite(x, y, "gun-sprite", 0)
+      .setScale(0.75)
+      .setDepth(this.depth + 1) // 항상 위쪽 레이어
 
     this.knife = scene.add
       .sprite(x, y, "knife-sprite", 0)
       .setScale(1.5)
+      .setDepth(this.depth + 1) // 항상 위쪽 레이어
+
+    this.book = scene.add
+      .sprite(x, y, "book-sprite", 0)
+      .setScale(0.75)
+      .setDepth(this.depth + 1) // 항상 위쪽 레이어
+
+    this.ring = scene.add
+      .sprite(x, y, "ring-sprite", 0)
+      .setScale(0.5)
       .setDepth(this.depth + 1) // 항상 위쪽 레이어
   }
 
@@ -32,11 +51,9 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   /** 매 프레임 플레이어 위치에 칼을 붙인다 */
   override preUpdate(time: number, delta: number) {
     super.preUpdate(time, delta)
-    this.knife.setTint(0xffffff)
-    const offsetX = this.flipX ? 12 : -12
-    const offsetY = 0
-    this.knife.setPosition(this.x + offsetX, this.y + offsetY)
-    this.knife.setFlipX(!this.flipX) // 플레이어가 반전되면 칼도 반전
+
+    this.book.setPosition(this.x, this.y)
+    this.ring.setPosition(this.x, this.y)
   }
 
   updatePlayerHpBar() {
@@ -50,12 +67,12 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 
     // 예시: 체력바 배경
     hpBar.fillStyle(0x000000)
-    hpBar.fillRect(this.x - 16, this.y - 55, 32, 4) // width 32, height 4
+    hpBar.fillRect(this.x - 16, this.y - 45, 32, 4) // width 32, height 4
 
     // 남은 체력 비율만큼 색 채우기
     const hpPercent = hp / maxHp
     hpBar.fillStyle(0xff0000)
-    hpBar.fillRect(this.x - 16, this.y - 55, 32 * hpPercent, 4)
+    hpBar.fillRect(this.x - 16, this.y - 45, 32 * hpPercent, 4)
   }
 
   handlePlayerMovement(cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
@@ -128,9 +145,30 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     })
 
     this.scene.anims.create({
+      key: "gun-animation",
+      frames: this.anims.generateFrameNumbers("gun-sprite", { start: 0, end: 5 }),
+      frameRate: 25,
+      repeat: 0,
+    })
+
+    this.scene.anims.create({
       key: "knife-animation",
       frames: this.anims.generateFrameNumbers("knife-sprite", { start: 0, end: 8 }),
-      frameRate: 9,
+      frameRate: 14,
+      repeat: 0,
+    })
+
+    this.scene.anims.create({
+      key: "book-animation",
+      frames: this.anims.generateFrameNumbers("book-sprite", { start: 0, end: 6 }),
+      frameRate: 14,
+      repeat: 0,
+    })
+
+    this.scene.anims.create({
+      key: "ring-animation",
+      frames: this.anims.generateFrameNumbers("ring-sprite", { start: 0, end: 6 }),
+      frameRate: 14,
       repeat: 0,
     })
 

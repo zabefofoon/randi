@@ -279,6 +279,8 @@ let isBossRemained = false
 const isTouchDevice =
   "ontouchstart" in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0
 
+let damageRect: Phaser.GameObjects.Rectangle
+
 onMounted(() => {
   if (!phaserContainer.value) return
 
@@ -302,10 +304,26 @@ onMounted(() => {
     scene: {
       preload(this: Phaser.Scene) {
         const scene = this
+
+        scene.load.image("bullet", "/assets/images/bullet.png")
+
+        scene.load.spritesheet("gun-sprite", "/assets/images/gun_sprite.png", {
+          frameWidth: 100,
+          frameHeight: 100,
+        })
         scene.load.spritesheet("knife-sprite", "/assets/images/knife_sprite.png", {
           frameWidth: 100,
           frameHeight: 100,
         })
+        scene.load.spritesheet("book-sprite", "/assets/images/book_sprite.png", {
+          frameWidth: 100,
+          frameHeight: 100,
+        })
+        scene.load.spritesheet("ring-sprite", "/assets/images/ring_sprite.png", {
+          frameWidth: 100,
+          frameHeight: 100,
+        })
+
         scene.load.image("tiles", "/assets/images/mainlevbuild2.png")
         scene.load.tilemapTiledJSON("map", "/assets/jsons/map.json")
 
@@ -336,6 +354,19 @@ onMounted(() => {
       },
       create(this: Phaser.Scene) {
         scene = this
+
+        damageRect = scene.add
+          .rectangle(
+            0,
+            0,
+            this.cameras.main.width,
+            this.cameras.main.height,
+            0xff0000 // 빨강
+          )
+          .setOrigin(0)
+          .setAlpha(0) // 처음엔 투명
+          .setDepth(999) // UI 위에 표시
+          .setScrollFactor(0) // 카메라에 붙어서 움직이지 않음
 
         const map = scene.make.tilemap({ key: "map" })
         const tileset = map.addTilesetImage("mainlevbuild2", "tiles")
@@ -387,9 +418,7 @@ onMounted(() => {
           gachaChance.value += 2
           coins.value += round.value * 10
         })
-        scene.events.on("enemy-die", () => {
-          killed.value++
-        })
+        scene.events.on("enemy-die", () => killed.value++)
         scene.time.addEvent({
           delay: 1000,
           repeat: -1,
@@ -409,7 +438,18 @@ onMounted(() => {
             }
 
             const playerHP = player.getData("hp") as number
-            if (remainnedEnemies.value > enemyCountDeadline) player.setData("hp", playerHP - 1)
+            if (remainnedEnemies.value > enemyCountDeadline) {
+              player.setData("hp", playerHP - 1)
+              scene.cameras.main.shake(100, 0.01)
+              damageRect.setAlpha(1 - (playerHP - 1) / 10)
+
+              scene.tweens.add({
+                targets: damageRect,
+                alpha: 0,
+                duration: 200,
+                ease: "Sine.easeOut",
+              })
+            }
 
             if (playerHP < 1) {
               scene.physics.pause()
@@ -468,13 +508,63 @@ onMounted(() => {
                 )
 
                 if (distance <= weapon.range) {
-                  weapon.fireHomingWeapon(time, player, enemy)
+                  weapon.fireHomingWeapon(index, time, player, enemy)
+                  const angleRad = Phaser.Math.Angle.Between(player.x, player.y, enemy.x, enemy.y)
+
+                  if (index === 0) {
+                    if (!player.gun.anims.isPlaying) {
+                      const offsetDist = 20
+                      const offsetX = Math.cos(angleRad) * offsetDist
+                      const offsetY = Math.sin(angleRad) * offsetDist
+
+                      player.gun
+                        .setOrigin(0.1, 0.5)
+                        .setTint(0xffffff)
+                        .setRotation(angleRad + Phaser.Math.DegToRad(0))
+                        .setPosition(player.x + offsetX, player.y + offsetY)
+                        .play("gun-animation")
+                        .once("animationcomplete-gun-animation", () => {
+                          player.gun.setFrame(0)
+                        })
+                    }
+                  }
                   if (index === 1) {
                     if (!player.knife.anims.isPlaying) {
-                      player.knife.play("knife-animation")
-                      player.knife.once("animationcomplete-knife-animation", () => {
-                        player.knife.setFrame(0)
-                      })
+                      const offsetDist = -50
+                      const offsetX = Math.cos(angleRad) * offsetDist
+                      const offsetY = Math.sin(angleRad) * offsetDist
+
+                      player.knife
+                        .setOrigin(0.1, 0.5)
+                        .setTint(0xffffff)
+                        .setRotation(angleRad + Phaser.Math.DegToRad(0))
+                        .setPosition(player.x + offsetX, player.y + offsetY)
+                        .play("knife-animation")
+                        .once("animationcomplete-knife-animation", () => {
+                          player.knife.setFrame(0)
+                        })
+                    }
+                  }
+
+                  if (index === 2) {
+                    if (!player.book.anims.isPlaying) {
+                      player.book
+                        .setTint(0xffffff)
+                        .play("book-animation")
+                        .once("animationcomplete-book-animation", () => {
+                          player.book.setFrame(0)
+                        })
+                    }
+                  }
+
+                  if (index === 3) {
+                    if (!player.ring.anims.isPlaying) {
+                      player.ring
+                        .setTint(0xffffff)
+                        .play("ring-animation")
+                        .once("animationcomplete-ring-animation", () => {
+                          player.ring.setFrame(0)
+                        })
                     }
                   }
                 }

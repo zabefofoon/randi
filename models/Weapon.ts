@@ -124,21 +124,20 @@ export abstract class Weapon implements WeaponOptions {
   /**
    * 호밍 탄환 발사
    */
-  fireHomingWeapon(currentTime: number, player: Player, enemy: Enemy) {
+  fireHomingWeapon(weaponIndex: number, currentTime: number, player: Player, enemy: Enemy) {
     this.lastAttackTime = currentTime
 
     // 플레이어 위치에서 탄환 생성
     const weapon = this.group?.create(
       player.x,
       player.y,
-      this.name
+      "bullet"
     ) as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
     if (!weapon) return
 
-    weapon.setActive(true)
-    weapon.setVisible(true)
+    weapon.setScale(0.1).setActive(true).setVisible(true).setData("target", enemy).setDepth(1)
 
-    weapon.setData("target", enemy)
+    if (weaponIndex === 1) weapon.setAlpha(0)
 
     // 처음에 한 번 적 방향으로 설정
     const angle = Phaser.Math.Angle.Between(weapon.x, weapon.y, enemy.x, enemy.y)
