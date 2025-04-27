@@ -2,7 +2,7 @@ import { Weapon, type WeaponOptions } from "./Weapon"
 
 // level 1
 export class ButterKnife extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 1,
     name: "버터칼",
     description: "근접 무기. 데미지는 크지만 사정거리가 짧습니다.",
@@ -29,13 +29,13 @@ export class ButterKnife extends Weapon {
         {
           cls: KitchenKnife,
           materials: [
-            { name: "힘", length: 1 },
-            { name: "민첩", length: 1 },
+            { key: "str", length: 1 },
+            { key: "agi", length: 1 },
           ],
         },
         {
           cls: CutterKnife,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -48,7 +48,7 @@ export class ButterKnife extends Weapon {
 
 // level 2
 export class KitchenKnife extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 2,
     name: "식칼",
     description: "근접 무기. 데미지가 강력합니다",
@@ -74,11 +74,11 @@ export class KitchenKnife extends Weapon {
       nexts: [
         {
           cls: SushiKnife,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
         {
           cls: Scissors,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -91,7 +91,7 @@ export class KitchenKnife extends Weapon {
 
 // level 2
 export class CutterKnife extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 2,
     name: "커터칼",
     description: "근접 무기. 데미지는 작지만 연사가 빠릅니다.",
@@ -117,11 +117,11 @@ export class CutterKnife extends Weapon {
       nexts: [
         {
           cls: Hammer,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
         {
           cls: AX,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -134,7 +134,7 @@ export class CutterKnife extends Weapon {
 
 // level 3
 export class SushiKnife extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 3,
     name: "회칼",
     description: "근접 무기. 데미지가 강력합니다",
@@ -160,11 +160,11 @@ export class SushiKnife extends Weapon {
       nexts: [
         {
           cls: ButcherKnife,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
         {
           cls: LongNails,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -177,7 +177,7 @@ export class SushiKnife extends Weapon {
 
 // level 3
 export class Scissors extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 3,
     name: "가위",
     description: "근접 무기. 데미지가 강력합니다",
@@ -203,11 +203,11 @@ export class Scissors extends Weapon {
       nexts: [
         {
           cls: SwissArmyKnife,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
         {
           cls: Fist,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -220,7 +220,7 @@ export class Scissors extends Weapon {
 
 // level 3
 export class Hammer extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 3,
     name: "망치",
     description: "근접 무기. 데미지가 강력합니다",
@@ -246,11 +246,11 @@ export class Hammer extends Weapon {
       nexts: [
         {
           cls: CrossCutSaw,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
         {
           cls: CrowBar,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -263,7 +263,7 @@ export class Hammer extends Weapon {
 
 // level 3
 export class AX extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 3,
     name: "도끼",
     description: "근접 무기. 데미지가 강력합니다",
@@ -289,11 +289,11 @@ export class AX extends Weapon {
       nexts: [
         {
           cls: Machete,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
         {
           cls: KoreanHandPlow,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -306,7 +306,7 @@ export class AX extends Weapon {
 
 // level 4
 export class ButcherKnife extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "정육칼",
     description: "근접 무기. 데미지가 강력합니다",
@@ -332,11 +332,11 @@ export class ButcherKnife extends Weapon {
       nexts: [
         {
           cls: BornSword,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
         {
           cls: DualBlade,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -349,7 +349,7 @@ export class ButcherKnife extends Weapon {
 
 // level 4
 export class LongNails extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "긴손톱",
     description: "근접 무기. 데미지가 강력합니다",
@@ -375,11 +375,11 @@ export class LongNails extends Weapon {
       nexts: [
         {
           cls: SurgicalKnife,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
         {
           cls: CursedSword,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -392,7 +392,7 @@ export class LongNails extends Weapon {
 
 // level 4
 export class SwissArmyKnife extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "맥가이버칼",
     description: "근접 무기. 데미지가 강력합니다",
@@ -418,11 +418,11 @@ export class SwissArmyKnife extends Weapon {
       nexts: [
         {
           cls: BlessedSword,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
         {
           cls: DualBlade,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -435,7 +435,7 @@ export class SwissArmyKnife extends Weapon {
 
 // level 4
 export class Fist extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "주먹",
     description: "근접 무기. 데미지가 강력합니다",
@@ -461,11 +461,11 @@ export class Fist extends Weapon {
       nexts: [
         {
           cls: BornSword,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
         {
           cls: CursedSword,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -478,7 +478,7 @@ export class Fist extends Weapon {
 
 // level 4
 export class CrossCutSaw extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "톱",
     description: "근접 무기. 데미지가 강력합니다",
@@ -504,7 +504,7 @@ export class CrossCutSaw extends Weapon {
       nexts: [
         {
           cls: BlessedSword,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -517,7 +517,7 @@ export class CrossCutSaw extends Weapon {
 
 // level 4
 export class CrowBar extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "빠루",
     description: "근접 무기. 데미지가 강력합니다",
@@ -543,11 +543,11 @@ export class CrowBar extends Weapon {
       nexts: [
         {
           cls: DualBlade,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
         {
           cls: BigAX,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -560,7 +560,7 @@ export class CrowBar extends Weapon {
 
 // level 4
 export class Machete extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "마체테",
     description: "근접 무기. 데미지가 강력합니다",
@@ -586,7 +586,7 @@ export class Machete extends Weapon {
       nexts: [
         {
           cls: SurgicalKnife,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -599,7 +599,7 @@ export class Machete extends Weapon {
 
 // level 4
 export class KoreanHandPlow extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "호미",
     description: "근접 무기. 데미지가 강력합니다",
@@ -625,7 +625,7 @@ export class KoreanHandPlow extends Weapon {
       nexts: [
         {
           cls: BigAX,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -638,7 +638,7 @@ export class KoreanHandPlow extends Weapon {
 
 // level 5
 export class BornSword extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 5,
     name: "뼈칼",
     description: "근접 무기. 데미지가 강력합니다",
@@ -664,7 +664,7 @@ export class BornSword extends Weapon {
       nexts: [
         {
           cls: DragonSlayer,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -677,7 +677,7 @@ export class BornSword extends Weapon {
 
 // level 5
 export class SurgicalKnife extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 5,
     name: "메스",
     description: "근접 무기. 데미지가 강력합니다",
@@ -703,7 +703,7 @@ export class SurgicalKnife extends Weapon {
       nexts: [
         {
           cls: SnotWhip,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -716,7 +716,7 @@ export class SurgicalKnife extends Weapon {
 
 // level 5
 export class BlessedSword extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 5,
     name: "축복받은칼",
     description: "근접 무기. 데미지가 강력합니다",
@@ -742,7 +742,7 @@ export class BlessedSword extends Weapon {
       nexts: [
         {
           cls: LaserSword,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -755,7 +755,7 @@ export class BlessedSword extends Weapon {
 
 // level 5
 export class CursedSword extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 5,
     name: "저주받은칼",
     description: "근접 무기. 데미지가 강력합니다",
@@ -781,7 +781,7 @@ export class CursedSword extends Weapon {
       nexts: [
         {
           cls: DragonSlayer,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -794,7 +794,7 @@ export class CursedSword extends Weapon {
 
 // level 5
 export class DualBlade extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 5,
     name: "쌍칼",
     description: "근접 무기. 데미지가 강력합니다",
@@ -820,7 +820,7 @@ export class DualBlade extends Weapon {
       nexts: [
         {
           cls: SnotWhip,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -833,7 +833,7 @@ export class DualBlade extends Weapon {
 
 // level 5
 export class BigAX extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 5,
     name: "대형도끼",
     description: "근접 무기. 데미지가 강력합니다",
@@ -859,7 +859,7 @@ export class BigAX extends Weapon {
       nexts: [
         {
           cls: DeathScythe,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -872,7 +872,7 @@ export class BigAX extends Weapon {
 
 // level 6
 export class DragonSlayer extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 6,
     name: "드래곤슬레이어",
     description: "근접 무기. 데미지가 강력합니다",
@@ -906,7 +906,7 @@ export class DragonSlayer extends Weapon {
 
 // level 6
 export class SnotWhip extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 6,
     name: "콧물채찍",
     description: "근접 무기. 데미지가 강력합니다",
@@ -940,7 +940,7 @@ export class SnotWhip extends Weapon {
 
 // level 6
 export class LaserSword extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 6,
     name: "레이저소드",
     description: "근접 무기. 데미지가 강력합니다",
@@ -974,7 +974,7 @@ export class LaserSword extends Weapon {
 
 // level 6
 export class DeathScythe extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 6,
     name: "사신의낫",
     description: "근접 무기. 데미지가 강력합니다",

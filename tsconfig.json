@@ -1,14 +1,16 @@
 {
-    // https://nuxt.com/docs/guide/concepts/typescript
-    "extends": "./.nuxt/tsconfig.json",
-    "compilerOptions": {
-        // 사용되지 않는 변수 경고
-        "noUnusedLocals": true,
-        // 사용되지 않는 arguments 경고
-        "noUnusedParameters": true,
-        "strict": true
-    },
-    "lib": ["es6", "dom", "dom.iterable", "scripthost"],
-    "typeRoots": ["./node_modules/phaser/types"],
-    "types": ["Phaser"]
+  // https://nuxt.com/docs/guide/concepts/typescript
+  "extends": "./.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "esnext",
+    // 사용되지 않는 변수 경고
+    "noUnusedLocals": true,
+    // 사용되지 않는 arguments 경고
+    "noUnusedParameters": true,
+    "strict": true
+  },
+  "lib": ["es6", "dom", "dom.iterable", "scripthost"],
+  "typeRoots": ["./node_modules/phaser/types"],
+  "types": ["Phaser"]
 }

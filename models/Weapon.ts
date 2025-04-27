@@ -1,10 +1,10 @@
 import type { Enemies, Enemy } from "./Enemies"
 import type { Enforces } from "./Enforces"
-import type { Materials } from "./Material"
+import type { Material, Materials } from "./Material"
 import type { Player } from "./Player"
 
 export interface MaterialReq {
-  name: string
+  key: Material["key"]
   length: number
 }
 export interface WeaponOptions {
@@ -25,7 +25,7 @@ export interface WeaponOptions {
   slow: number
   allCooltime: number
   spritePosition: string
-  index: number
+  index?: number
   nexts?: NextInfo[]
 }
 
@@ -88,6 +88,7 @@ export class Weapons {
 }
 
 export abstract class Weapon implements WeaponOptions {
+  static meta: WeaponOptions
   group?: Phaser.Physics.Arcade.Group
   name = ""
   description = ""

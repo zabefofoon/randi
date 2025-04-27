@@ -2,7 +2,7 @@ import { Weapon, type WeaponOptions } from "./Weapon"
 
 // level 1
 export class Book extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 1,
     name: "공책",
     description: "강력한 마법공격",
@@ -29,13 +29,13 @@ export class Book extends Weapon {
         {
           cls: ThickBook,
           materials: [
-            { name: "힘", length: 1 },
-            { name: "민첩", length: 1 },
+            { key: "str", length: 1 },
+            { key: "agi", length: 1 },
           ],
         },
         {
           cls: ThinBook,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -48,7 +48,7 @@ export class Book extends Weapon {
 
 // level 2
 export class ThickBook extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 2,
     name: "두꺼운책",
     description: "강력한 마법공격",
@@ -75,15 +75,15 @@ export class ThickBook extends Weapon {
         {
           cls: SpringBook,
           materials: [
-            { name: "힘", length: 1 },
-            { name: "민첩", length: 1 },
+            { key: "str", length: 1 },
+            { key: "agi", length: 1 },
           ],
         },
         {
           cls: TextBook,
           materials: [
-            { name: "힘", length: 1 },
-            { name: "민첩", length: 1 },
+            { key: "str", length: 1 },
+            { key: "agi", length: 1 },
           ],
         },
       ],
@@ -97,7 +97,7 @@ export class ThickBook extends Weapon {
 
 // level 2
 export class ThinBook extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 2,
     name: "얇은책",
     description: "강력한 마법공격",
@@ -124,15 +124,15 @@ export class ThinBook extends Weapon {
         {
           cls: Map,
           materials: [
-            { name: "힘", length: 1 },
-            { name: "민첩", length: 1 },
+            { key: "str", length: 1 },
+            { key: "agi", length: 1 },
           ],
         },
         {
           cls: PictureBook,
           materials: [
-            { name: "힘", length: 1 },
-            { name: "민첩", length: 1 },
+            { key: "str", length: 1 },
+            { key: "agi", length: 1 },
           ],
         },
       ],
@@ -146,7 +146,7 @@ export class ThinBook extends Weapon {
 
 // level 3
 export class SpringBook extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 3,
     name: "스프링책",
     description: "강력한 마법공격",
@@ -173,15 +173,15 @@ export class SpringBook extends Weapon {
         {
           cls: MagicBook,
           materials: [
-            { name: "힘", length: 1 },
-            { name: "민첩", length: 1 },
+            { key: "str", length: 1 },
+            { key: "agi", length: 1 },
           ],
         },
         {
           cls: MobilePhone,
           materials: [
-            { name: "힘", length: 1 },
-            { name: "민첩", length: 1 },
+            { key: "str", length: 1 },
+            { key: "agi", length: 1 },
           ],
         },
       ],
@@ -195,7 +195,7 @@ export class SpringBook extends Weapon {
 
 // level 3
 export class TextBook extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 3,
     name: "교과서",
     description: "강력한 마법공격",
@@ -222,15 +222,15 @@ export class TextBook extends Weapon {
         {
           cls: Regulations,
           materials: [
-            { name: "힘", length: 1 },
-            { name: "민첩", length: 1 },
+            { key: "str", length: 1 },
+            { key: "agi", length: 1 },
           ],
         },
         {
           cls: WorkBook,
           materials: [
-            { name: "힘", length: 1 },
-            { name: "민첩", length: 1 },
+            { key: "str", length: 1 },
+            { key: "agi", length: 1 },
           ],
         },
       ],
@@ -244,7 +244,7 @@ export class TextBook extends Weapon {
 
 // level 3
 export class Map extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 3,
     name: "지도",
     description: "강력한 마법공격",
@@ -271,15 +271,15 @@ export class Map extends Weapon {
         {
           cls: TreasureMap,
           materials: [
-            { name: "힘", length: 1 },
-            { name: "민첩", length: 1 },
+            { key: "str", length: 1 },
+            { key: "agi", length: 1 },
           ],
         },
         {
           cls: EvacuationMap,
           materials: [
-            { name: "힘", length: 1 },
-            { name: "민첩", length: 1 },
+            { key: "str", length: 1 },
+            { key: "agi", length: 1 },
           ],
         },
       ],
@@ -293,7 +293,7 @@ export class Map extends Weapon {
 
 // level 3
 export class PictureBook extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 3,
     name: "지도",
     description: "강력한 마법공격",
@@ -320,15 +320,15 @@ export class PictureBook extends Weapon {
         {
           cls: Diary,
           materials: [
-            { name: "힘", length: 1 },
-            { name: "민첩", length: 1 },
+            { key: "str", length: 1 },
+            { key: "agi", length: 1 },
           ],
         },
         {
           cls: Menu,
           materials: [
-            { name: "힘", length: 1 },
-            { name: "민첩", length: 1 },
+            { key: "str", length: 1 },
+            { key: "agi", length: 1 },
           ],
         },
       ],
@@ -342,7 +342,7 @@ export class PictureBook extends Weapon {
 
 // level 4
 export class MagicBook extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "마법책",
     description: "강력한 마법공격",
@@ -368,11 +368,11 @@ export class MagicBook extends Weapon {
       nexts: [
         {
           cls: Revelation,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
         {
           cls: HellMap,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -385,7 +385,7 @@ export class MagicBook extends Weapon {
 
 // level 4
 export class MobilePhone extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "핸드폰",
     description: "강력한 마법공격",
@@ -411,11 +411,11 @@ export class MobilePhone extends Weapon {
       nexts: [
         {
           cls: Labtop,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
         {
           cls: AnswerSheet,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -428,7 +428,7 @@ export class MobilePhone extends Weapon {
 
 // level 4
 export class Regulations extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "규칙서",
     description: "강력한 마법공격",
@@ -454,11 +454,11 @@ export class Regulations extends Weapon {
       nexts: [
         {
           cls: LawBook,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
         {
           cls: HellMap,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -471,7 +471,7 @@ export class Regulations extends Weapon {
 
 // level 4
 export class WorkBook extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "문제집",
     description: "강력한 마법공격",
@@ -497,11 +497,11 @@ export class WorkBook extends Weapon {
       nexts: [
         {
           cls: Revelation,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
         {
           cls: AnswerSheet,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -514,7 +514,7 @@ export class WorkBook extends Weapon {
 
 // level 4
 export class TreasureMap extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "보물지도",
     description: "강력한 마법공격",
@@ -540,7 +540,7 @@ export class TreasureMap extends Weapon {
       nexts: [
         {
           cls: LawBook,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -553,7 +553,7 @@ export class TreasureMap extends Weapon {
 
 // level 4
 export class EvacuationMap extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "피난안내도",
     description: "강력한 마법공격",
@@ -579,11 +579,11 @@ export class EvacuationMap extends Weapon {
       nexts: [
         {
           cls: HellMap,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
         {
           cls: OrderForm,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -596,7 +596,7 @@ export class EvacuationMap extends Weapon {
 
 // level 4
 export class Diary extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "일기장",
     description: "강력한 마법공격",
@@ -622,7 +622,7 @@ export class Diary extends Weapon {
       nexts: [
         {
           cls: Labtop,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -635,7 +635,7 @@ export class Diary extends Weapon {
 
 // level 4
 export class Menu extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "메뉴판",
     description: "강력한 마법공격",
@@ -661,7 +661,7 @@ export class Menu extends Weapon {
       nexts: [
         {
           cls: OrderForm,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -674,7 +674,7 @@ export class Menu extends Weapon {
 
 // level 5
 export class Revelation extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 5,
     name: "계시록",
     description: "강력한 마법공격",
@@ -700,7 +700,7 @@ export class Revelation extends Weapon {
       nexts: [
         {
           cls: Grimoire,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -713,7 +713,7 @@ export class Revelation extends Weapon {
 
 // level 5
 export class Labtop extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 5,
     name: "노트북",
     description: "강력한 마법공격",
@@ -739,7 +739,7 @@ export class Labtop extends Weapon {
       nexts: [
         {
           cls: TabletPC,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -752,7 +752,7 @@ export class Labtop extends Weapon {
 
 // level 5
 export class AnswerSheet extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 5,
     name: "답안지",
     description: "강력한 마법공격",
@@ -778,7 +778,7 @@ export class AnswerSheet extends Weapon {
       nexts: [
         {
           cls: TabletPC,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -791,7 +791,7 @@ export class AnswerSheet extends Weapon {
 
 // level 5
 export class LawBook extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 5,
     name: "법책",
     description: "강력한 마법공격",
@@ -817,7 +817,7 @@ export class LawBook extends Weapon {
       nexts: [
         {
           cls: Constitution,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -830,7 +830,7 @@ export class LawBook extends Weapon {
 
 // level 5
 export class HellMap extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 5,
     name: "지옥안내도",
     description: "강력한 마법공격",
@@ -856,7 +856,7 @@ export class HellMap extends Weapon {
       nexts: [
         {
           cls: Grimoire,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -869,7 +869,7 @@ export class HellMap extends Weapon {
 
 // level 5
 export class OrderForm extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 5,
     name: "주문서",
     description: "강력한 마법공격",
@@ -895,7 +895,7 @@ export class OrderForm extends Weapon {
       nexts: [
         {
           cls: Counterfeit,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -908,7 +908,7 @@ export class OrderForm extends Weapon {
 
 // level 6
 export class Grimoire extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 6,
     name: "마도서",
     description: "강력한 마법공격",
@@ -942,7 +942,7 @@ export class Grimoire extends Weapon {
 
 // level 6
 export class TabletPC extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 6,
     name: "타블릿피씨",
     description: "강력한 마법공격",
@@ -976,7 +976,7 @@ export class TabletPC extends Weapon {
 
 // level 6
 export class Constitution extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 6,
     name: "지옥의법",
     description: "강력한 마법공격",
@@ -1010,7 +1010,7 @@ export class Constitution extends Weapon {
 
 // level 6
 export class Counterfeit extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 6,
     name: "위조지폐",
     description: "강력한 마법공격",

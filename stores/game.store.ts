@@ -1,4 +1,4 @@
-import { Character, NylonMask, TrunkKing } from "~/models/Character"
+import { NylonMask, TrunkKing, type Character } from "~/models/Character"
 import type { Rewords } from "~/models/Rewords"
 
 export const useGameStore = defineStore("gameStore", () => {

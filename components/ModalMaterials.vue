@@ -10,23 +10,23 @@
         class="flex flex-col items-center justify-center | text-white | p-[1.5cqw] border-black border-[0.14cqw] rounded-lg">
         <div class="grid grid-cols-4 | gap-[0.5cqw]">
           <figure
-            v-for="(material, index) in materials"
+            v-for="(key, index) in materials.keys"
             ref="materialRefs"
-            :key="material.info.name"
+            :key="key"
             class="select-none transition-colors | flex flex-col items-center | bg-blue-900 | border-black border-[0.14cqw] rounded-lg p-[1cqw] | cursor-pointer"
             :class="{ selectable: selectChance > 0 }"
-            @click="select(Object.keys(materials).findIndex((item) => item === index))">
+            @click="select(index)">
             <div
               class="stat-sprites w-[5cqw] aspect-square"
               :style="{
-                backgroundPosition: etcUtil.getSpritePosition(
-                  Object.keys(materials).findIndex((item) => item === index)
-                ),
+                backgroundPosition: etcUtil.getSpritePosition(index),
               }"></div>
             <figcaption class="flex flex-col items-center">
-              <span class="text-outline text-[1.5cqw] font-bold">{{ material.info.name }}</span>
-              <span class="text-[1.1cqw]">{{ material.info.description }}</span>
-              <span class="text-[1.1cqw]">{{ material.length }}개</span>
+              <span class="text-outline text-[1.5cqw] font-bold">
+                {{ materials[key].info.key }}
+              </span>
+              <span class="text-[1.1cqw]">{{ materials[key].info.description }}</span>
+              <span class="text-[1.1cqw]">{{ materials[key].length }}개</span>
             </figcaption>
           </figure>
         </div>
@@ -64,7 +64,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Material, Materials } from "~/models/Material"
+import type { Materials } from "~/models/Material"
 
 const props = defineProps<{
   materials: Materials
@@ -82,8 +82,10 @@ const materialRefs = ref<HTMLElement[]>([])
 const gacha = () => {
   if (gachaChance.value < 1) return
   const randomIndex = Phaser.Math.Between(0, 7)
-  const selectedMaterialKey = Object.keys(props.materials)[randomIndex] as Material["name"]
-  props.materials[selectedMaterialKey].length++
+  const selectedMaterialKey = Object.keys(props.materials)[
+    randomIndex
+  ] as keyof ClassToRaw<Materials>
+  props.materials.increase(selectedMaterialKey, 1)
   gachaChance.value--
 
   const el = materialRefs.value[randomIndex]
@@ -96,8 +98,8 @@ const gacha = () => {
 
 const select = (index: number) => {
   if (selectChance.value < 1) return
-  const selectedMaterialKey = Object.keys(props.materials)[index] as Material["name"]
-  props.materials[selectedMaterialKey].length++
+  const selectedMaterialKey = Object.keys(props.materials)[index] as keyof ClassToRaw<Materials>
+  props.materials.increase(selectedMaterialKey, 1)
   selectChance.value--
 
   const el = materialRefs.value[index]

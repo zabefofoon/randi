@@ -2,7 +2,7 @@ import { Weapon, type WeaponOptions } from "./Weapon"
 
 // level 1
 export class Ring extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 1,
     name: "반지",
     description: "마법공격",
@@ -29,13 +29,13 @@ export class Ring extends Weapon {
         {
           cls: CopperRing,
           materials: [
-            { name: "힘", length: 1 },
-            { name: "민첩", length: 1 },
+            { key: "str", length: 1 },
+            { key: "agi", length: 1 },
           ],
         },
         {
           cls: FlowerRing,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -48,7 +48,7 @@ export class Ring extends Weapon {
 
 // level 2
 export class CopperRing extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 2,
     name: "구리반지",
     description: "마법공격",
@@ -74,11 +74,11 @@ export class CopperRing extends Weapon {
       nexts: [
         {
           cls: SilverRing,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
         {
           cls: JadeRing,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -91,7 +91,7 @@ export class CopperRing extends Weapon {
 
 // level 2
 export class FlowerRing extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 2,
     name: "꽃반지",
     description: "마법공격",
@@ -117,11 +117,11 @@ export class FlowerRing extends Weapon {
       nexts: [
         {
           cls: LeatherRing,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
         {
           cls: CandyRing,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -134,7 +134,7 @@ export class FlowerRing extends Weapon {
 
 // level 3
 export class SilverRing extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 3,
     name: "은도금반지",
     description: "마법공격",
@@ -160,11 +160,11 @@ export class SilverRing extends Weapon {
       nexts: [
         {
           cls: GoldRing,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
         {
           cls: KnuckleRing,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -177,7 +177,7 @@ export class SilverRing extends Weapon {
 
 // level 3
 export class JadeRing extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 3,
     name: "옥반지",
     description: "마법공격",
@@ -203,11 +203,11 @@ export class JadeRing extends Weapon {
       nexts: [
         {
           cls: DigitalRing,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
         {
           cls: CrystalRing,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -220,7 +220,7 @@ export class JadeRing extends Weapon {
 
 // level 3
 export class LeatherRing extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 3,
     name: "가죽반지",
     description: "마법공격",
@@ -246,11 +246,11 @@ export class LeatherRing extends Weapon {
       nexts: [
         {
           cls: RuneRing,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
         {
           cls: SignetRing,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -263,7 +263,7 @@ export class LeatherRing extends Weapon {
 
 // level 3
 export class CandyRing extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 3,
     name: "사탕반지",
     description: "마법공격",
@@ -289,11 +289,11 @@ export class CandyRing extends Weapon {
       nexts: [
         {
           cls: SharpieRing,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
         {
           cls: OnionRing,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -306,7 +306,7 @@ export class CandyRing extends Weapon {
 
 // level 4
 export class GoldRing extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "금반지",
     description: "마법공격",
@@ -332,11 +332,11 @@ export class GoldRing extends Weapon {
       nexts: [
         {
           cls: DiamondRing,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
         {
           cls: RubyRing,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -349,7 +349,7 @@ export class GoldRing extends Weapon {
 
 // level 4
 export class KnuckleRing extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "호신용반지",
     description: "마법공격",
@@ -375,11 +375,11 @@ export class KnuckleRing extends Weapon {
       nexts: [
         {
           cls: OpalRing,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
         {
           cls: ObsidianRing,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -392,7 +392,7 @@ export class KnuckleRing extends Weapon {
 
 // level 4
 export class DigitalRing extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "호신용반지",
     description: "마법공격",
@@ -418,11 +418,11 @@ export class DigitalRing extends Weapon {
       nexts: [
         {
           cls: SapphireRing,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
         {
           cls: RubyRing,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -435,7 +435,7 @@ export class DigitalRing extends Weapon {
 
 // level 4
 export class CrystalRing extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "수정반지",
     description: "마법공격",
@@ -461,11 +461,11 @@ export class CrystalRing extends Weapon {
       nexts: [
         {
           cls: DiamondRing,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
         {
           cls: ObsidianRing,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -478,7 +478,7 @@ export class CrystalRing extends Weapon {
 
 // level 4
 export class RuneRing extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "룬반지",
     description: "마법공격",
@@ -504,7 +504,7 @@ export class RuneRing extends Weapon {
       nexts: [
         {
           cls: SapphireRing,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -517,7 +517,7 @@ export class RuneRing extends Weapon {
 
 // level 4
 export class SignetRing extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "룬반지",
     description: "마법공격",
@@ -543,11 +543,11 @@ export class SignetRing extends Weapon {
       nexts: [
         {
           cls: RubyRing,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
         {
           cls: Bugles,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -560,7 +560,7 @@ export class SignetRing extends Weapon {
 
 // level 4
 export class SharpieRing extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "반지그림",
     description: "마법공격",
@@ -586,7 +586,7 @@ export class SharpieRing extends Weapon {
       nexts: [
         {
           cls: OpalRing,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -599,7 +599,7 @@ export class SharpieRing extends Weapon {
 
 // level 4
 export class OnionRing extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "양파링",
     description: "마법공격",
@@ -625,7 +625,7 @@ export class OnionRing extends Weapon {
       nexts: [
         {
           cls: Bugles,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -638,7 +638,7 @@ export class OnionRing extends Weapon {
 
 // level 5
 export class DiamondRing extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 5,
     name: "다이아반지",
     description: "마법공격",
@@ -664,7 +664,7 @@ export class DiamondRing extends Weapon {
       nexts: [
         {
           cls: BornRing,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -677,7 +677,7 @@ export class DiamondRing extends Weapon {
 
 // level 5
 export class OpalRing extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 5,
     name: "오팔반지",
     description: "마법공격",
@@ -703,7 +703,7 @@ export class OpalRing extends Weapon {
       nexts: [
         {
           cls: VampireRing,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -716,7 +716,7 @@ export class OpalRing extends Weapon {
 
 // level 5
 export class ObsidianRing extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 5,
     name: "흑요석반지",
     description: "마법공격",
@@ -742,7 +742,7 @@ export class ObsidianRing extends Weapon {
       nexts: [
         {
           cls: BornRing,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -755,7 +755,7 @@ export class ObsidianRing extends Weapon {
 
 // level 5
 export class SapphireRing extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 5,
     name: "사파이어반지",
     description: "마법공격",
@@ -781,7 +781,7 @@ export class SapphireRing extends Weapon {
       nexts: [
         {
           cls: Tattoo,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -794,7 +794,7 @@ export class SapphireRing extends Weapon {
 
 // level 5
 export class RubyRing extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 5,
     name: "루비반지",
     description: "마법공격",
@@ -820,7 +820,7 @@ export class RubyRing extends Weapon {
       nexts: [
         {
           cls: VampireRing,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -833,7 +833,7 @@ export class RubyRing extends Weapon {
 
 // level 5
 export class Bugles extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 5,
     name: "꼬깔과자",
     description: "마법공격",
@@ -859,7 +859,7 @@ export class Bugles extends Weapon {
       nexts: [
         {
           cls: FourLeafClover,
-          materials: [{ name: "힘", length: 3 }],
+          materials: [{ key: "str", length: 3 }],
         },
       ],
     })
@@ -872,7 +872,7 @@ export class Bugles extends Weapon {
 
 // level 6
 export class BornRing extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 6,
     name: "해골반지",
     description: "마법공격",
@@ -906,7 +906,7 @@ export class BornRing extends Weapon {
 
 // level 6
 export class VampireRing extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 6,
     name: "뱀파이어인장",
     description: "마법공격",
@@ -940,7 +940,7 @@ export class VampireRing extends Weapon {
 
 // level 6
 export class Tattoo extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 6,
     name: "타투",
     description: "마법공격",
@@ -974,7 +974,7 @@ export class Tattoo extends Weapon {
 
 // level 6
 export class FourLeafClover extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 6,
     name: "네잎클로버",
     description: "마법공격",

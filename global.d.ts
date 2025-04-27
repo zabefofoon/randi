@@ -1,0 +1,33 @@
+declare global {
+  interface HTMLElement {
+    mozCancelFullScreen?: () => Promise<void>
+    mozRequestFullScreen?: () => Promise<void>
+    msExitFullscreen?: () => Promise<void>
+    webkitExitFullscreen?: () => Promise<void>
+    webkitRequestFullscreen?: () => Promise<void>
+    msRequestFullscreen?: () => Promise<void>
+    mozFullScreenElement?: Element
+    msFullscreenElement?: Element
+    webkitFullscreenElement?: Element
+  }
+
+  interface ScreenOrientation {
+    lock?: (...args: unknown[]) => Promise<void>
+  }
+
+  interface Navigator {
+    msMaxTouchPoints: number
+  }
+}
+
+export interface Document extends HTMLDocument {
+  mozCancelFullScreen?: () => Promise<void>
+  mozRequestFullScreen?: () => Promise<void>
+  msExitFullscreen?: () => Promise<void>
+  webkitExitFullscreen?: () => Promise<void>
+  webkitRequestFullscreen?: () => Promise<void>
+  msRequestFullscreen?: () => Promise<void>
+  mozFullScreenElement?: Element
+  msFullscreenElement?: Element
+  webkitFullscreenElement?: Element
+}

@@ -105,8 +105,8 @@ const gacha = async () => {
   results.value
     .filter((item) => item !== -1)
     .forEach((index) => {
-      const key = Object.keys(props.materials)[index] as keyof Materials
-      props.materials[key].length++
+      const key = Object.keys(props.materials)[index] as keyof ClassToRaw<Materials>
+      props.materials.increase(key, 1)
     })
   await etcUtil.sleep(300)
   animating = false

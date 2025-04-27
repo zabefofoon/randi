@@ -131,10 +131,10 @@
                       (
                       <div
                         v-for="(material, index) in item.materials"
-                        :key="material.name"
+                        :key="material.key"
                         class="flex gap-[0.2cqw]">
                         <span v-if="index !== 0">&nbsp;+</span>
-                        <span>{{ material.name }} {{ material.length }}개</span>
+                        <span>{{ material.key }} {{ material.length }}개</span>
                       </div>
                       )
                     </div>
@@ -162,8 +162,9 @@
 
 <script setup lang="ts">
 import { Book } from "~/models/Book"
+import type { Gun } from "~/models/Gun"
 import { ButterKnife } from "~/models/Knife"
-import type { Material, Materials } from "~/models/Material"
+import type { Materials } from "~/models/Material"
 import { Ring } from "~/models/Ring"
 import type { NextInfo, Weapons } from "~/models/Weapon"
 
@@ -195,11 +196,12 @@ const gachaWeapon = () => {
     let doneCount = 0
     while (doneCount < needLength.value) {
       const randomIndex = Phaser.Math.Between(0, 7)
-      const selectedMaterialKey = Object.keys(props.materials)[randomIndex] as Material["name"]
+      const selectedMaterialKey = Object.keys(props.materials)[
+        randomIndex
+      ] as keyof ClassToRaw<Materials>
 
       if (props.materials[selectedMaterialKey].length > 0) {
-        props.materials[selectedMaterialKey].length =
-          props.materials[selectedMaterialKey].length - 1
+        props.materials.decrease(selectedMaterialKey, 1)
         doneCount++
       }
     }
@@ -208,12 +210,13 @@ const gachaWeapon = () => {
 
 const getNextWeapon = (item: NextInfo) => {
   const isGettable = item.materials.every(
-    (material) => props.materials[material.name].length >= material.length
+    (material) => props.materials[material.key].length >= material.length
   )
   if (!isGettable) return
   item.materials.forEach((material) => {
-    props.materials[material.name].length -= material.length
+    props.materials.decrease(material.key, material.length)
   })
-  props.weapons.addWeapon(selectedIndex.value, new item.cls().setIndex(selectedIndex.value))
+  const cls = item.cls as typeof Gun
+  props.weapons.addWeapon(selectedIndex.value, new cls().setIndex(selectedIndex.value))
 }
 </script>

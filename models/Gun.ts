@@ -2,7 +2,7 @@ import { Weapon, type WeaponOptions } from "./Weapon"
 
 // level 1
 export class Gun extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 1,
     name: "일반권총",
     description: "빠른 연사와 적당한 데미지를 가집니다.",
@@ -29,13 +29,13 @@ export class Gun extends Weapon {
         {
           cls: DoubleGun,
           materials: [
-            { name: "힘", length: 1 },
-            { name: "민첩", length: 1 },
+            { key: "str", length: 1 },
+            { key: "agi", length: 1 },
           ],
         },
         {
           cls: ShotGun,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
       ],
     })
@@ -48,7 +48,7 @@ export class Gun extends Weapon {
 
 // level 2
 export class ShotGun extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 2,
     name: "산탄총",
     description: "적당한 데미지를 가지며, 주변 적도 데미지를 받습니다.",
@@ -74,11 +74,11 @@ export class ShotGun extends Weapon {
       nexts: [
         {
           cls: MagicGun,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
         {
           cls: AirGun,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
       ],
     })
@@ -91,7 +91,7 @@ export class ShotGun extends Weapon {
 
 // level 2
 export class DoubleGun extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 2,
     name: "일반쌍권총",
     description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
@@ -117,11 +117,11 @@ export class DoubleGun extends Weapon {
       nexts: [
         {
           cls: MachineGun,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
         {
           cls: FingerGun,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
       ],
     })
@@ -134,7 +134,7 @@ export class DoubleGun extends Weapon {
 
 // level 3
 export class MagicGun extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 3,
     name: "마법권총",
     description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
@@ -160,11 +160,11 @@ export class MagicGun extends Weapon {
       nexts: [
         {
           cls: BubbleGun,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
         {
           cls: TazerGun,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
       ],
     })
@@ -177,7 +177,7 @@ export class MagicGun extends Weapon {
 
 // level 3
 export class AirGun extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 3,
     name: "공기총",
     description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
@@ -203,11 +203,11 @@ export class AirGun extends Weapon {
       nexts: [
         {
           cls: PulseGun,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
         {
           cls: Firework,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
       ],
     })
@@ -220,7 +220,7 @@ export class AirGun extends Weapon {
 
 // level 3
 export class MachineGun extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 3,
     name: "기관총",
     description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
@@ -246,11 +246,11 @@ export class MachineGun extends Weapon {
       nexts: [
         {
           cls: SilentKiller,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
         {
           cls: DrillGun,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
       ],
     })
@@ -263,7 +263,7 @@ export class MachineGun extends Weapon {
 
 // level 3
 export class FingerGun extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 3,
     name: "삿대질",
     description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
@@ -289,11 +289,11 @@ export class FingerGun extends Weapon {
       nexts: [
         {
           cls: PepperSpray,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
         {
           cls: EyeGun,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
       ],
     })
@@ -306,7 +306,7 @@ export class FingerGun extends Weapon {
 
 // level 4
 export class BubbleGun extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "거품발사기",
     description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
@@ -332,11 +332,11 @@ export class BubbleGun extends Weapon {
       nexts: [
         {
           cls: GrenadeLauncher,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
         {
           cls: BlessedRevolver,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
       ],
     })
@@ -349,7 +349,7 @@ export class BubbleGun extends Weapon {
 
 // level 4
 export class TazerGun extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "전기충격기",
     description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
@@ -375,11 +375,11 @@ export class TazerGun extends Weapon {
       nexts: [
         {
           cls: SilverBulletGun,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
         {
           cls: Cannon,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
       ],
     })
@@ -392,7 +392,7 @@ export class TazerGun extends Weapon {
 
 // level 4
 export class PulseGun extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "펄스건",
     description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
@@ -418,11 +418,11 @@ export class PulseGun extends Weapon {
       nexts: [
         {
           cls: PlasmaGun,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
         {
           cls: BlessedRevolver,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
       ],
     })
@@ -435,7 +435,7 @@ export class PulseGun extends Weapon {
 
 // level 4
 export class Firework extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "폭죽",
     description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
@@ -461,11 +461,11 @@ export class Firework extends Weapon {
       nexts: [
         {
           cls: GrenadeLauncher,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
         {
           cls: Cannon,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
       ],
     })
@@ -478,7 +478,7 @@ export class Firework extends Weapon {
 
 // level 4
 export class SilentKiller extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "소음기권총",
     description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
@@ -504,11 +504,11 @@ export class SilentKiller extends Weapon {
       nexts: [
         {
           cls: PlasmaGun,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
         {
           cls: CursedRevolver,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
       ],
     })
@@ -521,7 +521,7 @@ export class SilentKiller extends Weapon {
 
 // level 4
 export class DrillGun extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "드릴",
     description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
@@ -547,11 +547,11 @@ export class DrillGun extends Weapon {
       nexts: [
         {
           cls: PlasmaGun,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
         {
           cls: CursedRevolver,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
       ],
     })
@@ -564,7 +564,7 @@ export class DrillGun extends Weapon {
 
 // level 4
 export class PepperSpray extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "후추스프레이",
     description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
@@ -590,7 +590,7 @@ export class PepperSpray extends Weapon {
       nexts: [
         {
           cls: SilverBulletGun,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
       ],
     })
@@ -603,7 +603,7 @@ export class PepperSpray extends Weapon {
 
 // level 4
 export class EyeGun extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 4,
     name: "눈총",
     description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
@@ -629,7 +629,7 @@ export class EyeGun extends Weapon {
       nexts: [
         {
           cls: SilverBulletGun,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
       ],
     })
@@ -642,7 +642,7 @@ export class EyeGun extends Weapon {
 
 // level 5
 export class GrenadeLauncher extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 5,
     name: "유탄발사기",
     description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
@@ -668,7 +668,7 @@ export class GrenadeLauncher extends Weapon {
       nexts: [
         {
           cls: Missile,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
       ],
     })
@@ -681,7 +681,7 @@ export class GrenadeLauncher extends Weapon {
 
 // level 5
 export class SilverBulletGun extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 5,
     name: "은탄총",
     description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
@@ -707,7 +707,7 @@ export class SilverBulletGun extends Weapon {
       nexts: [
         {
           cls: HeartBreaker,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
       ],
     })
@@ -720,7 +720,7 @@ export class SilverBulletGun extends Weapon {
 
 // level 5
 export class PlasmaGun extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 5,
     name: "플라즈마총",
     description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
@@ -746,7 +746,7 @@ export class PlasmaGun extends Weapon {
       nexts: [
         {
           cls: RadiationBeam,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
       ],
     })
@@ -759,7 +759,7 @@ export class PlasmaGun extends Weapon {
 
 // level 5
 export class Cannon extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 5,
     name: "대포",
     description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
@@ -785,7 +785,7 @@ export class Cannon extends Weapon {
       nexts: [
         {
           cls: Missile,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
       ],
     })
@@ -798,7 +798,7 @@ export class Cannon extends Weapon {
 
 // level 5
 export class BlessedRevolver extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 5,
     name: "축복받은총",
     description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
@@ -824,7 +824,7 @@ export class BlessedRevolver extends Weapon {
       nexts: [
         {
           cls: HeartBreaker,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
       ],
     })
@@ -837,7 +837,7 @@ export class BlessedRevolver extends Weapon {
 
 // level 5
 export class CursedRevolver extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 5,
     name: "저주받은총",
     description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
@@ -863,7 +863,7 @@ export class CursedRevolver extends Weapon {
       nexts: [
         {
           cls: Booger,
-          materials: [{ name: "건강", length: 3 }],
+          materials: [{ key: "vit", length: 3 }],
         },
       ],
     })
@@ -876,7 +876,7 @@ export class CursedRevolver extends Weapon {
 
 // level 6
 export class HeartBreaker extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 6,
     name: "하트브레이커",
     description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
@@ -910,7 +910,7 @@ export class HeartBreaker extends Weapon {
 
 // level 6
 export class RadiationBeam extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 6,
     name: "방사능총",
     description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
@@ -944,7 +944,7 @@ export class RadiationBeam extends Weapon {
 
 // level 6
 export class Missile extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 6,
     name: "미사일",
     description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
@@ -978,7 +978,7 @@ export class Missile extends Weapon {
 
 // level 6
 export class Booger extends Weapon {
-  static readonly meta: WeaponOptions = {
+  static override readonly meta: WeaponOptions = {
     level: 6,
     name: "코딱지",
     description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",

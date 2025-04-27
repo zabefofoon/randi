@@ -69,7 +69,7 @@ export class Enemies {
       if (!enemy.active) return
 
       const dist = Phaser.Math.Distance.Between(centerX, centerY, enemy.x, enemy.y)
-      if (dist <= weaponData.splash + materials["건강"].length * materials["건강"].info.splash) {
+      if (dist <= weaponData.splash + materials["vit"].length * materials["vit"].info.splash) {
         enemy.takeDamage(weaponData, materials, enforces, dist)
       }
 
@@ -134,11 +134,10 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     const slowRange = 200
 
     const weaponSlows = weapons.reduce((acc, current) => acc + (current?.slow ?? 0), 0)
-    const materialSlows = materials["교양"].length / 100
 
     const speed =
       distanceToPlayer < slowRange
-        ? baseSpeed * (1 - Math.min(0.9, weaponSlows + materialSlows))
+        ? baseSpeed * (1 - Math.min(0.9, weaponSlows + materials.calculateStat("cul")))
         : baseSpeed
 
     const target = this.pathes[pathIndex]
@@ -179,12 +178,21 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   }
 
   showDamageText(damageValue: number, weapon: Weapon) {
+    let color = "#ffffff"
+    if (weapon.level === 2) color = "#2563eb"
+    if (weapon.level === 3) color = "#9333ea"
+    if (weapon.level === 4) color = "#eab308"
+    if (weapon.level === 5) color = "#e879f9"
+    if (weapon.level === 6) color = "#f87171"
     // “-10” 처럼 표시
     const dmgText = this.scene.add
       .text(this.x, this.y - weapon.index * 8, `-${damageValue}`, {
         fontSize: "18px",
-        color: "#ff4444",
+        color,
         fontStyle: "bold",
+        stroke: "#000000",
+        strokeThickness: 3,
+        align: "center",
       })
       .setOrigin(0.5)
 
@@ -209,32 +217,25 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
         ? this.calculateReducedDamage(
             numberUtil.addPercent(
               weaponData.physicalDamage +
-                materials["힘"].info.physicalDamage * materials["힘"].length +
+                materials.calculateStat("str") +
                 enforces.getAditionnalPlus("physical"),
               enforces.getAditionnalPercent("physical")
             ),
             this.physicalDefence,
-            weaponData.physicalPenetration +
-              materials["운"].info.armorPenetration * materials["운"].length
+            weaponData.physicalPenetration + materials.calculateStat("luk")
           )
         : this.calculateReducedDamage(
             numberUtil.addPercent(
               +(
                 weaponData.physicalDamage *
-                Math.max(
-                  1,
-                  1 -
-                    distInSplash /
-                      (weaponData.splash + materials["건강"].length * materials["건강"].info.splash)
-                )
+                Math.max(1, 1 - distInSplash / (weaponData.splash + materials.calculateStat("vit")))
               ).toFixed(2) +
-                materials["힘"].info.physicalDamage * materials["힘"].length +
+                materials.calculateStat("str") +
                 enforces.getAditionnalPlus("physical"),
               enforces.getAditionnalPercent("physical")
             ),
             this.physicalDefence,
-            weaponData.physicalPenetration +
-              materials["운"].info.armorPenetration * materials["운"].length
+            weaponData.physicalPenetration + materials.calculateStat("luk")
           )
 
     const _magicalDamage =
@@ -242,13 +243,12 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
         ? this.calculateReducedDamage(
             numberUtil.addPercent(
               weaponData.magicalDamage +
-                materials["지식"].info.magicalDamage * materials["지식"].length +
+                materials.calculateStat("int") +
                 enforces.getAditionnalPlus("magical"),
               enforces.getAditionnalPercent("magical")
             ),
             this.magicalDefence,
-            weaponData.magicalDamage +
-              materials["지혜"].info.armorPenetration * materials["지혜"].length
+            weaponData.magicalDamage + materials.calculateStat("wis")
           )
         : this.calculateReducedDamage(
             numberUtil.addPercent(
@@ -258,16 +258,15 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
                   1,
                   1 -
                     distInSplash /
-                      (weaponData.splash + materials["건강"].length * materials["건강"].info.splash)
+                      (weaponData.splash + materials["vit"].length * materials["vit"].info.splash)
                 )
               ).toFixed(2) +
-                materials["지식"].info.magicalDamage * materials["지식"].length +
+                materials.calculateStat("int") +
                 enforces.getAditionnalPlus("magical"),
               enforces.getAditionnalPercent("magical")
             ),
             this.magicalDefence,
-            weaponData.magicalDamage +
-              materials["지혜"].info.armorPenetration * materials["지혜"].length
+            weaponData.magicalDamage + materials.calculateStat("wis")
           )
 
     const damage = _physicalDamage + _magicalDamage
@@ -289,9 +288,8 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       this.body?.velocity.set(0, 0)
 
       // 300ms 후에 정지 상태 해제
-      this.scene.time.delayedCall(
-        weaponData.stun + materials["카리스마"].length * (materials["카리스마"].info.stun * 100),
-        () => this.setData("stunned", false)
+      this.scene.time.delayedCall(weaponData.stun + materials.calculateStat("cha"), () =>
+        this.setData("stunned", false)
       )
     }
 

@@ -4,7 +4,7 @@
       v-if="isShowGameOverPopup"
       @close="isShowGameOverPopup = false" />
     <ModalGamble
-      v-if="isShowGamblePopup"
+      v-if="enforces && weapons && isShowGamblePopup"
       v-model:selected-index="selectedGambleIndex"
       v-model:coins="coins"
       v-model:gamblings="gamblings"
@@ -13,7 +13,7 @@
       :enforces="enforces"
       @close="isShowGamblePopup = false" />
     <ModalWeapons
-      v-if="isShowWeaponsPopup"
+      v-if="weapons && isShowWeaponsPopup"
       v-model:selected-index="selectedWeaponIndex"
       :weapons="weapons"
       :materials="materials"
@@ -74,18 +74,16 @@
           <!-- 스텟표시 -->
           <div class="grid grid-cols-1 items-start | gap-[0.2cqh]">
             <div
-              v-for="(material, index) in materials"
-              :key="material.info.name"
+              v-for="(key, index) in materials.keys"
+              :key="key"
               class="flex items-center | bg-black rounded-lg | pr-[0.5cqw]">
               <div
                 class="stat-sprites | w-[3cqw] aspect-square"
                 :style="{
-                  backgroundPosition: etcUtil.getSpritePosition(
-                    Object.keys(materials).findIndex((item) => item === index)
-                  ),
+                  backgroundPosition: etcUtil.getSpritePosition(index),
                 }"></div>
               <span class="text-[1.3cqw] text-white">
-                {{ material.length }}
+                {{ materials[key].length }}
               </span>
             </div>
           </div>
@@ -206,17 +204,7 @@ import { NylonMask, TrunkKing } from "~/models/Character"
 import { Enemies } from "~/models/Enemies"
 import { Enforces } from "~/models/Enforces"
 import { Gun } from "~/models/Gun"
-import {
-  Material1,
-  Material2,
-  Material3,
-  Material4,
-  Material5,
-  Material6,
-  Material7,
-  Material8,
-  type Materials,
-} from "~/models/Material"
+import { Materials } from "~/models/Material"
 import { Player } from "~/models/Player"
 import { Weapons, type Weapon } from "~/models/Weapon"
 
@@ -240,16 +228,7 @@ let enemies: Enemies
 let cursors: Phaser.Types.Input.Keyboard.CursorKeys
 const enforces = ref<Enforces>()
 const weapons = ref<Weapons>()
-const materials = ref<Materials>({
-  힘: { length: 0, info: new Material1() },
-  지식: { length: 0, info: new Material2() },
-  교양: { length: 0, info: new Material3() },
-  카리스마: { length: 0, info: new Material4() },
-  건강: { length: 0, info: new Material5() },
-  민첩: { length: 0, info: new Material6() },
-  운: { length: 0, info: new Material7() },
-  지혜: { length: 0, info: new Material8() },
-})
+const materials = ref<Materials>(new Materials())
 
 const initialRemainnedTime = 3
 const roundTime = 45
@@ -303,7 +282,7 @@ onMounted(() => {
     },
     scene: {
       preload(this: Phaser.Scene) {
-        const scene = this
+        const scene = this as Phaser.Scene
 
         scene.load.image("bullet", "/assets/images/bullet.png")
 
@@ -353,7 +332,7 @@ onMounted(() => {
         })
       },
       create(this: Phaser.Scene) {
-        scene = this
+        scene = this as Phaser.Scene
 
         damageRect = scene.add
           .rectangle(
@@ -467,7 +446,7 @@ onMounted(() => {
         })
       },
       update(this: Phaser.Scene, time: number) {
-        const scene = this
+        const scene = this as Phaser.Scene
         if (scene.data.get("paused")) return
 
         // 플레이어 이동
@@ -492,7 +471,7 @@ onMounted(() => {
                 time,
                 Math.min(
                   99,
-                  (materials.value["민첩"].info.cooltime * materials.value["민첩"].length +
+                  (materials.value.calculateStat("agi") +
                     allCooltimes +
                     enforces.value!.aditionnalCooldown / 100) *
                     100

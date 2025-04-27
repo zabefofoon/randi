@@ -26,13 +26,19 @@ const currentScene = ref<"lobby" | "select" | "inGame" | "collection" | "result"
 )
 
 const fullScreen = async () => {
-  if (document.documentElement.requestFullscreen) {
-    await document.documentElement.requestFullscreen()
-  } else if (document.documentElement.webkitRequestFullscreen) {
-    // 구형 Safari 등
-    await document.documentElement.webkitRequestFullscreen()
+  const elem = document.documentElement
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen()
+  } else if (elem.mozRequestFullScreen) {
+    /* Firefox */
+    elem.mozRequestFullScreen()
+  } else if (elem.webkitRequestFullscreen) {
+    /* Chrome, Safari and Opera */
+    elem.webkitRequestFullscreen()
+  } else if (elem.msRequestFullscreen) {
+    /* IE/Edge */
+    elem.msRequestFullscreen()
   }
-
   // 2) 가로 모드 고정 (Screen Orientation API)
   if (screen.orientation && screen.orientation.lock) {
     try {
