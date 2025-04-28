@@ -226,7 +226,6 @@
 import { Enemies } from "~/models/Enemies"
 import { Enforces } from "~/models/Enforces"
 import { Gun } from "~/models/Gun"
-import { ButterKnife } from "~/models/Knife"
 import { Materials } from "~/models/Material"
 import { Player } from "~/models/Player"
 import { Weapons, type Weapon } from "~/models/Weapon"
@@ -386,7 +385,7 @@ onMounted(() => {
         enemies = new Enemies(scene, remainnedEnemies)
         enforces.value = new Enforces()
         weapons.value = new Weapons(scene, enemies, materials.value, enforces.value)
-        console.log(weapons.value)
+
         // 애니메이션
         scene.anims.create({
           key: "enemy-walk",
@@ -414,7 +413,7 @@ onMounted(() => {
 
         // ===== 탄환(Gun) 그룹 생성 =====
         weapons.value.addWeapon(0, Gun.of())
-        weapons.value.addWeapon(1, ButterKnife.of())
+
         scene.events.on("boss-die", () => {
           isBossRemained = false
           selectChance.value += 1

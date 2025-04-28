@@ -21,6 +21,8 @@
 </template>
 
 <script lang="ts" setup>
+const nuxt = useNuxtApp()
+
 const currentScene = ref<
   "lobby" | "select" | "inGame" | "store" | "collection" | "result" | "setting"
 >("lobby")
@@ -41,16 +43,30 @@ const fullScreen = async () => {
   }
   // 2) 가로 모드 고정 (Screen Orientation API)
   if (screen.orientation && screen.orientation.lock) {
-    try {
-      await screen.orientation.lock("landscape")
-      console.log("화면을 가로로 고정했습니다.")
-    } catch (err) {
-      console.warn("가로 고정에 실패했습니다.", err)
-    }
-  } else {
-    console.warn("해당 브라우저에서는 Screen Orientation API를 지원하지 않습니다.")
+    await screen.orientation.lock("landscape")
   }
 }
+onMounted(() => {
+  nuxt.$sound.registerSound("/assets/sounds/game_bgm.mp3", "bgm")
+  nuxt.$sound.registerSound("/assets/sounds/door.mp3", "door")
+  nuxt.$sound.registerSound("/assets/sounds/coin.mp3", "coin")
+  nuxt.$sound.registerSound("/assets/sounds/select.mp3", "select")
+  nuxt.$sound.registerSound("/assets/sounds/equip.mp3", "equip")
+  nuxt.$sound.registerSound("/assets/sounds/stat.mp3", "stat")
+})
+watch(currentScene, (scene) => {
+  if (import.meta.server) return
+
+  if (scene === "inGame") {
+    nuxt.$sound.play("bgm", {
+      loop: -1,
+      volume: 0.8,
+    })
+  } else {
+    nuxt.$sound.stop("bgm")
+    nuxt.$sound.play("door")
+  }
+})
 </script>
 <style lang="scss" scoped>
 .full-screen {

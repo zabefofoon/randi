@@ -145,6 +145,7 @@ const emit = defineEmits<{
   (e: "next", scene: "lobby"): void
 }>()
 
+const nuxt = useNuxtApp()
 const gameStore = useGameStore()
 
 const rounds = ref(0)
@@ -211,6 +212,10 @@ const transitionNumberInterval = (
 
   return requestAnimationFrame(tick)
 }
+watch([rounds, killed, materials, weapons, coins, enforces, gamblings, total], () => {
+  if (import.meta.server) return
+  nuxt.$sound.play("coin")
+})
 </script>
 <style lang="scss" scoped>
 .content {

@@ -62,6 +62,8 @@ const props = defineProps<{
 const coins = defineModel<number>("coins", { default: 0 })
 const gamblings = defineModel<number>("gamblings", { default: 0 })
 
+const nuxt = useNuxtApp()
+
 const cardEls = ref<HTMLDivElement[]>()
 const results = ref<number[]>([-1, -1, -1, -1, -1])
 const needCoins = 200
@@ -87,6 +89,7 @@ const gacha = async () => {
   coins.value = coins.value - needCoins
   if (coins.value < 0) coins.value = 0
   gamblings.value++
+  nuxt.$sound.play("coin")
 
   cardEls.value.forEach((el) => el.classList.remove("active"))
   await etcUtil.sleep(300)

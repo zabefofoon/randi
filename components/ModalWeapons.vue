@@ -181,6 +181,9 @@ const emit = defineEmits<{
 }>()
 
 const selectedIndex = defineModel<number>("selectedIndex", { default: 0 })
+
+const nuxt = useNuxtApp()
+
 const needLength = computed(() => selectedIndex.value * 4)
 const selectedWeapon = computed(() => {
   return props.weapons.weapons[selectedIndex.value]
@@ -208,6 +211,7 @@ const gachaWeapon = () => {
         doneCount++
       }
     }
+    nuxt.$sound.play("equip")
   }
 }
 
@@ -221,5 +225,10 @@ const getNextWeapon = (item: NextInfo) => {
   })
   const cls = item.cls as typeof Gun
   props.weapons.addWeapon(selectedIndex.value, new cls().setIndex(selectedIndex.value))
+  nuxt.$sound.play("equip")
 }
+
+watch(selectedIndex, () => {
+  nuxt.$sound.play("select")
+})
 </script>

@@ -44,14 +44,6 @@
 const emit = defineEmits<{
   (e: "next", scene: "inGame" | "select" | "store" | "collection"): void
 }>()
-
-onMounted(() => {
-  console.log(
-    Array.from({ length: 100 }, (_, index) => {
-      return Math.pow(index * 2, 2) + 10
-    })
-  )
-})
 </script>
 <style lang="scss" scoped>
 .content {

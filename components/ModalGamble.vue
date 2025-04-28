@@ -69,6 +69,8 @@ const selectedIndex = defineModel<number>("selectedIndex", { default: 0 })
 const coins = defineModel<number>("coins", { default: 0 })
 const gamblings = defineModel<number>("gamblings", { default: 0 })
 
+const nuxt = useNuxtApp()
+
 const menus = [
   {
     name: "돈",
@@ -83,4 +85,8 @@ const menus = [
     spriteIndex: 9,
   },
 ]
+
+watch(selectedIndex, () => {
+  nuxt.$sound.play("select")
+})
 </script>

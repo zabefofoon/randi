@@ -29,7 +29,7 @@
               <button
                 class="w-full aspect-square"
                 :disabled="!character"
-                @click="character && (gameStore.selectedCharacter = character)">
+                @click="selectCharacter(character)">
                 <div
                   class="w-full h-full | bg-blue-950 | grid place-items-center | rounded-lg border-black border-[0.2cqw]"
                   :class="
@@ -126,11 +126,13 @@
 <script setup lang="ts">
 import store from "store2"
 import { LOCAL_CHARACTERS, LOCAL_MONEY } from "~/const"
-import { PurchaseCharacter, RELEASED_CHARACTERS } from "~/models/Character"
+import { type Character, PurchaseCharacter, RELEASED_CHARACTERS } from "~/models/Character"
 
 const emit = defineEmits<{
   (e: "next", scene: "inGame" | "lobby"): void
 }>()
+
+const nuxt = useNuxtApp()
 const gameStore = useGameStore()
 
 const currentMoney = ref(0)
@@ -147,6 +149,11 @@ const initCharacters = () => {
       ? releasedCharacter
       : PurchaseCharacter.of(releasedCharacter)
   })
+}
+
+const selectCharacter = (character?: typeof Character | PurchaseCharacter) => {
+  if (character) gameStore.selectCharacter(character)
+  nuxt.$sound.play("select")
 }
 
 const purchase = () => {

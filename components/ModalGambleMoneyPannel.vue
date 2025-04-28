@@ -34,6 +34,8 @@ const coins = defineModel<number>("coins", { default: 0 })
 
 const gamblings = defineModel<number>("gamblings", { default: 0 })
 
+const nuxt = useNuxtApp()
+
 const units: (10 | 100 | 1000)[] = [10, 100, 1000]
 const numbers = ref("-----")
 let isAnimating = false
@@ -72,4 +74,8 @@ const gachaAnimated = (unit: 10 | 100 | 1000) => {
   }
   requestAnimationFrame(tick)
 }
+
+watch(numbers, () => {
+  nuxt.$sound.play("coin")
+})
 </script>

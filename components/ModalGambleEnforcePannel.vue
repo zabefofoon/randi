@@ -49,7 +49,7 @@ const props = defineProps<{
 
 const coins = defineModel<number>("coins", { default: 0 })
 const gamblings = defineModel<number>("gamblings", { default: 0 })
-
+const nuxt = useNuxtApp()
 const cardEl = ref<HTMLDivElement[]>()
 
 const gacha = (enforce: EnforceItem, index: number) => {
@@ -72,6 +72,7 @@ const gacha = (enforce: EnforceItem, index: number) => {
     el.classList.add("fail-animate")
     el.addEventListener("animationend", () => el.classList.remove("fail-animate"))
   }
+  nuxt.$sound.play("coin")
 }
 </script>
 <style lang="scss" scoped>
