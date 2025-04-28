@@ -1,11 +1,16 @@
 export interface CharacterOptions {
+  id: string
   name: string
   description: string
+  price: number
 }
 
 export abstract class Character {
+  id = ""
   name = ""
   description = ""
+  price = 0
+  static type = "character"
   static meta: CharacterOptions
   constructor(options: CharacterOptions) {
     Object.assign(options)
@@ -14,8 +19,10 @@ export abstract class Character {
 
 export class NylonMask extends Character {
   static override readonly meta: CharacterOptions = {
+    id: "nylonMask",
     name: "Nylon Mask",
     description: "복면을 쓴 의문의 사내<br />소문으로는 돈이 많다던데...",
+    price: 0,
   }
   constructor() {
     super(NylonMask.meta)
@@ -24,10 +31,23 @@ export class NylonMask extends Character {
 
 export class TrunkKing extends Character {
   static override readonly meta: CharacterOptions = {
+    id: "trunkKing",
     name: "Trunk King",
     description: "빨간 목을 가진 백인 중년.<br />강력한 힘을 자랑한다.",
+    price: 2000,
   }
   constructor() {
-    super(NylonMask.meta)
+    super(TrunkKing.meta)
   }
 }
+
+export class PurchaseCharacter {
+  type = "purchase"
+  constructor(public readonly character: typeof Character) {}
+
+  static of(character: typeof Character) {
+    return new PurchaseCharacter(character)
+  }
+}
+
+export const RELEASED_CHARACTERS = [NylonMask, TrunkKing]

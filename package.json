@@ -43,6 +43,7 @@
     "nuxt": "^3.14.1592",
     "pinia": "^3.0.1",
     "pinia-plugin-persistedstate": "^4.2.0",
+    "store2": "^2.14.4",
     "vue": "latest",
     "vue-router": "latest"
   },

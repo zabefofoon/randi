@@ -117,6 +117,7 @@ export abstract class Weapon implements WeaponOptions {
   index = 0
   constructor(weapon: WeaponOptions) {
     Object.assign(this, weapon)
+    console.log("weapon: ", weapon)
   }
 
   checkIsCooltime(time: number, cooldown: number) {

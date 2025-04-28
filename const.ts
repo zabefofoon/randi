@@ -23,3 +23,4 @@ export const WEAPON_LENGTH = 100
 export const PROFILES_LENGTH = 1
 
 export const LOCAL_MONEY = "currentMoney"
+export const LOCAL_CHARACTERS = "characters"

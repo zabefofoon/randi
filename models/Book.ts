@@ -19,6 +19,7 @@ export class Book extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 0),
   }
 
@@ -65,6 +66,7 @@ export class ThickBook extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 1),
   }
 
@@ -114,6 +116,7 @@ export class ThinBook extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 2),
   }
 
@@ -163,6 +166,7 @@ export class SpringBook extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 3),
   }
 
@@ -212,6 +216,7 @@ export class TextBook extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 4),
   }
 
@@ -261,6 +266,7 @@ export class Map extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 5),
   }
 
@@ -310,6 +316,7 @@ export class PictureBook extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 6),
   }
 
@@ -359,6 +366,7 @@ export class MagicBook extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 7),
   }
 
@@ -402,6 +410,7 @@ export class MobilePhone extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 8),
   }
 
@@ -445,6 +454,7 @@ export class Regulations extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 9),
   }
 
@@ -488,6 +498,7 @@ export class WorkBook extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 10),
   }
 
@@ -531,6 +542,7 @@ export class TreasureMap extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 11),
   }
 
@@ -570,6 +582,7 @@ export class EvacuationMap extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 12),
   }
 
@@ -613,6 +626,7 @@ export class Diary extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 13),
   }
 
@@ -652,6 +666,7 @@ export class Menu extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 14),
   }
 
@@ -691,6 +706,7 @@ export class Revelation extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 15),
   }
 
@@ -730,6 +746,7 @@ export class Labtop extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 16),
   }
 
@@ -769,6 +786,7 @@ export class AnswerSheet extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 17),
   }
 
@@ -808,6 +826,7 @@ export class LawBook extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 18),
   }
 
@@ -847,6 +866,7 @@ export class HellMap extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 19),
   }
 
@@ -886,6 +906,7 @@ export class OrderForm extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 20),
   }
 
@@ -925,6 +946,7 @@ export class Grimoire extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 21),
   }
 
@@ -959,6 +981,7 @@ export class TabletPC extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 22),
   }
 
@@ -993,6 +1016,7 @@ export class Constitution extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 23),
   }
 
@@ -1027,6 +1051,7 @@ export class Counterfeit extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 24),
   }
 

@@ -19,6 +19,7 @@ export class Ring extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 0),
   }
 
@@ -65,6 +66,7 @@ export class CopperRing extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 1),
   }
 
@@ -108,6 +110,7 @@ export class FlowerRing extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 2),
   }
 
@@ -151,6 +154,7 @@ export class SilverRing extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 3),
   }
 
@@ -194,6 +198,7 @@ export class JadeRing extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 4),
   }
 
@@ -237,6 +242,7 @@ export class LeatherRing extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 5),
   }
 
@@ -280,6 +286,7 @@ export class CandyRing extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 6),
   }
 
@@ -323,6 +330,7 @@ export class GoldRing extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 7),
   }
 
@@ -366,6 +374,7 @@ export class KnuckleRing extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 8),
   }
 
@@ -409,6 +418,7 @@ export class DigitalRing extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 9),
   }
 
@@ -452,6 +462,7 @@ export class CrystalRing extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 10),
   }
 
@@ -495,6 +506,7 @@ export class RuneRing extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 11),
   }
 
@@ -534,6 +546,7 @@ export class SignetRing extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 12),
   }
 
@@ -577,6 +590,7 @@ export class SharpieRing extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 13),
   }
 
@@ -616,6 +630,7 @@ export class OnionRing extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 14),
   }
 
@@ -655,6 +670,7 @@ export class DiamondRing extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 15),
   }
 
@@ -694,6 +710,7 @@ export class OpalRing extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 16),
   }
 
@@ -733,6 +750,7 @@ export class ObsidianRing extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 17),
   }
 
@@ -772,6 +790,7 @@ export class SapphireRing extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 18),
   }
 
@@ -811,6 +830,7 @@ export class RubyRing extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 19),
   }
 
@@ -850,6 +870,7 @@ export class Bugles extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 20),
   }
 
@@ -889,6 +910,7 @@ export class BornRing extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 21),
   }
 
@@ -923,6 +945,7 @@ export class VampireRing extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 22),
   }
 
@@ -957,6 +980,7 @@ export class Tattoo extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 23),
   }
 
@@ -991,6 +1015,7 @@ export class FourLeafClover extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 24),
   }
 

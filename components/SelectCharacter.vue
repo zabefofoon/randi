@@ -23,7 +23,7 @@
             drag-free>
             <UICarouselSlide
               v-for="(character, index) in gameStore.characters"
-              :key="`${character?.name}_${index}`"
+              :key="`${character?.type}_${index}`"
               class="p-[1cqw]"
               style="width: calc(25% + 0.25cqw)">
               <button
@@ -32,40 +32,58 @@
                 @click="character && (gameStore.selectedCharacter = character)">
                 <div
                   class="w-full h-full | bg-blue-950 | grid place-items-center | rounded-lg border-black border-[0.2cqw]"
-                  :class="{
-                    'border-orange-500 bg-orange-500':
-                      gameStore.selectedCharacter?.name === character?.name,
-                    'border-black bg-gray-950':
-                      gameStore.selectedCharacter?.name !== character?.name,
-                    '!bg-blue-950': !character,
-                  }">
+                  :class="
+                    gameStore.selectedCharacterIndex === index
+                      ? 'border-orange-500 bg-orange-500'
+                      : 'border-black bg-gray-950'
+                  ">
                   <div
-                    v-if="character"
+                    v-if="character?.type === 'character'"
                     class="profile-sprites | w-full h-full"
                     :style="{
                       backgroundPosition: etcUtil.getProfileSpritePosition(index),
                     }"></div>
+
                   <div
-                    v-else
+                    v-else-if="character?.type === 'purchase'"
                     class="text-outline gasoek-one-regular | text-[8cqw]">
                     ?
                   </div>
+                  <div
+                    v-else
+                    class="text-outline gasoek-one-regular | text-[8cqw]"></div>
                 </div>
               </button>
             </UICarouselSlide>
           </UICarousel>
           <div
             class="w-full h-full | flex flex-col items-center justify-center gap-[1cqw] text-center">
-            <span
-              class="text-outline text-[2.8cqw] font-bold"
-              v-html="gameStore.selectedCharacter?.meta?.name ?? '????'">
-            </span>
-            <span
-              class="text-outline text-[1.5cqw] font-bold"
-              v-html="gameStore.selectedCharacter?.meta?.description ?? '????'">
-            </span>
+            <template v-if="gameStore.checkCharacter(gameStore.selectedCharacter)">
+              <span
+                class="text-outline text-[2.8cqw] font-bold"
+                v-html="gameStore.selectedCharacter.meta.name">
+              </span>
+              <span
+                class="text-outline text-[1.5cqw] font-bold"
+                v-html="gameStore.selectedCharacter.meta.description">
+              </span>
+            </template>
+            <div
+              v-else
+              class="flex items-center">
+              <div
+                class="stat-sprites | w-[5cqw] aspect-square"
+                :style="{
+                  backgroundPosition: etcUtil.getSpritePosition(11),
+                }"></div>
+              <span class="text-outline font-bold text-[2.4cqw] -mt-[0.2cqw]">
+                {{ stringUtil.attachComma(gameStore.selectedCharacter.character.meta.price) }}
+              </span>
+            </div>
           </div>
-          <div class="mt-auto | flex items-center gap-[0.5cqw]">
+          <div
+            v-if="gameStore.checkCharacter(gameStore.selectedCharacter)"
+            class="mt-auto | flex items-center gap-[0.5cqw]">
             <button
               class="flex flex-col gap-[0.5cqw]"
               @click="emit('next', 'lobby')">
@@ -83,6 +101,22 @@
               </span>
             </button>
           </div>
+          <div
+            v-else
+            class="mt-auto | flex items-center gap-[0.5cqw]">
+            <button
+              class="flex flex-col gap-[0.5cqw]"
+              @click="purchase">
+              <span
+                class="px-[2cqw] py-[0.5cqw] | border-black border-[0.2cqw] rounded-lg | text-[1.5cqw] font-bold text-outline"
+                :class="{
+                  'bg-gray-700': gameStore.selectedCharacter.character.meta.price > currentMoney,
+                  'bg-orange-700': gameStore.selectedCharacter.character.meta.price <= currentMoney,
+                }">
+                구매하기
+              </span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -90,7 +124,9 @@
 </template>
 
 <script setup lang="ts">
-import { LOCAL_MONEY } from "~/const"
+import store from "store2"
+import { LOCAL_CHARACTERS, LOCAL_MONEY } from "~/const"
+import { PurchaseCharacter, RELEASED_CHARACTERS } from "~/models/Character"
 
 const emit = defineEmits<{
   (e: "next", scene: "inGame" | "lobby"): void
@@ -98,9 +134,43 @@ const emit = defineEmits<{
 const gameStore = useGameStore()
 
 const currentMoney = ref(0)
+
+const savedCharacters = store.get(LOCAL_CHARACTERS) ?? ["nylonMask"]
+
+const initMoney = () => {
+  currentMoney.value = store.get(LOCAL_MONEY) ?? 0
+}
+
+const initCharacters = () => {
+  RELEASED_CHARACTERS.forEach((releasedCharacter, index) => {
+    gameStore.characters[index] = savedCharacters.includes(releasedCharacter.meta.id)
+      ? releasedCharacter
+      : PurchaseCharacter.of(releasedCharacter)
+  })
+}
+
+const purchase = () => {
+  if (gameStore.checkCharacter(gameStore.selectedCharacter)) return
+  const selectedCharacter = gameStore.selectedCharacter as PurchaseCharacter
+
+  currentMoney.value -= selectedCharacter.character.meta.price
+  store.set(LOCAL_MONEY, currentMoney.value)
+
+  savedCharacters[gameStore.selectedCharacterIndex] = selectedCharacter.character.meta.id
+  store.set(LOCAL_CHARACTERS, savedCharacters)
+
+  gameStore.characters[gameStore.selectedCharacterIndex] = selectedCharacter.character
+  gameStore.selectCharacter(selectedCharacter.character)
+}
+
 onMounted(() => {
-  const localMoney = localStorage.getItem(LOCAL_MONEY)
-  currentMoney.value = localMoney ? +localMoney : 0
+  initMoney()
+  initCharacters()
+})
+
+onBeforeUnmount(() => {
+  store.set(LOCAL_MONEY, currentMoney.value)
+  store.set(LOCAL_CHARACTERS, savedCharacters)
 })
 </script>
 

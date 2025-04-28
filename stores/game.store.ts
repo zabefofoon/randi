@@ -1,4 +1,4 @@
-import { NylonMask, TrunkKing, type Character } from "~/models/Character"
+import { NylonMask, type Character, type PurchaseCharacter } from "~/models/Character"
 import type { Rewords } from "~/models/Rewords"
 
 export const useGameStore = defineStore("gameStore", () => {
@@ -16,16 +16,33 @@ export const useGameStore = defineStore("gameStore", () => {
     rewords.value = data
   }
 
-  const characters = ref<(typeof Character | undefined)[]>([
-    NylonMask,
-    TrunkKing,
+  const characters = ref<(typeof Character | PurchaseCharacter | undefined)[]>([
+    undefined,
+    undefined,
     undefined,
     undefined,
   ])
-  const selectedCharacter = ref<typeof Character>(NylonMask)
-  const selectCharacter = (character: typeof Character) => {
+  const selectedCharacter = ref<typeof Character | PurchaseCharacter>(NylonMask)
+  const selectedCharacterIndex = computed(() => {
+    return characters.value.findIndex((item) => item === selectedCharacter.value)
+  })
+  const selectCharacter = (character: typeof Character | PurchaseCharacter) => {
     selectedCharacter.value = character
   }
 
-  return { rewords, setRewords, characters, selectedCharacter, selectCharacter }
+  const checkCharacter = (
+    item?: typeof Character | PurchaseCharacter
+  ): item is typeof Character => {
+    return item?.type === "character"
+  }
+
+  return {
+    rewords,
+    setRewords,
+    characters,
+    selectedCharacter,
+    selectedCharacterIndex,
+    selectCharacter,
+    checkCharacter,
+  }
 })

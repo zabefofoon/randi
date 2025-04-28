@@ -223,10 +223,10 @@
 </template>
 
 <script lang="ts" setup>
-import { NylonMask, TrunkKing } from "~/models/Character"
 import { Enemies } from "~/models/Enemies"
 import { Enforces } from "~/models/Enforces"
 import { Gun } from "~/models/Gun"
+import { ButterKnife } from "~/models/Knife"
 import { Materials } from "~/models/Material"
 import { Player } from "~/models/Player"
 import { Weapons, type Weapon } from "~/models/Weapon"
@@ -330,24 +330,23 @@ onMounted(() => {
         scene.load.image("tiles", "/assets/images/mainlevbuild2.png")
         scene.load.tilemapTiledJSON("map", "/assets/jsons/map.json")
 
-        if (gameStore.selectedCharacter === NylonMask) {
-          scene.load.spritesheet("playerIdle", "/assets/images/player_idle2.png", {
-            frameWidth: 128,
-            frameHeight: 128,
-          })
-          scene.load.spritesheet("playerWork", "/assets/images/player_work2.png", {
-            frameWidth: 128,
-            frameHeight: 128,
-          })
-        } else if (gameStore.selectedCharacter === TrunkKing) {
-          scene.load.spritesheet("playerIdle", "/assets/images/player_idle3.png", {
-            frameWidth: 128,
-            frameHeight: 128,
-          })
-          scene.load.spritesheet("playerWork", "/assets/images/player2_work.png", {
-            frameWidth: 128,
-            frameHeight: 128,
-          })
+        if (gameStore.checkCharacter(gameStore.selectedCharacter)) {
+          scene.load.spritesheet(
+            "playerIdle",
+            `/assets/images/${gameStore.selectedCharacter.meta.id}_idle.png`,
+            {
+              frameWidth: 128,
+              frameHeight: 128,
+            }
+          )
+          scene.load.spritesheet(
+            "playerWork",
+            `/assets/images/${gameStore.selectedCharacter.meta.id}_work.png`,
+            {
+              frameWidth: 128,
+              frameHeight: 128,
+            }
+          )
         }
 
         scene.load.spritesheet("enemy", "/assets/images/zombie_work.png", {
@@ -414,7 +413,8 @@ onMounted(() => {
         scene.physics.add.collider(player, walls)
 
         // ===== 탄환(Gun) 그룹 생성 =====
-        weapons.value.addWeapon(0, Gun.of().setIndex(0))
+        weapons.value.addWeapon(0, Gun.of())
+        weapons.value.addWeapon(1, ButterKnife.of())
         scene.events.on("boss-die", () => {
           isBossRemained = false
           selectChance.value += 1

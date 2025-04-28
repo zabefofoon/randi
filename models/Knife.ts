@@ -19,6 +19,7 @@ export class ButterKnife extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 0),
   }
 
@@ -65,6 +66,7 @@ export class KitchenKnife extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 1),
   }
 
@@ -108,6 +110,7 @@ export class CutterKnife extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 2),
   }
 
@@ -151,6 +154,7 @@ export class SushiKnife extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 3),
   }
 
@@ -194,6 +198,7 @@ export class Scissors extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 4),
   }
 
@@ -237,6 +242,7 @@ export class Hammer extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 5),
   }
 
@@ -280,6 +286,7 @@ export class AX extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 6),
   }
 
@@ -323,6 +330,7 @@ export class ButcherKnife extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 7),
   }
 
@@ -366,6 +374,7 @@ export class LongNails extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 8),
   }
 
@@ -409,6 +418,7 @@ export class SwissArmyKnife extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 9),
   }
 
@@ -452,6 +462,7 @@ export class Fist extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 10),
   }
 
@@ -495,6 +506,7 @@ export class CrossCutSaw extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 11),
   }
 
@@ -534,6 +546,7 @@ export class CrowBar extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 12),
   }
 
@@ -577,6 +590,7 @@ export class Machete extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 13),
   }
 
@@ -616,6 +630,7 @@ export class KoreanHandPlow extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 14),
   }
 
@@ -655,6 +670,7 @@ export class BornSword extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 15),
   }
 
@@ -694,6 +710,7 @@ export class SurgicalKnife extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 16),
   }
 
@@ -733,6 +750,7 @@ export class BlessedSword extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 17),
   }
 
@@ -772,6 +790,7 @@ export class CursedSword extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 18),
   }
 
@@ -811,6 +830,7 @@ export class DualBlade extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 19),
   }
 
@@ -850,6 +870,7 @@ export class BigAX extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 20),
   }
 
@@ -889,6 +910,7 @@ export class DragonSlayer extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 21),
   }
 
@@ -923,6 +945,7 @@ export class SnotWhip extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 22),
   }
 
@@ -957,6 +980,7 @@ export class LaserSword extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 23),
   }
 
@@ -991,6 +1015,7 @@ export class DeathScythe extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 24),
   }
 

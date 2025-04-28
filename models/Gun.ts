@@ -19,6 +19,7 @@ export class Gun extends Weapon {
     stun: 0,
     slow: 0,
     allCooltime: 0,
+    index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 0),
   }
 
@@ -65,6 +66,7 @@ export class ShotGun extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 1),
   }
 
@@ -108,6 +110,7 @@ export class DoubleGun extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 2),
   }
 
@@ -151,6 +154,7 @@ export class MagicGun extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 3),
   }
 
@@ -194,6 +198,7 @@ export class AirGun extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 4),
   }
 
@@ -237,6 +242,7 @@ export class MachineGun extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 5),
   }
 
@@ -280,6 +286,7 @@ export class FingerGun extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 6),
   }
 
@@ -323,6 +330,7 @@ export class BubbleGun extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 7),
   }
 
@@ -366,6 +374,7 @@ export class TazerGun extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 8),
   }
 
@@ -409,6 +418,7 @@ export class PulseGun extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 9),
   }
 
@@ -452,6 +462,7 @@ export class Firework extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 10),
   }
 
@@ -495,6 +506,7 @@ export class SilentKiller extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 11),
   }
 
@@ -538,6 +550,7 @@ export class DrillGun extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 12),
   }
 
@@ -581,6 +594,7 @@ export class PepperSpray extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 13),
   }
 
@@ -620,6 +634,7 @@ export class EyeGun extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 14),
   }
 
@@ -659,6 +674,7 @@ export class GrenadeLauncher extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 15),
   }
 
@@ -698,6 +714,7 @@ export class SilverBulletGun extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 16),
   }
 
@@ -737,6 +754,7 @@ export class PlasmaGun extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 17),
   }
 
@@ -776,6 +794,7 @@ export class Cannon extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 18),
   }
 
@@ -815,6 +834,7 @@ export class BlessedRevolver extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 19),
   }
 
@@ -854,6 +874,7 @@ export class CursedRevolver extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 20),
   }
 
@@ -893,6 +914,7 @@ export class HeartBreaker extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 21),
   }
 
@@ -927,6 +949,7 @@ export class RadiationBeam extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 22),
   }
 
@@ -961,6 +984,7 @@ export class Missile extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 23),
   }
 
@@ -995,6 +1019,7 @@ export class Booger extends Weapon {
     stun: 0, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
+    index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 24),
   }
 

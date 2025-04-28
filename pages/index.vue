@@ -11,9 +11,9 @@
     <SelectCharacter
       v-if="currentScene === 'select'"
       @next="currentScene = $event" />
-    <InGame
-      v-if="currentScene === 'inGame'"
-      @next="currentScene = $event" />
+    <ClientOnly v-if="currentScene === 'inGame'">
+      <InGame @next="currentScene = $event" />
+    </ClientOnly>
     <Result
       v-if="currentScene === 'result'"
       @next="currentScene = $event" />
