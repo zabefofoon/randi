@@ -3,6 +3,10 @@
     <ModalGameOver
       v-if="isShowGameOverPopup"
       @close="isShowGameOverPopup = false" />
+    <ModalConfigs
+      v-if="isShowConfigPopup"
+      @close="isShowConfigPopup = false"
+      @exit="exit" />
     <ModalGamble
       v-if="enforces && weapons && isShowGamblePopup"
       v-model:selected-index="selectedGambleIndex"
@@ -47,7 +51,7 @@
         </div>
 
         <div class="absolute top-[0.5cqw] right-[1cqw] | flex items-center gap-[0.5cqw]">
-          <!-- 코인표시 -->
+          <!-- 킬 표시 -->
           <div
             class="bg-black mt-[0.2cqh] | flex items-center justify-between | pr-[0.5cqw] rounded-lg">
             <div
@@ -55,9 +59,13 @@
               :style="{
                 backgroundPosition: etcUtil.getSpritePosition(17),
               }"></div>
-            <span class="text-[1.3cqw] text-white"> {{ stringUtil.attachComma(killed) }} </span>
+            <span class="text-[1.3cqw] text-white font-bold text-outline">
+              {{ stringUtil.attachComma(killed) }}
+            </span>
           </div>
+          <!-- 킬 표시 -->
 
+          <!-- 코인표시 -->
           <div
             class="bg-black mt-[0.2cqh] | flex items-center justify-between | pr-[0.5cqw] rounded-lg">
             <div
@@ -65,9 +73,24 @@
               :style="{
                 backgroundPosition: etcUtil.getSpritePosition(11),
               }"></div>
-            <span class="text-[1.3cqw] text-white"> {{ stringUtil.attachComma(coins) }} </span>
+            <span class="text-[1.3cqw] text-white font-bold text-outline">
+              {{ stringUtil.attachComma(coins) }}
+            </span>
           </div>
           <!-- 코인표시 -->
+
+          <!-- 설정버튼 -->
+          <button
+            class="bg-blue-950 | mt-[0.2cqh] pr-[0.5cqw] | flex items-center justify-between | rounded-lg border-black border-[0.25cqw]"
+            @click="isShowConfigPopup = true">
+            <div
+              class="stat-sprites | w-[2.5cqw] aspect-square"
+              :style="{
+                backgroundPosition: etcUtil.getSpritePosition(19),
+              }"></div>
+            <span class="text-[1.3cqw] text-white font-bold text-outline">설정</span>
+          </button>
+          <!-- 설정버튼 -->
         </div>
 
         <div class="absolute top-1/2 left-[0.5cqw] -translate-y-1/2">
@@ -243,6 +266,7 @@ const isShowMaterialsPopup = ref(false)
 const isShowWeaponsPopup = ref(false)
 const isShowGameOverPopup = ref(false)
 const isShowGamblePopup = ref(false)
+const isShowConfigPopup = ref(false)
 
 const gachaChance = ref(2)
 const selectChance = ref(1)
@@ -603,52 +627,55 @@ watch(activeJoystick, (value) => {
   }
 })
 
+const rewords = computed(() => ({
+  rounds: round.value ? round.value : 0,
+  killed: round.value ? killed.value : 0,
+  materials: round.value
+    ? Object.values(materials.value).reduce((acc, current) => acc + current.length, 0)
+    : 0,
+  weapons: round.value
+    ? weapons.value?.weapons
+        .filter((weapon): weapon is Weapon => !!weapon)
+        .reduce((acc, current) => acc + current.level, 0) ?? 0
+    : 0,
+  coins: round.value ? coins.value : 0,
+  enforces: round.value
+    ? enforces.value?.items.reduce((acc, current) => acc + current.length, 0) ?? 0
+    : 0,
+  gamblings: round.value ? gamblings.value : 0,
+}))
+
+const exit = () => {
+  gameStore.setRewords(rewords.value)
+  emit("next", "result")
+}
+const pause = () => {
+  scene.data.set("paused", true)
+  scene.physics.pause()
+}
+const resume = () => {
+  scene.data.set("paused", false)
+  scene.physics.resume()
+}
+watch(isShowConfigPopup, (value) => {
+  if (value) pause()
+  else resume()
+})
 watch(isShowMaterialsPopup, (value) => {
-  if (value) {
-    scene.data.set("paused", true)
-    scene.physics.pause()
-  } else {
-    scene.data.set("paused", false)
-    scene.physics.resume()
-  }
+  if (value) pause()
+  else resume()
 })
 watch(isShowWeaponsPopup, (value) => {
-  if (value) {
-    scene.data.set("paused", true)
-    scene.physics.pause()
-  } else {
-    scene.data.set("paused", false)
-    scene.physics.resume()
-  }
+  if (value) pause()
+  else resume()
 })
 watch(isShowGamblePopup, (value) => {
-  if (value) {
-    scene.data.set("paused", true)
-    scene.physics.pause()
-  } else {
-    scene.data.set("paused", false)
-    scene.physics.resume()
-  }
+  if (value) pause()
+  else resume()
 })
 watch(isShowGameOverPopup, (value) => {
-  if (value) {
-    scene.data.set("paused", true)
-    scene.physics.pause()
-  } else {
-    gameStore.setRewords({
-      rounds: round.value,
-      killed: killed.value,
-      materials: Object.values(materials.value).reduce((acc, current) => acc + current.length, 0),
-      weapons:
-        weapons.value?.weapons
-          .filter((weapon): weapon is Weapon => !!weapon)
-          .reduce((acc, current) => acc + current.level, 0) ?? 0,
-      coins: coins.value,
-      enforces: enforces.value?.items.reduce((acc, current) => acc + current.length, 0) ?? 0,
-      gamblings: gamblings.value,
-    })
-    emit("next", "result")
-  }
+  if (!value) exit()
+  else pause()
 })
 </script>
 

@@ -58,6 +58,7 @@
             <h2
               class="text-outline text-[2cqw] font-bold | mb-[0.5cqw]"
               :class="{
+                'text-center': !selectedWeapon,
                 'text-white': !selectedWeapon || selectedWeapon?.level === 1,
                 'text-blue-500': selectedWeapon?.level === 2,
                 'text-purple-600': selectedWeapon?.level === 3,
@@ -67,7 +68,9 @@
               }">
               {{ selectedWeapon?.name ?? "????" }}
             </h2>
-            <h3 class="text-outline text-[1.5cqw] font-bold">
+            <h3
+              class="text-outline text-[1.5cqw] font-bold"
+              :class="{ 'text-center': !selectedWeapon }">
               {{ selectedWeapon?.description ?? "????" }}
             </h3>
             <div

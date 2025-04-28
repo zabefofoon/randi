@@ -16,7 +16,7 @@ export const GLOBAL_SPINNER_DELAY = 100
 export const LOADING_SSR = "ssr"
 export const LOADING_COVER = "loadingCover"
 
-export const SPRITE_LENGTH = 18
+export const SPRITE_LENGTH = 19
 
 export const WEAPON_LENGTH = 100
 
