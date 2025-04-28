@@ -21,9 +21,9 @@
 </template>
 
 <script lang="ts" setup>
-const currentScene = ref<"lobby" | "select" | "inGame" | "collection" | "result" | "setting">(
-  "lobby"
-)
+const currentScene = ref<
+  "lobby" | "select" | "inGame" | "store" | "collection" | "result" | "setting"
+>("lobby")
 
 const fullScreen = async () => {
   const elem = document.documentElement
