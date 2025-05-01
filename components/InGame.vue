@@ -228,6 +228,7 @@ import { Enforces } from "~/models/Enforces"
 import { Gun } from "~/models/Gun"
 import { Materials } from "~/models/Material"
 import { Player } from "~/models/Player"
+import { PayBack, Sharper } from "~/models/PurchaseItem"
 import { Weapons, type Weapon } from "~/models/Weapon"
 
 const emit = defineEmits<{
@@ -285,7 +286,10 @@ let damageRect: Phaser.GameObjects.Rectangle
 
 onMounted(() => {
   if (!phaserContainer.value) return
-  console.log("selectedPurchaseItems: ", gameStore.selectedPurchaseItems)
+
+  if (gameStore.checkSelectedPurchaseItem(PayBack)) gameStore.spendPurchaseItem(PayBack)
+  if (gameStore.checkSelectedPurchaseItem(Sharper)) gameStore.spendPurchaseItem(Sharper)
+
   game = new Phaser.Game({
     pixelArt: true,
     antialias: false,

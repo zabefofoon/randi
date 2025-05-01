@@ -33,7 +33,7 @@
         <div class="flex gap-[2cqw]">
           <button
             v-if="selectChance > 0"
-            class="grid place-items-center | relative bg-amber-500 | mt-[2cqw] px-[2cqw] py-[0.5cqw] | border-black border-[0.14cqw] rounded-lg | leading-none">
+            class="grid place-items-center | relative bg-amber-500 | mt-[2cqw] px-[1.5cqw] py-[0.5cqw] | border-black border-[0.14cqw] rounded-lg | leading-none">
             <span class="text-outline text-[1.7cqw] font-bold">선택가능</span>
             <div
               v-if="selectChance > 0"
@@ -45,7 +45,12 @@
             </div>
           </button>
           <button
-            class="grid place-items-center | relative bg-orange-700 | mt-[2cqw] px-[2cqw] py-[0.5cqw] | border-black border-[0.14cqw] rounded-lg | leading-none"
+            class="grid place-items-center | relative | mt-[2cqw] px-[1.5cqw] py-[0.5cqw] | border-black border-[0.14cqw] rounded-lg | leading-none"
+            :class="{
+              'bg-orange-700': gachaChance > 0,
+              'bg-gray-700': gachaChance < 1,
+            }"
+            :disabled="gachaChance < 1"
             @click="gacha">
             <span class="text-outline text-[1.7cqw] font-bold">랜덤뽑기</span>
             <div
@@ -57,6 +62,25 @@
               </span>
             </div>
           </button>
+          <button
+            v-if="gachaChance > 0 && gameStore.checkSelectedPurchaseItem(Joker)"
+            class="grid place-items-center | relative bg-green-700 | mt-[2cqw] px-[1.5cqw] py-[0.5cqw] | border-black border-[0.14cqw] rounded-lg | leading-none"
+            @click="useJoker">
+            <div
+              class="purchase-sprites | absolute top-[-0.5cqw] right-[-0.5cqw] | w-[2cqw] aspect-square shrink-0"
+              :style="{
+                backgroundPosition: etcUtil.getPurchaseSpritePosition(Joker.meta.spriteIndex),
+              }"></div>
+            <span class="text-outline text-[1.7cqw] font-bold">조커</span>
+            <div
+              v-if="jokerLength > 0"
+              class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2">
+              <span
+                class="grid place-items-center | w-[2.5cqw] aspect-square | rounded-full border-black border-[0.14cqw] | bg-red-500 | text-[1.5cqw] text-outline font-bold">
+                {{ jokerLength }}
+              </span>
+            </div>
+          </button>
         </div>
       </div>
     </template>
@@ -65,6 +89,7 @@
 
 <script setup lang="ts">
 import type { Materials } from "~/models/Material"
+import { Joker } from "~/models/PurchaseItem"
 
 const props = defineProps<{
   materials: Materials
@@ -78,7 +103,10 @@ const gachaChance = defineModel<number>("gachaChance", { default: 0 })
 const selectChance = defineModel<number>("selectChance", { default: 0 })
 
 const nuxt = useNuxtApp()
+const gameStore = useGameStore()
+
 const materialRefs = ref<HTMLElement[]>([])
+const jokerLength = ref(0)
 
 const gacha = () => {
   if (gachaChance.value < 1) return
@@ -110,6 +138,23 @@ const select = (index: number) => {
     el.addEventListener("animationend", () => el?.classList.remove("pop-animate"))
   }
 }
+
+const useJoker = () => {
+  if (gachaChance.value < 1) return
+  gachaChance.value--
+  selectChance.value++
+
+  nuxt.$sound.play("stat")
+  jokerLength.value--
+  gameStore.spendPurchaseItem(Joker)
+}
+const initJokerLength = () => {
+  if (gameStore.checkSelectedPurchaseItem(Joker))
+    jokerLength.value = gameStore.purchasedItems[Joker.meta.id]
+}
+onMounted(() => {
+  initJokerLength()
+})
 </script>
 <style lang="scss" scoped>
 .selectable {

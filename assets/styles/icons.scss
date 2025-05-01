@@ -57,3 +57,7 @@
 .icon-fullscreen {
   @include generateIcon("../images/icons/icon_fullscreen.svg");
 }
+
+.icon-rotate {
+  @include generateIcon("../images/icons/icon_rotate.svg");
+}

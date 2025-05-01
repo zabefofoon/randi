@@ -89,7 +89,7 @@
           <div class="mt-auto | flex items-center gap-[0.5cqw]">
             <button
               class="flex flex-col gap-[0.5cqw] | bg-blue-900 rounded-lg"
-              @click="emit('next', 'select')">
+              @click="goPrev()">
               <span
                 class="px-[2cqw] py-[0.5cqw] | border-black border-[0.2cqw] rounded-lg | text-[1.5cqw] font-bold text-outline">
                 돌아가기
@@ -127,10 +127,15 @@ const purchase = (item: typeof PurchaseItem) => {
 }
 
 const togglePurchaseItem = (item: typeof PurchaseItem) => {
-  const isUse = gameStore.togglePurchaseItem(item)
-  if (isUse) gameStore.addPurchaseItem(item)
-  else gameStore.spendPurchaseItem(item)
+  gameStore.togglePurchaseItem(item)
   nuxt.$sound.play("select")
+}
+
+const goPrev = () => {
+  PURCHASE_ITEMS.forEach((item) => {
+    if (gameStore.checkSelectedPurchaseItem(item)) gameStore.addPurchaseItem(item)
+  })
+  emit("next", "select")
 }
 
 onMounted(() => {

@@ -1,5 +1,12 @@
 <template>
-  <div class="w-full">
+  <div class="w-full | relative">
+    <div
+      v-if="gameStore.checkSelectedPurchaseItem(Sharper)"
+      class="purchase-sprites | absolute top-[-1.5cqw] left-[-1.8cqw] z-[1] | w-[4cqw] aspect-square shrink-0"
+      :style="{
+        backgroundPosition: etcUtil.getPurchaseSpritePosition(Sharper.meta.spriteIndex),
+      }"></div>
+
     <div class="w-full | flex items-center gap-[0.5cqw] text-white">
       <figure
         v-for="(enforce, index) in enforces.items"
@@ -42,6 +49,7 @@
 
 <script setup lang="ts">
 import type { EnforceItem, Enforces } from "~/models/Enforces"
+import { Sharper } from "~/models/PurchaseItem"
 
 const props = defineProps<{
   enforces: Enforces
@@ -50,6 +58,8 @@ const props = defineProps<{
 const coins = defineModel<number>("coins", { default: 0 })
 const gamblings = defineModel<number>("gamblings", { default: 0 })
 const nuxt = useNuxtApp()
+
+const gameStore = useGameStore()
 const cardEl = ref<HTMLDivElement[]>()
 
 const gacha = (enforce: EnforceItem, index: number) => {
@@ -58,7 +68,10 @@ const gacha = (enforce: EnforceItem, index: number) => {
   coins.value = coins.value - props.enforces.getExpense(enforce)
   if (coins.value < 0) coins.value = 0
   gamblings.value++
-  const random = Phaser.Math.Between(0, 1)
+
+  const random = gameStore.selectedPurchaseItems.includes(Sharper.meta.id)
+    ? Phaser.Math.Between(0, 3)
+    : Phaser.Math.Between(0, 1)
 
   const el = cardEl.value[index]
   if (random) {

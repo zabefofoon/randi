@@ -1,11 +1,25 @@
 <template>
-  <div class="w-full">
-    <div class="w-full | flex items-center gap-[0.5cqw] text-white">
+  <div class="w-full | relative">
+    <div
+      v-if="gameStore.checkSelectedPurchaseItem(PayBack)"
+      class="purchase-sprites | absolute top-[-1.5cqw] left-[-1.8cqw] | w-[4cqw] aspect-square shrink-0"
+      :style="{
+        backgroundPosition: etcUtil.getPurchaseSpritePosition(PayBack.meta.spriteIndex),
+      }"></div>
+
+    <div class="w-full | | flex items-center gap-[0.5cqw] text-white">
       <div
         v-for="(number, index) in numbers"
         :key="index"
         class="flex-1 aspect-square | grid place-items-center | border-black border-[0.2cqw] bg-blue-900 | rounded-lg">
-        <span class="text-outline text-[4cqw] font-bold">{{ number }}</span>
+        <i
+          v-if="index === 0 && isPayback"
+          class="icon icon-rotate | rotate-animation | text-outline text-[4cqw] font-bold"></i>
+        <span
+          v-else
+          class="text-outline text-[4cqw] font-bold">
+          {{ number }}
+        </span>
       </div>
     </div>
     <div class="flex items-center gap-[0.5cqw] | w-full | mt-[1cqw]">
@@ -30,15 +44,20 @@
 </template>
 
 <script setup lang="ts">
+import { PayBack } from "~/models/PurchaseItem"
+
 const coins = defineModel<number>("coins", { default: 0 })
 
 const gamblings = defineModel<number>("gamblings", { default: 0 })
 
 const nuxt = useNuxtApp()
+const gameStore = useGameStore()
 
 const units: (10 | 100 | 1000)[] = [10, 100, 1000]
 const numbers = ref("-----")
 let isAnimating = false
+
+const isPayback = ref(false)
 
 const formatSigned = (value: number) => {
   const isMinus = value < 0
@@ -48,15 +67,26 @@ const formatSigned = (value: number) => {
 
 const gachaAnimated = (unit: 10 | 100 | 1000) => {
   if (isAnimating) return
+  isPayback.value = false
   coins.value -= unit
   gamblings.value++
+  const finalValue = Phaser.Math.Between(-5 * unit, 5 * unit)
+
   setTimeout(() => {
     isAnimating = false
     coins.value = Math.max(0, coins.value + Number(numbers.value))
     if (coins.value < 0) coins.value = 0
-  }, 500)
 
-  const finalValue = Phaser.Math.Between(-5 * unit, 5 * unit)
+    if (finalValue < 0 && gameStore.selectedPurchaseItems.includes(PayBack.meta.id)) {
+      setTimeout(() => {
+        isPayback.value = true
+
+        const paybackMoney = Math.ceil(Math.abs(finalValue) / 2)
+        coins.value += paybackMoney
+        numbers.value = formatSigned(paybackMoney)
+      }, 300)
+    }
+  }, 500)
 
   let startTime = 0
   const duration = 300 // ms
@@ -75,7 +105,20 @@ const gachaAnimated = (unit: 10 | 100 | 1000) => {
   requestAnimationFrame(tick)
 }
 
-watch(numbers, () => {
-  nuxt.$sound.play("coin")
-})
+watch(numbers, () => nuxt.$sound.play("coin"))
 </script>
+<style lang="scss" scoped>
+.rotate-animation {
+  animation: rotate-animation 300ms ease;
+}
+
+@keyframes rotate-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+</style>
