@@ -37,6 +37,14 @@
 const emit = defineEmits<{
   (e: "next", scene: "inGame" | "select" | "store" | "collection"): void
 }>()
+
+const gameStore = useGameStore()
+
+onMounted(() => {
+  gameStore.initMoney()
+  gameStore.initCharacters()
+  gameStore.initPurchasedItems()
+})
 </script>
 <style lang="scss" scoped>
 .content {

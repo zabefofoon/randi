@@ -386,7 +386,7 @@ onMounted(() => {
         // 플레이어
         player = new Player(scene, 400, 300, "playerIdle")
         player.createPlayerAnimation()
-        enemies = new Enemies(scene, remainnedEnemies)
+        enemies = new Enemies(scene, remainnedEnemies, gameStore.selectedCharacter)
         enforces.value = new Enforces()
         weapons.value = new Weapons(scene, enemies, materials.value, enforces.value)
 

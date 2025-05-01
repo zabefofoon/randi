@@ -105,6 +105,21 @@
                   {{ stringUtil.attachComma(gamblings) }}
                 </div>
               </div>
+              <div
+                v-if="isBonusCharacter"
+                class="flex items-center justify-between">
+                <div class="flex items-center">
+                  <div
+                    class="stat-sprites | w-[3cqw] aspect-square"
+                    :style="{
+                      backgroundPosition: etcUtil.getSpritePosition(10),
+                    }"></div>
+                  <span>캐릭터 점수</span>
+                </div>
+                <div>
+                  {{ stringUtil.attachComma(bonus) }}
+                </div>
+              </div>
             </div>
             <div
               class="flex-1 flex flex-col items-center justify-center | border-[0.15cqw] border-blue-950 rounded-lg | p-[1cqw]">
@@ -155,34 +170,14 @@ const weapons = ref(0)
 const coins = ref(0)
 const enforces = ref(0)
 const gamblings = ref(0)
+const bonus = ref(0)
 const total = ref(0)
 
-onMounted(async () => {
-  const localMoney = localStorage.getItem(LOCAL_MONEY)
-  const currentMoney = localMoney ? +localMoney : 0
-  const _total = Object.values(gameStore.rewords).reduce((acc, current) => acc + current, 0)
-  localStorage.setItem(LOCAL_MONEY, `${currentMoney + _total}`)
-
-  await etcUtil.sleep(300)
-
-  const duration = 500
-  transitionNumberInterval(rounds, gameStore.rewords.rounds, duration)
-  await etcUtil.sleep(duration / 2)
-  transitionNumberInterval(killed, gameStore.rewords.killed, duration)
-  await etcUtil.sleep(duration / 2)
-  transitionNumberInterval(materials, gameStore.rewords.materials, duration)
-  await etcUtil.sleep(duration / 2)
-  transitionNumberInterval(weapons, gameStore.rewords.weapons, duration)
-  await etcUtil.sleep(duration / 2)
-  transitionNumberInterval(coins, gameStore.rewords.coins, duration)
-  await etcUtil.sleep(duration / 2)
-  transitionNumberInterval(enforces, gameStore.rewords.enforces, duration)
-  await etcUtil.sleep(duration / 2)
-  transitionNumberInterval(gamblings, gameStore.rewords.gamblings, duration)
-
-  await etcUtil.sleep(duration)
-
-  transitionNumberInterval(total, _total, duration)
+const isBonusCharacter = computed(() => {
+  return (
+    gameStore.checkCharacter(gameStore.selectedCharacter) &&
+    gameStore.selectedCharacter.meta.id === "nylonMask"
+  )
 })
 
 const transitionNumberInterval = (
@@ -212,6 +207,41 @@ const transitionNumberInterval = (
 
   return requestAnimationFrame(tick)
 }
+
+onMounted(async () => {
+  const localMoney = localStorage.getItem(LOCAL_MONEY)
+  const currentMoney = localMoney ? +localMoney : 0
+  const _total = Object.values(gameStore.rewords).reduce((acc, current) => acc + current, 0)
+  const appliedharacterBonus = Math.ceil(numberUtil.addPercent(_total, 30))
+  localStorage.setItem(LOCAL_MONEY, `${currentMoney + appliedharacterBonus}`)
+
+  await etcUtil.sleep(300)
+
+  const duration = 500
+  transitionNumberInterval(rounds, gameStore.rewords.rounds, duration)
+  await etcUtil.sleep(duration / 2)
+  transitionNumberInterval(killed, gameStore.rewords.killed, duration)
+  await etcUtil.sleep(duration / 2)
+  transitionNumberInterval(materials, gameStore.rewords.materials, duration)
+  await etcUtil.sleep(duration / 2)
+  transitionNumberInterval(weapons, gameStore.rewords.weapons, duration)
+  await etcUtil.sleep(duration / 2)
+  transitionNumberInterval(coins, gameStore.rewords.coins, duration)
+  await etcUtil.sleep(duration / 2)
+  transitionNumberInterval(enforces, gameStore.rewords.enforces, duration)
+  await etcUtil.sleep(duration / 2)
+  transitionNumberInterval(gamblings, gameStore.rewords.gamblings, duration)
+
+  if (isBonusCharacter.value) {
+    await etcUtil.sleep(duration / 2)
+    transitionNumberInterval(bonus, appliedharacterBonus - _total, duration)
+  }
+
+  await etcUtil.sleep(duration)
+
+  transitionNumberInterval(total, appliedharacterBonus, duration)
+})
+
 watch([rounds, killed, materials, weapons, coins, enforces, gamblings, total], () => {
   if (import.meta.server) return
   nuxt.$sound.play("coin")

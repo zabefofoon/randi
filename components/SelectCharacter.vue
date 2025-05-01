@@ -67,6 +67,10 @@
                 class="text-outline text-[1.5cqw] font-bold"
                 v-html="gameStore.selectedCharacter.meta.description">
               </span>
+              <span
+                class="text-outline text-[1.5cqw] font-bold"
+                v-html="gameStore.selectedCharacter.meta.specificity">
+              </span>
             </template>
             <div
               v-else

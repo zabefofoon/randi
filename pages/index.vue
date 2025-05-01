@@ -28,7 +28,6 @@
 
 <script lang="ts" setup>
 const nuxt = useNuxtApp()
-const gameStore = useGameStore()
 
 const currentScene = ref<
   "lobby" | "select" | "inGame" | "store" | "collection" | "result" | "setting"
@@ -54,10 +53,6 @@ const fullScreen = async () => {
   }
 }
 onMounted(() => {
-  gameStore.initMoney()
-  gameStore.initCharacters()
-  gameStore.initPurchasedItems()
-
   nuxt.$sound.registerSound("/assets/sounds/game_bgm.mp3", "bgm")
   nuxt.$sound.registerSound("/assets/sounds/door.mp3", "door")
   nuxt.$sound.registerSound("/assets/sounds/coin.mp3", "coin")

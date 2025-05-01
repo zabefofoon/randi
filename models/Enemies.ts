@@ -1,4 +1,5 @@
 import Phaser from "phaser"
+import { Character, type PurchaseCharacter } from "./Character"
 import type { Enforces } from "./Enforces"
 import type { Materials } from "./Material"
 import type { Player } from "./Player"
@@ -10,7 +11,11 @@ export class Enemies {
   pathes: { x: number; y: number }[]
   baseSpeed: number
 
-  constructor(scene: Phaser.Scene, private remainnedEnemies: Ref<number>) {
+  constructor(
+    scene: Phaser.Scene,
+    private remainnedEnemies: Ref<number>,
+    private selectedCharacter: typeof Character | PurchaseCharacter
+  ) {
     this.scene = scene
     // 적 그룹 생성
     this.group = scene.physics.add.group({ collideWorldBounds: false })
@@ -34,7 +39,9 @@ export class Enemies {
     const { x, y } = this.pathes[0]
 
     // 새 적 생성
-    this.group.add(new Enemy(this.scene, x, y, false, "enemy", this.pathes, round, coins))
+    this.group.add(
+      new Enemy(this.scene, x, y, false, "enemy", this.pathes, round, coins, this.selectedCharacter)
+    )
 
     this.remainnedEnemies.value++
   }
@@ -43,7 +50,9 @@ export class Enemies {
     const { x, y } = this.pathes[0]
 
     // 새 적 생성
-    this.group.add(new Enemy(this.scene, x, y, true, "enemy", this.pathes, round, coins))
+    this.group.add(
+      new Enemy(this.scene, x, y, true, "enemy", this.pathes, round, coins, this.selectedCharacter)
+    )
 
     this.remainnedEnemies.value++
   }
@@ -92,13 +101,14 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     key: string,
     paths: { x: number; y: number }[],
     private round: number,
-    private coins: Ref<number>
+    private coins: Ref<number>,
+    private selectedCharacter: typeof Character | PurchaseCharacter
   ) {
     super(scene, x, y, key)
 
     scene.add.existing(this)
     scene.physics.add.existing(this)
-    const hp = this.isBoss ? this.increaseHP(this.round) * 10 * 2 : this.increaseHP(this.round) * 10
+    const hp = this.isBoss ? this.increaseHP(this.round) * 3 : this.increaseHP(this.round)
 
     this.setData("hp", hp)
       .setData("pathIndex", 0)
@@ -117,7 +127,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   }
 
   private increaseHP(index: number): number {
-    return (Math.pow(index * 2, 2) + 10) / 10
+    return (Math.pow(index * 2, 2) + 10) * (Math.floor(this.round / 10) + 1)
   }
 
   moveEnemyAlongPath(player: Player, weapons: (Weapon | undefined)[], materials: Materials) {
@@ -127,7 +137,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     if (pathIndex == null) return
 
     // 기본 이동 속도
-    const baseSpeed = this.isBoss ? 80 : 120
+    const baseSpeed = numberUtil.addPercent(this.isBoss ? 80 : 120, this.round * 2)
     // 플레이어와 적 사이의 거리를 측정
     const distanceToPlayer = Phaser.Math.Distance.Between(this.x, this.y, player.x, player.y)
     // 플레이어가 가까우면 느리게 이동: 예시로, 200픽셀 이내면 속도를 50%로 줄임
@@ -269,7 +279,14 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
             weaponData.magicalDamage + materials.calculateStat("wis")
           )
 
-    const damage = _physicalDamage + _magicalDamage
+    const isTrunkKing =
+      Character.checkCharacter(this.selectedCharacter) &&
+      this.selectedCharacter.meta.id === "trunkKing"
+
+    let damage = _physicalDamage + _magicalDamage
+    if (isTrunkKing) {
+      damage = Math.round(numberUtil.addPercent(_physicalDamage, this.round)) + _magicalDamage
+    }
 
     this.setData("hp", currentHP - damage)
 
