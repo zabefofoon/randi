@@ -10,7 +10,7 @@
             backgroundPosition: etcUtil.getSpritePosition(11),
           }"></div>
         <span class="text-outline font-bold text-[1.5cqw] -mt-[0.2cqw]">
-          {{ stringUtil.attachComma(currentMoney) }}
+          {{ stringUtil.attachComma(gameStore.currentMoney) }}
         </span>
       </div>
       <div class="flex gap-[1cqw] | relative z-[1] | w-3/4 h-4/5 overflow-hidden">
@@ -94,7 +94,7 @@
             </button>
             <button
               class="flex flex-col gap-[0.5cqw]"
-              @click="emit('next', 'inGame')">
+              @click="emit('next', 'store')">
               <span
                 class="bg-orange-700 | px-[2cqw] py-[0.5cqw] | border-black border-[0.2cqw] rounded-lg | text-[1.5cqw] font-bold text-outline">
                 시작하기
@@ -106,12 +106,15 @@
             class="mt-auto | flex items-center gap-[0.5cqw]">
             <button
               class="flex flex-col gap-[0.5cqw]"
+              :disabled="gameStore.selectedCharacter.character.meta.price > gameStore.currentMoney"
               @click="purchase">
               <span
                 class="px-[2cqw] py-[0.5cqw] | border-black border-[0.2cqw] rounded-lg | text-[1.5cqw] font-bold text-outline"
                 :class="{
-                  'bg-gray-700': gameStore.selectedCharacter.character.meta.price > currentMoney,
-                  'bg-orange-700': gameStore.selectedCharacter.character.meta.price <= currentMoney,
+                  'bg-gray-700':
+                    gameStore.selectedCharacter.character.meta.price > gameStore.currentMoney,
+                  'bg-orange-700':
+                    gameStore.selectedCharacter.character.meta.price <= gameStore.currentMoney,
                 }">
                 구매하기
               </span>
@@ -124,32 +127,14 @@
 </template>
 
 <script setup lang="ts">
-import store from "store2"
-import { LOCAL_CHARACTERS, LOCAL_MONEY } from "~/const"
-import { type Character, PurchaseCharacter, RELEASED_CHARACTERS } from "~/models/Character"
+import type { Character, PurchaseCharacter } from "~/models/Character"
 
 const emit = defineEmits<{
-  (e: "next", scene: "inGame" | "lobby"): void
+  (e: "next", scene: "lobby" | "store"): void
 }>()
 
 const nuxt = useNuxtApp()
 const gameStore = useGameStore()
-
-const currentMoney = ref(0)
-
-const savedCharacters = store.get(LOCAL_CHARACTERS) ?? ["nylonMask"]
-
-const initMoney = () => {
-  currentMoney.value = store.get(LOCAL_MONEY) ?? 0
-}
-
-const initCharacters = () => {
-  RELEASED_CHARACTERS.forEach((releasedCharacter, index) => {
-    gameStore.characters[index] = savedCharacters.includes(releasedCharacter.meta.id)
-      ? releasedCharacter
-      : PurchaseCharacter.of(releasedCharacter)
-  })
-}
 
 const selectCharacter = (character?: typeof Character | PurchaseCharacter) => {
   if (character) gameStore.selectCharacter(character)
@@ -158,27 +143,16 @@ const selectCharacter = (character?: typeof Character | PurchaseCharacter) => {
 
 const purchase = () => {
   if (gameStore.checkCharacter(gameStore.selectedCharacter)) return
-  const selectedCharacter = gameStore.selectedCharacter as PurchaseCharacter
 
-  currentMoney.value -= selectedCharacter.character.meta.price
-  store.set(LOCAL_MONEY, currentMoney.value)
+  gameStore.setCurrentMoney(
+    gameStore.currentMoney - gameStore.selectedCharacter.character.meta.price
+  )
 
-  savedCharacters[gameStore.selectedCharacterIndex] = selectedCharacter.character.meta.id
-  store.set(LOCAL_CHARACTERS, savedCharacters)
+  gameStore.addCharacter()
+  gameStore.selectCharacter(gameStore.selectedCharacter.character)
 
-  gameStore.characters[gameStore.selectedCharacterIndex] = selectedCharacter.character
-  gameStore.selectCharacter(selectedCharacter.character)
+  nuxt.$sound.play("coin")
 }
-
-onMounted(() => {
-  initMoney()
-  initCharacters()
-})
-
-onBeforeUnmount(() => {
-  store.set(LOCAL_MONEY, currentMoney.value)
-  store.set(LOCAL_CHARACTERS, savedCharacters)
-})
 </script>
 
 <style lang="scss" scoped>

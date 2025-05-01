@@ -1,4 +1,10 @@
 declare global {
+  interface Window {
+    createjs: {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      Sound: any
+    }
+  }
   interface HTMLElement {
     mozCancelFullScreen?: () => Promise<void>
     mozRequestFullScreen?: () => Promise<void>

@@ -18,22 +18,15 @@
         <div
           class="dissolve | flex flex-col items-center gap-[0.5cqw] | mt-[2cqw] | font-bold text-[2.5cqw] text-white">
           <button
+            class="flex items-center | relative rounded-lg border-black border-[0.2cqw] | px-[1cqw] | bg-blue-950"
+            @click="emit('next', 'collection')">
+            <div class="text-outline">Collection</div>
+          </button>
+          <button
             class="w-full | flex items-center justify-center | relative rounded-lg border-black border-[0.2cqw] | px-[1cqw] | bg-orange-700"
             @click="emit('next', 'select')">
-            <span class="block | text-outline">Game Start</span>
+            <div class="text-outline">Game Start</div>
           </button>
-          <div class="flex items-center gap-[0.5cqw]">
-            <button
-              class="flex items-center | relative rounded-lg border-black border-[0.2cqw] | px-[1cqw] | bg-blue-950"
-              @click="emit('next', 'store')">
-              <span class="block | text-outline text-[2cqw]">Store</span>
-            </button>
-            <button
-              class="flex items-center | relative rounded-lg border-black border-[0.2cqw] | px-[1cqw] | bg-blue-950"
-              @click="emit('next', 'collection')">
-              <span class="block | text-outline text-[2cqw]">Collection</span>
-            </button>
-          </div>
         </div>
       </main>
     </div>

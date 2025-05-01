@@ -285,7 +285,7 @@ let damageRect: Phaser.GameObjects.Rectangle
 
 onMounted(() => {
   if (!phaserContainer.value) return
-
+  console.log("selectedPurchaseItems: ", gameStore.selectedPurchaseItems)
   game = new Phaser.Game({
     pixelArt: true,
     antialias: false,

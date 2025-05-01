@@ -21,6 +21,8 @@ export const SPRITE_LENGTH = 19
 export const WEAPON_LENGTH = 100
 
 export const PROFILES_LENGTH = 1
+export const PURCHASE_LENGTH = 2
 
 export const LOCAL_MONEY = "currentMoney"
 export const LOCAL_CHARACTERS = "characters"
+export const LOCAL_ITEMS = "purchasedItems"

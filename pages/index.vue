@@ -17,11 +17,18 @@
     <Result
       v-if="currentScene === 'result'"
       @next="currentScene = $event" />
+    <Store
+      v-if="currentScene === 'store'"
+      @next="currentScene = $event" />
+    <Collection
+      v-if="currentScene === 'collection'"
+      @next="currentScene = $event" />
   </div>
 </template>
 
 <script lang="ts" setup>
 const nuxt = useNuxtApp()
+const gameStore = useGameStore()
 
 const currentScene = ref<
   "lobby" | "select" | "inGame" | "store" | "collection" | "result" | "setting"
@@ -47,6 +54,10 @@ const fullScreen = async () => {
   }
 }
 onMounted(() => {
+  gameStore.initMoney()
+  gameStore.initCharacters()
+  gameStore.initPurchasedItems()
+
   nuxt.$sound.registerSound("/assets/sounds/game_bgm.mp3", "bgm")
   nuxt.$sound.registerSound("/assets/sounds/door.mp3", "door")
   nuxt.$sound.registerSound("/assets/sounds/coin.mp3", "coin")
@@ -54,19 +65,19 @@ onMounted(() => {
   nuxt.$sound.registerSound("/assets/sounds/equip.mp3", "equip")
   nuxt.$sound.registerSound("/assets/sounds/stat.mp3", "stat")
 })
-watch(currentScene, (scene) => {
-  if (import.meta.server) return
-
-  if (scene === "inGame") {
-    nuxt.$sound.play("bgm", {
-      loop: -1,
-      volume: 0.8,
-    })
-  } else {
-    nuxt.$sound.stop("bgm")
-    nuxt.$sound.play("door")
-  }
-})
+watch(currentScene, (scene) =>
+  setTimeout(() => {
+    if (scene === "inGame") {
+      nuxt.$sound.play("bgm", {
+        loop: -1,
+        volume: 0.8,
+      })
+    } else {
+      nuxt.$sound.stop("bgm")
+      nuxt.$sound.play("door")
+    }
+  })
+)
 </script>
 <style lang="scss" scoped>
 .full-screen {
