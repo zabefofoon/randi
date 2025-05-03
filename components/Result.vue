@@ -154,8 +154,6 @@
 </template>
 
 <script setup lang="ts">
-import { LOCAL_MONEY } from "~/const"
-
 const emit = defineEmits<{
   (e: "next", scene: "lobby"): void
 }>()
@@ -209,12 +207,9 @@ const transitionNumberInterval = (
 }
 
 onMounted(async () => {
-  const localMoney = localStorage.getItem(LOCAL_MONEY)
-  const currentMoney = localMoney ? +localMoney : 0
   const _total = Object.values(gameStore.rewords).reduce((acc, current) => acc + current, 0)
   const appliedharacterBonus = Math.ceil(numberUtil.addPercent(_total, 30))
-  localStorage.setItem(LOCAL_MONEY, `${currentMoney + appliedharacterBonus}`)
-
+  gameStore.setCurrentMoney(gameStore.currentMoney + appliedharacterBonus)
   await etcUtil.sleep(300)
 
   const duration = 500
@@ -242,7 +237,7 @@ onMounted(async () => {
   transitionNumberInterval(total, appliedharacterBonus, duration)
 })
 
-watch([rounds, killed, materials, weapons, coins, enforces, gamblings, total], () => {
+watch([rounds, killed, materials, weapons, coins, enforces, gamblings, total, bonus], () => {
   if (import.meta.server) return
   nuxt.$sound.play("coin")
 })

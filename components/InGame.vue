@@ -235,6 +235,7 @@ const emit = defineEmits<{
   (e: "next", scene: "result"): void
 }>()
 
+const nuxt = useNuxtApp()
 const gameStore = useGameStore()
 
 const phaserContainer = ref<HTMLDivElement>()
@@ -532,6 +533,8 @@ onMounted(() => {
                         .once("animationcomplete-gun-animation", () => {
                           player.gun.setFrame(0)
                         })
+
+                      nuxt.$sound.play("gun")
                     }
                   }
                   if (index === 1) {
@@ -549,6 +552,7 @@ onMounted(() => {
                         .once("animationcomplete-knife-animation", () => {
                           player.knife.setFrame(0)
                         })
+                      nuxt.$sound.play("knife")
                     }
                   }
 
@@ -561,6 +565,7 @@ onMounted(() => {
                           player.book.setFrame(0)
                         })
                     }
+                    nuxt.$sound.play("book")
                   }
 
                   if (index === 3) {
@@ -572,6 +577,7 @@ onMounted(() => {
                           player.ring.setFrame(0)
                         })
                     }
+                    nuxt.$sound.play("ring")
                   }
                 }
               })
