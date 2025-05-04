@@ -86,12 +86,32 @@ export class Enemies {
       if (!enemy.getData("hp")) (this.remainnedEnemies as unknown as number)--
     })
   }
+
+  applyStunMany(centerX: number, centerY: number, weaponData: Weapon, materials: Materials) {
+    // enemyGroup 내 모든 적 순회
+    this.children.forEach((enemy) => {
+      if (!enemy.active) return
+
+      const dist = Phaser.Math.Distance.Between(centerX, centerY, enemy.x, enemy.y)
+      if (dist <= weaponData.splash + materials["vit"].length * materials["vit"].info.splash) {
+        enemy.data.set("stunnedMany", true)
+        enemy.stunManyTimer?.remove()
+        enemy.stunManyTimer = this.scene.time.delayedCall(weaponData.stunMany, () => {
+          enemy.data.set("stunnedMany", false)
+          enemy.stunManyTimer = undefined
+        })
+      }
+    })
+  }
 }
 
 export class Enemy extends Phaser.Physics.Arcade.Sprite {
   pathes: { x: number; y: number }[]
   physicalDefence = 0
   magicalDefence = 0
+  private hitSlowTimer?: Phaser.Time.TimerEvent // 느려짐 타이머
+  stunManyTimer?: Phaser.Time.TimerEvent // 느려짐 타이머
+
   private activeDots: Phaser.Time.TimerEvent[] = [] // ⚑ DOT 타이머 보관
 
   constructor(
@@ -133,7 +153,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
   moveEnemyAlongPath(player: Player, weapons: (Weapon | undefined)[], materials: Materials) {
     if (this.getData("stunned")) return
-
+    if (this.getData("stunnedMany")) return
     const pathIndex = this.getData("pathIndex") as number
     if (pathIndex == null) return
 
@@ -166,7 +186,10 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       this.setFlipX([0, 3].includes(nextIndex))
       this.setData("pathIndex", nextIndex)
     }
-    if (this.active) this.scene.physics.moveTo(this, target.x, target.y, speed)
+    const isSlowed = this.getData("slowed")
+    const totalSpeed = isSlowed ? speed * (1 - Math.min(0.9, isSlowed)) : speed
+
+    if (this.active) this.scene.physics.moveTo(this, target.x, target.y, totalSpeed)
   }
 
   updateEnemyHpBar() {
@@ -296,7 +319,16 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     if (weaponData.dotted) this.applyDot(weaponData, damage, weaponData.dotted * 250, 250)
+    if (weaponData.slowOne) {
+      this.setData("slowed", weaponData.slowOne)
 
+      this.hitSlowTimer?.remove()
+
+      this.hitSlowTimer = this.scene.time.delayedCall(500, () => {
+        this.setData("slowed", 0)
+        this.hitSlowTimer = undefined
+      })
+    }
     this.setData("hp", currentHP - damage)
 
     // 깜빡이는 효과

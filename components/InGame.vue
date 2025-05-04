@@ -269,8 +269,8 @@ const isShowGameOverPopup = ref(false)
 const isShowGamblePopup = ref(false)
 const isShowConfigPopup = ref(false)
 
-const gachaChance = ref(2)
-const selectChance = ref(1)
+const gachaChance = ref(1)
+const selectChance = ref(2)
 const coins = ref(20)
 const killed = ref(0)
 const gamblings = ref(0)
@@ -287,7 +287,7 @@ let damageRect: Phaser.GameObjects.Rectangle
 
 onMounted(() => {
   if (!phaserContainer.value) return
-  window.speed = 2
+  window.speed = 1
 
   if (gameStore.checkSelectedPurchaseItem(PayBack)) gameStore.spendPurchaseItem(PayBack)
   if (gameStore.checkSelectedPurchaseItem(Sharper)) gameStore.spendPurchaseItem(Sharper)
@@ -439,7 +439,24 @@ onMounted(() => {
               round.value++
               remainnedTime.value = roundTime
 
-              if (round.value !== 1) gachaChance.value = gachaChance.value + 3
+              if (round.value !== 1) {
+                if (round.value < 10) {
+                  if (round.value % 5 === 0) {
+                    gachaChance.value = gachaChance.value + 2
+                    selectChance.value = selectChance.value + 1
+                  } else gachaChance.value = gachaChance.value + 3
+                } else if (round.value < 30) {
+                  if (round.value % 5 === 0) {
+                    gachaChance.value = gachaChance.value + 2
+                    selectChance.value = selectChance.value + 2
+                  } else gachaChance.value = gachaChance.value + 4
+                } else {
+                  if (round.value % 5 === 0) {
+                    gachaChance.value = gachaChance.value + 2
+                    selectChance.value = selectChance.value + 3
+                  } else gachaChance.value = gachaChance.value + 5
+                }
+              }
               if (isBossRemained) {
                 scene.physics.pause()
                 isShowGameOverPopup.value = true
@@ -496,7 +513,9 @@ onMounted(() => {
             0
           )
           weapons.value!.weapons.forEach((weapon, index) => {
-            const isCooltime = weapon?.checkIsCooltime(
+            if (!weapon) return
+
+            const isCooltime = weapon.checkIsCooltime(
               time,
               Math.min(
                 99,
@@ -647,7 +666,7 @@ const rewords = computed(() => ({
   weapons: round.value
     ? weapons.value?.weapons
         .filter((weapon): weapon is Weapon => !!weapon)
-        .reduce((acc, current) => acc + current.level, 0) ?? 0
+        .reduce((acc, current) => acc + current.level * 15, 0) ?? 0
     : 0,
   coins: round.value ? coins.value : 0,
   enforces: round.value

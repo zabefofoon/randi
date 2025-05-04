@@ -95,7 +95,17 @@
                 · 공격갯수: {{ selectedWeapon.targetLength }}
               </div>
               <div v-if="selectedWeapon.stun">· 스턴: {{ selectedWeapon.stun }}</div>
-              <div v-if="selectedWeapon.slow">· 슬로우: {{ selectedWeapon.slow }}</div>
+              <div
+                v-if="selectedWeapon.stunMany"
+                class="col-span-2">
+                · 스플레시 스턴: {{ selectedWeapon.stunMany }}
+              </div>
+              <div v-if="selectedWeapon.slow">· 영역 슬로우: {{ selectedWeapon.slow }}</div>
+              <div
+                v-if="selectedWeapon.slowOne"
+                class="col-span-2">
+                · 단일 슬로우: {{ selectedWeapon.slowOne }}
+              </div>
               <div
                 v-if="selectedWeapon.criticalChance"
                 class="col-span-3">
@@ -156,7 +166,12 @@
                         :key="material.key"
                         class="flex gap-[0.2cqw]">
                         <span v-if="index !== 0">&nbsp;+</span>
-                        <span>{{ material.key }} {{ material.length }}개</span>
+                        <span
+                          :class="{
+                            'text-red-500': materials[material.key].length < material.length,
+                          }"
+                          >{{ material.key }} {{ material.length }}개</span
+                        >
                       </div>
                       )
                     </div>
@@ -169,9 +184,14 @@
           <button
             v-if="!selectedWeapon"
             class="mt-[1cqw] | flex flex-col gap-[0.5cqw]"
+            :disabled="!isWeaponGettable"
             @click="gachaWeapon">
             <span
-              class="bg-orange-700 | py-[0.5cqw] | border-black border-[0.2cqw] rounded-lg | text-[1.5cqw] font-bold text-outline">
+              class="py-[0.5cqw] | border-black border-[0.2cqw] rounded-lg | text-[1.5cqw] font-bold text-outline"
+              :class="{
+                'bg-orange-700': isWeaponGettable,
+                'bg-gray-700': !isWeaponGettable,
+              }">
               뽑기
             </span>
             <span class="text-[1.2cqw]">(랜덤 {{ needLength }}개 필요)</span>
@@ -211,38 +231,33 @@ const selectedWeapon = computed(() => {
 })
 
 const gachaWeapon = () => {
-  const totalLength = Object.values(props.materials)
-    .map(({ length }) => length)
-    .reduce((acc, current) => acc + current, 0)
-
-  if (totalLength >= needLength.value) {
-    if (selectedIndex.value === 1) {
-      props.weapons.addWeapon(selectedIndex.value, ButterKnife.of())
-      gameStore.addCollection(ButterKnife.meta.name)
-    }
-    if (selectedIndex.value === 2) {
-      props.weapons.addWeapon(selectedIndex.value, Book.of())
-      gameStore.addCollection(Book.meta.name)
-    }
-    if (selectedIndex.value === 3) {
-      props.weapons.addWeapon(selectedIndex.value, Ring.of())
-      gameStore.addCollection(Ring.meta.name)
-    }
-
-    let doneCount = 0
-    while (doneCount < needLength.value) {
-      const randomIndex = Phaser.Math.Between(0, 7)
-      const selectedMaterialKey = Object.keys(props.materials)[
-        randomIndex
-      ] as keyof ClassToRaw<Materials>
-
-      if (props.materials[selectedMaterialKey].length > 0) {
-        props.materials.decrease(selectedMaterialKey, 1)
-        doneCount++
-      }
-    }
-    nuxt.$sound.play("equip")
+  if (!isWeaponGettable.value) return
+  if (selectedIndex.value === 1) {
+    props.weapons.addWeapon(selectedIndex.value, ButterKnife.of())
+    gameStore.addCollection(ButterKnife.meta.name)
   }
+  if (selectedIndex.value === 2) {
+    props.weapons.addWeapon(selectedIndex.value, Book.of())
+    gameStore.addCollection(Book.meta.name)
+  }
+  if (selectedIndex.value === 3) {
+    props.weapons.addWeapon(selectedIndex.value, Ring.of())
+    gameStore.addCollection(Ring.meta.name)
+  }
+
+  let doneCount = 0
+  while (doneCount < needLength.value) {
+    const randomIndex = Phaser.Math.Between(0, 7)
+    const selectedMaterialKey = Object.keys(props.materials)[
+      randomIndex
+    ] as keyof ClassToRaw<Materials>
+
+    if (props.materials[selectedMaterialKey].length > 0) {
+      props.materials.decrease(selectedMaterialKey, 1)
+      doneCount++
+    }
+  }
+  nuxt.$sound.play("equip")
 }
 
 const getNextWeapon = (item: NextInfo) => {
@@ -255,6 +270,14 @@ const getNextWeapon = (item: NextInfo) => {
   gameStore.addCollection(cls.meta.name)
   nuxt.$sound.play("equip")
 }
+
+const isWeaponGettable = computed(() => {
+  const totalLength = Object.values(props.materials)
+    .map(({ length }) => length)
+    .reduce((acc, current) => acc + current, 0)
+
+  return totalLength >= needLength.value
+})
 
 const checkGettable = (item: NextInfo) => {
   return item.materials.every((material) => props.materials[material.key].length >= material.length)

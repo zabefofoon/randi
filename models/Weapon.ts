@@ -22,7 +22,9 @@ export interface WeaponOptions {
   allTargetLength: number
   splash: number
   stun: number
+  stunMany: number
   slow: number
+  slowOne: number
   allCooltime: number
   spritePosition: string
   criticalChance: number // 0.1이 10%
@@ -84,7 +86,7 @@ export class Weapons {
     const enemy = enemyObj as Enemy
     this.enemies.takeDamage(enemy, weaponData, this.materials, this.enforces)
     this.enemies.applySplashDamage(weapon.x, weapon.y, weaponData, this.materials, this.enforces)
-
+    this.enemies.applyStunMany(weapon.x, weapon.y, weaponData, this.materials)
     // 탄환 제거
     weaponObj.destroy()
   }
@@ -107,8 +109,9 @@ export abstract class Weapon implements WeaponOptions {
 
   splash = 0
   stun = 0
+  stunMany = 0
   slow = 0
-
+  slowOne = 0
   nexts: NextInfo[] = []
 
   physicalDamage = 0
