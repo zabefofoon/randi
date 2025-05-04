@@ -30,13 +30,16 @@ export class Ring extends Weapon {
         {
           cls: CopperRing,
           materials: [
-            { key: "str", length: 1 },
+            { key: "vit", length: 2 },
             { key: "agi", length: 1 },
           ],
         },
         {
           cls: FlowerRing,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "luk", length: 2 },
+            { key: "wis", length: 1 },
+          ],
         },
       ],
     })
@@ -76,11 +79,17 @@ export class CopperRing extends Weapon {
       nexts: [
         {
           cls: SilverRing,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "str", length: 3 },
+            { key: "int", length: 2 },
+          ],
         },
         {
           cls: JadeRing,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "cul", length: 3 },
+            { key: "cha", length: 2 },
+          ],
         },
       ],
     })
@@ -120,11 +129,17 @@ export class FlowerRing extends Weapon {
       nexts: [
         {
           cls: LeatherRing,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "vit", length: 3 },
+            { key: "agi", length: 2 },
+          ],
         },
         {
           cls: CandyRing,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "luk", length: 3 },
+            { key: "wis", length: 2 },
+          ],
         },
       ],
     })
@@ -164,11 +179,19 @@ export class SilverRing extends Weapon {
       nexts: [
         {
           cls: GoldRing,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "str", length: 3 },
+            { key: "int", length: 3 },
+            { key: "cul", length: 3 },
+          ],
         },
         {
           cls: KnuckleRing,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "cha", length: 3 },
+            { key: "vit", length: 3 },
+            { key: "agi", length: 3 },
+          ],
         },
       ],
     })
@@ -208,11 +231,19 @@ export class JadeRing extends Weapon {
       nexts: [
         {
           cls: DigitalRing,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "luk", length: 3 },
+            { key: "wis", length: 3 },
+            { key: "str", length: 3 },
+          ],
         },
         {
           cls: CrystalRing,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "int", length: 3 },
+            { key: "cul", length: 3 },
+            { key: "cha", length: 3 },
+          ],
         },
       ],
     })
@@ -252,11 +283,19 @@ export class LeatherRing extends Weapon {
       nexts: [
         {
           cls: RuneRing,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "vit", length: 3 },
+            { key: "agi", length: 3 },
+            { key: "luk", length: 3 },
+          ],
         },
         {
           cls: SignetRing,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "wis", length: 3 },
+            { key: "str", length: 3 },
+            { key: "int", length: 3 },
+          ],
         },
       ],
     })
@@ -296,11 +335,19 @@ export class CandyRing extends Weapon {
       nexts: [
         {
           cls: SharpieRing,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "wis", length: 3 },
+            { key: "str", length: 3 },
+            { key: "int", length: 3 },
+          ],
         },
         {
           cls: OnionRing,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "cul", length: 3 },
+            { key: "cha", length: 3 },
+            { key: "vit", length: 3 },
+          ],
         },
       ],
     })
@@ -340,11 +387,21 @@ export class GoldRing extends Weapon {
       nexts: [
         {
           cls: DiamondRing,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "agi", length: 5 },
+            { key: "luk", length: 4 },
+            { key: "wis", length: 4 },
+            { key: "str", length: 3 },
+          ],
         },
         {
           cls: RubyRing,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "int", length: 4 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 4 },
+            { key: "vit", length: 3 },
+          ],
         },
       ],
     })
@@ -384,11 +441,21 @@ export class KnuckleRing extends Weapon {
       nexts: [
         {
           cls: OpalRing,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "agi", length: 5 },
+            { key: "luk", length: 4 },
+            { key: "wis", length: 4 },
+            { key: "str", length: 3 },
+          ],
         },
         {
           cls: ObsidianRing,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "int", length: 4 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 4 },
+            { key: "vit", length: 3 },
+          ],
         },
       ],
     })
@@ -403,7 +470,7 @@ export class KnuckleRing extends Weapon {
 export class DigitalRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "호신용반지",
+    name: "디지털반지",
     description: "마법공격",
     cooltime: 1000,
     speed: 500,
@@ -428,11 +495,21 @@ export class DigitalRing extends Weapon {
       nexts: [
         {
           cls: SapphireRing,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "agi", length: 5 },
+            { key: "luk", length: 4 },
+            { key: "wis", length: 4 },
+            { key: "str", length: 3 },
+          ],
         },
         {
           cls: RubyRing,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "int", length: 4 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 4 },
+            { key: "vit", length: 3 },
+          ],
         },
       ],
     })
@@ -472,11 +549,21 @@ export class CrystalRing extends Weapon {
       nexts: [
         {
           cls: DiamondRing,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "agi", length: 5 },
+            { key: "luk", length: 4 },
+            { key: "wis", length: 4 },
+            { key: "str", length: 3 },
+          ],
         },
         {
           cls: ObsidianRing,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "int", length: 4 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 4 },
+            { key: "vit", length: 3 },
+          ],
         },
       ],
     })
@@ -516,7 +603,12 @@ export class RuneRing extends Weapon {
       nexts: [
         {
           cls: SapphireRing,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "agi", length: 5 },
+            { key: "luk", length: 4 },
+            { key: "wis", length: 4 },
+            { key: "str", length: 3 },
+          ],
         },
       ],
     })
@@ -556,11 +648,21 @@ export class SignetRing extends Weapon {
       nexts: [
         {
           cls: RubyRing,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "int", length: 4 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 4 },
+            { key: "vit", length: 3 },
+          ],
         },
         {
           cls: Bugles,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "agi", length: 5 },
+            { key: "luk", length: 4 },
+            { key: "wis", length: 4 },
+            { key: "str", length: 3 },
+          ],
         },
       ],
     })
@@ -600,7 +702,12 @@ export class SharpieRing extends Weapon {
       nexts: [
         {
           cls: OpalRing,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "int", length: 4 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 4 },
+            { key: "vit", length: 3 },
+          ],
         },
       ],
     })
@@ -640,7 +747,12 @@ export class OnionRing extends Weapon {
       nexts: [
         {
           cls: Bugles,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "agi", length: 5 },
+            { key: "luk", length: 4 },
+            { key: "wis", length: 4 },
+            { key: "str", length: 3 },
+          ],
         },
       ],
     })
@@ -680,7 +792,12 @@ export class DiamondRing extends Weapon {
       nexts: [
         {
           cls: BornRing,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "int", length: 7 },
+            { key: "cul", length: 6 },
+            { key: "cha", length: 5 },
+            { key: "vit", length: 4 },
+          ],
         },
       ],
     })
@@ -720,7 +837,12 @@ export class OpalRing extends Weapon {
       nexts: [
         {
           cls: VampireRing,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "agi", length: 7 },
+            { key: "luk", length: 6 },
+            { key: "wis", length: 5 },
+            { key: "str", length: 4 },
+          ],
         },
       ],
     })
@@ -760,7 +882,12 @@ export class ObsidianRing extends Weapon {
       nexts: [
         {
           cls: BornRing,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "int", length: 7 },
+            { key: "cul", length: 6 },
+            { key: "cha", length: 5 },
+            { key: "vit", length: 4 },
+          ],
         },
       ],
     })
@@ -800,7 +927,12 @@ export class SapphireRing extends Weapon {
       nexts: [
         {
           cls: Tattoo,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "agi", length: 7 },
+            { key: "luk", length: 6 },
+            { key: "wis", length: 5 },
+            { key: "str", length: 4 },
+          ],
         },
       ],
     })
@@ -840,7 +972,12 @@ export class RubyRing extends Weapon {
       nexts: [
         {
           cls: VampireRing,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "int", length: 7 },
+            { key: "cul", length: 6 },
+            { key: "cha", length: 5 },
+            { key: "vit", length: 4 },
+          ],
         },
       ],
     })
@@ -880,7 +1017,12 @@ export class Bugles extends Weapon {
       nexts: [
         {
           cls: FourLeafClover,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "agi", length: 7 },
+            { key: "luk", length: 6 },
+            { key: "wis", length: 5 },
+            { key: "str", length: 4 },
+          ],
         },
       ],
     })

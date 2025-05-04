@@ -30,13 +30,16 @@ export class Book extends Weapon {
         {
           cls: ThickBook,
           materials: [
-            { key: "str", length: 1 },
+            { key: "vit", length: 2 },
             { key: "agi", length: 1 },
           ],
         },
         {
           cls: ThinBook,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "luk", length: 2 },
+            { key: "wis", length: 1 },
+          ],
         },
       ],
     })
@@ -77,15 +80,15 @@ export class ThickBook extends Weapon {
         {
           cls: SpringBook,
           materials: [
-            { key: "str", length: 1 },
-            { key: "agi", length: 1 },
+            { key: "str", length: 3 },
+            { key: "int", length: 2 },
           ],
         },
         {
           cls: TextBook,
           materials: [
-            { key: "str", length: 1 },
-            { key: "agi", length: 1 },
+            { key: "cul", length: 3 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -127,15 +130,15 @@ export class ThinBook extends Weapon {
         {
           cls: Map,
           materials: [
-            { key: "str", length: 1 },
-            { key: "agi", length: 1 },
+            { key: "vit", length: 3 },
+            { key: "agi", length: 2 },
           ],
         },
         {
           cls: PictureBook,
           materials: [
-            { key: "str", length: 1 },
-            { key: "agi", length: 1 },
+            { key: "luk", length: 3 },
+            { key: "wis", length: 2 },
           ],
         },
       ],
@@ -177,15 +180,17 @@ export class SpringBook extends Weapon {
         {
           cls: MagicBook,
           materials: [
-            { key: "str", length: 1 },
-            { key: "agi", length: 1 },
+            { key: "str", length: 3 },
+            { key: "int", length: 3 },
+            { key: "cul", length: 3 },
           ],
         },
         {
           cls: MobilePhone,
           materials: [
-            { key: "str", length: 1 },
-            { key: "agi", length: 1 },
+            { key: "cha", length: 3 },
+            { key: "vit", length: 3 },
+            { key: "agi", length: 3 },
           ],
         },
       ],
@@ -227,15 +232,17 @@ export class TextBook extends Weapon {
         {
           cls: Regulations,
           materials: [
-            { key: "str", length: 1 },
-            { key: "agi", length: 1 },
+            { key: "luk", length: 3 },
+            { key: "wis", length: 3 },
+            { key: "str", length: 3 },
           ],
         },
         {
           cls: WorkBook,
           materials: [
-            { key: "str", length: 1 },
-            { key: "agi", length: 1 },
+            { key: "int", length: 3 },
+            { key: "cul", length: 3 },
+            { key: "cha", length: 3 },
           ],
         },
       ],
@@ -277,15 +284,17 @@ export class Map extends Weapon {
         {
           cls: TreasureMap,
           materials: [
-            { key: "str", length: 1 },
-            { key: "agi", length: 1 },
+            { key: "vit", length: 3 },
+            { key: "agi", length: 3 },
+            { key: "luk", length: 3 },
           ],
         },
         {
           cls: EvacuationMap,
           materials: [
-            { key: "str", length: 1 },
-            { key: "agi", length: 1 },
+            { key: "wis", length: 3 },
+            { key: "str", length: 3 },
+            { key: "int", length: 3 },
           ],
         },
       ],
@@ -327,15 +336,17 @@ export class PictureBook extends Weapon {
         {
           cls: Diary,
           materials: [
-            { key: "str", length: 1 },
-            { key: "agi", length: 1 },
+            { key: "cul", length: 3 },
+            { key: "cha", length: 3 },
+            { key: "vit", length: 3 },
           ],
         },
         {
           cls: Menu,
           materials: [
-            { key: "str", length: 1 },
-            { key: "agi", length: 1 },
+            { key: "agi", length: 3 },
+            { key: "luk", length: 3 },
+            { key: "wis", length: 3 },
           ],
         },
       ],
@@ -376,11 +387,21 @@ export class MagicBook extends Weapon {
       nexts: [
         {
           cls: Revelation,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "str", length: 5 },
+            { key: "int", length: 4 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 3 },
+          ],
         },
         {
           cls: HellMap,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "vit", length: 4 },
+            { key: "agi", length: 4 },
+            { key: "luk", length: 4 },
+            { key: "wis", length: 3 },
+          ],
         },
       ],
     })
@@ -420,11 +441,21 @@ export class MobilePhone extends Weapon {
       nexts: [
         {
           cls: Labtop,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "str", length: 5 },
+            { key: "int", length: 4 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 3 },
+          ],
         },
         {
           cls: AnswerSheet,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "vit", length: 4 },
+            { key: "agi", length: 4 },
+            { key: "luk", length: 4 },
+            { key: "wis", length: 3 },
+          ],
         },
       ],
     })
@@ -464,11 +495,21 @@ export class Regulations extends Weapon {
       nexts: [
         {
           cls: LawBook,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "str", length: 5 },
+            { key: "int", length: 4 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 3 },
+          ],
         },
         {
           cls: HellMap,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "vit", length: 4 },
+            { key: "agi", length: 4 },
+            { key: "luk", length: 4 },
+            { key: "wis", length: 3 },
+          ],
         },
       ],
     })
@@ -508,11 +549,21 @@ export class WorkBook extends Weapon {
       nexts: [
         {
           cls: Revelation,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "str", length: 5 },
+            { key: "int", length: 4 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 3 },
+          ],
         },
         {
           cls: AnswerSheet,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "vit", length: 4 },
+            { key: "agi", length: 4 },
+            { key: "luk", length: 4 },
+            { key: "wis", length: 3 },
+          ],
         },
       ],
     })
@@ -552,7 +603,12 @@ export class TreasureMap extends Weapon {
       nexts: [
         {
           cls: LawBook,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "str", length: 5 },
+            { key: "int", length: 4 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 3 },
+          ],
         },
       ],
     })
@@ -592,11 +648,21 @@ export class EvacuationMap extends Weapon {
       nexts: [
         {
           cls: HellMap,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "vit", length: 4 },
+            { key: "agi", length: 4 },
+            { key: "luk", length: 4 },
+            { key: "wis", length: 3 },
+          ],
         },
         {
           cls: OrderForm,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "str", length: 5 },
+            { key: "int", length: 4 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 3 },
+          ],
         },
       ],
     })
@@ -636,7 +702,12 @@ export class Diary extends Weapon {
       nexts: [
         {
           cls: Labtop,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "vit", length: 4 },
+            { key: "agi", length: 4 },
+            { key: "luk", length: 4 },
+            { key: "wis", length: 3 },
+          ],
         },
       ],
     })
@@ -676,7 +747,12 @@ export class Menu extends Weapon {
       nexts: [
         {
           cls: OrderForm,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "str", length: 5 },
+            { key: "int", length: 4 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 3 },
+          ],
         },
       ],
     })
@@ -716,7 +792,12 @@ export class Revelation extends Weapon {
       nexts: [
         {
           cls: Grimoire,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "vit", length: 7 },
+            { key: "agi", length: 6 },
+            { key: "luk", length: 5 },
+            { key: "wis", length: 4 },
+          ],
         },
       ],
     })
@@ -756,7 +837,12 @@ export class Labtop extends Weapon {
       nexts: [
         {
           cls: TabletPC,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "str", length: 7 },
+            { key: "int", length: 6 },
+            { key: "cul", length: 5 },
+            { key: "cha", length: 4 },
+          ],
         },
       ],
     })
@@ -796,7 +882,12 @@ export class AnswerSheet extends Weapon {
       nexts: [
         {
           cls: TabletPC,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "vit", length: 7 },
+            { key: "agi", length: 6 },
+            { key: "luk", length: 5 },
+            { key: "wis", length: 4 },
+          ],
         },
       ],
     })
@@ -836,7 +927,12 @@ export class LawBook extends Weapon {
       nexts: [
         {
           cls: Constitution,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "str", length: 7 },
+            { key: "int", length: 6 },
+            { key: "cul", length: 5 },
+            { key: "cha", length: 4 },
+          ],
         },
       ],
     })
@@ -876,7 +972,12 @@ export class HellMap extends Weapon {
       nexts: [
         {
           cls: Grimoire,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "vit", length: 7 },
+            { key: "agi", length: 6 },
+            { key: "luk", length: 5 },
+            { key: "wis", length: 4 },
+          ],
         },
       ],
     })
@@ -916,7 +1017,12 @@ export class OrderForm extends Weapon {
       nexts: [
         {
           cls: Counterfeit,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "str", length: 7 },
+            { key: "int", length: 6 },
+            { key: "cul", length: 5 },
+            { key: "cha", length: 4 },
+          ],
         },
       ],
     })

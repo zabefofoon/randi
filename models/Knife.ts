@@ -30,13 +30,16 @@ export class ButterKnife extends Weapon {
         {
           cls: KitchenKnife,
           materials: [
-            { key: "str", length: 1 },
+            { key: "vit", length: 2 },
             { key: "agi", length: 1 },
           ],
         },
         {
           cls: CutterKnife,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "luk", length: 2 },
+            { key: "wis", length: 1 },
+          ],
         },
       ],
     })
@@ -76,11 +79,17 @@ export class KitchenKnife extends Weapon {
       nexts: [
         {
           cls: SushiKnife,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "str", length: 3 },
+            { key: "int", length: 2 },
+          ],
         },
         {
           cls: Scissors,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "cul", length: 3 },
+            { key: "cha", length: 2 },
+          ],
         },
       ],
     })
@@ -120,11 +129,17 @@ export class CutterKnife extends Weapon {
       nexts: [
         {
           cls: Hammer,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "vit", length: 3 },
+            { key: "agi", length: 2 },
+          ],
         },
         {
           cls: AX,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "luk", length: 3 },
+            { key: "wis", length: 2 },
+          ],
         },
       ],
     })
@@ -164,11 +179,19 @@ export class SushiKnife extends Weapon {
       nexts: [
         {
           cls: ButcherKnife,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "str", length: 3 },
+            { key: "int", length: 3 },
+            { key: "cul", length: 3 },
+          ],
         },
         {
           cls: LongNails,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "cha", length: 3 },
+            { key: "vit", length: 3 },
+            { key: "agi", length: 3 },
+          ],
         },
       ],
     })
@@ -208,11 +231,19 @@ export class Scissors extends Weapon {
       nexts: [
         {
           cls: SwissArmyKnife,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "luk", length: 3 },
+            { key: "wis", length: 3 },
+            { key: "str", length: 3 },
+          ],
         },
         {
           cls: Fist,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "int", length: 3 },
+            { key: "cul", length: 3 },
+            { key: "cha", length: 3 },
+          ],
         },
       ],
     })
@@ -252,11 +283,19 @@ export class Hammer extends Weapon {
       nexts: [
         {
           cls: CrossCutSaw,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "vit", length: 3 },
+            { key: "agi", length: 3 },
+            { key: "luk", length: 3 },
+          ],
         },
         {
           cls: CrowBar,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "wis", length: 3 },
+            { key: "str", length: 3 },
+            { key: "int", length: 3 },
+          ],
         },
       ],
     })
@@ -296,11 +335,19 @@ export class AX extends Weapon {
       nexts: [
         {
           cls: Machete,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "cul", length: 3 },
+            { key: "cha", length: 3 },
+            { key: "vit", length: 3 },
+          ],
         },
         {
           cls: KoreanHandPlow,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "agi", length: 3 },
+            { key: "luk", length: 3 },
+            { key: "wis", length: 3 },
+          ],
         },
       ],
     })
@@ -340,11 +387,21 @@ export class ButcherKnife extends Weapon {
       nexts: [
         {
           cls: BornSword,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "str", length: 5 },
+            { key: "int", length: 4 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 3 },
+          ],
         },
         {
           cls: DualBlade,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "vit", length: 4 },
+            { key: "agi", length: 4 },
+            { key: "luk", length: 4 },
+            { key: "wis", length: 3 },
+          ],
         },
       ],
     })
@@ -384,11 +441,21 @@ export class LongNails extends Weapon {
       nexts: [
         {
           cls: SurgicalKnife,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "str", length: 5 },
+            { key: "int", length: 4 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 3 },
+          ],
         },
         {
           cls: CursedSword,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "vit", length: 4 },
+            { key: "agi", length: 4 },
+            { key: "luk", length: 4 },
+            { key: "wis", length: 3 },
+          ],
         },
       ],
     })
@@ -428,11 +495,21 @@ export class SwissArmyKnife extends Weapon {
       nexts: [
         {
           cls: BlessedSword,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "str", length: 5 },
+            { key: "int", length: 4 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 3 },
+          ],
         },
         {
           cls: DualBlade,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "vit", length: 4 },
+            { key: "agi", length: 4 },
+            { key: "luk", length: 4 },
+            { key: "wis", length: 3 },
+          ],
         },
       ],
     })
@@ -472,11 +549,21 @@ export class Fist extends Weapon {
       nexts: [
         {
           cls: BornSword,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "str", length: 5 },
+            { key: "int", length: 4 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 3 },
+          ],
         },
         {
           cls: CursedSword,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "vit", length: 4 },
+            { key: "agi", length: 4 },
+            { key: "luk", length: 4 },
+            { key: "wis", length: 3 },
+          ],
         },
       ],
     })
@@ -516,7 +603,12 @@ export class CrossCutSaw extends Weapon {
       nexts: [
         {
           cls: BlessedSword,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "str", length: 5 },
+            { key: "int", length: 4 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 3 },
+          ],
         },
       ],
     })
@@ -556,11 +648,21 @@ export class CrowBar extends Weapon {
       nexts: [
         {
           cls: DualBlade,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "vit", length: 4 },
+            { key: "agi", length: 4 },
+            { key: "luk", length: 4 },
+            { key: "wis", length: 3 },
+          ],
         },
         {
           cls: BigAX,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "str", length: 5 },
+            { key: "int", length: 4 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 3 },
+          ],
         },
       ],
     })
@@ -600,7 +702,12 @@ export class Machete extends Weapon {
       nexts: [
         {
           cls: SurgicalKnife,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "vit", length: 4 },
+            { key: "agi", length: 4 },
+            { key: "luk", length: 4 },
+            { key: "wis", length: 3 },
+          ],
         },
       ],
     })
@@ -640,7 +747,12 @@ export class KoreanHandPlow extends Weapon {
       nexts: [
         {
           cls: BigAX,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "str", length: 5 },
+            { key: "int", length: 4 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 3 },
+          ],
         },
       ],
     })
@@ -680,7 +792,12 @@ export class BornSword extends Weapon {
       nexts: [
         {
           cls: DragonSlayer,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "vit", length: 7 },
+            { key: "agi", length: 6 },
+            { key: "luk", length: 5 },
+            { key: "wis", length: 4 },
+          ],
         },
       ],
     })
@@ -720,7 +837,12 @@ export class SurgicalKnife extends Weapon {
       nexts: [
         {
           cls: SnotWhip,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "str", length: 7 },
+            { key: "int", length: 6 },
+            { key: "cul", length: 5 },
+            { key: "cha", length: 4 },
+          ],
         },
       ],
     })
@@ -760,7 +882,12 @@ export class BlessedSword extends Weapon {
       nexts: [
         {
           cls: LaserSword,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "vit", length: 7 },
+            { key: "agi", length: 6 },
+            { key: "luk", length: 5 },
+            { key: "wis", length: 4 },
+          ],
         },
       ],
     })
@@ -800,7 +927,12 @@ export class CursedSword extends Weapon {
       nexts: [
         {
           cls: DragonSlayer,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "str", length: 7 },
+            { key: "int", length: 6 },
+            { key: "cul", length: 5 },
+            { key: "cha", length: 4 },
+          ],
         },
       ],
     })
@@ -840,7 +972,12 @@ export class DualBlade extends Weapon {
       nexts: [
         {
           cls: SnotWhip,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "vit", length: 7 },
+            { key: "agi", length: 6 },
+            { key: "luk", length: 5 },
+            { key: "wis", length: 4 },
+          ],
         },
       ],
     })
@@ -880,7 +1017,12 @@ export class BigAX extends Weapon {
       nexts: [
         {
           cls: DeathScythe,
-          materials: [{ key: "str", length: 3 }],
+          materials: [
+            { key: "str", length: 7 },
+            { key: "int", length: 6 },
+            { key: "cul", length: 5 },
+            { key: "cha", length: 4 },
+          ],
         },
       ],
     })

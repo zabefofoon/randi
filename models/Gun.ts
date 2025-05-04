@@ -30,13 +30,16 @@ export class Gun extends Weapon {
         {
           cls: DoubleGun,
           materials: [
-            { key: "str", length: 1 },
-            { key: "agi", length: 1 },
+            { key: "str", length: 2 },
+            { key: "int", length: 1 },
           ],
         },
         {
           cls: ShotGun,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "cul", length: 2 },
+            { key: "cha", length: 1 },
+          ],
         },
       ],
     })
@@ -76,11 +79,17 @@ export class ShotGun extends Weapon {
       nexts: [
         {
           cls: MagicGun,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "vit", length: 3 },
+            { key: "agi", length: 2 },
+          ],
         },
         {
           cls: AirGun,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "luk", length: 3 },
+            { key: "wis", length: 2 },
+          ],
         },
       ],
     })
@@ -120,11 +129,17 @@ export class DoubleGun extends Weapon {
       nexts: [
         {
           cls: MachineGun,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "str", length: 3 },
+            { key: "int", length: 2 },
+          ],
         },
         {
           cls: FingerGun,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "cul", length: 3 },
+            { key: "cha", length: 2 },
+          ],
         },
       ],
     })
@@ -164,11 +179,19 @@ export class MagicGun extends Weapon {
       nexts: [
         {
           cls: BubbleGun,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "vit", length: 3 },
+            { key: "agi", length: 3 },
+            { key: "luk", length: 3 },
+          ],
         },
         {
           cls: TazerGun,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "wis", length: 3 },
+            { key: "str", length: 3 },
+            { key: "int", length: 3 },
+          ],
         },
       ],
     })
@@ -208,11 +231,19 @@ export class AirGun extends Weapon {
       nexts: [
         {
           cls: PulseGun,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "cul", length: 3 },
+            { key: "cha", length: 3 },
+            { key: "vit", length: 3 },
+          ],
         },
         {
           cls: Firework,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "agi", length: 3 },
+            { key: "luk", length: 3 },
+            { key: "wis", length: 3 },
+          ],
         },
       ],
     })
@@ -252,11 +283,19 @@ export class MachineGun extends Weapon {
       nexts: [
         {
           cls: SilentKiller,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "str", length: 3 },
+            { key: "int", length: 3 },
+            { key: "cul", length: 3 },
+          ],
         },
         {
           cls: DrillGun,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "cha", length: 3 },
+            { key: "vit", length: 3 },
+            { key: "agi", length: 3 },
+          ],
         },
       ],
     })
@@ -296,11 +335,19 @@ export class FingerGun extends Weapon {
       nexts: [
         {
           cls: PepperSpray,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "luk", length: 3 },
+            { key: "wis", length: 3 },
+            { key: "str", length: 3 },
+          ],
         },
         {
           cls: EyeGun,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "int", length: 3 },
+            { key: "cul", length: 3 },
+            { key: "cha", length: 3 },
+          ],
         },
       ],
     })
@@ -340,11 +387,21 @@ export class BubbleGun extends Weapon {
       nexts: [
         {
           cls: GrenadeLauncher,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "vit", length: 5 },
+            { key: "agi", length: 4 },
+            { key: "luk", length: 4 },
+            { key: "wis", length: 3 },
+          ],
         },
         {
           cls: BlessedRevolver,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "str", length: 5 },
+            { key: "int", length: 4 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 3 },
+          ],
         },
       ],
     })
@@ -384,11 +441,21 @@ export class TazerGun extends Weapon {
       nexts: [
         {
           cls: SilverBulletGun,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "vit", length: 4 },
+            { key: "agi", length: 4 },
+            { key: "luk", length: 4 },
+            { key: "wis", length: 4 },
+          ],
         },
         {
           cls: Cannon,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "str", length: 5 },
+            { key: "int", length: 4 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 3 },
+          ],
         },
       ],
     })
@@ -428,11 +495,21 @@ export class PulseGun extends Weapon {
       nexts: [
         {
           cls: PlasmaGun,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "vit", length: 4 },
+            { key: "agi", length: 4 },
+            { key: "luk", length: 4 },
+            { key: "wis", length: 4 },
+          ],
         },
         {
           cls: BlessedRevolver,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "str", length: 5 },
+            { key: "int", length: 4 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 3 },
+          ],
         },
       ],
     })
@@ -472,11 +549,21 @@ export class Firework extends Weapon {
       nexts: [
         {
           cls: GrenadeLauncher,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "vit", length: 5 },
+            { key: "agi", length: 4 },
+            { key: "luk", length: 4 },
+            { key: "wis", length: 3 },
+          ],
         },
         {
           cls: Cannon,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "str", length: 5 },
+            { key: "int", length: 4 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 3 },
+          ],
         },
       ],
     })
@@ -516,11 +603,21 @@ export class SilentKiller extends Weapon {
       nexts: [
         {
           cls: PlasmaGun,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "vit", length: 4 },
+            { key: "agi", length: 4 },
+            { key: "luk", length: 4 },
+            { key: "wis", length: 4 },
+          ],
         },
         {
           cls: CursedRevolver,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "str", length: 5 },
+            { key: "int", length: 4 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 3 },
+          ],
         },
       ],
     })
@@ -560,11 +657,21 @@ export class DrillGun extends Weapon {
       nexts: [
         {
           cls: PlasmaGun,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "vit", length: 4 },
+            { key: "agi", length: 4 },
+            { key: "luk", length: 4 },
+            { key: "wis", length: 4 },
+          ],
         },
         {
           cls: CursedRevolver,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "str", length: 5 },
+            { key: "int", length: 4 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 3 },
+          ],
         },
       ],
     })
@@ -604,7 +711,12 @@ export class PepperSpray extends Weapon {
       nexts: [
         {
           cls: SilverBulletGun,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "vit", length: 4 },
+            { key: "agi", length: 4 },
+            { key: "luk", length: 4 },
+            { key: "wis", length: 3 },
+          ],
         },
       ],
     })
@@ -644,7 +756,12 @@ export class EyeGun extends Weapon {
       nexts: [
         {
           cls: SilverBulletGun,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "str", length: 4 },
+            { key: "int", length: 4 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 3 },
+          ],
         },
       ],
     })
@@ -684,7 +801,12 @@ export class GrenadeLauncher extends Weapon {
       nexts: [
         {
           cls: Missile,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "vit", length: 7 },
+            { key: "agi", length: 6 },
+            { key: "luk", length: 5 },
+            { key: "wis", length: 4 },
+          ],
         },
       ],
     })
@@ -724,7 +846,12 @@ export class SilverBulletGun extends Weapon {
       nexts: [
         {
           cls: HeartBreaker,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "str", length: 7 },
+            { key: "int", length: 6 },
+            { key: "cul", length: 5 },
+            { key: "cha", length: 4 },
+          ],
         },
       ],
     })
@@ -764,7 +891,12 @@ export class PlasmaGun extends Weapon {
       nexts: [
         {
           cls: RadiationBeam,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "vit", length: 7 },
+            { key: "agi", length: 6 },
+            { key: "luk", length: 5 },
+            { key: "wis", length: 4 },
+          ],
         },
       ],
     })
@@ -804,7 +936,12 @@ export class Cannon extends Weapon {
       nexts: [
         {
           cls: Missile,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "str", length: 7 },
+            { key: "int", length: 6 },
+            { key: "cul", length: 5 },
+            { key: "cha", length: 4 },
+          ],
         },
       ],
     })
@@ -844,7 +981,12 @@ export class BlessedRevolver extends Weapon {
       nexts: [
         {
           cls: HeartBreaker,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "str", length: 7 },
+            { key: "int", length: 6 },
+            { key: "cul", length: 5 },
+            { key: "cha", length: 4 },
+          ],
         },
       ],
     })
@@ -884,7 +1026,12 @@ export class CursedRevolver extends Weapon {
       nexts: [
         {
           cls: Booger,
-          materials: [{ key: "vit", length: 3 }],
+          materials: [
+            { key: "str", length: 7 },
+            { key: "int", length: 6 },
+            { key: "cul", length: 5 },
+            { key: "cha", length: 4 },
+          ],
         },
       ],
     })
