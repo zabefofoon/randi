@@ -211,7 +211,7 @@
               class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2">
               <span
                 class="text-white | grid place-items-center | w-[2.2cqw] aspect-square | rounded-full | bg-red-500 | text-outline text-[1.2cqw] font-bold | border-black border-[0.14cqw]">
-                {{ selectChance ? selectChance : gachaChance }}
+                {{ selectChance + gachaChance }}
               </span>
             </div>
           </button>
@@ -287,6 +287,7 @@ let damageRect: Phaser.GameObjects.Rectangle
 
 onMounted(() => {
   if (!phaserContainer.value) return
+  window.speed = 2
 
   if (gameStore.checkSelectedPurchaseItem(PayBack)) gameStore.spendPurchaseItem(PayBack)
   if (gameStore.checkSelectedPurchaseItem(Sharper)) gameStore.spendPurchaseItem(Sharper)
@@ -428,7 +429,7 @@ onMounted(() => {
         })
         scene.events.on("enemy-die", () => killed.value++)
         scene.time.addEvent({
-          delay: 1000,
+          delay: 1000 / window.speed,
           repeat: -1,
           callback: () => {
             if (scene.data.get("paused")) return
@@ -495,18 +496,18 @@ onMounted(() => {
             0
           )
           weapons.value!.weapons.forEach((weapon, index) => {
-            if (
-              weapon?.checkIsCooltime(
-                time,
-                Math.min(
-                  99,
-                  (materials.value.calculateStat("agi") +
-                    allCooltimes +
-                    enforces.value!.aditionnalCooldown / 100) *
-                    100
-                )
+            const isCooltime = weapon?.checkIsCooltime(
+              time,
+              Math.min(
+                99,
+                (materials.value.calculateStat("agi") +
+                  allCooltimes +
+                  enforces.value!.aditionnalCooldown / 100) *
+                  100
               )
             )
+
+            if (isCooltime)
               player.getClosestEnemies(enemies, weapon.targetLength).forEach((enemy) => {
                 const distance = Phaser.Math.Distance.Between(
                   player.x,

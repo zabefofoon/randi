@@ -1,5 +1,6 @@
 declare global {
   interface Window {
+    speed: number
     createjs: {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       Sound: any

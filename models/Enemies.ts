@@ -138,7 +138,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     if (pathIndex == null) return
 
     // 기본 이동 속도
-    const baseSpeed = numberUtil.addPercent(this.isBoss ? 80 : 120, this.round * 2)
+    const baseSpeed = numberUtil.addPercent(this.isBoss ? 80 : 120, this.round * 2) * window.speed
     // 플레이어와 적 사이의 거리를 측정
     const distanceToPlayer = Phaser.Math.Distance.Between(this.x, this.y, player.x, player.y)
     // 플레이어가 가까우면 느리게 이동: 예시로, 200픽셀 이내면 속도를 50%로 줄임

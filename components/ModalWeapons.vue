@@ -91,7 +91,7 @@
               <div v-if="selectedWeapon.range">· 공격거리: {{ selectedWeapon.range }}</div>
               <div v-if="selectedWeapon.splash">· 스플래쉬: {{ selectedWeapon.splash }}</div>
               <div v-if="selectedWeapon.cooltime">· 쿨타임: {{ selectedWeapon.cooltime }}</div>
-              <div v-if="selectedWeapon.targetLength">
+              <div v-if="selectedWeapon.targetLength > 1">
                 · 공격갯수: {{ selectedWeapon.targetLength }}
               </div>
               <div v-if="selectedWeapon.stun">· 스턴: {{ selectedWeapon.stun }}</div>
@@ -112,7 +112,7 @@
               <button
                 v-for="item in selectedWeapon?.nexts"
                 :key="item.cls.meta?.name"
-                class="select-none flex items-center gap-[1cqw] | mt-[1cqw] | px-[1cqw] py-[0.2cqw] | border-black border-[0.2cqw] rounded-lg"
+                class="select-none flex items-center gap-[1cqw] | mt-[1cqw] | px-[1cqw] py-[0.2cqw] | border-black border-[0.2cqw] rounded-lg disabled:bg-gray-700"
                 :class="{
                   'bg-white': item.cls.meta?.level === 1,
                   'bg-blue-500': item.cls.meta?.level === 2,
@@ -121,6 +121,7 @@
                   'bg-fuchsia-400': item.cls.meta?.level === 5,
                   'bg-red-400': item.cls.meta?.level === 6,
                 }"
+                :disabled="!checkGettable(item)"
                 @click="getNextWeapon(item)">
                 <div
                   :class="{
@@ -130,6 +131,7 @@
                     'bg-yellow-600': item.cls.meta?.level === 4,
                     'bg-fuchsia-500': item.cls.meta?.level === 5,
                     'bg-red-500': item.cls.meta?.level === 6,
+                    'bg-gray-700': !checkGettable(item),
                   }">
                   <div
                     v-if="gameStore.checkHasCollection(item.cls.meta.name)"
@@ -244,10 +246,7 @@ const gachaWeapon = () => {
 }
 
 const getNextWeapon = (item: NextInfo) => {
-  const isGettable = item.materials.every(
-    (material) => props.materials[material.key].length >= material.length
-  )
-  if (!isGettable) return
+  if (!checkGettable(item)) return
   item.materials.forEach((material) => {
     props.materials.decrease(material.key, material.length)
   })
@@ -255,6 +254,10 @@ const getNextWeapon = (item: NextInfo) => {
   props.weapons.addWeapon(selectedIndex.value, new cls().setIndex(selectedIndex.value))
   gameStore.addCollection(cls.meta.name)
   nuxt.$sound.play("equip")
+}
+
+const checkGettable = (item: NextInfo) => {
+  return item.materials.every((material) => props.materials[material.key].length >= material.length)
 }
 
 watch(selectedIndex, () => {

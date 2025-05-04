@@ -127,7 +127,9 @@ export abstract class Weapon implements WeaponOptions {
   }
 
   checkIsCooltime(time: number, cooldown: number) {
-    return time > this.lastAttackTime + (this.cooltime - (this.cooltime * cooldown) / 100)
+    return (
+      time > this.lastAttackTime + (this.cooltime - (this.cooltime * cooldown) / 100) / window.speed
+    )
   }
 
   /**
