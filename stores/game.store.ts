@@ -1,5 +1,5 @@
 import store from "store2"
-import { LOCAL_CHARACTERS, LOCAL_ITEMS, LOCAL_MONEY } from "~/const"
+import { LOCAL_CHARACTERS, LOCAL_COLLECTION, LOCAL_ITEMS, LOCAL_MONEY } from "~/const"
 import {
   NylonMask,
   PurchaseCharacter,
@@ -88,7 +88,8 @@ export const useGameStore = defineStore("gameStore", () => {
   const selectedPurchaseItems = ref<string[]>([])
   const togglePurchaseItem = (item: typeof PurchaseItem) => {
     const isHave = checkSelectedPurchaseItem(item)
-    isHave ? deselectPurchaseItem(item) : selectPurchaseItem(item)
+    if (isHave) deselectPurchaseItem(item)
+    else selectPurchaseItem(item)
     return isHave
   }
   const selectPurchaseItem = (item: typeof PurchaseItem) => {
@@ -100,6 +101,21 @@ export const useGameStore = defineStore("gameStore", () => {
   }
   const checkSelectedPurchaseItem = (item: typeof PurchaseItem) => {
     return selectedPurchaseItems.value.includes(item.meta.id)
+  }
+
+  const collection = ref<string[]>([])
+  const initCollection = () => {
+    collection.value = store.get(LOCAL_COLLECTION) ?? []
+  }
+  const addCollection = (weaponName: string) => {
+    if (checkHasCollection(weaponName)) return
+
+    collection.value.push(weaponName)
+    store.set(LOCAL_COLLECTION, collection.value)
+  }
+
+  const checkHasCollection = (weaponName: string) => {
+    return collection.value.includes(weaponName)
   }
 
   return {
@@ -127,5 +143,10 @@ export const useGameStore = defineStore("gameStore", () => {
     deselectPurchaseItem,
     checkSelectedPurchaseItem,
     spendPurchaseItem,
+
+    collection,
+    initCollection,
+    addCollection,
+    checkHasCollection,
   }
 })

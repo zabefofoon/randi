@@ -26,4 +26,5 @@ export const PURCHASE_LENGTH = 2
 export const LOCAL_MONEY = "currentMoney"
 export const LOCAL_CHARACTERS = "characters"
 export const LOCAL_ITEMS = "purchasedItems"
+export const LOCAL_COLLECTION = "collection"
 export const LAST_ACCESS = "lastAccess"

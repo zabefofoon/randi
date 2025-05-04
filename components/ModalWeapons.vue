@@ -121,8 +121,14 @@
                     'bg-red-500': item.cls.meta?.level === 6,
                   }">
                   <div
-                    class="weapon-sprites | bg-red-500 | w-[3.5cqw] aspect-square | rounded-lg border-black border-[0.2cqw]"
+                    v-if="gameStore.checkHasCollection(item.cls.meta.name)"
+                    class="weapon-sprites | w-[3.5cqw] aspect-square | rounded-lg border-black border-[0.2cqw]"
                     :style="{ 'background-position': item.cls.meta.spritePosition }"></div>
+                  <div
+                    v-else
+                    class="w-[3.5cqw] aspect-square | rounded-lg border-black border-[0.2cqw] | flex items-center justify-center">
+                    <span class="gasoek-one-regular font-bold text-[2cqw]">?</span>
+                  </div>
                 </div>
 
                 <div class="flex flex-col gap-[0.2cqw]">
@@ -184,6 +190,8 @@ const selectedIndex = defineModel<number>("selectedIndex", { default: 0 })
 
 const nuxt = useNuxtApp()
 
+const gameStore = useGameStore()
+
 const needLength = computed(() => selectedIndex.value * 4)
 const selectedWeapon = computed(() => {
   return props.weapons.weapons[selectedIndex.value]
@@ -195,9 +203,18 @@ const gachaWeapon = () => {
     .reduce((acc, current) => acc + current, 0)
 
   if (totalLength >= needLength.value) {
-    if (selectedIndex.value === 1) props.weapons.addWeapon(selectedIndex.value, ButterKnife.of())
-    if (selectedIndex.value === 2) props.weapons.addWeapon(selectedIndex.value, Book.of())
-    if (selectedIndex.value === 3) props.weapons.addWeapon(selectedIndex.value, Ring.of())
+    if (selectedIndex.value === 1) {
+      props.weapons.addWeapon(selectedIndex.value, ButterKnife.of())
+      gameStore.addCollection(ButterKnife.meta.name)
+    }
+    if (selectedIndex.value === 2) {
+      props.weapons.addWeapon(selectedIndex.value, Book.of())
+      gameStore.addCollection(Book.meta.name)
+    }
+    if (selectedIndex.value === 3) {
+      props.weapons.addWeapon(selectedIndex.value, Ring.of())
+      gameStore.addCollection(Ring.meta.name)
+    }
 
     let doneCount = 0
     while (doneCount < needLength.value) {
@@ -225,6 +242,7 @@ const getNextWeapon = (item: NextInfo) => {
   })
   const cls = item.cls as typeof Gun
   props.weapons.addWeapon(selectedIndex.value, new cls().setIndex(selectedIndex.value))
+  gameStore.addCollection(cls.meta.name)
   nuxt.$sound.play("equip")
 }
 

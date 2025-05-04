@@ -418,6 +418,7 @@ onMounted(() => {
 
         // ===== 탄환(Gun) 그룹 생성 =====
         weapons.value.addWeapon(0, Gun.of())
+        gameStore.addCollection(Gun.meta.name)
 
         scene.events.on("boss-die", () => {
           isBossRemained = false

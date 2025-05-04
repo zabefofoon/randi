@@ -44,6 +44,7 @@ onMounted(() => {
   gameStore.initMoney()
   gameStore.initCharacters()
   gameStore.initPurchasedItems()
+  gameStore.initCollection()
 })
 </script>
 <style lang="scss" scoped>

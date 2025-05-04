@@ -1,7 +1,7 @@
 <template>
   <div
     class="w-screen h-screen | flex items-center justify-center | bg-black | text-white text-[1.8cqw] font-bold text-outline">
-    <div class="content | relative | aspect-video max-w-full max-h-full | bg-purple-950">
+    <div class="content | relative | aspect-video max-w-full max-h-full">
       <img
         class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full | select-none pointer-events-none"
         src="/assets/images/chase.webp" />

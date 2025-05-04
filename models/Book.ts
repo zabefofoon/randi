@@ -301,7 +301,7 @@ export class Map extends Weapon {
 export class PictureBook extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
-    name: "지도",
+    name: "그림책",
     description: "강력한 마법공격",
     cooltime: 1000,
     speed: 500,
