@@ -25,6 +25,9 @@ export interface WeaponOptions {
   slow: number
   allCooltime: number
   spritePosition: string
+  criticalChance: number // 0.1이 10%
+  criticalDamage: number // 2가 2배
+  dotted: number // 3이면 3번
   index?: number
   nexts?: NextInfo[]
 }
@@ -115,6 +118,10 @@ export abstract class Weapon implements WeaponOptions {
   level = 0
   spritePosition = etcUtil.getWeaponSpritePosition(0, 0)
   index = 0
+
+  criticalChance = 0 // 0.1이 10%
+  criticalDamage = 0 // 2가 2배
+  dotted = 0
   constructor(weapon: WeaponOptions) {
     Object.assign(this, weapon)
   }

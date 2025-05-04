@@ -92,6 +92,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   pathes: { x: number; y: number }[]
   physicalDefence = 0
   magicalDefence = 0
+  private activeDots: Phaser.Time.TimerEvent[] = [] // ⚑ DOT 타이머 보관
 
   constructor(
     scene: Phaser.Scene,
@@ -284,9 +285,17 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       this.selectedCharacter.meta.id === "trunkKing"
 
     let damage = _physicalDamage + _magicalDamage
+    if (weaponData.criticalChance > 0) {
+      damage =
+        Phaser.Math.FloatBetween(0, 1) < weaponData.criticalChance
+          ? damage * weaponData.criticalDamage
+          : damage
+    }
     if (isTrunkKing) {
       damage = Math.round(numberUtil.addPercent(_physicalDamage, this.round)) + _magicalDamage
     }
+
+    if (weaponData.dotted) this.applyDot(weaponData, damage, weaponData.dotted * 250, 250)
 
     this.setData("hp", currentHP - damage)
 
@@ -311,14 +320,32 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     // 적 HP가 0 이하라면 제거
-    if (this.getData("hp") <= 0) {
-      if (this.isBoss) this.scene.events.emit("boss-die")
-      else this.scene.events.emit("enemy-die")
-      ;(this.coins as unknown as number) += this.round
-      const hpBar = this.getData("hpBar") as Phaser.GameObjects.Graphics
-      if (hpBar) hpBar.destroy()
-      this.destroy()
-    }
+    if (this.getData("hp") <= 0) this.die()
+  }
+  applyDot(weaponData: Weapon, totalDamage: number, duration: number, tick = 500) {
+    const ticks = Math.ceil(duration / tick)
+    const dmgPerTick = Math.ceil(totalDamage / ticks)
+
+    const timer = this.scene.time.addEvent({
+      delay: tick,
+      repeat: ticks - 1,
+      callback: () => this.takeDotDamage(weaponData, dmgPerTick, timer),
+      callbackScope: this,
+    })
+
+    this.activeDots.push(timer)
+  }
+  private takeDotDamage(weaponData: Weapon, amount: number, event: Phaser.Time.TimerEvent) {
+    if (!this.active) return
+
+    const hp = this.getData("hp") as number
+
+    this.setData("hp", hp - amount)
+    this.showDamageText(amount, weaponData)
+    if (event.getRepeatCount() === 0)
+      this.activeDots = this.activeDots.filter((t) => t.repeatCount !== 0)
+
+    if (this.getData("hp") <= 0) this.die()
   }
 
   calculateReducedDamage(damage: number, defense: number, penetration = 0): number {
@@ -330,5 +357,15 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     const reductionRate = Math.min(reducedDefense / (reducedDefense + k), maxReduction)
     return damage ? Math.max(1, Math.floor(damage * (1 - reductionRate))) : damage
+  }
+
+  die() {
+    if (this.isBoss) this.scene.events.emit("boss-die")
+    else this.scene.events.emit("enemy-die")
+    ;(this.coins as unknown as number) += this.round
+    const hpBar = this.getData("hpBar") as Phaser.GameObjects.Graphics
+    if (hpBar) hpBar.destroy()
+    this.destroy()
+    this.activeDots.forEach((t) => t.remove())
   }
 }

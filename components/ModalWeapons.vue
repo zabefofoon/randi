@@ -96,6 +96,17 @@
               </div>
               <div v-if="selectedWeapon.stun">· 스턴: {{ selectedWeapon.stun }}</div>
               <div v-if="selectedWeapon.slow">· 슬로우: {{ selectedWeapon.slow }}</div>
+              <div
+                v-if="selectedWeapon.criticalChance"
+                class="col-span-3">
+                · 크리티컬: {{ selectedWeapon.criticalChance * 100 }}% 확률의
+                {{ selectedWeapon.criticalDamage }}배 데미지
+              </div>
+              <div
+                v-if="selectedWeapon.dotted"
+                class="col-span-3">
+                · 도트: {{ selectedWeapon.dotted }}번의 도트 데미지
+              </div>
             </div>
             <div class="flex flex-col | w-full | mt-[1cqw]">
               <button

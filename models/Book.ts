@@ -5,7 +5,7 @@ export class Book extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 1,
     name: "공책",
-    description: "강력한 마법공격",
+    description: `“여백뿐인 가능성.”`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -21,6 +21,9 @@ export class Book extends Weapon {
     allCooltime: 0,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 0),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -55,7 +58,7 @@ export class ThickBook extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 2,
     name: "두꺼운책",
-    description: "강력한 마법공격",
+    description: `“잡으면 팔 아픈 지식.” - 물리 방어 + 소폭 증가.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -71,6 +74,9 @@ export class ThickBook extends Weapon {
     allCooltime: 0,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 1),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -105,7 +111,7 @@ export class ThinBook extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 2,
     name: "얇은책",
-    description: "강력한 마법공격",
+    description: `“휴대성 만점.” - 이동 속도 소폭 상승.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -121,6 +127,9 @@ export class ThinBook extends Weapon {
     allCooltime: 0,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 2),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -155,7 +164,7 @@ export class SpringBook extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
     name: "스프링책",
-    description: "강력한 마법공격",
+    description: `“펼치기 쉽고 던지기도 쉽다.” - 투척 시 다단 히트.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -171,6 +180,9 @@ export class SpringBook extends Weapon {
     allCooltime: 0,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 3),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -207,7 +219,7 @@ export class TextBook extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
     name: "교과서",
-    description: "강력한 마법공격",
+    description: `“정석의 힘.” - 스킬 재사용 대기시간 -3%.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -223,6 +235,9 @@ export class TextBook extends Weapon {
     allCooltime: 0,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 4),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -259,7 +274,7 @@ export class Map extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
     name: "지도",
-    description: "강력한 마법공격",
+    description: `“길만 알면 살아남는다.” - 미니맵 시야 확장.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -275,6 +290,9 @@ export class Map extends Weapon {
     allCooltime: 0,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 5),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -311,7 +329,7 @@ export class PictureBook extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
     name: "그림책",
-    description: "강력한 마법공격",
+    description: `“그림은 힘이 세다.” - 정신 공격(혼란) 내성 +.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -327,6 +345,9 @@ export class PictureBook extends Weapon {
     allCooltime: 0,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 6),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -363,7 +384,7 @@ export class MagicBook extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "마법책",
-    description: "강력한 마법공격",
+    description: `“주문 한 줄에 화살 한 다발.” - 마법 공격력 +10%.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -379,6 +400,9 @@ export class MagicBook extends Weapon {
     allCooltime: 0,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 7),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -417,7 +441,7 @@ export class MobilePhone extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "핸드폰",
-    description: "강력한 마법공격",
+    description: `“전화는 덤, 게임은 본업.” - 랜덤 버프/디버프 호출.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -433,6 +457,9 @@ export class MobilePhone extends Weapon {
     allCooltime: 0,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 8),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -471,7 +498,7 @@ export class Regulations extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "규칙서",
-    description: "강력한 마법공격",
+    description: `“규칙이 곧 힘이다.” - 파티 전체 방어 +5%.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -487,6 +514,9 @@ export class Regulations extends Weapon {
     allCooltime: 0,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 9),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -525,7 +555,7 @@ export class WorkBook extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "문제집",
-    description: "강력한 마법공격",
+    description: `“풀지 않으면 계속 따라온다.” - 사용 시 경험치 대량 획득, 대신 피로도 상승.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -541,6 +571,9 @@ export class WorkBook extends Weapon {
     allCooltime: 0,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 10),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -579,7 +612,7 @@ export class TreasureMap extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "보물지도",
-    description: "강력한 마법공격",
+    description: `“X표시에 눈이 간다.” - 드롭율+보물방 확률 증가.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -595,6 +628,9 @@ export class TreasureMap extends Weapon {
     allCooltime: 0,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 11),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -624,7 +660,7 @@ export class EvacuationMap extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "피난안내도",
-    description: "강력한 마법공격",
+    description: `“비상구는 저쪽.” - 치명적 피해를 한번 회피.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -640,6 +676,9 @@ export class EvacuationMap extends Weapon {
     allCooltime: 0,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 12),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -678,7 +717,7 @@ export class Diary extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "일기장",
-    description: "강력한 마법공격",
+    description: `“감정이 적힌 종이.” - 일정 확률로 치유 or 혼란.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -694,6 +733,9 @@ export class Diary extends Weapon {
     allCooltime: 0,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 13),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -723,7 +765,7 @@ export class Menu extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "메뉴판",
-    description: "강력한 마법공격",
+    description: `“배고플 땐 공격보다 밥.” - 음식 아이템 회복량 +20%.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -739,6 +781,9 @@ export class Menu extends Weapon {
     allCooltime: 0,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 14),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -768,7 +813,7 @@ export class Revelation extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
     name: "계시록",
-    description: "강력한 마법공격",
+    description: `“끝과 시작의 비밀.” - 마법 치명타 배율 +30%.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -784,6 +829,9 @@ export class Revelation extends Weapon {
     allCooltime: 0,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 15),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -813,7 +861,7 @@ export class Labtop extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
     name: "노트북",
-    description: "강력한 마법공격",
+    description: `“모든 지식을 담는다.” - 스킬 레벨 +1(장착 중).`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -829,6 +877,9 @@ export class Labtop extends Weapon {
     allCooltime: 0,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 16),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -858,7 +909,7 @@ export class AnswerSheet extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
     name: "답안지",
-    description: "강력한 마법공격",
+    description: `“정답은 알려주지만 대가는 혹독.” - 즉시 경험치, 대신 골드 소모.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -874,6 +925,9 @@ export class AnswerSheet extends Weapon {
     allCooltime: 0,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 17),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -903,7 +957,7 @@ export class LawBook extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
     name: "법책",
-    description: "강력한 마법공격",
+    description: `“법은 만인을 굴복시킨다.” - 적에게 속박(스턴) 0.4초.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -919,6 +973,9 @@ export class LawBook extends Weapon {
     allCooltime: 0,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 18),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -948,7 +1005,7 @@ export class HellMap extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
     name: "지옥안내도",
-    description: "강력한 마법공격",
+    description: `“환영합니다, 단편도표.” - 화염·암흑 속성 동시 부여.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -964,6 +1021,9 @@ export class HellMap extends Weapon {
     allCooltime: 0,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 19),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -993,7 +1053,7 @@ export class OrderForm extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
     name: "주문서",
-    description: "강력한 마법공격",
+    description: `“계약서에 사인은 피.” - 거래 시 가격 +15% 유리.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -1009,6 +1069,9 @@ export class OrderForm extends Weapon {
     allCooltime: 0,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 20),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -1038,7 +1101,7 @@ export class Grimoire extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
     name: "마도서",
-    description: "강력한 마법공격",
+    description: `“살아있는 글귀.” - 스킬 쿨타임 초기화 확률 발생.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -1054,6 +1117,9 @@ export class Grimoire extends Weapon {
     allCooltime: 0,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 21),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -1073,7 +1139,7 @@ export class TabletPC extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
     name: "타블릿피씨",
-    description: "강력한 마법공격",
+    description: `“휴대용 다차원 포털.” - 모든 능력치 +3%, 전투 중 모션 줄어듦.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -1089,6 +1155,9 @@ export class TabletPC extends Weapon {
     allCooltime: 0,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 22),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -1108,7 +1177,7 @@ export class Constitution extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
     name: "지옥의법",
-    description: "강력한 마법공격",
+    description: `	“불경과 율법, 그리고 고문.” - 공격 시 적 방어력 2초간 0.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -1124,6 +1193,9 @@ export class Constitution extends Weapon {
     allCooltime: 0,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 23),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -1143,7 +1215,7 @@ export class Counterfeit extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
     name: "위조지폐",
-    description: "강력한 마법공격",
+    description: `“위조지만 가치는 진짜?” - 사용 시 대량 골드, 대신 명성 감소.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -1159,6 +1231,9 @@ export class Counterfeit extends Weapon {
     allCooltime: 0,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 24),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {

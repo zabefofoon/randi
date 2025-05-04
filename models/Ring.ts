@@ -5,7 +5,7 @@ export class Ring extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 1,
     name: "반지",
-    description: "마법공격",
+    description: `“작은 원에 담긴 큰 약속.”`,
     cooltime: 1000,
     speed: 500,
     range: 300,
@@ -21,6 +21,9 @@ export class Ring extends Weapon {
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 0),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -55,7 +58,7 @@ export class CopperRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 2,
     name: "구리반지",
-    description: "마법공격",
+    description: `“손가락이 초록으로 물들 수 있다.” - 물리 방어 +1.`,
     cooltime: 1000,
     speed: 500,
     range: 300,
@@ -71,6 +74,9 @@ export class CopperRing extends Weapon {
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 1),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -105,7 +111,7 @@ export class FlowerRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 2,
     name: "꽃반지",
-    description: "마법공격",
+    description: `“은은한 향기로 치유.” - 전투 종료 시 체력 1% 회복.`,
     cooltime: 1000,
     speed: 500,
     range: 300,
@@ -121,6 +127,9 @@ export class FlowerRing extends Weapon {
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 2),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -155,7 +164,7 @@ export class SilverRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
     name: "은도금반지",
-    description: "마법공격",
+    description: `“가짜라도 반짝이면 충분해.” - 공격 속도 +3%.`,
     cooltime: 1000,
     speed: 500,
     range: 300,
@@ -171,6 +180,9 @@ export class SilverRing extends Weapon {
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 3),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -207,7 +219,7 @@ export class JadeRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
     name: "옥반지",
-    description: "마법공격",
+    description: `“맑은 영혼의 돌.” - 상태 이상 저항 +4%.`,
     cooltime: 1000,
     speed: 500,
     range: 300,
@@ -223,6 +235,9 @@ export class JadeRing extends Weapon {
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 4),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -259,7 +274,7 @@ export class LeatherRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
     name: "가죽반지",
-    description: "마법공격",
+    description: `“가볍고 부드러운 손맛.” - 이동 속도 +2%.`,
     cooltime: 1000,
     speed: 500,
     range: 300,
@@ -275,6 +290,9 @@ export class LeatherRing extends Weapon {
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 5),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -311,7 +329,7 @@ export class CandyRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
     name: "사탕반지",
-    description: "마법공격",
+    description: "“단맛은 잠깐, 충치는 영원.” - 사용 시 즉시 체력 회복, 이후 10초간 방어 -1.",
     cooltime: 1000,
     speed: 500,
     range: 300,
@@ -327,6 +345,9 @@ export class CandyRing extends Weapon {
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 6),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -363,7 +384,7 @@ export class GoldRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "금반지",
-    description: "마법공격",
+    description: `“빛나는 부와 탐욕.” - 획득 골드 +5%.`,
     cooltime: 1000,
     speed: 500,
     range: 300,
@@ -379,6 +400,9 @@ export class GoldRing extends Weapon {
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 7),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -417,7 +441,7 @@ export class KnuckleRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "호신용반지",
-    description: "마법공격",
+    description: "“주먹보다 단단한 주먹.” - 적중 시 확률로 밀쳐내기.",
     cooltime: 1000,
     speed: 500,
     range: 300,
@@ -433,6 +457,9 @@ export class KnuckleRing extends Weapon {
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 8),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -487,6 +514,9 @@ export class DigitalRing extends Weapon {
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 9),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -525,7 +555,7 @@ export class CrystalRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "수정반지",
-    description: "마법공격",
+    description: "“투명한 충전석.” - 마나 재생 +6%.",
     cooltime: 1000,
     speed: 500,
     range: 300,
@@ -541,6 +571,9 @@ export class CrystalRing extends Weapon {
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 10),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -579,7 +612,7 @@ export class RuneRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "룬반지",
-    description: "마법공격",
+    description: "“새겨진 문양이 빛난다.” - 스킬 데미지 +4%.",
     cooltime: 1000,
     speed: 500,
     range: 300,
@@ -595,6 +628,9 @@ export class RuneRing extends Weapon {
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 11),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -640,6 +676,9 @@ export class SignetRing extends Weapon {
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 12),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -678,7 +717,7 @@ export class SharpieRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "반지그림",
-    description: "마법공격",
+    description: "“반지의 꿈을 그리다.” - 제작/강화 비용 할인 3%.",
     cooltime: 1000,
     speed: 500,
     range: 300,
@@ -694,6 +733,9 @@ export class SharpieRing extends Weapon {
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 13),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -723,7 +765,7 @@ export class OnionRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "양파링",
-    description: "마법공격",
+    description: "“냄새는 강하지만 맛은 굿.” - 체력 회복량 +2%.",
     cooltime: 1000,
     speed: 500,
     range: 300,
@@ -739,6 +781,9 @@ export class OnionRing extends Weapon {
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 14),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -768,7 +813,7 @@ export class DiamondRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
     name: "다이아반지",
-    description: "마법공격",
+    description: "“부를 넘어선 위신.” - 치명타 확률 +5%.",
     cooltime: 1000,
     speed: 500,
     range: 300,
@@ -784,6 +829,9 @@ export class DiamondRing extends Weapon {
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 15),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -813,7 +861,7 @@ export class OpalRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
     name: "오팔반지",
-    description: "마법공격",
+    description: "“무지갯빛 보호.” - 모든 속성 저항 +4%.",
     cooltime: 1000,
     speed: 500,
     range: 300,
@@ -829,6 +877,9 @@ export class OpalRing extends Weapon {
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 16),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -858,7 +909,7 @@ export class ObsidianRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
     name: "흑요석반지",
-    description: "마법공격",
+    description: "“어둠이 빛을 삼킨다.” - 암흑 공격력 +8%.",
     cooltime: 1000,
     speed: 500,
     range: 300,
@@ -874,6 +925,9 @@ export class ObsidianRing extends Weapon {
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 17),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -903,7 +957,7 @@ export class SapphireRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
     name: "사파이어반지",
-    description: "마법공격",
+    description: "	“차가운 물빛.” - 빙결 공격력 +8%.",
     cooltime: 1000,
     speed: 500,
     range: 300,
@@ -919,6 +973,9 @@ export class SapphireRing extends Weapon {
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 18),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -948,7 +1005,7 @@ export class RubyRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
     name: "루비반지",
-    description: "마법공격",
+    description: "“붉은 불꽃을 머금은 보석.” - 화염 공격력 +8%.",
     cooltime: 1000,
     speed: 500,
     range: 300,
@@ -964,6 +1021,9 @@ export class RubyRing extends Weapon {
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 19),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -993,7 +1053,7 @@ export class Bugles extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
     name: "꼬깔과자",
-    description: "마법공격",
+    description: "“어릴 적 추억의 맛.” - 사용 시 랜덤 버프(공·방·속 +5%, 30초).",
     cooltime: 1000,
     speed: 500,
     range: 300,
@@ -1009,6 +1069,9 @@ export class Bugles extends Weapon {
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 20),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -1038,7 +1101,7 @@ export class BornRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
     name: "해골반지",
-    description: "마법공격",
+    description: "“죽음과 동행하는 장식.” - 언데드 피해 +10%, 착용자도 체력 재생 -2%.",
     cooltime: 1000,
     speed: 500,
     range: 300,
@@ -1054,6 +1117,9 @@ export class BornRing extends Weapon {
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 21),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -1073,7 +1139,7 @@ export class VampireRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
     name: "뱀파이어인장",
-    description: "마법공격",
+    description: "“피의 계약.” - 공격 시 흡혈 4%.",
     cooltime: 1000,
     speed: 500,
     range: 300,
@@ -1089,6 +1155,9 @@ export class VampireRing extends Weapon {
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 22),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -1108,7 +1177,7 @@ export class Tattoo extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
     name: "타투",
-    description: "마법공격",
+    description: `“살에 새긴 영원한 약속.” - 방어 +3, 스킬 시전 중 경직 면역.`,
     cooltime: 1000,
     speed: 500,
     range: 300,
@@ -1124,6 +1193,9 @@ export class Tattoo extends Weapon {
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 23),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -1143,7 +1215,7 @@ export class FourLeafClover extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
     name: "네잎클로버",
-    description: "마법공격",
+    description: "“찾기 힘든 행운.” - 아이템 드롭률 +7%.",
     cooltime: 1000,
     speed: 500,
     range: 300,
@@ -1159,6 +1231,9 @@ export class FourLeafClover extends Weapon {
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 24),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {

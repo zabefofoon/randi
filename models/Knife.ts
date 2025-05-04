@@ -5,7 +5,7 @@ export class ButterKnife extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 1,
     name: "버터칼",
-    description: "근접 무기. 데미지는 크지만 사정거리가 짧습니다.",
+    description: `“따뜻한 식빵용이지만 찌르면 아프다.”`,
     cooltime: 1000,
     speed: 500,
     range: 100,
@@ -21,6 +21,9 @@ export class ButterKnife extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 0),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -55,10 +58,10 @@ export class KitchenKnife extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 2,
     name: "식칼",
-    description: "근접 무기. 데미지가 강력합니다",
+    description: `“주방 장인의 친구.”`,
     cooltime: 1000,
     speed: 500,
-    range: 100,
+    range: 150,
     physicalDamage: 10,
     magicalDamage: 0,
     physicalPenetration: 1,
@@ -71,6 +74,9 @@ export class KitchenKnife extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 1),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -105,11 +111,11 @@ export class CutterKnife extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 2,
     name: "커터칼",
-    description: "근접 무기. 데미지는 작지만 연사가 빠릅니다.",
+    description: `“칼날이 잘 드러나는 만큼 위험도 높다.”`,
     cooltime: 500,
     speed: 500,
     range: 100,
-    physicalDamage: 3,
+    physicalDamage: 8,
     magicalDamage: 0,
     physicalPenetration: 1,
     magicalPenetration: 0,
@@ -121,6 +127,9 @@ export class CutterKnife extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 2),
+    criticalChance: 0.1, // 0.1이 10%
+    criticalDamage: 3, // 3배
+    dotted: 0,
   }
 
   constructor() {
@@ -155,11 +164,11 @@ export class SushiKnife extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
     name: "회칼",
-    description: "근접 무기. 데미지가 강력합니다",
+    description: `“살점이 매끄럽게 잘린다.”`,
     cooltime: 1000,
     speed: 500,
     range: 100,
-    physicalDamage: 10,
+    physicalDamage: 25,
     magicalDamage: 0,
     physicalPenetration: 1,
     magicalPenetration: 0,
@@ -171,6 +180,9 @@ export class SushiKnife extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 3),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 3,
   }
 
   constructor() {
@@ -207,7 +219,7 @@ export class Scissors extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
     name: "가위",
-    description: "근접 무기. 데미지가 강력합니다",
+    description: `“잘라낸다는 건 곧 구속이라는 뜻.” - 적 이동 속도 잠시 감소.`,
     cooltime: 1000,
     speed: 500,
     range: 100,
@@ -223,6 +235,9 @@ export class Scissors extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 4),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -275,6 +290,9 @@ export class Hammer extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 5),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -327,6 +345,9 @@ export class AX extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 6),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -363,7 +384,7 @@ export class ButcherKnife extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "정육칼",
-    description: "근접 무기. 데미지가 강력합니다",
+    description: `	“힘줄도 뼈도 꾸욱.” - 물리관통력 절삭 보너스 큼.`,
     cooltime: 1000,
     speed: 500,
     range: 100,
@@ -379,6 +400,9 @@ export class ButcherKnife extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 7),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -417,7 +441,7 @@ export class LongNails extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "긴손톱",
-    description: "근접 무기. 데미지가 강력합니다",
+    description: `“짐승의 본능.” - 빠른 연타, 치명 피해 낮음.`,
     cooltime: 1000,
     speed: 500,
     range: 100,
@@ -433,6 +457,9 @@ export class LongNails extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 8),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -487,6 +514,9 @@ export class SwissArmyKnife extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 9),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -541,6 +571,9 @@ export class Fist extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 10),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -579,7 +612,7 @@ export class CrossCutSaw extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "톱",
-    description: "근접 무기. 데미지가 강력합니다",
+    description: `“도려내듯 파고든다.” - 일정 시간 방어력 지속 감소 효과.`,
     cooltime: 1000,
     speed: 500,
     range: 100,
@@ -595,6 +628,9 @@ export class CrossCutSaw extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 11),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -624,7 +660,7 @@ export class CrowBar extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "빠루",
-    description: "근접 무기. 데미지가 강력합니다",
+    description: `건축 현장의 다크호스.” - 깡딜.`,
     cooltime: 1000,
     speed: 500,
     range: 100,
@@ -640,6 +676,9 @@ export class CrowBar extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 12),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -678,7 +717,7 @@ export class Machete extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "마체테",
-    description: "근접 무기. 데미지가 강력합니다",
+    description: `“정글 개척자의 칼.” - 여럿 적을 휩쓰는 광역 베기.`,
     cooltime: 1000,
     speed: 500,
     range: 100,
@@ -694,6 +733,9 @@ export class Machete extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 13),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -723,7 +765,7 @@ export class KoreanHandPlow extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "호미",
-    description: "근접 무기. 데미지가 강력합니다",
+    description: `“흙도 사람도 뒤집는다.” - 근거리 다중 타격, 스플래시 작음.`,
     cooltime: 1000,
     speed: 500,
     range: 100,
@@ -739,6 +781,9 @@ export class KoreanHandPlow extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 14),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -768,7 +813,7 @@ export class BornSword extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
     name: "뼈칼",
-    description: "근접 무기. 데미지가 강력합니다",
+    description: `“뼈를 깎아 만든 뼈 파괴자.” - 해골형 몬스터 추가 피해.`,
     cooltime: 1000,
     speed: 500,
     range: 100,
@@ -784,6 +829,9 @@ export class BornSword extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 15),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -813,7 +861,7 @@ export class SurgicalKnife extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
     name: "메스",
-    description: "근접 무기. 데미지가 강력합니다",
+    description: `“외과용 정밀 베기.” - 크리티컬 시 내부 출혈, DOT 높음.`,
     cooltime: 1000,
     speed: 500,
     range: 100,
@@ -829,6 +877,9 @@ export class SurgicalKnife extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 16),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -858,7 +909,7 @@ export class BlessedSword extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
     name: "축복받은칼",
-    description: "근접 무기. 데미지가 강력합니다",
+    description: `“성수에 담가낸 깨끗한 날.” - 언데드·악마에게 성속 추가.`,
     cooltime: 1000,
     speed: 500,
     range: 100,
@@ -874,6 +925,9 @@ export class BlessedSword extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 17),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -903,7 +957,7 @@ export class CursedSword extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
     name: "저주받은칼",
-    description: "근접 무기. 데미지가 강력합니다",
+    description: `“들면 들수록 속삭임이 들려온다.” - 흡혈과 자신의 방어력 감소 동시.`,
     cooltime: 1000,
     speed: 500,
     range: 100,
@@ -919,6 +973,9 @@ export class CursedSword extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 18),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -948,7 +1005,7 @@ export class DualBlade extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
     name: "쌍칼",
-    description: "근접 무기. 데미지가 강력합니다",
+    description: `“두 손엔 두 개, 춤추는 칼날.” - 공격 속도 대폭 상승.`,
     cooltime: 1000,
     speed: 500,
     range: 100,
@@ -964,6 +1021,9 @@ export class DualBlade extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 19),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -993,7 +1053,7 @@ export class BigAX extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
     name: "대형도끼",
-    description: "근접 무기. 데미지가 강력합니다",
+    description: `“도끼는 컸고, 문제도 컸다.” - 느리지만 한 방 대미지 극대.`,
     cooltime: 1000,
     speed: 500,
     range: 100,
@@ -1009,6 +1069,9 @@ export class BigAX extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 20),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -1038,7 +1101,7 @@ export class DragonSlayer extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
     name: "드래곤슬레이어",
-    description: "근접 무기. 데미지가 강력합니다",
+    description: `“용을 잡기 위해 태어난 거대 철검.” - 거대형·비행형 몬스터 추가 피해.`,
     cooltime: 1000,
     speed: 500,
     range: 100,
@@ -1054,6 +1117,9 @@ export class DragonSlayer extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 21),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -1073,7 +1139,7 @@ export class SnotWhip extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
     name: "콧물채찍",
-    description: "근접 무기. 데미지가 강력합니다",
+    description: `“질겅질겅 끈적!” - 타격 시 슬로우+지속 피해.`,
     cooltime: 1000,
     speed: 500,
     range: 100,
@@ -1089,6 +1155,9 @@ export class SnotWhip extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 22),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -1108,7 +1177,7 @@ export class LaserSword extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
     name: "레이저소드",
-    description: "근접 무기. 데미지가 강력합니다",
+    description: `“미래에서 왔다.” - 타격 시 절단 판정, 실드 무시.`,
     cooltime: 1000,
     speed: 500,
     range: 100,
@@ -1124,6 +1193,9 @@ export class LaserSword extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 23),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -1143,7 +1215,7 @@ export class DeathScythe extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
     name: "사신의낫",
-    description: "근접 무기. 데미지가 강력합니다",
+    description: `“삶과 죽음의 경계를 베어낸다.” - 체력이 낮은 적 즉사 라인 보너스.`,
     cooltime: 1000,
     speed: 500,
     range: 100,
@@ -1159,6 +1231,9 @@ export class DeathScythe extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 24),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {

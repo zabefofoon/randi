@@ -5,7 +5,7 @@ export class Gun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 1,
     name: "일반권총",
-    description: "빠른 연사와 적당한 데미지를 가집니다.",
+    description: `“누구에게나 익숙한 9mm 한‑발.”`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -21,6 +21,9 @@ export class Gun extends Weapon {
     allCooltime: 0,
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 0),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -30,8 +33,8 @@ export class Gun extends Weapon {
         {
           cls: DoubleGun,
           materials: [
-            { key: "str", length: 2 },
-            { key: "int", length: 1 },
+            { key: "agi", length: 2 },
+            { key: "vit", length: 1 },
           ],
         },
         {
@@ -55,7 +58,7 @@ export class ShotGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 2,
     name: "산탄총",
-    description: "적당한 데미지를 가지며, 주변 적도 데미지를 받습니다.",
+    description: `“펑! 하고 퍼지는 쇠구슬의 벽.”`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -63,7 +66,7 @@ export class ShotGun extends Weapon {
     magicalDamage: 0,
     physicalPenetration: 3,
     magicalPenetration: 0,
-    targetLength: 2,
+    targetLength: 1,
     allTargetLength: 0,
     splash: 100,
     stun: 0, // 1000이어야 1초
@@ -71,6 +74,9 @@ export class ShotGun extends Weapon {
     allCooltime: 0, // 0.01이 1%
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 1),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -105,13 +111,13 @@ export class DoubleGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 2,
     name: "일반쌍권총",
-    description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
+    description: `“두 손, 두 방아쇠, 두 배의 불꽃.”`,
     cooltime: 1000,
     speed: 500,
     range: 150,
-    physicalDamage: 4,
+    physicalDamage: 5,
     magicalDamage: 0,
-    physicalPenetration: 1,
+    physicalPenetration: 2,
     magicalPenetration: 0,
     targetLength: 2,
     allTargetLength: 0,
@@ -121,6 +127,9 @@ export class DoubleGun extends Weapon {
     allCooltime: 0, // 0.01이 1%
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 2),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -131,7 +140,8 @@ export class DoubleGun extends Weapon {
           cls: MachineGun,
           materials: [
             { key: "str", length: 3 },
-            { key: "int", length: 2 },
+            { key: "agi", length: 2 },
+            { key: "wis", length: 1 },
           ],
         },
         {
@@ -155,14 +165,14 @@ export class MagicGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
     name: "마법권총",
-    description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
+    description: `“총열에 기도를 담아 쏘아 올린다.”`,
     cooltime: 1000,
     speed: 500,
     range: 150,
-    physicalDamage: 4,
+    physicalDamage: 25,
     magicalDamage: 0,
-    physicalPenetration: 1,
-    magicalPenetration: 0,
+    physicalPenetration: 9999,
+    magicalPenetration: 9999,
     targetLength: 2,
     allTargetLength: 0,
     splash: 0,
@@ -171,6 +181,9 @@ export class MagicGun extends Weapon {
     allCooltime: 0, // 0.01이 1%
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 3),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -207,11 +220,11 @@ export class AirGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
     name: "공기총",
-    description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
+    description: `“바람을 모아 쏘는 조용한 한 방.”`,
     cooltime: 1000,
     speed: 500,
     range: 150,
-    physicalDamage: 4,
+    physicalDamage: 30,
     magicalDamage: 0,
     physicalPenetration: 1,
     magicalPenetration: 0,
@@ -223,6 +236,9 @@ export class AirGun extends Weapon {
     allCooltime: 0, // 0.01이 1%
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 4),
+    criticalChance: 0.2,
+    criticalDamage: 2,
+    dotted: 0,
   }
 
   constructor() {
@@ -259,15 +275,15 @@ export class MachineGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
     name: "기관총",
-    description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
-    cooltime: 1000,
+    description: "`“이제부터는 ‘분’ 단위가 아니라 ‘초’ 단위로 탄약을 쓴다.”`",
+    cooltime: 200,
     speed: 500,
     range: 150,
-    physicalDamage: 4,
+    physicalDamage: 5,
     magicalDamage: 0,
-    physicalPenetration: 1,
+    physicalPenetration: 5,
     magicalPenetration: 0,
-    targetLength: 2,
+    targetLength: 1,
     allTargetLength: 0,
     splash: 0,
     stun: 0, // 1000이어야 1초
@@ -275,6 +291,9 @@ export class MachineGun extends Weapon {
     allCooltime: 0, // 0.01이 1%
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 5),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -311,22 +330,25 @@ export class FingerGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
     name: "삿대질",
-    description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
+    description: `“말 안 듣는 놈한테는 손가락이 총.”`,
     cooltime: 1000,
     speed: 500,
     range: 150,
-    physicalDamage: 4,
-    magicalDamage: 0,
-    physicalPenetration: 1,
-    magicalPenetration: 0,
-    targetLength: 2,
+    physicalDamage: 0,
+    magicalDamage: 35,
+    physicalPenetration: 9999,
+    magicalPenetration: 9999,
+    targetLength: 1,
     allTargetLength: 0,
     splash: 0,
-    stun: 0, // 1000이어야 1초
+    stun: 200, // 1000이어야 1초
     slow: 0, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 6),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -363,22 +385,25 @@ export class BubbleGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "거품발사기",
-    description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
+    description: `“상냥한 듯 보이지만 질식사 주의.”`,
     cooltime: 1000,
     speed: 500,
     range: 150,
     physicalDamage: 4,
-    magicalDamage: 0,
-    physicalPenetration: 1,
-    magicalPenetration: 0,
+    magicalDamage: 75,
+    physicalPenetration: 2,
+    magicalPenetration: 10,
     targetLength: 2,
     allTargetLength: 0,
     splash: 0,
     stun: 0, // 1000이어야 1초
-    slow: 0, // 0.1이면 10%
+    slow: 0.3, // 0.1이면 10%
     allCooltime: 0, // 0.01이 1%
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 7),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -417,7 +442,7 @@ export class TazerGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "전기충격기",
-    description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
+    description: `“찌릿! - 정전기는 덤.” - 탄환 적중 시 확률로 스턴 0.3초.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -433,6 +458,9 @@ export class TazerGun extends Weapon {
     allCooltime: 0, // 0.01이 1%
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 8),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -471,7 +499,7 @@ export class PulseGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "펄스건",
-    description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
+    description: `“초록빛 파동이 관통한다.” - 직선 관통 사격, 관통당할수록 피해감소.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -487,6 +515,9 @@ export class PulseGun extends Weapon {
     allCooltime: 0, // 0.01이 1%
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 9),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -525,7 +556,7 @@ export class Firework extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "폭죽",
-    description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
+    description: `“축제용? 아니 전장용.” - 적중 시 작은 범위 화염 피해, 군중 제어에 최적.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -541,6 +572,9 @@ export class Firework extends Weapon {
     allCooltime: 0, // 0.01이 1%
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 10),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -579,7 +613,7 @@ export class SilentKiller extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "소음기권총",
-    description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
+    description: `“조용히, 하지만 확실히.” - 치명타 배율 증가, 위협도 거의 없음.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -595,6 +629,9 @@ export class SilentKiller extends Weapon {
     allCooltime: 0, // 0.01이 1%
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 11),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -633,7 +670,7 @@ export class DrillGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "드릴",
-    description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
+    description: `“회전하는 총열, 회전하는 악몽.” - 근접 시 빠른 다단 히트, 방어구 파쇄 효과.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -649,6 +686,9 @@ export class DrillGun extends Weapon {
     allCooltime: 0, // 0.01이 1%
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 12),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -687,7 +727,7 @@ export class PepperSpray extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "후추스프레이",
-    description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
+    description: `“눈물 쏙!” - 맞은 적이 시야를 잃어 명중률 감소.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -703,6 +743,9 @@ export class PepperSpray extends Weapon {
     allCooltime: 0, // 0.01이 1%
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 13),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -732,7 +775,7 @@ export class EyeGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "눈총",
-    description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
+    description: `“말보다 빠른 눈빛.” - 대상 하나를 지정해 순식간에 두 배 피해.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -748,6 +791,9 @@ export class EyeGun extends Weapon {
     allCooltime: 0, // 0.01이 1%
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 14),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -777,7 +823,7 @@ export class GrenadeLauncher extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
     name: "유탄발사기",
-    description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
+    description: `“아크 궤적, 폭발하는 정의.” - 포물선 사격, 넓은 스플래시.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -793,6 +839,9 @@ export class GrenadeLauncher extends Weapon {
     allCooltime: 0, // 0.01이 1%
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 15),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -822,7 +871,7 @@ export class SilverBulletGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
     name: "은탄총",
-    description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
+    description: `“달빛을 품은 은의 재앙.” - 뒤틀린 생물에 피해+관통.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -838,6 +887,9 @@ export class SilverBulletGun extends Weapon {
     allCooltime: 0, // 0.01이 1%
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 16),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -867,7 +919,7 @@ export class PlasmaGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
     name: "플라즈마총",
-    description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
+    description: `	“빛과 열로 적을 태운다.” - 타격 부위에 연소 디버프, 방사형 소량 스플래시.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -883,6 +935,9 @@ export class PlasmaGun extends Weapon {
     allCooltime: 0, // 0.01이 1%
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 17),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -912,7 +967,7 @@ export class Cannon extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
     name: "대포",
-    description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
+    description: "“작지만 성능은 진짜.” - 느리지만 막대한 범위 피해, 발사 반동 있음.",
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -928,6 +983,9 @@ export class Cannon extends Weapon {
     allCooltime: 0, // 0.01이 1%
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 18),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -957,7 +1015,7 @@ export class BlessedRevolver extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
     name: "축복받은총",
-    description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
+    description: `“성스러운 빛이 총열 끝에서 피어난다.” - 언데드·악마 추가 피해.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -973,6 +1031,9 @@ export class BlessedRevolver extends Weapon {
     allCooltime: 0, // 0.01이 1%
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 19),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -1002,7 +1063,7 @@ export class CursedRevolver extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
     name: "저주받은총",
-    description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
+    description: `“총열에서 검은 한기가 뿜어져 나온다.” - 발사마다 사용자도 소량 체력 소모, 대신 큰 흡혈.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -1018,6 +1079,9 @@ export class CursedRevolver extends Weapon {
     allCooltime: 0, // 0.01이 1%
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 20),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -1047,7 +1111,7 @@ export class HeartBreaker extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
     name: "하트브레이커",
-    description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
+    description: `“심장을 두드리는 한 방.” - 치명 적중 시 체력 비례 추가 피해.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -1063,6 +1127,9 @@ export class HeartBreaker extends Weapon {
     allCooltime: 0, // 0.01이 1%
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 21),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -1082,7 +1149,7 @@ export class RadiationBeam extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
     name: "방사능총",
-    description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
+    description: `“보이지 않는 후폭풍.” - 적중 시 방사능 중첩, 시간이 지날수록 DOT 증가.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -1098,6 +1165,9 @@ export class RadiationBeam extends Weapon {
     allCooltime: 0, // 0.01이 1%
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 22),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -1117,7 +1187,7 @@ export class Missile extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
     name: "미사일",
-    description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
+    description: `“잠깐, 이건 반칙 아닌가?” - 자동 추적, 적중 시 큰 폭발+화염 구역 생성.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -1133,6 +1203,9 @@ export class Missile extends Weapon {
     allCooltime: 0, // 0.01이 1%
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 23),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
@@ -1152,7 +1225,7 @@ export class Booger extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
     name: "코딱지",
-    description: "빠른 연사와 적당한 데미지를 가지며, 동시에 두번 공격합니다.",
+    description: `“더럽다고 무시하지 마!” - 적 중독, 방어력·이동 속도 동시 감소.`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -1168,6 +1241,9 @@ export class Booger extends Weapon {
     allCooltime: 0, // 0.01이 1%
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 24),
+    criticalChance: 0,
+    criticalDamage: 0,
+    dotted: 0,
   }
 
   constructor() {
