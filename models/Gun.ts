@@ -11,10 +11,12 @@ export class Gun extends Weapon {
     range: 150,
     physicalDamage: 1,
     magicalDamage: 0,
-    physicalPenetration: 1,
+    physicalPenetration: 0,
     magicalPenetration: 0,
+    physicalAllPercent: 0,
+    magicalAllPercent: 0,
     targetLength: 1,
-    allTargetLength: 0,
+
     splash: 0,
     stun: 0,
     stunMany: 0,
@@ -64,13 +66,15 @@ export class ShotGun extends Weapon {
     cooltime: 1000,
     speed: 500,
     range: 150,
-    physicalDamage: 6,
+    physicalDamage: 8,
     magicalDamage: 0,
     physicalPenetration: 3,
     magicalPenetration: 0,
+    physicalAllPercent: 0,
+    magicalAllPercent: 0,
     targetLength: 1,
-    allTargetLength: 0,
-    splash: 100,
+
+    splash: 80,
     stun: 0, // 1000이어야 1초
     stunMany: 0,
     slow: 0, // 0.1이면 10%
@@ -119,12 +123,14 @@ export class DoubleGun extends Weapon {
     cooltime: 1000,
     speed: 500,
     range: 150,
-    physicalDamage: 4,
+    physicalDamage: 6,
     magicalDamage: 0,
     physicalPenetration: 2,
     magicalPenetration: 0,
+    physicalAllPercent: 0,
+    magicalAllPercent: 0,
     targetLength: 2,
-    allTargetLength: 0,
+
     splash: 0,
     stun: 0, // 1000이어야 1초
     stunMany: 0,
@@ -175,12 +181,14 @@ export class MagicGun extends Weapon {
     cooltime: 1000,
     speed: 500,
     range: 150,
-    physicalDamage: 25,
-    magicalDamage: 0,
+    physicalDamage: 0,
+    magicalDamage: 50,
     physicalPenetration: 0,
-    magicalPenetration: 10,
+    magicalPenetration: 20,
+    physicalAllPercent: 0,
+    magicalAllPercent: 0,
     targetLength: 2,
-    allTargetLength: 0,
+
     splash: 0,
     stun: 0, // 1000이어야 1초
     stunMany: 0,
@@ -232,12 +240,14 @@ export class AirGun extends Weapon {
     cooltime: 1000,
     speed: 500,
     range: 150,
-    physicalDamage: 30,
+    physicalDamage: 45,
     magicalDamage: 0,
-    physicalPenetration: 5,
+    physicalPenetration: 10,
     magicalPenetration: 0,
+    physicalAllPercent: 0,
+    magicalAllPercent: 0,
     targetLength: 2,
-    allTargetLength: 0,
+
     splash: 0,
     stun: 0, // 1000이어야 1초
     stunMany: 0,
@@ -247,7 +257,7 @@ export class AirGun extends Weapon {
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 4),
     criticalChance: 0.2,
-    criticalDamage: 2,
+    criticalDamage: 3,
     dotted: 0,
   }
 
@@ -289,12 +299,14 @@ export class MachineGun extends Weapon {
     cooltime: 200,
     speed: 500,
     range: 150,
-    physicalDamage: 5,
+    physicalDamage: 10,
     magicalDamage: 0,
     physicalPenetration: 5,
     magicalPenetration: 0,
+    physicalAllPercent: 0,
+    magicalAllPercent: 0,
     targetLength: 1,
-    allTargetLength: 0,
+
     splash: 0,
     stun: 0, // 1000이어야 1초
     stunMany: 0,
@@ -347,11 +359,13 @@ export class FingerGun extends Weapon {
     speed: 500,
     range: 150,
     physicalDamage: 0,
-    magicalDamage: 35,
+    magicalDamage: 50,
     physicalPenetration: 0,
     magicalPenetration: 10,
+    physicalAllPercent: 0,
+    magicalAllPercent: 0,
     targetLength: 1,
-    allTargetLength: 0,
+
     splash: 0,
     stun: 200, // 1000이어야 1초
     stunMany: 0,
@@ -403,12 +417,14 @@ export class BubbleGun extends Weapon {
     cooltime: 1000,
     speed: 500,
     range: 150,
-    physicalDamage: 4,
-    magicalDamage: 75,
-    physicalPenetration: 2,
-    magicalPenetration: 10,
-    targetLength: 2,
-    allTargetLength: 0,
+    physicalDamage: 0,
+    magicalDamage: 300,
+    physicalPenetration: 0,
+    magicalPenetration: 50,
+    physicalAllPercent: 0,
+    magicalAllPercent: 0,
+    targetLength: 3,
+
     splash: 0,
     stun: 0, // 1000이어야 1초
     stunMany: 0,
@@ -458,19 +474,21 @@ export class TazerGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "전기충격기",
-    description: `“찌릿! - 정전기는 덤.” - 탄환 적중 시 확률로 스턴 0.3초.`,
+    description: `“찌릿! - 정전기는 덤.”`,
     cooltime: 1000,
     speed: 500,
     range: 150,
-    physicalDamage: 4,
+    physicalDamage: 250,
     magicalDamage: 0,
     physicalPenetration: 1,
     magicalPenetration: 0,
+    physicalAllPercent: 0,
+    magicalAllPercent: 0,
     targetLength: 2,
-    allTargetLength: 0,
-    splash: 0,
+
+    splash: 80,
     stun: 0, // 1000이어야 1초
-    stunMany: 0,
+    stunMany: 300,
     slow: 0, // 0.1이면 10%
     slowOne: 0,
     allCooltime: 0, // 0.01이 1%
@@ -517,21 +535,23 @@ export class PulseGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "펄스건",
-    description: `“초록빛 파동이 관통한다.” - 직선 관통 사격, 관통당할수록 피해감소.`,
+    description: `“초록빛 파동이 관통한다.”`,
     cooltime: 1000,
     speed: 500,
     range: 150,
-    physicalDamage: 4,
+    physicalDamage: 450,
     magicalDamage: 0,
-    physicalPenetration: 1,
+    physicalPenetration: 50,
     magicalPenetration: 0,
-    targetLength: 2,
-    allTargetLength: 0,
+    physicalAllPercent: 0,
+    magicalAllPercent: 0,
+    targetLength: 3,
+
     splash: 0,
     stun: 0, // 1000이어야 1초
     stunMany: 0,
     slow: 0, // 0.1이면 10%
-    slowOne: 0,
+    slowOne: 0.3,
     allCooltime: 0, // 0.01이 1%
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 9),
@@ -576,20 +596,22 @@ export class Firework extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "폭죽",
-    description: `“축제용? 아니 전장용.” - 적중 시 작은 범위 화염 피해, 군중 제어에 최적.`,
+    description: `“축제용? 아니 전장용.”`,
     cooltime: 1000,
     speed: 500,
     range: 150,
-    physicalDamage: 4,
+    physicalDamage: 380,
     magicalDamage: 0,
-    physicalPenetration: 1,
+    physicalPenetration: 50,
     magicalPenetration: 0,
+    physicalAllPercent: 0,
+    magicalAllPercent: 0,
     targetLength: 2,
-    allTargetLength: 0,
-    splash: 0,
+
+    splash: 100,
     stun: 0, // 1000이어야 1초
     stunMany: 0,
-    slow: 0, // 0.1이면 10%
+    slow: 0.2, // 0.1이면 10%
     slowOne: 0,
     allCooltime: 0, // 0.01이 1%
     index: 0,
@@ -635,16 +657,18 @@ export class SilentKiller extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "소음기권총",
-    description: `“조용히, 하지만 확실히.” - 치명타 배율 증가, 위협도 거의 없음.`,
+    description: `“조용히, 하지만 확실히.”`,
     cooltime: 1000,
     speed: 500,
     range: 150,
-    physicalDamage: 4,
+    physicalDamage: 450,
     magicalDamage: 0,
     physicalPenetration: 1,
     magicalPenetration: 0,
-    targetLength: 2,
-    allTargetLength: 0,
+    physicalAllPercent: 0,
+    magicalAllPercent: 0,
+    targetLength: 1,
+
     splash: 0,
     stun: 0, // 1000이어야 1초
     stunMany: 0,
@@ -653,8 +677,8 @@ export class SilentKiller extends Weapon {
     allCooltime: 0, // 0.01이 1%
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 11),
-    criticalChance: 0,
-    criticalDamage: 0,
+    criticalChance: 0.3,
+    criticalDamage: 3,
     dotted: 0,
   }
 
@@ -694,16 +718,18 @@ export class DrillGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "드릴",
-    description: `“회전하는 총열, 회전하는 악몽.” - 근접 시 빠른 다단 히트, 방어구 파쇄 효과.`,
-    cooltime: 1000,
+    description: `“회전하는 총열, 회전하는 악몽.”`,
+    cooltime: 200,
     speed: 500,
     range: 150,
-    physicalDamage: 4,
+    physicalDamage: 100,
     magicalDamage: 0,
-    physicalPenetration: 1,
+    physicalPenetration: 100,
     magicalPenetration: 0,
-    targetLength: 2,
-    allTargetLength: 0,
+    physicalAllPercent: 0,
+    magicalAllPercent: 0,
+    targetLength: 1,
+
     splash: 0,
     stun: 0, // 1000이어야 1초
     stunMany: 0,
@@ -753,27 +779,29 @@ export class PepperSpray extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "후추스프레이",
-    description: `“눈물 쏙!” - 맞은 적이 시야를 잃어 명중률 감소.`,
+    description: `“눈물 쏙!”`,
     cooltime: 1000,
     speed: 500,
     range: 150,
-    physicalDamage: 4,
-    magicalDamage: 0,
-    physicalPenetration: 1,
-    magicalPenetration: 0,
-    targetLength: 2,
-    allTargetLength: 0,
-    splash: 0,
+    physicalDamage: 0,
+    magicalDamage: 350,
+    physicalPenetration: 0,
+    magicalPenetration: 30,
+    physicalAllPercent: 0,
+    magicalAllPercent: 0,
+    targetLength: 1,
+
+    splash: 80,
     stun: 0, // 1000이어야 1초
     stunMany: 0,
     slow: 0, // 0.1이면 10%
-    slowOne: 0,
+    slowOne: 0.3,
     allCooltime: 0, // 0.01이 1%
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 13),
     criticalChance: 0,
     criticalDamage: 0,
-    dotted: 0,
+    dotted: 3,
   }
 
   constructor() {
@@ -803,16 +831,18 @@ export class EyeGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "눈총",
-    description: `“말보다 빠른 눈빛.” - 대상 하나를 지정해 순식간에 두 배 피해.`,
+    description: `“말보다 빠른 눈빛.”`,
     cooltime: 1000,
     speed: 500,
     range: 150,
-    physicalDamage: 4,
-    magicalDamage: 0,
-    physicalPenetration: 1,
-    magicalPenetration: 0,
-    targetLength: 2,
-    allTargetLength: 0,
+    physicalDamage: 0,
+    magicalDamage: 450,
+    physicalPenetration: 0,
+    magicalPenetration: 50,
+    physicalAllPercent: 0,
+    magicalAllPercent: 0,
+    targetLength: 4,
+
     splash: 0,
     stun: 0, // 1000이어야 1초
     stunMany: 0,
@@ -861,8 +891,10 @@ export class GrenadeLauncher extends Weapon {
     magicalDamage: 0,
     physicalPenetration: 1,
     magicalPenetration: 0,
+    physicalAllPercent: 0,
+    magicalAllPercent: 0,
     targetLength: 2,
-    allTargetLength: 0,
+
     splash: 0,
     stun: 0, // 1000이어야 1초
     stunMany: 0,
@@ -911,8 +943,10 @@ export class SilverBulletGun extends Weapon {
     magicalDamage: 0,
     physicalPenetration: 1,
     magicalPenetration: 0,
+    physicalAllPercent: 0,
+    magicalAllPercent: 0,
     targetLength: 2,
-    allTargetLength: 0,
+
     splash: 0,
     stun: 0, // 1000이어야 1초
     stunMany: 0,
@@ -961,8 +995,10 @@ export class PlasmaGun extends Weapon {
     magicalDamage: 0,
     physicalPenetration: 1,
     magicalPenetration: 0,
+    physicalAllPercent: 0,
+    magicalAllPercent: 0,
     targetLength: 2,
-    allTargetLength: 0,
+
     splash: 0,
     stun: 0, // 1000이어야 1초
     stunMany: 0,
@@ -1011,8 +1047,10 @@ export class Cannon extends Weapon {
     magicalDamage: 0,
     physicalPenetration: 1,
     magicalPenetration: 0,
+    physicalAllPercent: 0,
+    magicalAllPercent: 0,
     targetLength: 2,
-    allTargetLength: 0,
+
     splash: 0,
     stun: 0, // 1000이어야 1초
     stunMany: 0,
@@ -1061,8 +1099,10 @@ export class BlessedRevolver extends Weapon {
     magicalDamage: 0,
     physicalPenetration: 1,
     magicalPenetration: 0,
+    physicalAllPercent: 0,
+    magicalAllPercent: 0,
     targetLength: 2,
-    allTargetLength: 0,
+
     splash: 0,
     stun: 0, // 1000이어야 1초
     stunMany: 0,
@@ -1111,8 +1151,10 @@ export class CursedRevolver extends Weapon {
     magicalDamage: 0,
     physicalPenetration: 1,
     magicalPenetration: 0,
+    physicalAllPercent: 0,
+    magicalAllPercent: 0,
     targetLength: 2,
-    allTargetLength: 0,
+
     splash: 0,
     stun: 0, // 1000이어야 1초
     stunMany: 0,
@@ -1161,8 +1203,10 @@ export class HeartBreaker extends Weapon {
     magicalDamage: 0,
     physicalPenetration: 1,
     magicalPenetration: 0,
+    physicalAllPercent: 0,
+    magicalAllPercent: 0,
     targetLength: 2,
-    allTargetLength: 0,
+
     splash: 0,
     stun: 0, // 1000이어야 1초
     stunMany: 0,
@@ -1201,8 +1245,10 @@ export class RadiationBeam extends Weapon {
     magicalDamage: 0,
     physicalPenetration: 1,
     magicalPenetration: 0,
+    physicalAllPercent: 0,
+    magicalAllPercent: 0,
     targetLength: 2,
-    allTargetLength: 0,
+
     splash: 0,
     stun: 0, // 1000이어야 1초
     stunMany: 0,
@@ -1241,8 +1287,10 @@ export class Missile extends Weapon {
     magicalDamage: 0,
     physicalPenetration: 1,
     magicalPenetration: 0,
+    physicalAllPercent: 0,
+    magicalAllPercent: 0,
     targetLength: 2,
-    allTargetLength: 0,
+
     splash: 0,
     stun: 0, // 1000이어야 1초
     stunMany: 0,
@@ -1281,8 +1329,10 @@ export class Booger extends Weapon {
     magicalDamage: 0,
     physicalPenetration: 1,
     magicalPenetration: 0,
+    physicalAllPercent: 0,
+    magicalAllPercent: 0,
     targetLength: 2,
-    allTargetLength: 0,
+
     splash: 0,
     stun: 0, // 1000이어야 1초
     stunMany: 0,

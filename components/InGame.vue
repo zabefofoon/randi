@@ -51,6 +51,19 @@
         </div>
 
         <div class="absolute top-[0.5cqw] right-[1cqw] | flex items-center gap-[0.5cqw]">
+          <div
+            v-for="(enforce, index) in enforces?.items"
+            :key="enforce.name"
+            class="flex items-center | bg-black rounded-lg | pr-[0.5cqw]">
+            <div
+              class="stat-sprites | w-[3cqw] aspect-square"
+              :style="{
+                backgroundPosition: etcUtil.getSpritePosition(12 + index),
+              }"></div>
+            <span class="text-[1.3cqw] text-white">
+              {{ stringUtil.attachComma(enforce.length) }}
+            </span>
+          </div>
           <!-- 킬 표시 -->
           <div
             class="bg-black mt-[0.2cqh] | flex items-center justify-between | pr-[0.5cqw] rounded-lg">
@@ -111,24 +124,6 @@
             </div>
           </div>
           <!-- 스텟표시 -->
-
-          <!-- 강화표시 -->
-          <div class="mt-[0.2cqh] | flex flex-col gap-[0.2cqh]">
-            <div
-              v-for="(enforce, index) in enforces?.items"
-              :key="enforce.name"
-              class="flex items-center | bg-black rounded-lg | pr-[0.5cqw]">
-              <div
-                class="stat-sprites | w-[3cqw] aspect-square"
-                :style="{
-                  backgroundPosition: etcUtil.getSpritePosition(12 + index),
-                }"></div>
-              <span class="text-[1.3cqw] text-white">
-                {{ stringUtil.attachComma(enforce.length) }}
-              </span>
-            </div>
-          </div>
-          <!-- 강화표시 -->
         </div>
 
         <div class="absolute top-1/2 right-[1cqw] -translate-y-1/2 | flex flex-col gap-[0.5cqw]">

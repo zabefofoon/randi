@@ -12,20 +12,21 @@ export interface WeaponOptions {
   name: string
   description: string
   cooltime: number
-  speed: number
-  range: number
-  physicalDamage: number
-  magicalDamage: number
-  physicalPenetration: number
-  magicalPenetration: number
-  targetLength: number
-  allTargetLength: number
-  splash: number
-  stun: number
-  stunMany: number
-  slow: number
-  slowOne: number
-  allCooltime: number
+  speed: number // 무기 날라가는 속도
+  range: number // 범위
+  physicalDamage: number // 물리데미지
+  magicalDamage: number // 마법데미지
+  physicalPenetration: number // 물리관통력
+  magicalPenetration: number // 마법관통력
+  physicalAllPercent: number // 물리피해상승 100이면 100퍼
+  magicalAllPercent: number // 마법피해상승 100이면 100퍼
+  targetLength: number // 몇마리 공격할건지
+  splash: number // 스플래시 범위 50정도가 적당한듯
+  stun: number // 스턴 1000가 1초
+  stunMany: number // 범위스턴 1000가 1초
+  slow: number // 전체 0.1이 10%
+  slowOne: number // 단일 슬로우 0.1이 10%
+  allCooltime: number // 전체 쿨타임 0.1이 10%
   spritePosition: string
   criticalChance: number // 0.1이 10%
   criticalDamage: number // 2가 2배
@@ -104,7 +105,6 @@ export abstract class Weapon implements WeaponOptions {
   physicalPenetration = 0
   magicalPenetration = 0
   targetLength = 0
-  allTargetLength = 0
   lastAttackTime = 0
 
   splash = 0
@@ -116,7 +116,8 @@ export abstract class Weapon implements WeaponOptions {
 
   physicalDamage = 0
   magicalDamage = 0
-
+  physicalAllPercent = 0
+  magicalAllPercent = 0
   allCooltime = 0
   level = 0
   spritePosition = etcUtil.getWeaponSpritePosition(0, 0)

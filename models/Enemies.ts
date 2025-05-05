@@ -307,11 +307,20 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       Character.checkCharacter(this.selectedCharacter) &&
       this.selectedCharacter.meta.id === "trunkKing"
 
-    let damage = _physicalDamage + _magicalDamage
+    let damage =
+      numberUtil.addPercent(_physicalDamage, weaponData.physicalAllPercent) +
+      numberUtil.addPercent(_magicalDamage, weaponData.magicalAllPercent)
 
     if (isTrunkKing) {
-      damage = Math.round(numberUtil.addPercent(_physicalDamage, this.round)) + _magicalDamage
+      damage =
+        Math.round(
+          numberUtil.addPercent(
+            numberUtil.addPercent(_physicalDamage, weaponData.physicalAllPercent),
+            this.round
+          )
+        ) + numberUtil.addPercent(_magicalDamage, weaponData.magicalAllPercent)
     }
+
     if (weaponData.criticalChance > 0) {
       const random = Phaser.Math.FloatBetween(0, 1)
       damage =
