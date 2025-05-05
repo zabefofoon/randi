@@ -66,7 +66,10 @@
                 'text-fuchsia-400': selectedWeapon?.level === 5,
                 'text-red-400': selectedWeapon?.level === 6,
               }">
-              {{ selectedWeapon?.name ?? "????" }}
+              <template v-if="selectedWeapon?.name">
+                Lv.{{ selectedWeapon.level }} {{ selectedWeapon.name }}
+              </template>
+              <template v-else>????</template>
             </h2>
             <h3
               class="text-outline text-[1.5cqw] font-bold"
@@ -141,7 +144,7 @@
                     'bg-yellow-600': item.cls.meta?.level === 4,
                     'bg-fuchsia-500': item.cls.meta?.level === 5,
                     'bg-red-500': item.cls.meta?.level === 6,
-                    'bg-gray-700': !checkGettable(item),
+                    '!bg-gray-700': !checkGettable(item),
                   }">
                   <div
                     v-if="gameStore.checkHasCollection(item.cls.meta.name)"
@@ -156,27 +159,25 @@
 
                 <div class="flex flex-col gap-[0.2cqw]">
                   <div class="flex items-center gap-[0.5cqw]">
-                    <span class="text-outline text-[1.5cqw] font-bold"
-                      >· {{ item.cls.meta?.name }} 조합</span
-                    >
-                    <div class="flex justify-center | text-[1.1cqw]">
-                      (
-                      <div
-                        v-for="(material, index) in item.materials"
-                        :key="material.key"
-                        class="flex gap-[0.2cqw]">
-                        <span v-if="index !== 0">&nbsp;+</span>
-                        <span
-                          :class="{
-                            'text-red-500': materials[material.key].length < material.length,
-                          }"
-                          >{{ material.key }} {{ material.length }}개</span
-                        >
-                      </div>
-                      )
-                    </div>
+                    <span class="text-outline text-[1.5cqw] font-bold">
+                      Lv.{{ item.cls.meta.level }} {{ item.cls.meta?.name }} 조합
+                    </span>
                   </div>
-                  <div class="text-[1.1cqw] text-left">{{ item.cls.meta?.description }}</div>
+                  <div class="flex | text-outline text-[1.1cqw] text-left font-bold">
+                    <div
+                      v-for="(material, index) in item.materials"
+                      :key="material.key"
+                      class="flex">
+                      <span v-if="index !== 0">&nbsp;+&nbsp;</span>
+                      <span
+                        :class="{
+                          'text-red-500': materials[material.key].length < material.length,
+                        }">
+                        {{ material.key }} {{ material.length }}개
+                      </span>
+                    </div>
+                    <div>{{ getNeedLevel(item) }}</div>
+                  </div>
                 </div>
               </button>
             </div>
@@ -280,7 +281,40 @@ const isWeaponGettable = computed(() => {
 })
 
 const checkGettable = (item: NextInfo) => {
-  return item.materials.every((material) => props.materials[material.key].length >= material.length)
+  const isMaterial = item.materials.every(
+    (material) => props.materials[material.key].length >= material.length
+  )
+
+  let isLevel = true
+  switch (item.cls.meta.level) {
+    case 3:
+      isLevel = props.weapons.getHowManyLevels(2) >= 1
+      break
+    case 4:
+      isLevel = props.weapons.getHowManyLevels(3) >= 2
+      break
+    case 5:
+      isLevel = props.weapons.getHowManyLevels(4) >= 3
+      break
+    case 6:
+      isLevel = props.weapons.getHowManyLevels(5) >= 4
+      break
+  }
+
+  return isMaterial && isLevel
+}
+
+const getNeedLevel = (item: NextInfo) => {
+  switch (item.cls.meta.level) {
+    case 3:
+      return ` + Lv.2 무기 1개`
+    case 4:
+      return ` + Lv.3 무기 2개`
+    case 5:
+      return ` + Lv.4 무기 3개`
+    case 6:
+      return ` + Lv.5 무기 4개`
+  }
 }
 
 watch(selectedIndex, () => {

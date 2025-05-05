@@ -54,6 +54,10 @@ export class Weapons {
     this.enforces = enforces
   }
 
+  getHowManyLevels(level: number) {
+    return this.weapons.filter((weapon) => weapon).filter((weapon) => weapon!.level >= level).length
+  }
+
   addWeapon(index: number, weapon: Weapon) {
     this.weapons[index] = weapon
     const w = this.weapons[index]

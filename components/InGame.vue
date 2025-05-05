@@ -383,7 +383,7 @@ onMounted(() => {
         // 플레이어
         player = new Player(scene, 400, 300, "playerIdle")
         player.createPlayerAnimation()
-        enemies = new Enemies(scene, remainnedEnemies, gameStore.selectedCharacter)
+        enemies = new Enemies(scene, gameStore.selectedCharacter)
         enforces.value = new Enforces()
         weapons.value = new Weapons(scene, enemies, materials.value, enforces.value)
 
@@ -422,7 +422,13 @@ onMounted(() => {
           gachaChance.value += 2
           coins.value += round.value * 10
         })
-        scene.events.on("enemy-die", () => killed.value++)
+        scene.events.on("enemy-die", () => {
+          killed.value++
+          remainnedEnemies.value--
+        })
+        scene.events.on("enemy-spawn", () => {
+          remainnedEnemies.value++
+        })
         scene.time.addEvent({
           delay: 1000 / window.speed,
           repeat: -1,
@@ -430,20 +436,20 @@ onMounted(() => {
             if (scene.data.get("paused")) return
 
             remainnedTime.value--
-
-            if (remainnedTime.value % 5 === 0) remainnedEnemies.value = enemies.group.children.size
-
+            if (remainnedTime.value % 5 === 0) {
+              remainnedEnemies.value = enemies.group.children.size
+            }
             if (remainnedTime.value < 0) {
               round.value++
               remainnedTime.value = roundTime
 
               if (round.value !== 1) {
-                if (round.value < 10) {
+                if (round.value < 20) {
                   if (round.value % 5 === 0) {
                     gachaChance.value = gachaChance.value + 2
                     selectChance.value = selectChance.value + 1
                   } else gachaChance.value = gachaChance.value + 3
-                } else if (round.value < 30) {
+                } else if (round.value < 40) {
                   if (round.value % 5 === 0) {
                     gachaChance.value = gachaChance.value + 2
                     selectChance.value = selectChance.value + 2

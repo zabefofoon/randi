@@ -13,7 +13,6 @@ export class Enemies {
 
   constructor(
     scene: Phaser.Scene,
-    private remainnedEnemies: Ref<number>,
     private selectedCharacter: typeof Character | PurchaseCharacter
   ) {
     this.scene = scene
@@ -42,8 +41,7 @@ export class Enemies {
     this.group.add(
       new Enemy(this.scene, x, y, false, "enemy", this.pathes, round, coins, this.selectedCharacter)
     )
-
-    this.remainnedEnemies.value++
+    this.scene.events.emit("enemy-spawn")
   }
 
   spawnBoss(round: number, coins: Ref<number>) {
@@ -53,17 +51,11 @@ export class Enemies {
     this.group.add(
       new Enemy(this.scene, x, y, true, "enemy", this.pathes, round, coins, this.selectedCharacter)
     )
-
-    this.remainnedEnemies.value++
+    this.scene.events.emit("enemy-spawn")
   }
 
   takeDamage(enemy: Enemy, weapon: Weapon, materials: Materials, enforces: Enforces) {
     enemy.takeDamage(weapon, materials, enforces)
-
-    // 적 HP가 0 이하라면 제거
-    if (!enemy.getData("hp") || enemy.getData("hp") < 0) {
-      ;(this.remainnedEnemies as unknown as number)--
-    }
   }
 
   applySplashDamage(
@@ -81,9 +73,6 @@ export class Enemies {
       if (dist <= weaponData.splash + materials["vit"].length * materials["vit"].info.splash) {
         enemy.takeDamage(weaponData, materials, enforces, dist)
       }
-
-      // 적 HP가 0 이하라면 제거
-      if (!enemy.getData("hp")) (this.remainnedEnemies as unknown as number)--
     })
   }
 
@@ -93,10 +82,11 @@ export class Enemies {
       if (!enemy.active) return
 
       const dist = Phaser.Math.Distance.Between(centerX, centerY, enemy.x, enemy.y)
-      if (dist <= weaponData.splash + materials["vit"].length * materials["vit"].info.splash) {
+      if (dist <= weaponData.splash + materials.calculateStat("vit")) {
         enemy.data.set("stunnedMany", true)
         enemy.stunManyTimer?.remove()
         enemy.stunManyTimer = this.scene.time.delayedCall(weaponData.stunMany, () => {
+          if (!enemy?.active) return
           enemy.data.set("stunnedMany", false)
           enemy.stunManyTimer = undefined
         })
