@@ -677,7 +677,7 @@ export class SilentKiller extends Weapon {
     allCooltime: 0, // 0.01이 1%
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 11),
-    criticalChance: 0.3,
+    criticalChance: 0.2,
     criticalDamage: 3,
     dotted: 0,
   }

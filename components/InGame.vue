@@ -430,6 +430,9 @@ onMounted(() => {
             if (scene.data.get("paused")) return
 
             remainnedTime.value--
+
+            if (remainnedTime.value % 5 === 0) remainnedEnemies.value = enemies.group.children.size
+
             if (remainnedTime.value < 0) {
               round.value++
               remainnedTime.value = roundTime

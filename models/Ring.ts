@@ -533,8 +533,8 @@ export class KnuckleRing extends Weapon {
 export class DigitalRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "“역시 실용주의”",
-    description: "마법공격",
+    name: "디지털링",
+    description: "“역시 실용주의”",
     cooltime: 1000,
     speed: 500,
     range: 300,
