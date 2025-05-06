@@ -129,7 +129,7 @@
                       <span v-if="index !== 0">&nbsp;+&nbsp;</span>
                       <span
                         :class="{
-                          'text-red-500': !checkHasMaterial(item),
+                          'text-red-500': materials[material.key].length < material.length,
                         }">
                         {{ material.key }} {{ material.length }}개
                       </span>

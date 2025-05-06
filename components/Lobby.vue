@@ -7,7 +7,7 @@
       <main
         class="backdrop-blur-anim | relative | w-full h-full | flex flex-col justify-center items-center">
         <h1
-          class="fade-up | gasoek-one-regular | relative z-[1] | leading-none text-center text-[5cqw] font-bold text-outline text-white">
+          class="fade-up | gasoek-one-regular | relative z-[1] | mt-[5cqw] | leading-none text-center text-[5cqw] font-bold text-outline text-white">
           <span class="text-red-500">N</span>
           <span class="text-orange-500">Y</span>
           <span class="text-blue-500">L</span>
@@ -18,14 +18,18 @@
         <div
           class="dissolve | flex flex-col items-center gap-[0.5cqw] | mt-[2cqw] | font-bold text-[2.5cqw] text-white">
           <button
-            class="flex items-center | relative rounded-lg border-black border-[0.2cqw] | px-[1cqw] | bg-blue-950"
+            class="w-[20cqw] | flex items-center justify-center | relative rounded-lg border-black border-[0.2cqw] | px-[1cqw] | bg-orange-700"
+            @click="emit('next', 'select')">
+            <div class="text-outline">Game Start</div>
+          </button>
+          <button
+            class="w-[20cqw] | flex items-center justify-center | relative rounded-lg border-black border-[0.2cqw] | px-[1cqw] | bg-blue-950"
             @click="emit('next', 'collection')">
             <div class="text-outline">Collection</div>
           </button>
           <button
-            class="w-full | flex items-center justify-center | relative rounded-lg border-black border-[0.2cqw] | px-[1cqw] | bg-orange-700"
-            @click="emit('next', 'select')">
-            <div class="text-outline">Game Start</div>
+            class="w-[20cqw] | flex items-center justify-center | relative rounded-lg border-black border-[0.2cqw] | px-[1cqw] | bg-blue-950">
+            <div class="text-outline">Review</div>
           </button>
         </div>
       </main>

@@ -90,7 +90,14 @@ export class Weapons {
     const weapon = weaponObj as Phaser.Physics.Arcade.Sprite
     const enemy = enemyObj as Enemy
     this.enemies.takeDamage(enemy, weaponData, this.materials, this.enforces)
-    this.enemies.applySplashDamage(weapon.x, weapon.y, weaponData, this.materials, this.enforces)
+    this.enemies.applySplashDamage(
+      enemy,
+      weapon.x,
+      weapon.y,
+      weaponData,
+      this.materials,
+      this.enforces
+    )
     this.enemies.applyStunMany(weapon.x, weapon.y, weaponData, this.materials)
     weaponObj.destroy()
   }

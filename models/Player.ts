@@ -1,4 +1,4 @@
-import type { Enemies, Enemy } from "./Enemies"
+import type { Enemies } from "./Enemies"
 
 export class Player extends Phaser.Physics.Arcade.Sprite {
   maxLife = 5
@@ -104,21 +104,17 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   getClosestEnemies(enemies: Enemies, length: number) {
-    const enemiesData: {
-      enemy: Enemy
-      dist: number
-    }[] = []
-
-    enemies.children.forEach((enemy) => {
-      if (!enemy.active) return
-
-      const dist = Phaser.Math.Distance.Between(this.x, this.y, enemy.x, enemy.y)
-
-      enemiesData.push({ enemy, dist })
-    })
-    enemiesData.sort((a, b) => a.dist - b.dist)
-
-    return enemiesData.slice(0, length).map((e) => e.enemy)
+    return enemies.children
+      .filter((enemy) => enemy.active)
+      .map((enemy) => ({
+        enemy,
+        dist: Phaser.Math.Distance.Between(this.x, this.y, enemy.x, enemy.y),
+        isBoss: enemy.isBoss ? 0 : 1,
+        hp: enemy.getData("hp") as number,
+      }))
+      .sort((a, b) => a.dist - b.dist)
+      .slice(0, length)
+      .map((e) => e.enemy)
   }
 
   createPlayerAnimation() {

@@ -55,27 +55,30 @@ export class Enemies {
   }
 
   applySplashDamage(
+    enemy: Enemy,
     centerX: number,
     centerY: number,
     weaponData: Weapon,
     materials: Materials,
     enforces: Enforces
   ) {
-    this.children.forEach((enemy) => {
-      if (!enemy.active) return
+    this.children
+      .filter((child) => child != enemy)
+      .forEach((enemy) => {
+        if (!enemy.active) return
 
-      const dist = Phaser.Math.Distance.Between(centerX, centerY, enemy.x, enemy.y)
-      if (dist <= weaponData.splash + materials["vit"].length * materials["vit"].info.splash) {
-        enemy.takeDamage(weaponData, materials, enforces, dist)
-      }
-    })
+        const dist = Math.round(Phaser.Math.Distance.Between(centerX, centerY, enemy.x, enemy.y))
+        if (dist <= weaponData.splash + materials.calculateStat("vit")) {
+          enemy.takeDamage(weaponData, materials, enforces, dist)
+        }
+      })
   }
 
   applyStunMany(centerX: number, centerY: number, weaponData: Weapon, materials: Materials) {
     this.children.forEach((enemy) => {
       if (!enemy.active) return
 
-      const dist = Phaser.Math.Distance.Between(centerX, centerY, enemy.x, enemy.y)
+      const dist = Math.round(Phaser.Math.Distance.Between(centerX, centerY, enemy.x, enemy.y))
       if (dist <= weaponData.splash + materials.calculateStat("vit")) {
         enemy.data.set("stunnedMany", true)
         enemy.stunManyTimer?.remove()
@@ -239,7 +242,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
             numberUtil.addPercent(
               +(
                 weaponData.physicalDamage *
-                Math.max(1, 1 - distInSplash / (weaponData.splash + materials.calculateStat("vit")))
+                Math.min(1, 1 - distInSplash / (weaponData.splash + materials.calculateStat("vit")))
               ).toFixed(2) +
                 materials.calculateStat("str") +
                 enforces.getAditionnalPlus("physical"),
@@ -265,7 +268,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
             numberUtil.addPercent(
               +(
                 weaponData.magicalDamage *
-                Math.max(
+                Math.min(
                   1,
                   1 -
                     distInSplash /
