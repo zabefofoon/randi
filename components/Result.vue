@@ -181,7 +181,7 @@ const isBonusCharacter = computed(() => {
 const transitionNumberInterval = (
   target: Ref<number>,
   destination: number,
-  duration = 1000 // 기본 1초
+  duration = 1000
 ): number => {
   if (duration <= 0) {
     target.value = destination
@@ -189,7 +189,7 @@ const transitionNumberInterval = (
   }
 
   let startTime: number | undefined
-  const startVal = 0 // 기존 로직과 동일하게 0부터 시작
+  const startVal = 0
   target.value = startVal
 
   const tick = (timestamp: number) => {
@@ -197,10 +197,9 @@ const transitionNumberInterval = (
     const elapsed = timestamp - startTime
     const progress = Math.min(elapsed / duration, 1) // 0 ~ 1
 
-    // 선형 보간 후 정수로
     target.value = Math.round(startVal + (destination - startVal) * progress)
 
-    if (progress < 1) requestAnimationFrame(tick) // 아직 진행 중
+    if (progress < 1) requestAnimationFrame(tick)
   }
 
   return requestAnimationFrame(tick)

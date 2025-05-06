@@ -4,9 +4,7 @@
   "compilerOptions": {
     "module": "esnext",
     "target": "esnext",
-    // 사용되지 않는 변수 경고
     "noUnusedLocals": true,
-    // 사용되지 않는 arguments 경고
     "noUnusedParameters": true,
     "strict": true
   },

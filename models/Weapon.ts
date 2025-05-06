@@ -92,7 +92,6 @@ export class Weapons {
     this.enemies.takeDamage(enemy, weaponData, this.materials, this.enforces)
     this.enemies.applySplashDamage(weapon.x, weapon.y, weaponData, this.materials, this.enforces)
     this.enemies.applyStunMany(weapon.x, weapon.y, weaponData, this.materials)
-    // 탄환 제거
     weaponObj.destroy()
   }
 }
@@ -127,8 +126,8 @@ export abstract class Weapon implements WeaponOptions {
   spritePosition = etcUtil.getWeaponSpritePosition(0, 0)
   index = 0
 
-  criticalChance = 0 // 0.1이 10%
-  criticalDamage = 0 // 2가 2배
+  criticalChance = 0
+  criticalDamage = 0
   dotted = 0
   constructor(weapon: WeaponOptions) {
     Object.assign(this, weapon)
@@ -140,13 +139,9 @@ export abstract class Weapon implements WeaponOptions {
     )
   }
 
-  /**
-   * 호밍 탄환 발사
-   */
   fireHomingWeapon(weaponIndex: number, currentTime: number, player: Player, enemy: Enemy) {
     this.lastAttackTime = currentTime
 
-    // 플레이어 위치에서 탄환 생성
     const bullet = this.group?.create(
       player.x,
       player.y,
@@ -158,7 +153,6 @@ export abstract class Weapon implements WeaponOptions {
 
     if (weaponIndex === 1) bullet.setAlpha(0)
 
-    // 처음에 한 번 적 방향으로 설정
     const angle = Phaser.Math.Angle.Between(bullet.x, bullet.y, enemy.x, enemy.y)
     bullet.body.setVelocity(Math.cos(angle) * this.speed, Math.sin(angle) * this.speed)
   }
@@ -168,7 +162,6 @@ export abstract class Weapon implements WeaponOptions {
       const weaponObj = obj as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
       if (!weaponObj.active) return
 
-      // bullet에 저장해둔 target(Enemy)을 따라가도록
       const target = weaponObj.getData(
         "target"
       ) as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
@@ -177,7 +170,6 @@ export abstract class Weapon implements WeaponOptions {
       const angle = Phaser.Math.Angle.Between(weaponObj.x, weaponObj.y, target.x, target.y)
       weaponObj.body.setVelocity(Math.cos(angle) * this.speed, Math.sin(angle) * this.speed)
 
-      // 화면 밖으로 나가면 제거
       this.destroyWhenOutOfMap()
     })
   }
@@ -187,7 +179,6 @@ export abstract class Weapon implements WeaponOptions {
       const weaponObj = obj as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
       if (!weaponObj.active) return
 
-      // 화면 밖으로 나가면 제거
       if (weaponObj.x < 0 || weaponObj.x > 960 || weaponObj.y < 0 || weaponObj.y > 540) {
         weaponObj.destroy()
       }

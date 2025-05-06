@@ -76,51 +76,9 @@
               :class="{ 'text-center': !selectedWeapon }">
               {{ selectedWeapon?.description ?? "????" }}
             </h3>
-            <div
+            <WeaponCharacteristic
               v-if="selectedWeapon"
-              class="mt-[0.5cqw] | grid grid-cols-4 gap-[0.5cqw] text-[1.2cqw]">
-              <div v-if="selectedWeapon.physicalDamage">
-                · 물리데미지: {{ selectedWeapon.physicalDamage }}
-              </div>
-              <div v-if="selectedWeapon.magicalDamage">
-                · 마법데미지: {{ selectedWeapon.magicalDamage }}
-              </div>
-              <div v-if="selectedWeapon.physicalPenetration">
-                · 물리관통력: {{ selectedWeapon.physicalPenetration }}
-              </div>
-              <div v-if="selectedWeapon.magicalPenetration">
-                · 마법관통력: {{ selectedWeapon.magicalPenetration }}
-              </div>
-              <div v-if="selectedWeapon.range">· 공격거리: {{ selectedWeapon.range }}</div>
-              <div v-if="selectedWeapon.splash">· 스플래쉬: {{ selectedWeapon.splash }}</div>
-              <div v-if="selectedWeapon.cooltime">· 쿨타임: {{ selectedWeapon.cooltime }}</div>
-              <div v-if="selectedWeapon.targetLength > 1">
-                · 공격갯수: {{ selectedWeapon.targetLength }}
-              </div>
-              <div v-if="selectedWeapon.stun">· 스턴: {{ selectedWeapon.stun }}</div>
-              <div
-                v-if="selectedWeapon.stunMany"
-                class="col-span-2">
-                · 스플레시 스턴: {{ selectedWeapon.stunMany }}
-              </div>
-              <div v-if="selectedWeapon.slow">· 영역 슬로우: {{ selectedWeapon.slow }}</div>
-              <div
-                v-if="selectedWeapon.slowOne"
-                class="col-span-2">
-                · 단일 슬로우: {{ selectedWeapon.slowOne }}
-              </div>
-              <div
-                v-if="selectedWeapon.criticalChance"
-                class="col-span-3">
-                · 크리티컬: {{ selectedWeapon.criticalChance * 100 }}% 확률의
-                {{ selectedWeapon.criticalDamage }}배 데미지
-              </div>
-              <div
-                v-if="selectedWeapon.dotted"
-                class="col-span-3">
-                · 도트: {{ selectedWeapon.dotted }}번의 도트 데미지
-              </div>
-            </div>
+              :weapon="selectedWeapon" />
             <div class="flex flex-col | w-full | mt-[1cqw]">
               <button
                 v-for="item in selectedWeapon?.nexts"
@@ -171,12 +129,17 @@
                       <span v-if="index !== 0">&nbsp;+&nbsp;</span>
                       <span
                         :class="{
-                          'text-red-500': materials[material.key].length < material.length,
+                          'text-red-500': !checkHasMaterial(item),
                         }">
                         {{ material.key }} {{ material.length }}개
                       </span>
                     </div>
-                    <div>{{ getNeedLevel(item) }}</div>
+                    <div
+                      :class="{
+                        'text-red-500': !checkHasLevel(item),
+                      }">
+                      {{ getNeedLevel(item) }}
+                    </div>
                   </div>
                 </div>
               </button>
@@ -281,33 +244,27 @@ const isWeaponGettable = computed(() => {
 })
 
 const checkGettable = (item: NextInfo) => {
-  const isMaterial = item.materials.every(
-    (material) => props.materials[material.key].length >= material.length
-  )
+  return checkHasMaterial(item) && checkHasLevel(item)
+}
+const checkHasMaterial = (item: NextInfo) => {
+  return item.materials.every((material) => props.materials[material.key].length >= material.length)
+}
 
-  let isLevel = true
+const checkHasLevel = (item: NextInfo) => {
   switch (item.cls.meta.level) {
-    case 3:
-      isLevel = props.weapons.getHowManyLevels(2) >= 1
-      break
     case 4:
-      isLevel = props.weapons.getHowManyLevels(3) >= 2
-      break
+      return props.weapons.getHowManyLevels(3) >= 2
     case 5:
-      isLevel = props.weapons.getHowManyLevels(4) >= 3
-      break
+      return props.weapons.getHowManyLevels(4) >= 3
     case 6:
-      isLevel = props.weapons.getHowManyLevels(5) >= 4
-      break
+      return props.weapons.getHowManyLevels(5) >= 4
+    default:
+      return true
   }
-
-  return isMaterial && isLevel
 }
 
 const getNeedLevel = (item: NextInfo) => {
   switch (item.cls.meta.level) {
-    case 3:
-      return ` + Lv.2 무기 1개`
     case 4:
       return ` + Lv.3 무기 2개`
     case 5:

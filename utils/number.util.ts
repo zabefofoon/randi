@@ -7,7 +7,7 @@ export default {
     return Math.min(Math.max(min, value), max)
   },
   addPercent(base: number, n: number): number {
-    const rate = n / 100 // n% => 소수
+    const rate = n / 100
     return base + base * rate
   },
 }

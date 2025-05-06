@@ -2,170 +2,148 @@
 .snackbar-move,
 .snackbar-enter-active,
 .snackbar-leave-active {
-    transition:
-        opacity 300ms ease,
-        transform 300ms ease;
+  transition: opacity 300ms ease, transform 300ms ease;
 }
 
 .snackbar-enter-from,
 .snackbar-leave-to {
-    opacity: 0;
-    transform: translateY(-30px);
+  opacity: 0;
+  transform: translateY(-30px);
 }
 
 .snackbar-leave-active {
-    position: absolute;
+  position: absolute;
 }
 /* snackbar */
 
 /* modal */
 .modal-enter-active,
 .modal-leave-active {
-    transition: all 300ms ease;
+  transition: all 300ms ease;
 
-    .transition-inner,
-    .transition-inner {
-        transition: all 300ms ease;
-        clip-path: inset(0 0 0 0);
-    }
+  .transition-inner,
+  .transition-inner {
+    transition: all 300ms ease;
+    clip-path: inset(0 0 0 0);
+  }
 }
 
 .modal-enter-from,
 .modal-leave-to {
+  opacity: 0;
+
+  .transition-inner,
+  .transition-inner {
+    clip-path: inset(100% 0 0 0);
+    transform: translate(0, 30px);
+  }
+}
+
+.iphone-history-back {
+  .modal-enter-active,
+  .modal-leave-active {
+    transition: all 0ms ease;
+
+    .transition-inner,
+    .transition-inner {
+      transition: all 0ms ease;
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  .modal-enter-from,
+  .modal-leave-to {
     opacity: 0;
 
     .transition-inner,
     .transition-inner {
-        clip-path: inset(100% 0 0 0);
-        transform: translate(0, 30px);
+      clip-path: inset(100% 0 0 0);
+      transform: translate(0, 30px);
     }
-}
-
-.iphone-history-back {
-    .modal-enter-active,
-    .modal-leave-active {
-        transition: all 0ms ease;
-
-        .transition-inner,
-        .transition-inner {
-            transition: all 0ms ease;
-            clip-path: inset(0 0 0 0);
-        }
-    }
-
-    .modal-enter-from,
-    .modal-leave-to {
-        opacity: 0;
-
-        .transition-inner,
-        .transition-inner {
-            clip-path: inset(100% 0 0 0);
-            transform: translate(0, 30px);
-        }
-    }
+  }
 }
 
 .iphone-history-forward {
-    .modal-enter-active,
-    .modal-leave-active {
-        transition: all 0ms ease;
+  .modal-enter-active,
+  .modal-leave-active {
+    transition: all 0ms ease;
 
-        .transition-inner,
-        .transition-inner {
-            transition: all 0ms ease;
-            clip-path: inset(0 0 0 0);
-        }
+    .transition-inner,
+    .transition-inner {
+      transition: all 0ms ease;
+      clip-path: inset(0 0 0 0);
     }
+  }
 
-    .modal-enter-from,
-    .modal-leave-to {
-        opacity: 1;
+  .modal-enter-from,
+  .modal-leave-to {
+    opacity: 1;
 
-        .transition-inner,
-        .transition-inner {
-            clip-path: inset(0 0 0 0);
-            transform: translate(0, 0);
-        }
+    .transition-inner,
+    .transition-inner {
+      clip-path: inset(0 0 0 0);
+      transform: translate(0, 0);
     }
+  }
 }
 /* modal */
 
 /* dropdown */
 .select-options-bottom-enter-active,
 .select-options-bottom-leave-active {
-    transition:
-        opacity 300ms ease,
-        bottom 300ms ease;
+  transition: opacity 300ms ease, bottom 300ms ease;
 }
 
 .select-options-bottom-enter-from,
 .select-options-bottom-leave-to {
-    opacity: 0;
-    bottom: 10px !important;
+  opacity: 0;
+  bottom: 10px !important;
 }
 
 .select-options-top-enter-active,
 .select-options-top-leave-active {
-    transition:
-        opacity 300ms ease,
-        top 300ms ease;
+  transition: opacity 300ms ease, top 300ms ease;
 }
 .select-options-top-enter-from,
 .select-options-top-leave-to {
-    opacity: 0;
-    top: 10px !important;
+  opacity: 0;
+  top: 10px !important;
 }
 /* dropdown */
 
 /* UIFolderable */
 .folderable-enter-active,
 .folderable-leave-active {
-    transition:
-        clip-path 100ms ease,
-        opacity 100ms ease;
+  transition: clip-path 100ms ease, opacity 100ms ease;
 
-    .inner,
-    .inner {
-        transition:
-            clip-path 100ms ease,
-            opacity 100ms ease;
-        clip-path: inset(0 0 0 0);
-    }
+  .inner,
+  .inner {
+    transition: clip-path 100ms ease, opacity 100ms ease;
+    clip-path: inset(0 0 0 0);
+  }
 }
 
 .folderable-enter-from,
 .folderable-leave-to {
-    position: relative;
-    .inner,
-    .inner {
-        position: absolute;
-        width: 100%;
-        clip-path: inset(0 0 100% 0);
-        opacity: 0;
-    }
+  position: relative;
+  .inner,
+  .inner {
+    position: absolute;
+    width: 100%;
+    clip-path: inset(0 0 100% 0);
+    opacity: 0;
+  }
 }
 /* UIFolderable */
-
-/* slideUp */
-.music-container-enter-active,
-.music-container-leave-active {
-    transition: all 300ms ease;
-}
-
-.music-container-enter-from,
-.music-container-leave-to {
-    transform: translate(0%, 100%);
-}
-/* slideUp */
 
 /* fade */
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity 300ms ease;
+  transition: opacity 300ms ease;
 }
 
 .fade-enter-from,
 .fade-leave-to {
-    opacity: 0;
+  opacity: 0;
 }
 /* fade */

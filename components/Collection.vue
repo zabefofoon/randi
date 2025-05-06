@@ -1,5 +1,9 @@
 <template>
   <div class="w-screen h-screen | flex items-center justify-center | bg-black">
+    <ModalCollectionWeapon
+      v-if="isShowWeaponModal"
+      :weapon="isShowWeaponModal"
+      @close="isShowWeaponModal = undefined" />
     <div
       class="content | relative | grid place-items-center | aspect-video max-w-full max-h-full | text-white overflow-hidden">
       <div class="pattern | absolute top-0 left-0 z-[0] | w-full h-full | opacity-40"></div>
@@ -7,43 +11,40 @@
         <div
           class="w-full h-full | flex flex-col items-center gap-[1cqw] | p-[1cqw] | bg-blue-950 | rounded-lg border-black border-[0.2cqw]">
           <div class="w-full h-full overflow-auto | grid grid-cols-7 gap-[1cqw]">
-            <div
+            <figure
               v-for="weapon in weapons"
               :key="weapon.meta.name"
               v-memo="[]"
               class="flex flex-col items-center justify-center">
-              <div
-                v-if="gameStore.checkHasCollection(weapon.meta.name)"
-                class="w-full | border-black border-[0.2cqw] rounded-lg"
-                :class="{
-                  'bg-white': weapon.meta.level === 1,
-                  'bg-blue-500': weapon.meta.level === 2,
-                  'bg-purple-600': weapon.meta.level === 3,
-                  'bg-yellow-400': weapon.meta.level === 4,
-                  'bg-fuchsia-400': weapon.meta.level === 5,
-                  'bg-red-400': weapon.meta.level === 6,
-                }">
+              <template v-if="gameStore.checkHasCollection(weapon.meta.name)">
                 <div
-                  class="weapon-sprites | w-full aspect-square"
-                  :style="{ 'background-position': weapon.meta.spritePosition }"></div>
-              </div>
-              <div
-                v-else
-                class="w-full aspect-square | border-black border-[0.2cqw] rounded-lg | flex items-center justify-center">
-                <span class="gasoek-one-regular text-outline text-[5cqw] font-bold">?</span>
-              </div>
-
-              <div
-                v-if="gameStore.checkHasCollection(weapon.meta.name)"
-                class="text-outline font-bold text-[1.4cqw]">
-                {{ weapon.meta.name }}
-              </div>
-              <div
-                v-else
-                class="text-outline font-bold text-[1.4cqw]">
-                ????
-              </div>
-            </div>
+                  class="w-full | border-black border-[0.2cqw] rounded-lg"
+                  :class="{
+                    'bg-white': weapon.meta.level === 1,
+                    'bg-blue-500': weapon.meta.level === 2,
+                    'bg-purple-600': weapon.meta.level === 3,
+                    'bg-yellow-400': weapon.meta.level === 4,
+                    'bg-fuchsia-400': weapon.meta.level === 5,
+                    'bg-red-400': weapon.meta.level === 6,
+                  }"
+                  @click="showWeaponModal(weapon)">
+                  <div
+                    class="weapon-sprites | w-full aspect-square"
+                    :style="{ 'background-position': weapon.meta.spritePosition }"
+                    @click="showWeaponModal(weapon)"></div>
+                </div>
+                <figcaption class="text-outline font-bold text-[1.4cqw]">
+                  {{ weapon.meta.name }}
+                </figcaption>
+              </template>
+              <template v-else>
+                <div
+                  class="w-full aspect-square | border-black border-[0.2cqw] rounded-lg | flex items-center justify-center">
+                  <span class="gasoek-one-regular text-outline text-[5cqw] font-bold">?</span>
+                </div>
+                <figcaption class="text-outline font-bold text-[1.4cqw]">????</figcaption>
+              </template>
+            </figure>
           </div>
           <div class="mt-auto | flex items-center gap-[0.5cqw]">
             <button
@@ -281,6 +282,11 @@ const weapons = shallowRef<(typeof Weapon)[]>([
   Tattoo,
   FourLeafClover,
 ])
+
+const isShowWeaponModal = ref()
+const showWeaponModal = (weapon: typeof Weapon) => {
+  isShowWeaponModal.value = weapon
+}
 </script>
 
 <style lang="scss" scoped>

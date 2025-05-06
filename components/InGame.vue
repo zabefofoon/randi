@@ -235,14 +235,11 @@ const gameStore = useGameStore()
 
 const phaserContainer = ref<HTMLDivElement>()
 
-// Phaser.Game 인스턴스
 let game: Phaser.Game
 
-// 전역 참조 (씬 내부에서 할당)
 let player: Player
 
 let enemies: Enemies
-// 기타 상수
 
 let cursors: Phaser.Types.Input.Keyboard.CursorKeys
 const enforces = ref<Enforces>()
@@ -295,8 +292,8 @@ onMounted(() => {
     height: 540,
     parent: phaserContainer.value,
     scale: {
-      mode: Phaser.Scale.FIT, // 내부 캔버스를 "비율 유지"하면서 컨테이너에 맞춤
-      autoCenter: Phaser.Scale.CENTER_BOTH, // 화면 중앙 정렬
+      mode: Phaser.Scale.FIT,
+      autoCenter: Phaser.Scale.CENTER_BOTH,
     },
     physics: {
       default: "arcade",
@@ -358,17 +355,11 @@ onMounted(() => {
         scene = this as Phaser.Scene
 
         damageRect = scene.add
-          .rectangle(
-            0,
-            0,
-            this.cameras.main.width,
-            this.cameras.main.height,
-            0xff0000 // 빨강
-          )
+          .rectangle(0, 0, this.cameras.main.width, this.cameras.main.height, 0xff0000)
           .setOrigin(0)
-          .setAlpha(0) // 처음엔 투명
-          .setDepth(999) // UI 위에 표시
-          .setScrollFactor(0) // 카메라에 붙어서 움직이지 않음
+          .setAlpha(0)
+          .setDepth(999)
+          .setScrollFactor(0)
 
         const map = scene.make.tilemap({ key: "map" })
         const tileset = map.addTilesetImage("mainlevbuild2", "tiles")
@@ -387,12 +378,11 @@ onMounted(() => {
         enforces.value = new Enforces()
         weapons.value = new Weapons(scene, enemies, materials.value, enforces.value)
 
-        // 애니메이션
         scene.anims.create({
           key: "enemy-walk",
-          frames: scene.anims.generateFrameNumbers("enemy", { start: 0, end: 7 }), // 프레임 범위는 이미지에 맞게
-          frameRate: 7, // 초당 몇 프레임
-          repeat: -1, // 반복
+          frames: scene.anims.generateFrameNumbers("enemy", { start: 0, end: 7 }),
+          frameRate: 7,
+          repeat: -1,
         })
 
         const walls = scene.physics.add.staticGroup()
@@ -500,11 +490,9 @@ onMounted(() => {
         const scene = this as Phaser.Scene
         if (scene.data.get("paused")) return
 
-        // 플레이어 이동
         player.handlePlayerMovement(cursors)
         player.updatePlayerHpBar()
 
-        // 적 이동
         enemies.children.forEach((enemy) => {
           enemy.moveEnemyAlongPath(player, weapons.value!.weapons, materials.value)
           enemy.updateEnemyHpBar()

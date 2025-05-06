@@ -52,7 +52,7 @@ const fullScreen = async () => {
     /* IE/Edge */
     elem.msRequestFullscreen()
   }
-  // 2) 가로 모드 고정 (Screen Orientation API)
+
   if (screen.orientation && screen.orientation.lock) {
     await screen.orientation.lock("landscape")
   }

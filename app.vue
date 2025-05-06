@@ -4,16 +4,11 @@
   <NuxtPage />
   <ClientOnly>
     <AppSnackbarContainer />
-    <Transition name="music-container">
-      <AppMusicPlayerContainer v-if="musicStore.musicToPlay" />
-    </Transition>
   </ClientOnly>
 </template>
 <script lang="ts" setup>
 import { useIphoneHistoryDetector } from "./composables/useIphoneHistoryDetector"
 import { I18N_COOKIE } from "./const"
-
-const musicStore = useMusicStore()
 
 const i18n = useI18n()
 const headers = useRequestHeaders()
@@ -45,8 +40,4 @@ onBeforeUnmount(() => {
   window.removeEventListener("iphoneHistoryBack", iphoneHistoryDetector.historyBackHandler)
   window.removeEventListener("touchcancel", iphoneHistoryDetector.historyForwardHandler)
 })
-
-useHead(() => ({
-  script: [{ src: "https://code.createjs.com/1.0.0/soundjs.min.js" }],
-}))
 </script>

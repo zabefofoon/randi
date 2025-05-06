@@ -7,7 +7,6 @@ import type { Weapon } from "./Weapon"
 export class Enemies {
   scene: Phaser.Scene
   group: Phaser.Physics.Arcade.Group
-  // 경로, 기본 속도 등 전역 설정
   pathes: { x: number; y: number }[]
   baseSpeed: number
 
@@ -16,7 +15,6 @@ export class Enemies {
     private selectedCharacter: typeof Character | PurchaseCharacter
   ) {
     this.scene = scene
-    // 적 그룹 생성
     this.group = scene.physics.add.group({ collideWorldBounds: false })
 
     const gameWidth = scene.scale.width
@@ -37,7 +35,6 @@ export class Enemies {
   spawnEnemy(round: number, coins: Ref<number>) {
     const { x, y } = this.pathes[0]
 
-    // 새 적 생성
     this.group.add(
       new Enemy(this.scene, x, y, false, "enemy", this.pathes, round, coins, this.selectedCharacter)
     )
@@ -47,7 +44,6 @@ export class Enemies {
   spawnBoss(round: number, coins: Ref<number>) {
     const { x, y } = this.pathes[0]
 
-    // 새 적 생성
     this.group.add(
       new Enemy(this.scene, x, y, true, "enemy", this.pathes, round, coins, this.selectedCharacter)
     )
@@ -65,7 +61,6 @@ export class Enemies {
     materials: Materials,
     enforces: Enforces
   ) {
-    // enemyGroup 내 모든 적 순회
     this.children.forEach((enemy) => {
       if (!enemy.active) return
 
@@ -77,7 +72,6 @@ export class Enemies {
   }
 
   applyStunMany(centerX: number, centerY: number, weaponData: Weapon, materials: Materials) {
-    // enemyGroup 내 모든 적 순회
     this.children.forEach((enemy) => {
       if (!enemy.active) return
 
@@ -99,10 +93,10 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   pathes: { x: number; y: number }[]
   physicalDefence = 0
   magicalDefence = 0
-  private hitSlowTimer?: Phaser.Time.TimerEvent // 느려짐 타이머
-  stunManyTimer?: Phaser.Time.TimerEvent // 느려짐 타이머
+  private hitSlowTimer?: Phaser.Time.TimerEvent
+  stunManyTimer?: Phaser.Time.TimerEvent
 
-  private activeDots: Phaser.Time.TimerEvent[] = [] // ⚑ DOT 타이머 보관
+  private activeDots: Phaser.Time.TimerEvent[] = []
 
   constructor(
     scene: Phaser.Scene,
@@ -147,11 +141,8 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     const pathIndex = this.getData("pathIndex") as number
     if (pathIndex == null) return
 
-    // 기본 이동 속도
     const baseSpeed = numberUtil.addPercent(this.isBoss ? 80 : 120, this.round * 2) * window.speed
-    // 플레이어와 적 사이의 거리를 측정
     const distanceToPlayer = Phaser.Math.Distance.Between(this.x, this.y, player.x, player.y)
-    // 플레이어가 가까우면 느리게 이동: 예시로, 200픽셀 이내면 속도를 50%로 줄임
     const slowRange = 200
 
     const weaponSlows = weapons.reduce((acc, current) => acc + (current?.slow ?? 0), 0)
@@ -188,14 +179,11 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     const hpBar = this.getData("hpBar") as Phaser.GameObjects.Graphics
     if (!hpBar) return
 
-    // 위치나 스타일 초기화
     hpBar.clear()
 
-    // 예시: 체력바 배경
     hpBar.fillStyle(0x000000)
     hpBar.fillRect(this.x - 16, this.y - 30, 32, 4) // width 32, height 4
 
-    // 남은 체력 비율만큼 색 채우기
     const hpPercent = hp / maxHp
     hpBar.fillStyle(0xff0000)
     hpBar.fillRect(this.x - 16, this.y - 30, 32 * hpPercent, 4)
@@ -208,7 +196,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     if (weapon.level === 4) color = "#eab308"
     if (weapon.level === 5) color = "#e879f9"
     if (weapon.level === 6) color = "#f87171"
-    // “-10” 처럼 표시
+
     const dmgText = this.scene.add
       .text(this.x, this.y - weapon.index * 8, `-${damageValue}`, {
         fontSize: "18px",
@@ -220,12 +208,11 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       })
       .setOrigin(0.5)
 
-    // 트윈으로 서서히 떠오르며 사라지는 연출
     this.scene.tweens.add({
       targets: dmgText,
-      y: this.y - 20 - weapon.index * 8, // 위로 30px 이동
-      alpha: 0, // 투명도 0이 됨
-      duration: 800, // 0.8초 동안
+      y: this.y - 20 - weapon.index * 8,
+      alpha: 0,
+      duration: 800,
       ease: "Sine.easeOut",
       onComplete: () => {
         dmgText.destroy()
@@ -329,7 +316,6 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
     this.setData("hp", currentHP - damage)
 
-    // 깜빡이는 효과
     this.setTintFill(0xff0000)
     this.scene.time.delayedCall(100, () => {
       this.clearTint()
@@ -340,16 +326,14 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     if (!this.getData("stunned")) {
       this.setData("stunned", true)
-      // 즉시 적 이동을 멈춤
+
       this.body?.velocity.set(0, 0)
 
-      // 300ms 후에 정지 상태 해제
       this.scene.time.delayedCall(weaponData.stun + materials.calculateStat("cha"), () =>
         this.setData("stunned", false)
       )
     }
 
-    // 적 HP가 0 이하라면 제거
     if (this.getData("hp") <= 0) this.die()
   }
   applyDot(weaponData: Weapon, totalDamage: number, duration: number, tick = 500) {
@@ -382,7 +366,6 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     const k = 100
     const maxReduction = 0.8
 
-    // 관통 적용: 방어력 감소
     const reducedDefense = Math.max(0, defense - penetration)
 
     const reductionRate = Math.min(reducedDefense / (reducedDefense + k), maxReduction)

@@ -11,11 +11,9 @@ export default defineNuxtPlugin(async () => {
     })
   }
 
-  // 3) 오디오 플러그인 준비
   if (!window.createjs.Sound.initializeDefaultPlugins()) {
     console.warn("SoundJS: no audio plugin available")
   }
 
-  // 4) Nuxt 전역 주입 → 모든 컴포넌트에서 useNuxtApp().$sound 로 접근
   return { provide: { sound: window.createjs.Sound } }
 })

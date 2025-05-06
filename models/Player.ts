@@ -13,7 +13,6 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     scene.add.existing(this)
     scene.physics.add.existing(this)
 
-    // 대신 자기 자신에 대해 설정:
     this.setCollideWorldBounds(true)
       .setData("maxHp", this.maxLife)
       .setData("hp", this.maxLife)
@@ -26,29 +25,28 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.gun = scene.add
       .sprite(x, y, "gun-sprite", 0)
       .setScale(0.75)
-      .setDepth(this.depth + 1) // 항상 위쪽 레이어
+      .setDepth(this.depth + 1)
 
     this.knife = scene.add
       .sprite(x, y, "knife-sprite", 0)
       .setScale(1.5)
-      .setDepth(this.depth + 1) // 항상 위쪽 레이어
+      .setDepth(this.depth + 1)
 
     this.book = scene.add
       .sprite(x, y, "book-sprite", 0)
       .setScale(0.75)
-      .setDepth(this.depth + 1) // 항상 위쪽 레이어
+      .setDepth(this.depth + 1)
 
     this.ring = scene.add
       .sprite(x, y, "ring-sprite", 0)
       .setScale(0.5)
-      .setDepth(this.depth + 1) // 항상 위쪽 레이어
+      .setDepth(this.depth + 1)
   }
 
   get isIdle() {
     return this.body?.velocity.x === 0 && this.body.velocity.y === 0
   }
 
-  /** 매 프레임 플레이어 위치에 칼을 붙인다 */
   override preUpdate(time: number, delta: number) {
     super.preUpdate(time, delta)
 
@@ -62,14 +60,11 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     const hpBar = this.getData("hpBar") as Phaser.GameObjects.Graphics
     if (!hpBar) return
 
-    // 위치나 스타일 초기화
     hpBar.clear()
 
-    // 예시: 체력바 배경
     hpBar.fillStyle(0x000000)
     hpBar.fillRect(this.x - 16, this.y - 45, 32, 4) // width 32, height 4
 
-    // 남은 체력 비율만큼 색 채우기
     const hpPercent = hp / maxHp
     hpBar.fillStyle(0xff0000)
     hpBar.fillRect(this.x - 16, this.y - 45, 32 * hpPercent, 4)
@@ -108,9 +103,6 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     if (!moving) this.anims.play("turn", true)
   }
 
-  /**
-   * 가장 가까운 Enemy 찾기 (옵션 구현)
-   */
   getClosestEnemies(enemies: Enemies, length: number) {
     const enemiesData: {
       enemy: Enemy
@@ -130,7 +122,6 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   createPlayerAnimation() {
-    // 애니메이션
     this.scene.anims.create({
       key: "turn",
       frames: this.anims.generateFrameNumbers("playerIdle", { start: 0, end: 3 }),

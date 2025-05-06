@@ -66,7 +66,7 @@ export class ShotGun extends Weapon {
     cooltime: 1000,
     speed: 500,
     range: 150,
-    physicalDamage: 8,
+    physicalDamage: 7,
     magicalDamage: 0,
     physicalPenetration: 3,
     magicalPenetration: 0,
@@ -75,11 +75,11 @@ export class ShotGun extends Weapon {
     targetLength: 1,
 
     splash: 80,
-    stun: 0, // 1000이어야 1초
+    stun: 0,
     stunMany: 0,
-    slow: 0, // 0.1이면 10%
+    slow: 0,
     slowOne: 0,
-    allCooltime: 0, // 0.01이 1%
+    allCooltime: 0,
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 1),
     criticalChance: 0,
@@ -123,7 +123,7 @@ export class DoubleGun extends Weapon {
     cooltime: 1000,
     speed: 500,
     range: 150,
-    physicalDamage: 6,
+    physicalDamage: 8,
     magicalDamage: 0,
     physicalPenetration: 2,
     magicalPenetration: 0,
@@ -132,11 +132,11 @@ export class DoubleGun extends Weapon {
     targetLength: 2,
 
     splash: 0,
-    stun: 0, // 1000이어야 1초
+    stun: 0,
     stunMany: 0,
-    slow: 0, // 0.1이면 10%
+    slow: 0,
     slowOne: 0,
-    allCooltime: 0, // 0.01이 1%
+    allCooltime: 0,
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 2),
     criticalChance: 0,
@@ -182,19 +182,19 @@ export class MagicGun extends Weapon {
     speed: 500,
     range: 150,
     physicalDamage: 0,
-    magicalDamage: 50,
+    magicalDamage: 60,
     physicalPenetration: 0,
-    magicalPenetration: 5,
+    magicalPenetration: 6,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
     targetLength: 2,
 
     splash: 0,
-    stun: 0, // 1000이어야 1초
+    stun: 0,
     stunMany: 0,
-    slow: 0, // 0.1이면 10%
+    slow: 0,
     slowOne: 0,
-    allCooltime: 0, // 0.01이 1%
+    allCooltime: 0,
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 3),
     criticalChance: 0,
@@ -242,18 +242,18 @@ export class AirGun extends Weapon {
     range: 150,
     physicalDamage: 45,
     magicalDamage: 0,
-    physicalPenetration: 6,
+    physicalPenetration: 5,
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
     targetLength: 1,
 
     splash: 0,
-    stun: 0, // 1000이어야 1초
+    stun: 0,
     stunMany: 0,
-    slow: 0, // 0.1이면 10%
+    slow: 0,
     slowOne: 0,
-    allCooltime: 0, // 0.01이 1%
+    allCooltime: 0,
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 4),
     criticalChance: 0.2,
@@ -308,11 +308,11 @@ export class MachineGun extends Weapon {
     targetLength: 1,
 
     splash: 0,
-    stun: 0, // 1000이어야 1초
+    stun: 0,
     stunMany: 0,
-    slow: 0, // 0.1이면 10%
+    slow: 0,
     slowOne: 0,
-    allCooltime: 0, // 0.01이 1%
+    allCooltime: 0,
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 5),
     criticalChance: 0,
@@ -359,19 +359,19 @@ export class FingerGun extends Weapon {
     speed: 500,
     range: 150,
     physicalDamage: 0,
-    magicalDamage: 50,
+    magicalDamage: 60,
     physicalPenetration: 0,
-    magicalPenetration: 5,
+    magicalPenetration: 6,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
-    targetLength: 1,
+    targetLength: 2,
 
     splash: 0,
-    stun: 200, // 1000이어야 1초
+    stun: 200,
     stunMany: 0,
-    slow: 0, // 0.1이면 10%
+    slow: 0,
     slowOne: 0,
-    allCooltime: 0, // 0.01이 1%
+    allCooltime: 0,
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 6),
     criticalChance: 0,
@@ -426,11 +426,11 @@ export class BubbleGun extends Weapon {
     targetLength: 3,
 
     splash: 0,
-    stun: 0, // 1000이어야 1초
+    stun: 0,
     stunMany: 0,
-    slow: 0.3, // 0.1이면 10%
+    slow: 0.3,
     slowOne: 0,
-    allCooltime: 0, // 0.01이 1%
+    allCooltime: 0,
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 7),
     criticalChance: 0,
@@ -487,11 +487,11 @@ export class TazerGun extends Weapon {
     targetLength: 2,
 
     splash: 80,
-    stun: 0, // 1000이어야 1초
+    stun: 0,
     stunMany: 300,
-    slow: 0, // 0.1이면 10%
+    slow: 0,
     slowOne: 0,
-    allCooltime: 0, // 0.01이 1%
+    allCooltime: 0,
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 8),
     criticalChance: 0,
@@ -548,11 +548,11 @@ export class PulseGun extends Weapon {
     targetLength: 3,
 
     splash: 0,
-    stun: 0, // 1000이어야 1초
+    stun: 0,
     stunMany: 0,
-    slow: 0, // 0.1이면 10%
+    slow: 0,
     slowOne: 0.3,
-    allCooltime: 0, // 0.01이 1%
+    allCooltime: 0,
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 9),
     criticalChance: 0,
@@ -609,11 +609,11 @@ export class Firework extends Weapon {
     targetLength: 1,
 
     splash: 80,
-    stun: 0, // 1000이어야 1초
+    stun: 0,
     stunMany: 0,
-    slow: 0, // 0.1이면 10%
+    slow: 0,
     slowOne: 0,
-    allCooltime: 0, // 0.01이 1%
+    allCooltime: 0,
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 10),
     criticalChance: 0,
@@ -670,11 +670,11 @@ export class SilentKiller extends Weapon {
     targetLength: 1,
 
     splash: 0,
-    stun: 0, // 1000이어야 1초
+    stun: 0,
     stunMany: 0,
-    slow: 0, // 0.1이면 10%
+    slow: 0,
     slowOne: 0,
-    allCooltime: 0, // 0.01이 1%
+    allCooltime: 0,
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 11),
     criticalChance: 0.2,
@@ -731,11 +731,11 @@ export class DrillGun extends Weapon {
     targetLength: 1,
 
     splash: 0,
-    stun: 0, // 1000이어야 1초
+    stun: 0,
     stunMany: 0,
-    slow: 0, // 0.1이면 10%
+    slow: 0,
     slowOne: 0,
-    allCooltime: 0, // 0.01이 1%
+    allCooltime: 0,
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 12),
     criticalChance: 0,
@@ -792,11 +792,11 @@ export class PepperSpray extends Weapon {
     targetLength: 1,
 
     splash: 80,
-    stun: 0, // 1000이어야 1초
+    stun: 0,
     stunMany: 0,
-    slow: 0, // 0.1이면 10%
+    slow: 0,
     slowOne: 0.3,
-    allCooltime: 0, // 0.01이 1%
+    allCooltime: 0,
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 13),
     criticalChance: 0,
@@ -844,11 +844,11 @@ export class EyeGun extends Weapon {
     targetLength: 4,
 
     splash: 0,
-    stun: 0, // 1000이어야 1초
+    stun: 0,
     stunMany: 0,
-    slow: 0, // 0.1이면 10%
+    slow: 0,
     slowOne: 0,
-    allCooltime: 0, // 0.01이 1%
+    allCooltime: 0,
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 14),
     criticalChance: 0,
@@ -896,11 +896,11 @@ export class GrenadeLauncher extends Weapon {
     targetLength: 1,
 
     splash: 100,
-    stun: 0, // 1000이어야 1초
+    stun: 0,
     stunMany: 0,
-    slow: 0, // 0.1이면 10%
+    slow: 0,
     slowOne: 0,
-    allCooltime: 0, // 0.01이 1%
+    allCooltime: 0,
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 15),
     criticalChance: 0,
@@ -948,11 +948,11 @@ export class SilverBulletGun extends Weapon {
     targetLength: 4,
 
     splash: 0,
-    stun: 0, // 1000이어야 1초
+    stun: 0,
     stunMany: 0,
-    slow: 0, // 0.1이면 10%
+    slow: 0,
     slowOne: 0,
-    allCooltime: 0, // 0.01이 1%
+    allCooltime: 0,
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 16),
     criticalChance: 0.2,
@@ -1000,11 +1000,11 @@ export class PlasmaGun extends Weapon {
     targetLength: 3,
 
     splash: 0,
-    stun: 0, // 1000이어야 1초
+    stun: 0,
     stunMany: 0,
-    slow: 0, // 0.1이면 10%
+    slow: 0,
     slowOne: 0,
-    allCooltime: 0, // 0.01이 1%
+    allCooltime: 0,
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 17),
     criticalChance: 0,
@@ -1052,11 +1052,11 @@ export class Cannon extends Weapon {
     targetLength: 1,
 
     splash: 80,
-    stun: 0, // 1000이어야 1초
+    stun: 0,
     stunMany: 300,
-    slow: 0, // 0.1이면 10%
+    slow: 0,
     slowOne: 0,
-    allCooltime: 0, // 0.01이 1%
+    allCooltime: 0,
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 18),
     criticalChance: 0,
@@ -1104,11 +1104,11 @@ export class BlessedRevolver extends Weapon {
     targetLength: 4,
 
     splash: 0,
-    stun: 0, // 1000이어야 1초
+    stun: 0,
     stunMany: 0,
-    slow: 0, // 0.1이면 10%
+    slow: 0,
     slowOne: 0,
-    allCooltime: 0.3, // 0.01이 1%
+    allCooltime: 0.3,
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 19),
     criticalChance: 0,
@@ -1156,11 +1156,11 @@ export class CursedRevolver extends Weapon {
     targetLength: 4,
 
     splash: 0,
-    stun: 0, // 1000이어야 1초
+    stun: 0,
     stunMany: 0,
-    slow: 0.44, // 0.1이면 10%
+    slow: 0.44,
     slowOne: 0,
-    allCooltime: 0, // 0.01이 1%
+    allCooltime: 0,
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 20),
     criticalChance: 0,
@@ -1208,11 +1208,11 @@ export class HeartBreaker extends Weapon {
     targetLength: 1,
 
     splash: 0,
-    stun: 0, // 1000이어야 1초
+    stun: 0,
     stunMany: 0,
-    slow: 0, // 0.1이면 10%
+    slow: 0,
     slowOne: 0,
-    allCooltime: 0, // 0.01이 1%
+    allCooltime: 0,
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 21),
     criticalChance: 0.1,
@@ -1250,11 +1250,11 @@ export class RadiationBeam extends Weapon {
     targetLength: 4,
 
     splash: 0,
-    stun: 0, // 1000이어야 1초
+    stun: 0,
     stunMany: 0,
-    slow: 0, // 0.1이면 10%
+    slow: 0,
     slowOne: 0,
-    allCooltime: 0, // 0.01이 1%
+    allCooltime: 0,
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 22),
     criticalChance: 0,
@@ -1292,11 +1292,11 @@ export class Missile extends Weapon {
     targetLength: 4,
 
     splash: 120,
-    stun: 0, // 1000이어야 1초
+    stun: 0,
     stunMany: 500,
-    slow: 0, // 0.1이면 10%
+    slow: 0,
     slowOne: 0,
-    allCooltime: 0, // 0.01이 1%
+    allCooltime: 0,
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 23),
     criticalChance: 0,
@@ -1334,11 +1334,11 @@ export class Booger extends Weapon {
     targetLength: 3,
 
     splash: 80,
-    stun: 0, // 1000이어야 1초
+    stun: 0,
     stunMany: 0,
-    slow: 1, // 0.1이면 10%
+    slow: 1,
     slowOne: 0,
-    allCooltime: 0, // 0.01이 1%
+    allCooltime: 0,
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 24),
     criticalChance: 0,

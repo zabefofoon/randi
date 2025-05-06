@@ -103,41 +103,6 @@
     </section>
 
     <section class="area">
-      <h2 class="title">MusicPlayer</h2>
-      <div class="buttons-container">
-        <button
-          class="button"
-          @click="
-            musicStore.addMusicToPlay({
-              isrc: 'isrc1',
-              music: 'https://cdn.zzal.studio/studioassets/musics/aicompany/KRMIM2472434.mp3',
-              thumbnail: '',
-              name: 'music1',
-            })
-          ">
-          Music1
-          <template v-if="musicStore.musicToPlay?.isrc === 'isrc1'">
-            {{ musicStore.musicStatus }}
-          </template>
-        </button>
-        <button
-          class="button"
-          @click="
-            musicStore.addMusicToPlay({
-              isrc: 'isrc2',
-              music: 'https://cdn.zzal.studio/studioassets/musics/aicompany/KRMIM2472435.mp3',
-              thumbnail: '',
-              name: 'music2',
-            })
-          ">
-          Music2
-          <template v-if="musicStore.musicToPlay?.isrc === 'isrc2'">
-            {{ musicStore.musicStatus }}
-          </template>
-        </button>
-      </div>
-    </section>
-    <section class="area">
       <h2 class="title">Carousel</h2>
       <h2 class="sub-title">Gap</h2>
       <div class="carousel-row-gap-container">
@@ -241,13 +206,11 @@ import { I18N_COOKIE, I18N_COOKIE_MAX_AGE, LOADING_COVER } from "~/const"
 
 const route = useRoute()
 const snackbarStore = useSnackbarStore()
-const musicStore = useMusicStore()
 const i18n = useI18n()
 const globalLoadingStore = useGlobalLoadingStore()
 
 const isShowBasicModal = ref(false)
 const showBasicModal = (value = false): void => {
-  // INFO query[key] 추가시, filterModal.middleware에 추가
   navigateTo({
     path: route.path,
     query: { ...route.query, basicModal: value ? `${value}` : undefined },
@@ -262,7 +225,6 @@ const showGlobalCoverLoading = (): void => {
 }
 
 const showGlobalLoading = (duration = 1000): void => {
-  // INFO 확인용으로 만들어서 Key를 `DIM_${duration}`로 줬지만, 실사용시 const.ts에 key 등록
   globalLoadingStore.withGlobalDimLoading(`DIM_${duration}`, async () => {
     await etcUtil.sleep(duration)
   })
