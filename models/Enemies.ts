@@ -27,9 +27,26 @@ export class Enemies {
       { x: gameWidth * 0.87, y: gameHeight * 0.18 },
     ]
     this.baseSpeed = 160
+
+    this.createDamageTextPool(400)
   }
   get children() {
     return this.group.getChildren() as Enemy[]
+  }
+
+  createDamageTextPool(size = 200) {
+    const pool = this.scene.add.group({
+      classType: Phaser.GameObjects.BitmapText,
+      maxSize: size,
+      runChildUpdate: false,
+    })
+
+    // 미리 생성해서 in‑active 상태
+    for (let i = 0; i < size; i++) {
+      const t = this.scene.add.bitmapText(0, 0, "damageFont", "", 18).setAlpha(0).setVisible(false)
+      pool.add(t)
+    }
+    return pool
   }
 
   spawnEnemy(round: number, coins: Ref<number>) {
@@ -202,32 +219,33 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   }
 
   showDamageText(damageValue: number, weapon: Weapon) {
-    let color = "#ffffff"
-    if (weapon.level === 2) color = "#2563eb"
-    if (weapon.level === 3) color = "#9333ea"
-    if (weapon.level === 4) color = "#eab308"
-    if (weapon.level === 5) color = "#e879f9"
-    if (weapon.level === 6) color = "#f87171"
+    const tintColors = [0xffffff, 0x2563eb, 0x9333ea, 0xeab308, 0xe879f9, 0xf87171]
 
-    const dmgText = this.scene.add
-      .text(this.x, this.y - weapon.index * 8, `-${damageValue}`, {
-        fontSize: "18px",
-        color,
-        fontStyle: "bold",
-        stroke: "#000000",
-        strokeThickness: 3,
-        align: "center",
-      })
-      .setOrigin(0.5)
+    // ① 풀에서 하나 꺼내기
+    const text = this.scene.dmgPool.getFirstDead(false) as Phaser.GameObjects.BitmapText
+    if (!text) return // 풀 부족 → 그냥 무시하거나 확장
 
+    /* ② 초기 설정 */
+    const colorIndex = Math.min(weapon.level - 1, tintColors.length - 1)
+    text
+      .setActive(true) // ★ 반드시 살려 줍니다!
+      .setVisible(true)
+      .setText(`-${damageValue}`)
+      .setTint(tintColors[colorIndex])
+      .setPosition(this.x, this.y - weapon.index * 8)
+      .setAlpha(1)
+      .setDepth(10)
+
+    /* ③ 트윈으로 떠오르며 투명화 */
     this.scene.tweens.add({
-      targets: dmgText,
+      targets: text,
       y: this.y - 20 - weapon.index * 8,
       alpha: 0,
       duration: 800,
       ease: "Sine.easeOut",
       onComplete: () => {
-        dmgText.destroy()
+        text.setVisible(false)
+        text.setActive(false) // 풀로 반환
       },
     })
   }
@@ -313,7 +331,9 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     if (weaponData.criticalChance > 0) {
       const random = Phaser.Math.FloatBetween(0, 1)
       damage =
-        random < weaponData.criticalChance ? Math.ceil(damage * weaponData.criticalDamage) : damage
+        random < weaponData.criticalChance
+          ? Math.ceil(damage * weaponData.criticalDamage)
+          : Math.ceil(damage)
     }
     if (weaponData.dotted) this.applyDot(weaponData, damage, weaponData.dotted * 250, 250)
     if (weaponData.slowOne) {

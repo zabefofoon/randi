@@ -248,7 +248,7 @@ const materials = ref<Materials>(new Materials())
 
 const initialRemainnedTime = 3
 const roundTime = 45
-const enemyCountDeadline = 29
+const enemyCountDeadline = 39
 
 const round = ref(0)
 const remainnedTime = ref(initialRemainnedTime)
@@ -298,13 +298,17 @@ onMounted(() => {
     physics: {
       default: "arcade",
       arcade: {
-        debug: false,
+        debug: true,
       },
     },
     scene: {
       preload(this: Phaser.Scene) {
         const scene = this as Phaser.Scene
-
+        this.load.bitmapFont(
+          "damageFont",
+          "/assets/fonts/bit_map_text.png",
+          "/assets/fonts/bit_map_text.xml"
+        )
         scene.load.image("bullet", "/assets/images/bullet.png")
 
         scene.load.spritesheet("gun-sprite", "/assets/images/gun_sprite.png", {
@@ -361,6 +365,20 @@ onMounted(() => {
           .setDepth(999)
           .setScrollFactor(0)
 
+        scene.dmgPool = this.add.group({
+          classType: Phaser.GameObjects.BitmapText,
+          maxSize: 200,
+          runChildUpdate: false,
+        })
+        for (let i = 0; i < 300; i++) {
+          const t = this.add
+            .bitmapText(0, 0, "damageFont", "", 24)
+            .setAlpha(0)
+            .setVisible(false)
+            .setActive(false)
+          scene.dmgPool.add(t)
+        }
+
         const map = scene.make.tilemap({ key: "map" })
         const tileset = map.addTilesetImage("mainlevbuild2", "tiles")
         const tileset2 = map.addTilesetImage("mainlevbuild2", "tiles")
@@ -371,19 +389,22 @@ onMounted(() => {
 
         cursors = scene.input.keyboard!.createCursorKeys()
 
-        // 플레이어
         player = new Player(scene, 400, 300, "playerIdle")
         player.createPlayerAnimation()
-        enemies = new Enemies(scene, gameStore.selectedCharacter)
-        enforces.value = new Enforces()
-        weapons.value = new Weapons(scene, enemies, materials.value, enforces.value)
 
+        enemies = new Enemies(scene, gameStore.selectedCharacter)
         scene.anims.create({
           key: "enemy-walk",
           frames: scene.anims.generateFrameNumbers("enemy", { start: 0, end: 7 }),
           frameRate: 7,
           repeat: -1,
         })
+
+        enforces.value = new Enforces()
+        weapons.value = new Weapons(scene, enemies, materials.value, enforces.value)
+
+        const group = scene.add.group()
+        weapons.value.weapons.forEach(() => group.add(scene.add.circle(0, 0, 0, 0xff0000, 0.1)))
 
         const walls = scene.physics.add.staticGroup()
         walls.create(160, 130, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(10, 90).refreshBody()
@@ -489,6 +510,7 @@ onMounted(() => {
       update(this: Phaser.Scene, time: number) {
         const scene = this as Phaser.Scene
         if (scene.data.get("paused")) return
+        weapons.value?.updateDistDiscs(player.x, player.y)
 
         player.handlePlayerMovement(cursors)
         player.updatePlayerHpBar()
