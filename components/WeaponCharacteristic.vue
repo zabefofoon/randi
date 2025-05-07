@@ -35,7 +35,7 @@
       class="col-span-3 | border border-dotted border-gray-950"></div>
 
     <div v-if="weapon.cooltime">· 쿨타임: {{ weapon.cooltime / 1000 }}초</div>
-    <div v-if="weapon.allCooltime">· 전체 쿨타임: {{ weapon.allCooltime }}%</div>
+    <div v-if="weapon.allCooltime">· 전체 쿨타임: {{ weapon.allCooltime * 100 }}%</div>
 
     <div
       v-if="weapon.stun || weapon.stunMany"

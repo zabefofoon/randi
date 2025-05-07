@@ -89,7 +89,7 @@ watch(currentScene, (scene) =>
     if (scene === "inGame") {
       nuxt.$sound.play("bgm", {
         loop: -1,
-        volume: 0.8,
+        volume: 0.1,
       })
     } else {
       nuxt.$sound.stop("bgm")

@@ -126,8 +126,12 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     if (this.isBoss) this.setTint(0xff0000)
 
-    this.physicalDefence = this.isBoss ? numberUtil.addPercent(this.round, 10) : this.round
-    this.magicalDefence = this.isBoss ? numberUtil.addPercent(this.round, 10) : this.round
+    this.physicalDefence = this.isBoss
+      ? numberUtil.addPercent(this.round + this.increaseDefence(this.round), 10)
+      : this.round + this.increaseDefence(this.round)
+    this.magicalDefence = this.isBoss
+      ? numberUtil.addPercent(this.round + this.increaseDefence(this.round), 10)
+      : this.round + this.increaseDefence(this.round)
 
     this.pathes = paths
 
@@ -136,6 +140,11 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
   private increaseHP(index: number): number {
     return (Math.pow(index * 2, 2) + 10) * (Math.floor(this.round / 10) + 1)
+  }
+
+  increaseDefence(round: number): number {
+    const group = Math.ceil(round / 10)
+    return [0, 0, 5, 10, 15, 30, 60, 100][group]
   }
 
   moveEnemyAlongPath(player: Player, weapons: (Weapon | undefined)[], materials: Materials) {
