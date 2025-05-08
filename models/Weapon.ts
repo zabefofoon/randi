@@ -42,51 +42,13 @@ export interface NextInfo {
 
 export class Weapons {
   weapons: (Weapon | undefined)[] = [undefined, undefined, undefined, undefined]
-  weaponDistDiscs: Phaser.GameObjects.Group
 
   constructor(
     public scene: Phaser.Scene,
     public enemies: Enemies,
     public materials: Materials,
     public enforces: Enforces
-  ) {
-    this.weaponDistDiscs = this.scene.physics.add.group({ collideWorldBounds: false })
-
-    this.weapons.forEach((_, index) => {
-      let color
-      switch (index) {
-        case 0:
-          color = 0xff0000
-          break
-        case 1:
-          color = 0x0ff000
-          break
-        case 2:
-          color = 0x00ff00
-          break
-        case 3:
-          color = 0x000ff0
-          break
-      }
-      const circle = this.scene.add.circle(0, 0, 0, color, 0.1)
-      this.scene.physics.add.existing(circle)
-      const body = circle.body as Phaser.Physics.Arcade.Body
-      body.setCircle(1).setOffset(0).setAllowGravity(false).setImmovable(true)
-
-      this.weaponDistDiscs.add(circle)
-    })
-  }
-  updateDistDiscs(x: number, y: number) {
-    this.weaponDistDiscs.getChildren().forEach((disc) => {
-      const arc = disc as Phaser.GameObjects.Arc
-      arc.setPosition(x, y)
-    })
-
-    this.enemies.children.forEach((enemy) => enemy.clearTint())
-    this.scene.physics.overlap(this.weaponDistDiscs, this.enemies.group, (disc, enemy) => {
-      enemy.setTint(0xff0000)
-    })
-  }
+  ) {}
 
   getHowManyLevels(level: number) {
     return this.weapons.filter((weapon) => weapon).filter((weapon) => weapon!.level >= level).length
@@ -102,16 +64,6 @@ export class Weapons {
     this.scene.physics.add.overlap(w.group, this.enemies.group, (weaponObj, enemyObj) =>
       this.weaponHitEnemy(weaponObj, enemyObj, weapon)
     )
-
-    this.weaponDistDiscs.getChildren().forEach((disc, discIndex) => {
-      if (discIndex !== index) return
-
-      const arc = disc as Phaser.GameObjects.Arc
-      const body = arc.body as Phaser.Physics.Arcade.Body
-
-      // arc.setRadius(weapon.range)
-      // body.setCircle(weapon.range)
-    })
   }
 
   weaponHitEnemy(
@@ -182,7 +134,9 @@ export abstract class Weapon implements WeaponOptions {
 
   checkIsCooltime(time: number, cooldown: number) {
     return (
-      time > this.lastAttackTime + (this.cooltime - (this.cooltime * cooldown) / 100) / window.speed
+      time >
+      this.lastAttackTime +
+        Math.max(200, this.cooltime - (this.cooltime * cooldown) / 100) / window.speed
     )
   }
 

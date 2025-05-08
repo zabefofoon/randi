@@ -248,7 +248,7 @@ const materials = ref<Materials>(new Materials())
 
 const initialRemainnedTime = 3
 const roundTime = 45
-const enemyCountDeadline = 39
+const enemyCountDeadline = 29
 
 const round = ref(0)
 const remainnedTime = ref(initialRemainnedTime)
@@ -298,7 +298,7 @@ onMounted(() => {
     physics: {
       default: "arcade",
       arcade: {
-        debug: true,
+        debug: false,
       },
     },
     scene: {
@@ -357,7 +357,7 @@ onMounted(() => {
       },
       create(this: Phaser.Scene) {
         scene = this as Phaser.Scene
-
+        // scene.physics.world.timeScale = 0.5
         damageRect = scene.add
           .rectangle(0, 0, this.cameras.main.width, this.cameras.main.height, 0xff0000)
           .setOrigin(0)
@@ -370,7 +370,7 @@ onMounted(() => {
           maxSize: 200,
           runChildUpdate: false,
         })
-        for (let i = 0; i < 300; i++) {
+        for (let i = 0; i < 200; i++) {
           const t = this.add
             .bitmapText(0, 0, "damageFont", "", 24)
             .setAlpha(0)
@@ -510,7 +510,6 @@ onMounted(() => {
       update(this: Phaser.Scene, time: number) {
         const scene = this as Phaser.Scene
         if (scene.data.get("paused")) return
-        weapons.value?.updateDistDiscs(player.x, player.y)
 
         player.handlePlayerMovement(cursors)
         player.updatePlayerHpBar()
@@ -551,10 +550,15 @@ onMounted(() => {
 
                 if (distance <= weapon.range) {
                   weapon.fireHomingWeapon(index, time, player, enemy)
-                  const angleRad = Phaser.Math.Angle.Between(player.x, player.y, enemy.x, enemy.y)
 
                   if (index === 0) {
                     if (!player.gun.anims.isPlaying) {
+                      const angleRad = Phaser.Math.Angle.Between(
+                        player.x,
+                        player.y,
+                        enemy.x,
+                        enemy.y
+                      )
                       const offsetDist = 20
                       const offsetX = Math.cos(angleRad) * offsetDist
                       const offsetY = Math.sin(angleRad) * offsetDist
@@ -574,6 +578,12 @@ onMounted(() => {
                   }
                   if (index === 1) {
                     if (!player.knife.anims.isPlaying) {
+                      const angleRad = Phaser.Math.Angle.Between(
+                        player.x,
+                        player.y,
+                        enemy.x,
+                        enemy.y
+                      )
                       const offsetDist = -50
                       const offsetX = Math.cos(angleRad) * offsetDist
                       const offsetY = Math.sin(angleRad) * offsetDist

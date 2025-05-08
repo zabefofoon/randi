@@ -295,12 +295,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
             numberUtil.addPercent(
               +(
                 weaponData.magicalDamage *
-                Math.min(
-                  1,
-                  1 -
-                    distInSplash /
-                      (weaponData.splash + materials["vit"].length * materials["vit"].info.splash)
-                )
+                Math.min(1, 1 - distInSplash / (weaponData.splash + materials.calculateStat("vit")))
               ).toFixed(2) +
                 materials.calculateStat("int") +
                 enforces.getAditionnalPlus("magical"),

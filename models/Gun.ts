@@ -15,7 +15,7 @@ export class Gun extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
-    targetLength: 3,
+    targetLength: 1,
 
     splash: 0,
     stun: 0,
