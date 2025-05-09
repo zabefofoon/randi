@@ -122,7 +122,12 @@
               </div>
             </div>
             <div
-              class="flex-1 flex flex-col items-center justify-center | border-[0.15cqw] border-blue-950 rounded-lg | p-[1cqw]">
+              class="relative | flex-1 flex flex-col items-center justify-center | border-[0.15cqw] border-blue-950 rounded-lg | p-[1cqw]">
+              <div
+                v-if="isShowClear"
+                class="clear-anim | gasoek-one-regular | absolute left-[4cqw] top-[7cqw] | text-[3cqw]">
+                CLEAR!
+              </div>
               <div class="mt-[0.2cqh] | flex items-center justify-between | pr-[0.5cqw] rounded-lg">
                 <div
                   class="stat-sprites | w-[8cqw] aspect-square"
@@ -171,6 +176,8 @@ const gamblings = ref(0)
 const bonus = ref(0)
 const total = ref(0)
 
+const isShowClear = ref(false)
+
 const isBonusCharacter = computed(() => {
   return (
     gameStore.checkCharacter(gameStore.selectedCharacter) &&
@@ -206,8 +213,15 @@ const transitionNumberInterval = (
 }
 
 onMounted(async () => {
-  const _total = Object.values(gameStore.rewords).reduce((acc, current) => acc + current, 0)
-  const appliedharacterBonus = Math.ceil(numberUtil.addPercent(_total, 30))
+  const clearReward = gameStore.rewords.isClear * 2
+
+  const _total =
+    Object.values(gameStore.rewords).reduce((acc, current) => acc + current, 0) * clearReward
+
+  const appliedharacterBonus = isBonusCharacter.value
+    ? Math.ceil(numberUtil.addPercent(_total, 30))
+    : _total
+
   gameStore.setCurrentMoney(gameStore.currentMoney + appliedharacterBonus)
   await etcUtil.sleep(300)
 
@@ -232,8 +246,17 @@ onMounted(async () => {
   }
 
   await etcUtil.sleep(duration)
+  transitionNumberInterval(
+    total,
+    clearReward ? appliedharacterBonus / 2 : appliedharacterBonus,
+    duration
+  )
 
-  transitionNumberInterval(total, appliedharacterBonus, duration)
+  if (clearReward) {
+    await etcUtil.sleep(duration * 2)
+    isShowClear.value = true
+    transitionNumberInterval(total, appliedharacterBonus, duration)
+  }
 })
 
 watch([rounds, killed, materials, weapons, coins, enforces, gamblings, total, bonus], () => {
@@ -257,6 +280,10 @@ watch([rounds, killed, materials, weapons, coins, enforces, gamblings, total, bo
     opacity: 0;
     animation: appear 1000ms ease 300ms forwards;
   }
+
+  .clear-anim {
+    animation: clear-animation 300ms ease forwards;
+  }
 }
 
 @keyframes appear {
@@ -268,6 +295,18 @@ watch([rounds, killed, materials, weapons, coins, enforces, gamblings, total, bo
   100% {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+@keyframes clear-animation {
+  0% {
+    opacity: 0;
+    transform: scale(2);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(-45deg);
   }
 }
 </style>

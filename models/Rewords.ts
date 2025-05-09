@@ -6,4 +6,5 @@ export interface Rewords {
   coins: number
   enforces: number
   gamblings: number
+  isClear: number
 }

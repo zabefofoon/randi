@@ -3,6 +3,9 @@
     <ModalGameOver
       v-if="isShowGameOverPopup"
       @close="isShowGameOverPopup = false" />
+    <ModalGameClear
+      v-if="isShowGameClearPopup"
+      @close="isShowGameClearPopup = false" />
     <ModalConfigs
       v-if="isShowConfigPopup"
       @close="isShowConfigPopup = false"
@@ -258,6 +261,7 @@ const activeJoystick = ref<number>()
 const isShowMaterialsPopup = ref(false)
 const isShowWeaponsPopup = ref(false)
 const isShowGameOverPopup = ref(false)
+const isShowGameClearPopup = ref(false)
 const isShowGamblePopup = ref(false)
 const isShowConfigPopup = ref(false)
 
@@ -271,6 +275,7 @@ const selectedWeaponIndex = ref(0)
 const selectedGambleIndex = ref(0)
 let scene: Phaser.Scene
 let isBossRemained = false
+let isClear = false
 
 const isTouchDevice =
   "ontouchstart" in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0
@@ -498,6 +503,12 @@ onMounted(() => {
               isShowGameOverPopup.value = true
             }
 
+            if (round.value === 60 && remainnedTime.value === 0) {
+              scene.physics.pause()
+              isShowGameClearPopup.value = true
+              isClear = true
+            }
+
             if (46 > remainnedTime.value && remainnedTime.value > 35)
               enemies.spawnEnemy(round.value, coins)
             if (round.value >= 10 && round.value % 10 === 0 && remainnedTime.value === 45)
@@ -691,6 +702,7 @@ const rewords = computed(() => ({
     ? enforces.value?.items.reduce((acc, current) => acc + current.length, 0) ?? 0
     : 0,
   gamblings: round.value ? gamblings.value : 0,
+  isClear: isClear ? 1 : 0,
 }))
 
 const exit = () => {
@@ -722,6 +734,10 @@ watch(isShowGamblePopup, (value) => {
   else resume()
 })
 watch(isShowGameOverPopup, (value) => {
+  if (!value) exit()
+  else pause()
+})
+watch(isShowGameClearPopup, (value) => {
   if (!value) exit()
   else pause()
 })
