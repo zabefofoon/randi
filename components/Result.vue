@@ -213,10 +213,10 @@ const transitionNumberInterval = (
 }
 
 onMounted(async () => {
-  const clearReward = gameStore.rewords.isClear * 2
+  const clearReward = gameStore.rewords.isClear
 
   const _total =
-    Object.values(gameStore.rewords).reduce((acc, current) => acc + current, 0) * clearReward
+    Object.values(gameStore.rewords).reduce((acc, current) => acc + current, 0) * (clearReward + 1)
 
   const appliedharacterBonus = isBonusCharacter.value
     ? Math.ceil(numberUtil.addPercent(_total, 30))

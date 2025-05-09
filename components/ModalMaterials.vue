@@ -22,11 +22,11 @@
                 backgroundPosition: etcUtil.getSpritePosition(index),
               }"></div>
             <figcaption class="flex flex-col items-center">
-              <span class="text-outline text-[1.5cqw] font-bold">
+              <span class="text-outline text-[1.6cqw] font-bold">
                 {{ materials[key].info.key }}
               </span>
-              <span class="text-[1.1cqw]">{{ materials[key].info.description }}</span>
-              <span class="text-[1.1cqw]">{{ materials[key].length }}개</span>
+              <span class="text-outline text-[1.3cqw]">{{ materials[key].info.description }}</span>
+              <span class="text-outline text-[1.3cqw]">{{ materials[key].length }}개</span>
             </figcaption>
           </figure>
         </div>

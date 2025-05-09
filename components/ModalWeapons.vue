@@ -83,7 +83,7 @@
               <button
                 v-for="item in selectedWeapon?.nexts"
                 :key="item.cls.meta?.name"
-                class="select-none flex items-center gap-[1cqw] | mt-[1cqw] | px-[1cqw] py-[0.2cqw] | border-black border-[0.2cqw] rounded-lg disabled:bg-gray-700"
+                class="select-none flex items-center gap-[1cqw] | mt-[1cqw] | px-[1cqw] py-[0.2cqw] | border-black border-[0.2cqw] rounded-lg disabled:bg-gray-700 overflow-hidden"
                 :class="{
                   'bg-white': item.cls.meta?.level === 1,
                   'bg-blue-500': item.cls.meta?.level === 2,
@@ -95,6 +95,7 @@
                 :disabled="!checkGettable(item)"
                 @click="getNextWeapon(item)">
                 <div
+                  class="rounded-lg"
                   :class="{
                     'bg-white': item.cls.meta?.level === 1,
                     'bg-blue-600': item.cls.meta?.level === 2,
@@ -116,12 +117,12 @@
                 </div>
 
                 <div class="flex flex-col gap-[0.2cqw]">
-                  <div class="flex items-center gap-[0.5cqw]">
+                  <div class="flex items-center">
                     <span class="text-outline text-[1.5cqw] font-bold">
                       Lv.{{ item.cls.meta.level }} {{ item.cls.meta?.name }} 조합
                     </span>
                   </div>
-                  <div class="flex | text-outline text-[1.1cqw] text-left font-bold">
+                  <div class="flex | text-outline text-[1.3cqw] text-left font-bold">
                     <div
                       v-for="(material, index) in item.materials"
                       :key="material.key"
@@ -147,11 +148,11 @@
           </div>
           <button
             v-if="!selectedWeapon"
-            class="mt-[1cqw] | flex flex-col gap-[0.5cqw]"
+            class="mt-[1cqw] | flex flex-col items-center gap-[0.5cqw]"
             :disabled="!isWeaponGettable"
             @click="gachaWeapon">
             <span
-              class="py-[0.5cqw] | border-black border-[0.2cqw] rounded-lg | text-[1.5cqw] font-bold text-outline"
+              class="block | py-[0.5cqw] px-[2cqw] | border-black border-[0.2cqw] rounded-lg | text-[1.5cqw] font-bold text-outline"
               :class="{
                 'bg-orange-700': isWeaponGettable,
                 'bg-gray-700': !isWeaponGettable,

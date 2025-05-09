@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="weapon"
-    class="mt-[0.5cqw] | grid grid-cols-3 gap-[0.5cqw] text-[1.2cqw]">
+    class="mt-[0.5cqw] | grid grid-cols-3 gap-x-[0.5cqw] text-[1.3cqw]">
     <div v-if="weapon.physicalDamage">
       · 물리데미지: {{ stringUtil.attachComma(weapon.physicalDamage) }}
     </div>
