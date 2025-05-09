@@ -108,7 +108,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       .filter((enemy) => enemy.active)
       .map((enemy) => ({
         enemy,
-        dist: Phaser.Math.Distance.Between(this.x, this.y, enemy.x, enemy.y),
+        dist: enemy.distanceWithPlayer,
         isBoss: enemy.isBoss ? 0 : 1,
         hp: enemy.getData("hp") as number,
       }))

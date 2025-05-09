@@ -2,8 +2,8 @@ import Phaser from "phaser"
 import { Character, type PurchaseCharacter } from "./Character"
 import type { Enforces } from "./Enforces"
 import type { Materials } from "./Material"
-import type { Player } from "./Player"
 import type { Weapon } from "./Weapon"
+
 export class Enemies {
   scene: Phaser.Scene
   group: Phaser.Physics.Arcade.Group
@@ -32,6 +32,18 @@ export class Enemies {
   }
   get children() {
     return this.group.getChildren() as Enemy[]
+  }
+
+  updateDistances(px: number, py: number) {
+    const list = this.group.getChildren() as Enemy[]
+
+    for (let i = 0, n = list.length; i < n; i++) {
+      const e = list[i]
+      if (!e.active) continue
+
+      const distanceToPlayer = Phaser.Math.Distance.Between(e.x, e.y, px, py)
+      e.setDistanceWithPlayer(distanceToPlayer)
+    }
   }
 
   createDamageTextPool(size = 200) {
@@ -72,23 +84,29 @@ export class Enemies {
   }
 
   applySplashDamage(
-    enemy: Enemy,
-    centerX: number,
-    centerY: number,
-    weaponData: Weapon,
+    source: Enemy,
+    cx: number,
+    cy: number,
+    weapon: Weapon,
     materials: Materials,
     enforces: Enforces
   ) {
-    this.children
-      .filter((child) => child != enemy)
-      .forEach((enemy) => {
-        if (!enemy.active) return
+    const r = weapon.splash + materials.calculateStat("vit")
+    const rSq = r * r
+    const splashId = ++this.scene.data.values.splashSeq
 
-        const dist = Math.round(Phaser.Math.Distance.Between(centerX, centerY, enemy.x, enemy.y))
-        if (dist <= weaponData.splash + materials.calculateStat("vit")) {
-          enemy.takeDamage(weaponData, materials, enforces, dist)
-        }
-      })
+    for (const enemy of this.children) {
+      if (!enemy.active || enemy === source) continue
+
+      const dx = enemy.x - cx
+      const dy = enemy.y - cy
+      if (dx * dx + dy * dy > rSq) continue
+
+      if (enemy.lastSplashId !== splashId) {
+        enemy.lastSplashId = splashId
+        enemy.takeDamage(weapon, materials, enforces, Math.sqrt(dx * dx + dy * dy))
+      }
+    }
   }
 
   applyStunMany(centerX: number, centerY: number, weaponData: Weapon, materials: Materials) {
@@ -115,7 +133,8 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   magicalDefence = 0
   private hitSlowTimer?: Phaser.Time.TimerEvent
   stunManyTimer?: Phaser.Time.TimerEvent
-
+  distanceWithPlayer = 0
+  lastSplashId = 0
   private activeDots: Phaser.Time.TimerEvent[] = []
 
   constructor(
@@ -159,45 +178,53 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     return (Math.pow(index * 2, 2) + 10) * (Math.floor(this.round / 10) + 1)
   }
 
+  setDistanceWithPlayer(distance: number) {
+    this.distanceWithPlayer = distance
+  }
+
   increaseDefence(round: number): number {
     const group = Math.ceil(round / 10)
     return [0, 0, 5, 10, 15, 30, 60, 100][group]
   }
 
-  moveEnemyAlongPath(player: Player, weapons: (Weapon | undefined)[], materials: Materials) {
-    if (this.getData("stunned")) return
-    if (this.getData("stunnedMany")) return
+  moveEnemyAlongPath(weapons: (Weapon | undefined)[], materials: Materials) {
+    if (this.getData("stunned") || this.getData("stunnedMany")) return
+
     const pathIndex = this.getData("pathIndex") as number
     if (pathIndex == null) return
 
+    /* 1) 속도 결정 (플레이어 거리 = 캐시 사용) */
     const baseSpeed = numberUtil.addPercent(this.isBoss ? 80 : 120, this.round * 2) * window.speed
-    const distanceToPlayer = Phaser.Math.Distance.Between(this.x, this.y, player.x, player.y)
-    const slowRange = 200
 
-    const weaponSlows = weapons.reduce((acc, current) => acc + (current?.slow ?? 0), 0)
+    const slowRange = 200
+    const weaponSlows = weapons.reduce((a, w) => a + (w?.slow ?? 0), 0)
 
     const speed =
-      distanceToPlayer < slowRange
+      this.distanceWithPlayer < slowRange
         ? baseSpeed * (1 - Math.min(0.9, weaponSlows + materials.calculateStat("cul")))
         : baseSpeed
 
+    /* 2) 다음 노드 도착 판정 → 제곱거리로 교체 */
     const target = this.pathes[pathIndex]
-    const dist = Phaser.Math.Distance.Between(
-      this.x,
-      this.y,
-      this.pathes[pathIndex].x,
-      this.pathes[pathIndex].y
-    )
-    if (dist < 5) {
+    const dx = this.x - target.x
+    const dy = this.y - target.y
+
+    if (dx * dx + dy * dy < 25) {
+      // 5px^2 = 25
       this.x = target.x
       this.y = target.y
-      let nextIndex = pathIndex + 1
-      if (nextIndex >= this.pathes.length) nextIndex = 0
-      this.setFlipX([0, 3].includes(nextIndex))
-      this.setData("pathIndex", nextIndex)
+
+      let next = pathIndex + 1
+      if (next >= this.pathes.length) next = 0
+
+      this.setFlipX([0, 3].includes(next))
+      this.setData("pathIndex", next)
     }
-    const isSlowed = this.getData("slowed")
-    const totalSpeed = isSlowed ? speed * (1 - Math.min(0.9, isSlowed)) : speed
+
+    /* 3) moveTo 유지 */
+    const totalSpeed = this.getData("slowed")
+      ? speed * (1 - Math.min(0.9, this.getData("slowed")))
+      : speed
 
     if (this.active) this.scene.physics.moveTo(this, target.x, target.y, totalSpeed)
   }

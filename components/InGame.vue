@@ -357,6 +357,7 @@ onMounted(() => {
       },
       create(this: Phaser.Scene) {
         scene = this as Phaser.Scene
+        scene.data.set("splashSeq", 0)
         // scene.physics.world.timeScale = 0.5
         damageRect = scene.add
           .rectangle(0, 0, this.cameras.main.width, this.cameras.main.height, 0xff0000)
@@ -513,9 +514,9 @@ onMounted(() => {
 
         player.handlePlayerMovement(cursors)
         player.updatePlayerHpBar()
-
+        enemies.updateDistances(player.x, player.y)
         enemies.children.forEach((enemy) => {
-          enemy.moveEnemyAlongPath(player, weapons.value!.weapons, materials.value)
+          enemy.moveEnemyAlongPath(weapons.value!.weapons, materials.value)
           enemy.updateEnemyHpBar()
         })
 
@@ -541,14 +542,7 @@ onMounted(() => {
 
             if (isCooltime)
               player.getClosestEnemies(enemies, weapon.targetLength).forEach((enemy) => {
-                const distance = Phaser.Math.Distance.Between(
-                  player.x,
-                  player.y + 20,
-                  enemy.x,
-                  enemy.y
-                )
-
-                if (distance <= weapon.range) {
+                if (enemy.distanceWithPlayer <= weapon.range) {
                   weapon.fireHomingWeapon(index, time, player, enemy)
 
                   if (index === 0) {
