@@ -1190,7 +1190,7 @@ export class DragonSlayer extends Weapon {
     cooltime: 1000,
     speed: 500,
     range: 140,
-    physicalDamage: 5800,
+    physicalDamage: 4800,
     magicalDamage: 0,
     physicalPenetration: 89,
     magicalPenetration: 0,
@@ -1208,7 +1208,7 @@ export class DragonSlayer extends Weapon {
     spritePosition: etcUtil.getWeaponSpritePosition(1, 21),
     criticalChance: 0,
     criticalDamage: 0,
-    dotted: 50,
+    dotted: 5,
   }
 
   constructor() {
@@ -1233,7 +1233,7 @@ export class SnotWhip extends Weapon {
     speed: 500,
     range: 140,
     physicalDamage: 0,
-    magicalDamage: 5600,
+    magicalDamage: 4600,
     physicalPenetration: 0,
     magicalPenetration: 82,
     physicalAllPercent: 0,
@@ -1316,11 +1316,11 @@ export class DeathScythe extends Weapon {
     cooltime: 1000,
     speed: 500,
     range: 90,
-    physicalDamage: 10,
+    physicalDamage: 4444,
     magicalDamage: 0,
     physicalPenetration: 4444,
     magicalPenetration: 0,
-    physicalAllPercent: 44,
+    physicalAllPercent: 0,
     magicalAllPercent: 0,
     targetLength: 1,
 

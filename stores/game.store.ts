@@ -18,6 +18,7 @@ export const useGameStore = defineStore("gameStore", () => {
     coins: 0,
     enforces: 0,
     gamblings: 0,
+    isClear: 0,
   })
 
   const setRewords = (data: Rewords) => {

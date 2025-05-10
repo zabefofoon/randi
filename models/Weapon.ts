@@ -90,7 +90,7 @@ export class Weapons {
       this.materials,
       this.enforces
     )
-    this.enemies.applyStunMany(weapon.x, weapon.y, weaponData, this.materials)
+    this.enemies.applyStunMany(enemy, weapon.x, weapon.y, weaponData, this.materials)
     weaponObj.destroy()
   }
 }
