@@ -4,6 +4,8 @@ import type { Enforces } from "./Enforces"
 import type { Materials } from "./Material"
 import type { Weapon } from "./Weapon"
 
+let timeKey = 0
+
 export class Enemies {
   scene: Phaser.Scene
   group: Phaser.Physics.Arcade.Group
@@ -35,6 +37,8 @@ export class Enemies {
   }
 
   updateDistances(px: number, py: number) {
+    timeKey++
+    if (timeKey % 2 === 0) return
     const list = this.group.getChildren() as Enemy[]
 
     for (let i = 0, n = list.length; i < n; i++) {
@@ -184,7 +188,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
   increaseDefence(round: number): number {
     const group = Math.ceil(round / 10)
-    return [0, 0, 5, 10, 15, 30, 60, 100][group]
+    return [0, 0, 5, 10, 30, 60, 120, 240][group]
   }
 
   moveEnemyAlongPath(weapons: (Weapon | undefined)[], materials: Materials) {
