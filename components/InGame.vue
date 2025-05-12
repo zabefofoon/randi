@@ -371,13 +371,13 @@ onMounted(() => {
           .setDepth(999)
           .setScrollFactor(0)
 
-        scene.dmgPool = this.add.group({
+        scene.dmgPool = scene.add.group({
           classType: Phaser.GameObjects.BitmapText,
           maxSize: 200,
           runChildUpdate: false,
         })
         for (let i = 0; i < 200; i++) {
-          const t = this.add
+          const t = scene.add
             .bitmapText(0, 0, "damageFont", "", 24)
             .setAlpha(0)
             .setVisible(false)
@@ -442,6 +442,7 @@ onMounted(() => {
         scene.events.on("enemy-die", () => {
           killed.value++
           remainnedEnemies.value--
+          coins.value += round.value
         })
         scene.events.on("enemy-spawn", () => {
           remainnedEnemies.value++
@@ -554,7 +555,7 @@ onMounted(() => {
             if (isCooltime)
               player.getClosestEnemies(enemies, weapon.targetLength).forEach((enemy) => {
                 if (enemy.distanceWithPlayer <= weapon.range) {
-                  weapon.fireHomingWeapon(index, time, player, enemy)
+                  weapon.fireHomingWeapon(weapons.value!, index, time, player, enemy)
 
                   if (index === 0) {
                     if (!player.gun.anims.isPlaying) {
@@ -636,8 +637,7 @@ onMounted(() => {
 
         weapons.value!.weapons.forEach((weapon) => {
           if (!weapon) return
-          weapon.followEnemy()
-          weapon.destroyWhenOutOfMap()
+          weapon.followEnemy(weapons.value!)
         })
       },
     },

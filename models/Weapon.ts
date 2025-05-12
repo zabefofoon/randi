@@ -42,13 +42,36 @@ export interface NextInfo {
 
 export class Weapons {
   weapons: (Weapon | undefined)[] = [undefined, undefined, undefined, undefined]
+  bulletPool: Phaser.GameObjects.Group
 
   constructor(
     public scene: Phaser.Scene,
     public enemies: Enemies,
     public materials: Materials,
     public enforces: Enforces
-  ) {}
+  ) {
+    this.bulletPool = this.scene.physics.add.group({
+      classType: Phaser.GameObjects.Image,
+      maxSize: 120,
+      runChildUpdate: false,
+    })
+    for (let i = 0; i < 120; i++) {
+      const bullet = scene.physics.add
+        .image(0, 0, "bullet")
+        .setScale(0.1)
+        .setActive(false)
+        .setVisible(false)
+      this.bulletPool.add(bullet)
+    }
+
+    scene.physics.add.overlap(
+      this.bulletPool,
+      enemies.group,
+      (bullet, enemy) => this.weaponHitEnemy(bullet, enemy),
+      undefined,
+      this
+    )
+  }
 
   getHowManyLevels(level: number) {
     return this.weapons.filter((weapon) => weapon).filter((weapon) => weapon!.level >= level).length
@@ -56,29 +79,11 @@ export class Weapons {
 
   addWeapon(index: number, weapon: Weapon) {
     this.weapons[index] = weapon
-    const w = this.weapons[index]
-    if (!w) return
-
-    w.group = this.scene.physics.add.group({ collideWorldBounds: false })
-
-    this.scene.physics.add.overlap(w.group, this.enemies.group, (weaponObj, enemyObj) =>
-      this.weaponHitEnemy(weaponObj, enemyObj, weapon)
-    )
   }
 
-  weaponHitEnemy(
-    weaponObj:
-      | Phaser.Physics.Arcade.Body
-      | Phaser.Physics.Arcade.StaticBody
-      | Phaser.Types.Physics.Arcade.GameObjectWithBody
-      | Phaser.Tilemaps.Tile,
-    enemyObj:
-      | Phaser.Physics.Arcade.Body
-      | Phaser.Physics.Arcade.StaticBody
-      | Phaser.Types.Physics.Arcade.GameObjectWithBody
-      | Phaser.Tilemaps.Tile,
-    weaponData: Weapon
-  ) {
+  weaponHitEnemy(weaponObj: Phaser.Physics.Arcade.Image, enemyObj: Phaser.Physics.Arcade.Sprite) {
+    const weaponData = weaponObj.getData("weaponData")
+
     const weapon = weaponObj as Phaser.Physics.Arcade.Sprite
     const enemy = enemyObj as Enemy
     this.enemies.takeDamage(enemy, weaponData, this.materials, this.enforces)
@@ -91,7 +96,8 @@ export class Weapons {
       this.enforces
     )
     this.enemies.applyStunMany(enemy, weapon.x, weapon.y, weaponData, this.materials)
-    weaponObj.destroy()
+
+    weaponObj.disableBody(true, true)
   }
 }
 
@@ -128,6 +134,7 @@ export abstract class Weapon implements WeaponOptions {
   criticalChance = 0
   criticalDamage = 0
   dotted = 0
+
   constructor(weapon: WeaponOptions) {
     Object.assign(this, weapon)
   }
@@ -140,50 +147,49 @@ export abstract class Weapon implements WeaponOptions {
     )
   }
 
-  fireHomingWeapon(weaponIndex: number, currentTime: number, player: Player, enemy: Enemy) {
+  fireHomingWeapon(
+    weapons: Weapons,
+    weaponIndex: number,
+    currentTime: number,
+    player: Player,
+    enemy: Enemy
+  ) {
     this.lastAttackTime = currentTime
 
-    const bullet = this.group?.create(
-      player.x,
-      player.y,
-      "bullet"
-    ) as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
-    if (!bullet) return
+    const bullet1 = weapons.bulletPool.getFirstDead(false)
+    if (!bullet1) return
 
-    bullet.setScale(0.1).setActive(true).setVisible(true).setData("target", enemy).setDepth(1)
+    bullet1
+      .enableBody(true, player.x, player.y, true, true) // (x,y, show, activate)
+      .setScale(0.1)
+      .setData("weaponData", weapons.weapons[weaponIndex])
+      .setData("target", enemy)
 
-    if (weaponIndex === 1) bullet.setAlpha(0)
-
-    const angle = Phaser.Math.Angle.Between(bullet.x, bullet.y, enemy.x, enemy.y)
-    bullet.body.setVelocity(Math.cos(angle) * this.speed, Math.sin(angle) * this.speed)
+    if (!bullet1.body) return
+    const angle = Phaser.Math.Angle.Between(bullet1.x, bullet1.y, enemy.x, enemy.y)
+    bullet1.body.setVelocity(Math.cos(angle) * this.speed, Math.sin(angle) * this.speed)
   }
 
-  followEnemy() {
-    this.group?.getChildren().forEach((obj) => {
-      const weaponObj = obj as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
-      if (!weaponObj.active) return
+  followEnemy(weapons: Weapons) {
+    const children = weapons.bulletPool.getChildren()
+    for (const bullet of children) {
+      const bulletObj = bullet as Phaser.Physics.Arcade.Image
+      if (!bulletObj.active) return // false 대신 void
 
-      const target = weaponObj.getData(
-        "target"
-      ) as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
-      if (!target || !target.active) return
-
-      const angle = Phaser.Math.Angle.Between(weaponObj.x, weaponObj.y, target.x, target.y)
-      weaponObj.body.setVelocity(Math.cos(angle) * this.speed, Math.sin(angle) * this.speed)
-
-      this.destroyWhenOutOfMap()
-    })
-  }
-
-  destroyWhenOutOfMap() {
-    this.group?.getChildren().forEach((obj) => {
-      const weaponObj = obj as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
-      if (!weaponObj.active) return
-
-      if (weaponObj.x < 0 || weaponObj.x > 960 || weaponObj.y < 0 || weaponObj.y > 540) {
-        weaponObj.destroy()
+      const target = bulletObj.getData("target") as Enemy
+      if (!target || !target.active) {
+        bulletObj.disableBody(true, true)
+        return
       }
-    })
+
+      const ang = Phaser.Math.Angle.Between(bulletObj.x, bulletObj.y, target.x, target.y)
+      const body = bulletObj.body as Phaser.Physics.Arcade.Body
+      body.setVelocity(Math.cos(ang) * this.speed, Math.sin(ang) * this.speed)
+
+      // 화면 밖 검사
+      if (bulletObj.x < 0 || bulletObj.x > 960 || bulletObj.y < 0 || bulletObj.y > 540)
+        bulletObj.disableBody(true, true)
+    }
   }
 
   setIndex(index: number) {
