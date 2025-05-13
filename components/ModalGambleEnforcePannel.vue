@@ -79,11 +79,15 @@ const gacha = (enforce: EnforceItem, index: number) => {
 
     el.classList.remove("success-animate")
     el.classList.add("success-animate")
-    el.addEventListener("animationend", () => el.classList.remove("success-animate"))
+    etcUtil.restartAnimation(el)
+    el.addEventListener("animationend", () => el.classList.remove("success-animate"), {
+      once: true,
+    })
   } else {
     el.classList.remove("fail-animate")
     el.classList.add("fail-animate")
-    el.addEventListener("animationend", () => el.classList.remove("fail-animate"))
+    etcUtil.restartAnimation(el)
+    el.addEventListener("animationend", () => el.classList.remove("fail-animate"), { once: true })
   }
   nuxt.$sound.play("coin")
 }
@@ -99,6 +103,7 @@ const gacha = (enforce: EnforceItem, index: number) => {
     background: linear-gradient(180deg, transparent, rgb(50 205 50 / 50%), transparent);
     background-size: 300% 300%;
     animation: success-animation 200ms ease;
+    will-change: background-position;
   }
 }
 
@@ -112,6 +117,7 @@ const gacha = (enforce: EnforceItem, index: number) => {
     background: linear-gradient(180deg, transparent, rgb(220 20 60 / 50%), transparent);
     background-size: 300% 300%;
     animation: fail-animation 200ms ease;
+    will-change: background-position;
   }
 }
 

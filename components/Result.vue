@@ -15,7 +15,7 @@
             <div
               class="flex-1 | flex flex-col justify-center gap-[0.2cqw] | border-[0.15cqw] border-blue-950 rounded-lg | p-[1cqw]">
               <div class="flex items-center justify-between">
-                <div class="flex items-center">
+                <div class="flex items-center gap-[0.5cqw]">
                   <div
                     class="stat-sprites | w-[3cqw] aspect-square"
                     :style="{
@@ -28,7 +28,7 @@
                 </div>
               </div>
               <div class="flex items-center justify-between">
-                <div class="flex items-center">
+                <div class="flex items-center gap-[0.5cqw]">
                   <div
                     class="stat-sprites | w-[3cqw] aspect-square"
                     :style="{
@@ -41,7 +41,7 @@
                 </div>
               </div>
               <div class="flex items-center justify-between">
-                <div class="flex items-center">
+                <div class="flex items-center gap-[0.5cqw]">
                   <div
                     class="stat-sprites | w-[3cqw] aspect-square"
                     :style="{
@@ -54,7 +54,7 @@
                 </div>
               </div>
               <div class="flex items-center justify-between">
-                <div class="flex items-center">
+                <div class="flex items-center gap-[0.5cqw]">
                   <div
                     class="stat-sprites | w-[3cqw] aspect-square"
                     :style="{
@@ -67,7 +67,7 @@
                 </div>
               </div>
               <div class="flex items-center justify-between">
-                <div class="flex items-center">
+                <div class="flex items-center gap-[0.5cqw]">
                   <div
                     class="stat-sprites | w-[3cqw] aspect-square"
                     :style="{
@@ -80,7 +80,7 @@
                 </div>
               </div>
               <div class="flex items-center justify-between">
-                <div class="flex items-center">
+                <div class="flex items-center gap-[0.5cqw]">
                   <div
                     class="stat-sprites | w-[3cqw] aspect-square"
                     :style="{
@@ -93,7 +93,7 @@
                 </div>
               </div>
               <div class="flex items-center justify-between">
-                <div class="flex items-center">
+                <div class="flex items-center gap-[0.5cqw]">
                   <div
                     class="stat-sprites | w-[3cqw] aspect-square"
                     :style="{
@@ -108,11 +108,13 @@
               <div
                 v-if="isBonusCharacter"
                 class="flex items-center justify-between">
-                <div class="flex items-center">
+                <div class="flex items-center gap-[0.5cqw]">
                   <div
-                    class="stat-sprites | w-[3cqw] aspect-square"
+                    class="profile-sprites | w-[3cqw] aspect-square"
                     :style="{
-                      backgroundPosition: etcUtil.getSpritePosition(10),
+                      backgroundPosition: etcUtil.getProfileSpritePosition(
+                        gameStore.selectedCharacterIndex
+                      ),
                     }"></div>
                   <span>캐릭터 점수</span>
                 </div>

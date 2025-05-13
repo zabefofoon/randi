@@ -36,4 +36,10 @@ export default {
   getPurchaseSpritePosition(index: number): string {
     return `calc(100% * ${index} / ${PURCHASE_LENGTH}) 0`
   },
+
+  restartAnimation(el: HTMLElement) {
+    el.classList.remove("pop-animate")
+    void el.offsetWidth
+    el.classList.add("pop-animate")
+  },
 }

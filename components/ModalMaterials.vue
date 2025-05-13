@@ -121,7 +121,8 @@ const gacha = () => {
   if (el) {
     el.classList.remove("pop-animate")
     el.classList.add("pop-animate")
-    el.addEventListener("animationend", () => el?.classList.remove("pop-animate"))
+    etcUtil.restartAnimation(el)
+    el.addEventListener("animationend", () => el?.classList.remove("pop-animate"), { once: true })
   }
 }
 
@@ -152,6 +153,7 @@ const initJokerLength = () => {
   if (gameStore.checkSelectedPurchaseItem(Joker))
     jokerLength.value = gameStore.purchasedItems[Joker.meta.id]
 }
+
 onMounted(() => {
   initJokerLength()
 })
@@ -161,10 +163,12 @@ onMounted(() => {
   background: linear-gradient(49deg, #b87115, #f2ae37, #f84cd0);
   background-size: 180% 180%;
   animation: gradient-animation 3s ease infinite;
+  will-change: background-size, background-poisition;
 }
 
 .pop-animate {
   animation: pop-rotate 400ms ease;
+  will-change: transform;
 }
 
 @keyframes pop-rotate {
