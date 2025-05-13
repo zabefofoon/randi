@@ -67,7 +67,7 @@ export class Weapons {
     scene.physics.add.overlap(
       this.bulletPool,
       enemies.group,
-      (bullet, enemy) => this.weaponHitEnemy(bullet, enemy),
+      (bullet, enemy) => this.weaponHitEnemy(bullet as Phaser.Physics.Arcade.Image, enemy as Enemy),
       undefined,
       this
     )
@@ -81,23 +81,16 @@ export class Weapons {
     this.weapons[index] = weapon
   }
 
-  weaponHitEnemy(weaponObj: Phaser.Physics.Arcade.Image, enemyObj: Phaser.Physics.Arcade.Sprite) {
-    const weaponData = weaponObj.getData("weaponData")
+  weaponHitEnemy(bullet: Phaser.Physics.Arcade.Image, enemy: Enemy) {
+    const weaponData = bullet.getData("weaponData")
 
-    const weapon = weaponObj as Phaser.Physics.Arcade.Sprite
-    const enemy = enemyObj as Enemy
-    this.enemies.takeDamage(enemy, weaponData, this.materials, this.enforces)
-    this.enemies.applySplashDamage(
-      enemy,
-      weapon.x,
-      weapon.y,
-      weaponData,
-      this.materials,
-      this.enforces
-    )
-    this.enemies.applyStunMany(enemy, weapon.x, weapon.y, weaponData, this.materials)
+    enemy.takeDamage(weaponData, this.materials, this.enforces)
+    enemy.applyStunOne(weaponData, this.materials)
 
-    weaponObj.disableBody(true, true)
+    this.enemies.applyStunMany(enemy, bullet, this.materials)
+    this.enemies.applySplashDamage(enemy, bullet, this.materials, this.enforces)
+
+    bullet.disableBody(true, true)
   }
 }
 

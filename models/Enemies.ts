@@ -83,18 +83,13 @@ export class Enemies {
     this.scene.events.emit("enemy-spawn")
   }
 
-  takeDamage(enemy: Enemy, weapon: Weapon, materials: Materials, enforces: Enforces) {
-    enemy.takeDamage(weapon, materials, enforces)
-  }
-
   applySplashDamage(
     source: Enemy,
-    cx: number,
-    cy: number,
-    weapon: Weapon,
+    bullet: Phaser.Physics.Arcade.Image,
     materials: Materials,
     enforces: Enforces
   ) {
+    const weapon = bullet.getData("weaponData") as Weapon
     const r = weapon.splash + materials.calculateStat("vit")
     const rSq = r * r
     const splashId = ++this.scene.data.values.splashSeq
@@ -102,8 +97,8 @@ export class Enemies {
     for (const enemy of this.children) {
       if (!enemy.active || enemy === source) continue
 
-      const dx = enemy.x - cx
-      const dy = enemy.y - cy
+      const dx = enemy.x - bullet.x
+      const dy = enemy.y - bullet.y
       if (dx * dx + dy * dy > rSq) continue
 
       if (enemy.lastSplashId !== splashId) {
@@ -113,49 +108,31 @@ export class Enemies {
     }
   }
 
-  applyStunMany(
-    source: Enemy,
-    centerX: number,
-    centerY: number,
-    weaponData: Weapon,
-    materials: Materials
-  ) {
+  applyStunMany(source: Enemy, bullet: Phaser.Physics.Arcade.Image, materials: Materials) {
+    const weaponData = bullet.getData("weaponData")
+
     const r = weaponData.splash + materials.calculateStat("vit")
     const rSq = r * r
     const splashId = ++this.scene.data.values.splashSeq
 
+    source.remainedStuns[weaponData.index] = Math.min(
+      weaponData.stunMany,
+      source.remainedStuns[weaponData.index] + weaponData.stunMany
+    )
+
     for (const enemy of this.children) {
       if (!enemy.active || enemy === source) continue
 
-      const dx = enemy.x - centerX
-      const dy = enemy.y - centerY
+      const dx = enemy.x - bullet.x
+      const dy = enemy.y - bullet.y
       if (dx * dx + dy * dy > rSq) continue
 
-      if (enemy.lastSplashId !== splashId) {
-        enemy.data.set("stunnedMany", true)
-        enemy.stunManyTimer?.remove()
-        enemy.stunManyTimer = this.scene.time.delayedCall(weaponData.stunMany, () => {
-          if (!enemy?.active) return
-          enemy.data.set("stunnedMany", false)
-          enemy.stunManyTimer = undefined
-        })
-      }
+      if (enemy.lastSplashId !== splashId)
+        enemy.remainedStuns[weaponData.index] = Math.min(
+          weaponData.stunMany,
+          source.remainedStuns[weaponData.index] + weaponData.stunMany
+        )
     }
-
-    this.children.forEach((enemy) => {
-      if (!enemy.active) return
-
-      const dist = Math.round(Phaser.Math.Distance.Between(centerX, centerY, enemy.x, enemy.y))
-      if (dist <= weaponData.splash + materials.calculateStat("vit")) {
-        enemy.data.set("stunnedMany", true)
-        enemy.stunManyTimer?.remove()
-        enemy.stunManyTimer = this.scene.time.delayedCall(weaponData.stunMany, () => {
-          if (!enemy?.active) return
-          enemy.data.set("stunnedMany", false)
-          enemy.stunManyTimer = undefined
-        })
-      }
-    })
   }
 }
 
@@ -164,10 +141,11 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   physicalDefence = 0
   magicalDefence = 0
   private hitSlowTimer?: Phaser.Time.TimerEvent
-  stunManyTimer?: Phaser.Time.TimerEvent
   distanceWithPlayer = 0
   lastSplashId = 0
   private activeDots: Phaser.Time.TimerEvent[] = []
+  remainedStuns = [0, 0, 0, 0]
+  stunTimer?: Phaser.Time.TimerEvent
 
   constructor(
     scene: Phaser.Scene,
@@ -195,70 +173,101 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     if (this.isBoss) this.setTint(0xff0000)
 
     this.physicalDefence = this.isBoss
-      ? numberUtil.addPercent(this.round + this.increaseDefence(this.round), 10)
-      : this.round + this.increaseDefence(this.round)
+      ? numberUtil.addPercent(this.increaseDefence(this.round), 100)
+      : this.increaseDefence(this.round)
+
     this.magicalDefence = this.isBoss
-      ? numberUtil.addPercent(this.round + this.increaseDefence(this.round), 10)
-      : this.round + this.increaseDefence(this.round)
+      ? numberUtil.addPercent(this.increaseDefence(this.round), 100)
+      : this.increaseDefence(this.round)
 
     this.pathes = paths
 
     this.anims.play("enemy-walk")
+
+    this.stunTimer = this.scene.time.addEvent({
+      delay: 100,
+      repeat: -1,
+      callback: () => this.clearStunStack(),
+      callbackScope: this,
+    })
   }
 
-  private increaseHP(index: number): number {
-    return (Math.pow(index * 2, 2) + 10) * (Math.floor(this.round / 10) + 1)
+  applyStunOne(weapon: Weapon, materials: Materials) {
+    const stunValue = weapon.stun + materials.calculateStat("cha")
+    this.remainedStuns[weapon.index] = Math.min(
+      stunValue,
+      this.remainedStuns[weapon.index] + stunValue
+    )
+  }
+
+  clearStunStack() {
+    this.remainedStuns.forEach((item, index) => {
+      if (item < 1) return
+      this.remainedStuns[index] -= 100
+    })
+  }
+
+  increaseHP(round: number): number {
+    const _round = round - 1
+    const roundGroup = Math.ceil(_round / 10)
+    const roundMultiplies = [1, 1, 1.1, 1.2, 1.3, 1.5, 2, 2.5]
+    const result = (Math.pow(_round * 2, 2) + 10) * (Math.floor(_round / 10) + 1)
+    return Math.ceil(result * (roundMultiplies?.[roundGroup] ?? 1))
+  }
+
+  increaseDefence(round: number): number {
+    const roundGroup = Math.ceil(round / 10)
+    const value = [0, 0, 5, 10, 30, 60, 120, 240][roundGroup]
+    return value + round
   }
 
   setDistanceWithPlayer(distance: number) {
     this.distanceWithPlayer = distance
   }
 
-  increaseDefence(round: number): number {
-    const group = Math.ceil(round / 10)
-    return [0, 0, 5, 10, 30, 60, 120, 240][group]
-  }
-
   moveEnemyAlongPath(weapons: (Weapon | undefined)[], materials: Materials) {
-    if (this.getData("stunned") || this.getData("stunnedMany")) return
+    if (this.remainedStuns.some((item) => item > 0)) {
+      this.body?.velocity.set(0, 0)
+      return
+    }
 
     const pathIndex = this.getData("pathIndex") as number
     if (pathIndex == null) return
 
-    /* 1) 속도 결정 (플레이어 거리 = 캐시 사용) */
-    const baseSpeed = numberUtil.addPercent(this.isBoss ? 80 : 120, this.round * 2) * window.speed
-
-    const slowRange = 200
-    const weaponSlows = weapons.reduce((a, w) => a + (w?.slow ?? 0), 0)
-
-    const speed =
-      this.distanceWithPlayer < slowRange
-        ? baseSpeed * (1 - Math.min(0.9, weaponSlows + materials.calculateStat("cul")))
-        : baseSpeed
-
-    /* 2) 다음 노드 도착 판정 → 제곱거리로 교체 */
     const target = this.pathes[pathIndex]
     const dx = this.x - target.x
     const dy = this.y - target.y
 
     if (dx * dx + dy * dy < 25) {
-      // 5px^2 = 25
       this.x = target.x
       this.y = target.y
 
       let next = pathIndex + 1
       if (next >= this.pathes.length) next = 0
 
-      this.setFlipX([0, 3].includes(next))
-      this.setData("pathIndex", next)
+      this.setFlipX([0, 3].includes(next)).setData("pathIndex", next)
     }
 
-    /* 3) moveTo 유지 */
-    const totalSpeed = this.getData("slowed")
-      ? speed * (1 - Math.min(0.9, this.getData("slowed")))
-      : speed
+    if (this.active)
+      this.scene.physics.moveTo(this, target.x, target.y, this.calculateSpeed(weapons, materials))
+  }
 
-    if (this.active) this.scene.physics.moveTo(this, target.x, target.y, totalSpeed)
+  calculateSpeed(weapons: (Weapon | undefined)[], materials: Materials) {
+    const slowRange = 150
+    const weaponSlows = weapons.reduce((a, w) => a + (w?.slow ?? 0), 0)
+
+    const enemySpeed = this.isBoss ? 80 : 120
+    const appliedGameSpeed = enemySpeed * window.speed
+    const appliedRoundSpeed = numberUtil.addPercent(appliedGameSpeed, this.round * 2)
+
+    const appliedMaterialSpeed =
+      this.distanceWithPlayer < slowRange
+        ? appliedRoundSpeed * (1 - Math.min(0.9, weaponSlows + materials.calculateStat("cul")))
+        : appliedRoundSpeed
+
+    return this.getData("slowed")
+      ? appliedMaterialSpeed * (1 - Math.min(0.9, this.getData("slowed")))
+      : appliedMaterialSpeed
   }
 
   updateEnemyHpBar() {
@@ -280,14 +289,12 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   showDamageText(damageValue: number, weapon: Weapon) {
     const tintColors = [0xffffff, 0x2563eb, 0x9333ea, 0xeab308, 0xe879f9, 0xf87171]
 
-    // ① 풀에서 하나 꺼내기
     const text = this.scene.dmgPool.getFirstDead(false) as Phaser.GameObjects.BitmapText
-    if (!text) return // 풀 부족 → 그냥 무시하거나 확장
+    if (!text) return
 
-    /* ② 초기 설정 */
     const colorIndex = Math.min(weapon.level - 1, tintColors.length - 1)
     text
-      .setActive(true) // ★ 반드시 살려 줍니다!
+      .setActive(true)
       .setVisible(true)
       .setText(`-${damageValue}`)
       .setTint(tintColors[colorIndex])
@@ -295,7 +302,6 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       .setAlpha(1)
       .setDepth(10)
 
-    /* ③ 트윈으로 떠오르며 투명화 */
     this.scene.tweens.add({
       targets: text,
       y: this.y - 20 - weapon.index * 8,
@@ -304,7 +310,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       ease: "Sine.easeOut",
       onComplete: () => {
         text.setVisible(false)
-        text.setActive(false) // 풀로 반환
+        text.setActive(false)
       },
     })
   }
@@ -410,16 +416,6 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     this.showDamageText(damage, weaponData)
 
-    if (!this.getData("stunned")) {
-      this.setData("stunned", true)
-
-      this.body?.velocity.set(0, 0)
-
-      this.scene.time.delayedCall(weaponData.stun + materials.calculateStat("cha"), () =>
-        this.setData("stunned", false)
-      )
-    }
-
     if (this.getData("hp") <= 0) this.die()
   }
   applyDot(weaponData: Weapon, totalDamage: number, duration: number, tick = 500) {
@@ -435,7 +431,8 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     this.activeDots.push(timer)
   }
-  private takeDotDamage(weaponData: Weapon, amount: number, event: Phaser.Time.TimerEvent) {
+
+  takeDotDamage(weaponData: Weapon, amount: number, event: Phaser.Time.TimerEvent) {
     if (!this.active) return
 
     const hp = this.getData("hp") as number
@@ -466,5 +463,6 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     if (hpBar) hpBar.destroy()
     this.destroy()
     this.activeDots.forEach((t) => t.remove())
+    this.stunTimer?.destroy()
   }
 }
