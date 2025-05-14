@@ -10,6 +10,7 @@ import type { PurchaseItem, PurchasedItem } from "~/models/PurchaseItem"
 import type { Rewords } from "~/models/Rewords"
 
 export const useGameStore = defineStore("gameStore", () => {
+  const route = useRoute()
   const rewords = ref<Rewords>({
     rounds: 0,
     killed: 0,
@@ -116,6 +117,7 @@ export const useGameStore = defineStore("gameStore", () => {
   }
 
   const checkHasCollection = (weaponName: string) => {
+    if (route.query.d === "1") return true
     return collection.value.includes(weaponName)
   }
 
