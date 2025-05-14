@@ -10,4 +10,8 @@ export default {
     const rate = n / 100
     return base + base * rate
   },
+  subtractPercent(base: number, n: number): number {
+    const rate = n / 100
+    return base - base * rate
+  },
 }

@@ -73,6 +73,10 @@ export class Weapons {
     )
   }
 
+  get minLevel() {
+    return this.weapons.map((weapon) => weapon?.level ?? 0).sort((a, b) => a - b)[0]
+  }
+
   getHowManyLevels(level: number) {
     return this.weapons.filter((weapon) => weapon).filter((weapon) => weapon!.level >= level).length
   }

@@ -82,6 +82,9 @@ onMounted(() => {
   nuxt.$sound.registerSound("/assets/sounds/knife.mp3", "knife")
   nuxt.$sound.registerSound("/assets/sounds/book.mp3", "book")
   nuxt.$sound.registerSound("/assets/sounds/ring.mp3", "ring")
+  nuxt.$sound.registerSound("/assets/sounds/attacked.mp3", "attacked")
+  nuxt.$sound.registerSound("/assets/sounds/weapons.mp3", "weapons")
+
   store.set(LAST_ACCESS, TODAY)
 })
 watch(currentScene, (scene) =>

@@ -253,6 +253,8 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   }
 
   calculateSpeed(weapons: (Weapon | undefined)[], materials: Materials) {
+    const isAllWeaponActiveLevel = this.scene.data.get("isAllWeaponActive") ?? 0
+
     const slowRange = 150
     const weaponSlows = weapons.reduce((a, w) => a + (w?.slow ?? 0), 0)
 
@@ -265,9 +267,14 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
         ? appliedRoundSpeed * (1 - Math.min(0.9, weaponSlows + materials.calculateStat("cul")))
         : appliedRoundSpeed
 
+    const appliedWeaponActive = numberUtil.subtractPercent(
+      appliedMaterialSpeed,
+      isAllWeaponActiveLevel * 5
+    )
+
     return this.getData("slowed")
-      ? appliedMaterialSpeed * (1 - Math.min(0.9, this.getData("slowed")))
-      : appliedMaterialSpeed
+      ? appliedWeaponActive * (1 - Math.min(0.9, this.getData("slowed")))
+      : appliedWeaponActive
   }
 
   updateEnemyHpBar() {
@@ -395,7 +402,12 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
           ? Math.ceil(damage * weaponData.criticalDamage)
           : Math.ceil(damage)
     }
-    if (weaponData.dotted) this.applyDot(weaponData, damage, weaponData.dotted * 250, 250)
+    const isAllWeaponActiveLevel = this.scene.data.get("isAllWeaponActive") ?? 0
+
+    damage = numberUtil.addPercent(damage, isAllWeaponActiveLevel * 20)
+    const finalDamage = Math.ceil(damage)
+
+    if (weaponData.dotted) this.applyDot(weaponData, finalDamage, weaponData.dotted * 250, 250)
     if (weaponData.slowOne) {
       this.setData("slowed", weaponData.slowOne)
 
@@ -406,7 +418,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.hitSlowTimer = undefined
       })
     }
-    this.setData("hp", currentHP - damage)
+    this.setData("hp", currentHP - finalDamage)
 
     this.setTintFill(0xff0000)
     this.scene.time.delayedCall(100, () => {
@@ -414,7 +426,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       if (this.isBoss) this.setTint(0xff0000)
     })
 
-    this.showDamageText(damage, weaponData)
+    this.showDamageText(finalDamage, weaponData)
 
     if (this.getData("hp") <= 0) this.die()
   }

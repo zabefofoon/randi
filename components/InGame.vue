@@ -22,6 +22,7 @@
     <ModalWeapons
       v-if="weapons && isShowWeaponsPopup"
       v-model:selected-index="selectedWeaponIndex"
+      v-model:is-all-weapon-effect="isAllWeaponEffect"
       :weapons="weapons"
       :materials="materials"
       @close="isShowWeaponsPopup = false" />
@@ -273,6 +274,9 @@ const gamblings = ref(0)
 
 const selectedWeaponIndex = ref(0)
 const selectedGambleIndex = ref(0)
+
+const isAllWeaponEffect = ref(false)
+
 let scene: Phaser.Scene
 let isBossRemained = false
 let isClear = false
@@ -359,6 +363,16 @@ onMounted(() => {
           frameWidth: 96,
           frameHeight: 96,
         })
+
+        scene.load.spritesheet("weapons-animation", "/assets/images/weapons_sprite1.png", {
+          frameWidth: 100,
+          frameHeight: 100,
+        })
+
+        scene.load.spritesheet("weapons-animation2", "/assets/images/weapons_sprite2.png", {
+          frameWidth: 100,
+          frameHeight: 100,
+        })
       },
       create(this: Phaser.Scene) {
         scene = this as Phaser.Scene
@@ -397,6 +411,8 @@ onMounted(() => {
 
         player = new Player(scene, 400, 300, "playerIdle")
         player.createPlayerAnimation()
+        player.weapons.setFrame(8)
+        player.weaponsEffect.setFrame(8)
 
         enemies = new Enemies(scene, gameStore.selectedCharacter)
         scene.anims.create({
@@ -491,6 +507,7 @@ onMounted(() => {
               scene.cameras.main.shake(100, 0.01)
               damageRect.setAlpha(1 - (playerHP - 1) / 10)
 
+              nuxt.$sound.play("attacked", { volume: 0.5 })
               scene.tweens.add({
                 targets: damageRect,
                 alpha: 0,
@@ -500,6 +517,7 @@ onMounted(() => {
             }
 
             if (playerHP < 1) {
+              nuxt.$sound.play("attacked", { volume: 0.5 })
               scene.physics.pause()
               isShowGameOverPopup.value = true
             }
@@ -523,7 +541,6 @@ onMounted(() => {
       update(this: Phaser.Scene, time: number) {
         const scene = this as Phaser.Scene
         if (scene.data.get("paused")) return
-
         player.handlePlayerMovement(cursors)
         player.updatePlayerHpBar()
         enemies.updateDistances(player.x, player.y)
@@ -554,7 +571,7 @@ onMounted(() => {
 
             if (isCooltime)
               player.getClosestEnemies(enemies, weapon.targetLength).forEach((enemy) => {
-                if (enemy.distanceWithPlayer <= weapon.range) {
+                if (enemy.distanceWithPlayer && enemy.distanceWithPlayer <= weapon.range) {
                   weapon.fireHomingWeapon(weapons.value!, index, time, player, enemy)
 
                   if (index === 0) {
@@ -571,7 +588,7 @@ onMounted(() => {
 
                       player.gun
                         .setOrigin(0.1, 0.5)
-                        .setTint(0xffffff)
+                        .setTint(etcUtil.getLevelColorHex(weapon.level))
                         .setRotation(angleRad + Phaser.Math.DegToRad(0))
                         .setPosition(player.x + offsetX, player.y + offsetY)
                         .play("gun-animation")
@@ -596,7 +613,7 @@ onMounted(() => {
 
                       player.knife
                         .setOrigin(0.1, 0.5)
-                        .setTint(0xffffff)
+                        .setTint(etcUtil.getLevelColorHex(weapon.level))
                         .setRotation(angleRad + Phaser.Math.DegToRad(0))
                         .setPosition(player.x + offsetX, player.y + offsetY)
                         .play("knife-animation")
@@ -610,7 +627,7 @@ onMounted(() => {
                   if (index === 2) {
                     if (!player.book.anims.isPlaying) {
                       player.book
-                        .setTint(0xffffff)
+                        .setTint(etcUtil.getLevelColorHex(weapon.level))
                         .play("book-animation")
                         .once("animationcomplete-book-animation", () => {
                           player.book.setFrame(0)
@@ -622,7 +639,7 @@ onMounted(() => {
                   if (index === 3) {
                     if (!player.ring.anims.isPlaying) {
                       player.ring
-                        .setTint(0xffffff)
+                        .setTint(etcUtil.getLevelColorHex(weapon.level))
                         .play("ring-animation")
                         .once("animationcomplete-ring-animation", () => {
                           player.ring.setFrame(0)
@@ -643,6 +660,101 @@ onMounted(() => {
     },
   })
 })
+
+const allAttack = async () => {
+  if (!weapons.value) return
+  isAllWeaponEffect.value = false
+
+  const ws = weapons.value.weapons.filter((w): w is Weapon => !!w)
+
+  for (let i = 0; i < ws.length; i++) {
+    const weapon = ws[i]
+
+    const targets = [...enemies.children]
+
+    for (const enemy of targets) enemy.takeDamage(weapon, materials.value, enforces.value!)
+
+    if (targets.length) {
+      if (i === 0) {
+        nuxt.$sound.play("gun")
+        player.gun
+          .setPosition(player.x + 20, player.y)
+          .play("gun-animation")
+          .once("animationcomplete-gun-animation", () => {
+            player.gun.setFrame(0)
+          })
+      }
+
+      if (i === 1) {
+        nuxt.$sound.play("knife")
+        player.knife
+          .setPosition(player.x + 20, player.y)
+          .play("knife-animation")
+          .once("animationcomplete-knife-animation", () => {
+            player.knife.setFrame(0)
+          })
+      }
+      if (i === 2) {
+        nuxt.$sound.play("book")
+        player.book
+          .setPosition(player.x, player.y)
+          .play("book-animation")
+          .once("animationcomplete-book-animation", () => {
+            player.book.setFrame(0)
+          })
+      }
+      if (i === 3) {
+        nuxt.$sound.play("ring")
+        player.ring
+          .setPosition(player.x, player.y)
+          .play("ring-animation")
+          .once("animationcomplete-ring-animation", () => {
+            player.ring.setFrame(0)
+          })
+      }
+    }
+
+    await etcUtil.sleep(250)
+  }
+}
+
+const allAttackAnimation = async () => {
+  const cam = scene.cameras.main
+  const centerX = cam.width / 2
+  const centerY = cam.height / 2
+  // 1) 카메라 플래시 + 쉐이크
+  cam.flash(300, 255, 255, 255)
+  cam.shake(300, 0.01)
+
+  // 2) 풀스크린 반투명 오버레이
+  const overlay = scene.add
+    .rectangle(centerX, centerY, cam.width, cam.height, 0xffff00, 0.2)
+    .setDepth(100)
+  scene.tweens.add({
+    targets: overlay,
+    alpha: 0,
+    duration: 500,
+    ease: "Cubic.easeOut",
+    onComplete: () => overlay.destroy(),
+  })
+  const weaponLevel = weapons.value?.minLevel ?? 0
+  player.weaponsEffect.setTint(etcUtil.getLevelColorHex(weaponLevel)).setFrame(8)
+  player.weapons.setTint(etcUtil.getLevelColorHex(weaponLevel)).setFrame(8)
+  player.gun.setTint(etcUtil.getLevelColorHex(weaponLevel))
+  player.knife.setTint(etcUtil.getLevelColorHex(weaponLevel))
+  player.book.setTint(etcUtil.getLevelColorHex(weaponLevel))
+  player.ring.setTint(etcUtil.getLevelColorHex(weaponLevel))
+  scene.data.set("isAllWeaponActive", weaponLevel)
+  pause()
+
+  player.weaponsEffect.setPosition(player.x, player.y).setFrame(8).play("weapons-animation")
+  nuxt.$sound.play("weapons", nuxt.$sound.INTERRUPT_ANY, 0, 1000)
+  await etcUtil.sleep(1000)
+  allAttack()
+  await etcUtil.sleep(1000)
+  resume()
+  player.weapons.setPosition(player.x, player.y).play("weapons-animation2")
+}
 
 onBeforeUnmount(() => {
   if (game) game.destroy(true)
@@ -725,9 +837,12 @@ watch(isShowMaterialsPopup, (value) => {
   if (value) pause()
   else resume()
 })
-watch(isShowWeaponsPopup, (value) => {
+watch(isShowWeaponsPopup, async (value) => {
   if (value) pause()
-  else resume()
+  else {
+    resume()
+    if (isAllWeaponEffect.value) allAttackAnimation()
+  }
 })
 watch(isShowGamblePopup, (value) => {
   if (value) pause()

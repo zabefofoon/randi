@@ -6,6 +6,8 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   gun!: Phaser.GameObjects.Sprite
   book!: Phaser.GameObjects.Sprite
   ring!: Phaser.GameObjects.Sprite
+  weapons!: Phaser.GameObjects.Sprite
+  weaponsEffect!: Phaser.GameObjects.Sprite
 
   constructor(scene: Phaser.Scene, x: number, y: number, key: string) {
     super(scene, x, y, key)
@@ -41,6 +43,16 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       .sprite(x, y, "ring-sprite", 0)
       .setScale(0.5)
       .setDepth(this.depth + 1)
+
+    this.weapons = scene.add
+      .sprite(x, y, "weapons-animation2", 0)
+      .setScale(1)
+      .setDepth(this.depth + 1)
+
+    this.weaponsEffect = scene.add
+      .sprite(x, y, "weapons-animation", 0)
+      .setScale(1)
+      .setDepth(this.depth + 1)
   }
 
   get isIdle() {
@@ -52,6 +64,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 
     this.book.setPosition(this.x, this.y)
     this.ring.setPosition(this.x, this.y)
+    this.weapons.setPosition(this.x, this.y + 20)
   }
 
   updatePlayerHpBar() {
@@ -157,6 +170,19 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       frames: this.anims.generateFrameNumbers("ring-sprite", { start: 0, end: 6 }),
       frameRate: 14,
       repeat: 0,
+    })
+
+    this.scene.anims.create({
+      key: "weapons-animation",
+      frames: this.anims.generateFrameNumbers("weapons-animation", { start: 0, end: 8 }),
+      frameRate: 8,
+      repeat: 0,
+    })
+    this.scene.anims.create({
+      key: "weapons-animation2",
+      frames: this.anims.generateFrameNumbers("weapons-animation2", { start: 0, end: 8 }),
+      frameRate: 8,
+      repeat: -1,
     })
 
     return this

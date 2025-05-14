@@ -42,4 +42,23 @@ export default {
     void el.offsetWidth
     el.classList.add("pop-animate")
   },
+
+  getLevelColorHex(level: number) {
+    switch (level) {
+      case 1:
+        return 0xffffff
+      case 2:
+        return 0x3b82f6
+      case 3:
+        return 0x9333ea
+      case 4:
+        return 0xfacc15
+      case 5:
+        return 0xe879f9
+      case 6:
+        return 0xf87171
+      default:
+        return 0xffffff
+    }
+  },
 }

@@ -2,7 +2,7 @@
   <UIModal
     enable-dim-click-close
     hide-close-button
-    inner-class="!max-w-[50cqw] | !bg-transparent"
+    inner-class="!max-w-[56cqw] | !bg-transparent"
     @close="emit('close')">
     <template #content>
       <div class="flex items-center gap-[1cqw]">
@@ -126,7 +126,7 @@
                     <div
                       v-for="(material, index) in item.materials"
                       :key="material.key"
-                      class="flex">
+                      class="flex | whitespace-nowrap">
                       <span v-if="index !== 0">&nbsp;+&nbsp;</span>
                       <span
                         :class="{
@@ -185,10 +185,13 @@ const emit = defineEmits<{
 }>()
 
 const selectedIndex = defineModel<number>("selectedIndex", { default: 0 })
+const isAllWeaponEffect = defineModel<boolean>("isAllWeaponEffect", { default: false })
 
 const nuxt = useNuxtApp()
 
 const gameStore = useGameStore()
+
+let minLevel = 0
 
 const needLength = computed(() => selectedIndex.value * 4)
 const selectedWeapon = computed(() => {
@@ -222,6 +225,9 @@ const gachaWeapon = () => {
       doneCount++
     }
   }
+
+  loadAllAttack()
+
   nuxt.$sound.play("equip")
 }
 
@@ -233,6 +239,9 @@ const getNextWeapon = (item: NextInfo) => {
   const cls = item.cls as typeof Gun
   props.weapons.addWeapon(selectedIndex.value, new cls().setIndex(selectedIndex.value))
   gameStore.addCollection(cls.meta.name)
+
+  loadAllAttack()
+
   nuxt.$sound.play("equip")
 }
 
@@ -275,7 +284,13 @@ const getNeedLevel = (item: NextInfo) => {
   }
 }
 
-watch(selectedIndex, () => {
-  nuxt.$sound.play("select")
+const loadAllAttack = () => {
+  isAllWeaponEffect.value = props.weapons.minLevel > minLevel
+}
+
+onMounted(() => {
+  minLevel = props.weapons.minLevel
 })
+
+watch(selectedIndex, () => nuxt.$sound.play("select"))
 </script>
