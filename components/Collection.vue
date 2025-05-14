@@ -3,7 +3,8 @@
     <ModalCollectionWeapon
       v-if="isShowWeaponModal"
       :weapon="isShowWeaponModal"
-      @close="isShowWeaponModal = undefined" />
+      @close="isShowWeaponModal = undefined"
+      @select="selectNextWeapon" />
     <div
       class="content | relative | grid place-items-center | aspect-video max-w-full max-h-full | text-white overflow-hidden">
       <div class="pattern | absolute top-0 left-0 z-[0] | w-full h-full | opacity-40"></div>
@@ -283,9 +284,14 @@ const weapons = shallowRef<(typeof Weapon)[]>([
   FourLeafClover,
 ])
 
-const isShowWeaponModal = ref()
+const isShowWeaponModal = ref<typeof Weapon>()
 const showWeaponModal = (weapon: typeof Weapon) => {
   isShowWeaponModal.value = weapon
+}
+
+const selectNextWeapon = (weapon: typeof Weapon) => {
+  isShowWeaponModal.value = undefined
+  etcUtil.sleep(1).then(() => (isShowWeaponModal.value = weapon))
 }
 </script>
 

@@ -24,8 +24,8 @@ export interface WeaponOptions {
   splash: number // 스플래시 범위 50정도가 적당한듯
   stun: number // 스턴 1000가 1초
   stunMany: number // 범위스턴 1000가 1초
-  slow: number // 전체 0.1이 10%
-  slowOne: number // 단일 슬로우 0.1이 10%
+  slow: number // 1이 1%
+  slowOne: number // 단일 슬로우 1이 1%
   allCooltime: number // 전체 쿨타임 0.1이 10%
   spritePosition: string
   criticalChance: number // 0.1이 10%

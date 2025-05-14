@@ -262,13 +262,18 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     const appliedGameSpeed = enemySpeed * window.speed
     const appliedRoundSpeed = numberUtil.addPercent(appliedGameSpeed, this.round * 2)
 
-    const appliedMaterialSpeed =
+    const appliedMaterial =
       this.distanceWithPlayer < slowRange
-        ? appliedRoundSpeed * (1 - Math.min(0.9, weaponSlows + materials.calculateStat("cul")))
+        ? numberUtil.subtractPercent(appliedRoundSpeed, materials.calculateStat("cul"))
         : appliedRoundSpeed
 
+    const applyWeaponSlow =
+      this.distanceWithPlayer < slowRange
+        ? numberUtil.subtractPercent(appliedMaterial, weaponSlows)
+        : appliedMaterial
+
     const appliedWeaponActive = numberUtil.subtractPercent(
-      appliedMaterialSpeed,
+      applyWeaponSlow,
       isAllWeaponActiveLevel * 5
     )
 

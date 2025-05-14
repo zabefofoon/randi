@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="weapon"
-    class="mt-[0.5cqw] | grid grid-cols-3 gap-x-[0.5cqw] text-[1.3cqw]">
+    class="mt-[0.5cqw] | grid grid-cols-3 gap-x-[0.5cqw] text-[1.3cqw] | text-outline">
     <div v-if="weapon.physicalDamage">
       · 물리데미지: {{ stringUtil.attachComma(weapon.physicalDamage) }}
     </div>
@@ -31,10 +31,12 @@
     <div v-if="weapon.splash">· 스플래쉬: {{ stringUtil.attachComma(weapon.splash) }}</div>
 
     <div
-      v-if="weapon.cooltime || weapon.allCooltime"
+      v-if="weapon.cooltime !== 1000 || weapon.allCooltime"
       class="col-span-3 | border border-dotted border-gray-950"></div>
 
-    <div v-if="weapon.cooltime">· 쿨타임: {{ weapon.cooltime / 1000 }}초</div>
+    <div v-if="weapon.cooltime && weapon.cooltime !== 1000">
+      · 쿨타임: {{ weapon.cooltime / 1000 }}초
+    </div>
     <div v-if="weapon.allCooltime">· 전체 쿨타임: {{ weapon.allCooltime * 100 }}%</div>
 
     <div
@@ -48,8 +50,8 @@
       v-if="weapon.slowOne || weapon.slow"
       class="col-span-3 | border border-dotted border-gray-950"></div>
 
-    <div v-if="weapon.slowOne">· 단일 슬로우 : {{ weapon.slowOne * 100 }}%</div>
-    <div v-if="weapon.slow">· 영역 슬로우 : {{ weapon.slow * 100 }}%</div>
+    <div v-if="weapon.slowOne">· 단일 슬로우 : {{ weapon.slowOne }}%</div>
+    <div v-if="weapon.slow">· 영역 슬로우 : {{ weapon.slow }}%</div>
 
     <template v-if="weapon.criticalChance">
       <div class="col-span-3 | border border-dotted border-gray-950"></div>
