@@ -187,9 +187,8 @@ const emit = defineEmits<{
 const selectedIndex = defineModel<number>("selectedIndex", { default: 0 })
 const isAllWeaponEffect = defineModel<boolean>("isAllWeaponEffect", { default: false })
 
-const nuxt = useNuxtApp()
-
 const gameStore = useGameStore()
+const soundStore = useSoundStore()
 
 let minLevel = 0
 
@@ -228,7 +227,7 @@ const gachaWeapon = () => {
 
   loadAllAttack()
 
-  nuxt.$sound.play("equip")
+  soundStore.play("equip")
 }
 
 const getNextWeapon = (item: NextInfo) => {
@@ -242,7 +241,7 @@ const getNextWeapon = (item: NextInfo) => {
 
   loadAllAttack()
 
-  nuxt.$sound.play("equip")
+  soundStore.play("equip")
 }
 
 const isWeaponGettable = computed(() => {
@@ -292,5 +291,5 @@ onMounted(() => {
   minLevel = props.weapons.minLevel
 })
 
-watch(selectedIndex, () => nuxt.$sound.play("select"))
+watch(selectedIndex, () => soundStore.play("select"))
 </script>

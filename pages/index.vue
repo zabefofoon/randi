@@ -29,10 +29,10 @@
 <script lang="ts" setup>
 import store from "store2"
 import { LAST_ACCESS } from "~/const"
-const nuxt = useNuxtApp()
 const TODAY = new Date().toISOString().slice(0, 10)
 const snackbarStore = useSnackbarStore()
 const gameStore = useGameStore()
+const soundStore = useSoundStore()
 
 const currentScene = ref<
   "lobby" | "select" | "inGame" | "store" | "collection" | "result" | "setting"
@@ -64,6 +64,8 @@ const checkFirstAccessToday = () => {
 }
 
 onMounted(() => {
+  soundStore.preloadSounds()
+
   if (checkFirstAccessToday()) {
     snackbarStore.showSnackbar({
       message: "접속 보상 100코인 적립",
@@ -72,31 +74,16 @@ onMounted(() => {
 
     gameStore.setCurrentMoney(gameStore.currentMoney + 100)
   }
-  nuxt.$sound.registerSound("assets/sounds/game_bgm.mp3", "bgm")
-  nuxt.$sound.registerSound("assets/sounds/door.mp3", "door")
-  nuxt.$sound.registerSound("assets/sounds/coin.mp3", "coin")
-  nuxt.$sound.registerSound("assets/sounds/select.mp3", "select")
-  nuxt.$sound.registerSound("assets/sounds/equip.mp3", "equip")
-  nuxt.$sound.registerSound("assets/sounds/stat.mp3", "stat")
-  nuxt.$sound.registerSound("assets/sounds/gun.mp3", "gun")
-  nuxt.$sound.registerSound("assets/sounds/knife.mp3", "knife")
-  nuxt.$sound.registerSound("assets/sounds/book.mp3", "book")
-  nuxt.$sound.registerSound("assets/sounds/ring.mp3", "ring")
-  nuxt.$sound.registerSound("assets/sounds/attacked.mp3", "attacked")
-  nuxt.$sound.registerSound("assets/sounds/weapons.mp3", "weapons")
 
   store.set(LAST_ACCESS, TODAY)
 })
 watch(currentScene, (scene) =>
   setTimeout(() => {
     if (scene === "inGame") {
-      nuxt.$sound.play("bgm", {
-        loop: -1,
-        volume: 0.1,
-      })
+      soundStore.playBGM("bgm", 0.1)
     } else {
-      nuxt.$sound.stop("bgm")
-      nuxt.$sound.play("door")
+      soundStore.stopBGM()
+      soundStore.play("door")
     }
   })
 )

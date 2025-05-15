@@ -234,8 +234,8 @@ const emit = defineEmits<{
   (e: "next", scene: "result"): void
 }>()
 
-const nuxt = useNuxtApp()
 const gameStore = useGameStore()
+const soundStore = useSoundStore()
 
 const phaserContainer = ref<HTMLDivElement>()
 
@@ -506,8 +506,8 @@ onMounted(() => {
               player.setData("hp", playerHP - 1)
               scene.cameras.main.shake(100, 0.01)
               damageRect.setAlpha(1 - (playerHP - 1) / 10)
+              soundStore.play("attacked")
 
-              nuxt.$sound.play("attacked", { volume: 0.5 })
               scene.tweens.add({
                 targets: damageRect,
                 alpha: 0,
@@ -517,7 +517,8 @@ onMounted(() => {
             }
 
             if (playerHP < 1) {
-              nuxt.$sound.play("attacked", { volume: 0.5 })
+              soundStore.play("attacked")
+
               scene.physics.pause()
               isShowGameOverPopup.value = true
             }
@@ -596,7 +597,7 @@ onMounted(() => {
                           player.gun.setFrame(0)
                         })
 
-                      nuxt.$sound.play("gun")
+                      soundStore.play("gun")
                     }
                   }
                   if (index === 1) {
@@ -620,7 +621,7 @@ onMounted(() => {
                         .once("animationcomplete-knife-animation", () => {
                           player.knife.setFrame(0)
                         })
-                      nuxt.$sound.play("knife")
+                      soundStore.play("knife")
                     }
                   }
 
@@ -633,7 +634,8 @@ onMounted(() => {
                           player.book.setFrame(0)
                         })
                     }
-                    nuxt.$sound.play("book")
+
+                    soundStore.play("book")
                   }
 
                   if (index === 3) {
@@ -645,7 +647,8 @@ onMounted(() => {
                           player.ring.setFrame(0)
                         })
                     }
-                    nuxt.$sound.play("ring")
+
+                    soundStore.play("ring")
                   }
                 }
               })
@@ -676,7 +679,8 @@ const allAttack = async () => {
 
     if (targets.length) {
       if (i === 0) {
-        nuxt.$sound.play("gun")
+        soundStore.play("gun")
+
         player.gun
           .setPosition(player.x + 20, player.y)
           .play("gun-animation")
@@ -686,7 +690,8 @@ const allAttack = async () => {
       }
 
       if (i === 1) {
-        nuxt.$sound.play("knife")
+        soundStore.play("knife")
+
         player.knife
           .setPosition(player.x + 20, player.y)
           .play("knife-animation")
@@ -695,7 +700,8 @@ const allAttack = async () => {
           })
       }
       if (i === 2) {
-        nuxt.$sound.play("book")
+        soundStore.play("book")
+
         player.book
           .setPosition(player.x, player.y)
           .play("book-animation")
@@ -704,7 +710,8 @@ const allAttack = async () => {
           })
       }
       if (i === 3) {
-        nuxt.$sound.play("ring")
+        soundStore.play("ring")
+
         player.ring
           .setPosition(player.x, player.y)
           .play("ring-animation")
@@ -748,7 +755,8 @@ const allAttackAnimation = async () => {
   pause()
 
   player.weaponsEffect.setPosition(player.x, player.y).setFrame(8).play("weapons-animation")
-  nuxt.$sound.play("weapons", nuxt.$sound.INTERRUPT_ANY, 0, 1000)
+  soundStore.play("weapons")
+
   await etcUtil.sleep(1000)
   allAttack()
   await etcUtil.sleep(1000)

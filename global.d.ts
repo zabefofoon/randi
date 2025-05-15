@@ -4,6 +4,8 @@ declare global {
     createjs: {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       Sound: any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      WebAudioPlugin: any
     }
   }
   interface HTMLElement {

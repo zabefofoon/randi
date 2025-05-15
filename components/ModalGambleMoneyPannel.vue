@@ -50,8 +50,8 @@ const coins = defineModel<number>("coins", { default: 0 })
 
 const gamblings = defineModel<number>("gamblings", { default: 0 })
 
-const nuxt = useNuxtApp()
 const gameStore = useGameStore()
+const soundStore = useSoundStore()
 
 const units: (10 | 100 | 1000)[] = [10, 100, 1000]
 const numbers = ref("-----")
@@ -105,7 +105,7 @@ const gachaAnimated = (unit: 10 | 100 | 1000) => {
   requestAnimationFrame(tick)
 }
 
-watch(numbers, () => nuxt.$sound.play("coin"))
+watch(numbers, () => soundStore.play("coin"))
 </script>
 <style lang="scss" scoped>
 .rotate-animation {

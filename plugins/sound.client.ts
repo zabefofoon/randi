@@ -1,5 +1,3 @@
-import { defineNuxtPlugin } from "#app"
-
 export default defineNuxtPlugin(async () => {
   if (!window.createjs) {
     await new Promise<void>((resolve, reject) => {
@@ -10,6 +8,8 @@ export default defineNuxtPlugin(async () => {
       document.head.appendChild(s)
     })
   }
+
+  window.createjs.Sound.registerPlugins([window.createjs.WebAudioPlugin])
 
   if (!window.createjs.Sound.initializeDefaultPlugins()) {
     console.warn("SoundJS: no audio plugin available")

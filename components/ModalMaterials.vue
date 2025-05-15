@@ -102,8 +102,8 @@ const emit = defineEmits<{
 const gachaChance = defineModel<number>("gachaChance", { default: 0 })
 const selectChance = defineModel<number>("selectChance", { default: 0 })
 
-const nuxt = useNuxtApp()
 const gameStore = useGameStore()
+const soundStore = useSoundStore()
 
 const materialRefs = ref<HTMLElement[]>([])
 const jokerLength = ref(0)
@@ -116,7 +116,7 @@ const gacha = () => {
   ] as keyof ClassToRaw<Materials>
   props.materials.increase(selectedMaterialKey, 1)
   gachaChance.value--
-  nuxt.$sound.play("stat")
+  soundStore.play("stat")
   const el = materialRefs.value[randomIndex]
   if (el) {
     el.classList.remove("pop-animate")
@@ -131,7 +131,7 @@ const select = (index: number) => {
   const selectedMaterialKey = Object.keys(props.materials)[index] as keyof ClassToRaw<Materials>
   props.materials.increase(selectedMaterialKey, 1)
   selectChance.value--
-  nuxt.$sound.play("stat")
+  soundStore.play("stat")
   const el = materialRefs.value[index]
   if (el) {
     el.classList.remove("pop-animate")
@@ -145,7 +145,7 @@ const useJoker = () => {
   gachaChance.value--
   selectChance.value++
 
-  nuxt.$sound.play("stat")
+  soundStore.play("stat")
   jokerLength.value--
   gameStore.spendPurchaseItem(Joker)
 }

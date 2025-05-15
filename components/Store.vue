@@ -116,19 +116,20 @@ import { PURCHASE_ITEMS, type PurchaseItem } from "~/models/PurchaseItem"
 const emit = defineEmits<{
   (e: "next", scene: "select" | "inGame"): void
 }>()
-const nuxt = useNuxtApp()
+
 const gameStore = useGameStore()
+const soundStore = useSoundStore()
 
 const purchase = (item: typeof PurchaseItem) => {
   gameStore.setCurrentMoney(gameStore.currentMoney - item.meta.price)
   gameStore.addPurchaseItem(item)
 
-  nuxt.$sound.play("coin")
+  soundStore.play("coin")
 }
 
 const togglePurchaseItem = (item: typeof PurchaseItem) => {
   gameStore.togglePurchaseItem(item)
-  nuxt.$sound.play("select")
+  soundStore.play("select")
 }
 
 const goPrev = () => {

@@ -137,12 +137,12 @@ const emit = defineEmits<{
   (e: "next", scene: "lobby" | "store"): void
 }>()
 
-const nuxt = useNuxtApp()
 const gameStore = useGameStore()
+const soundStore = useSoundStore()
 
 const selectCharacter = (character?: typeof Character | PurchaseCharacter) => {
   if (character) gameStore.selectCharacter(character)
-  nuxt.$sound.play("select")
+  soundStore.play("select")
 }
 
 const purchase = () => {
@@ -155,7 +155,7 @@ const purchase = () => {
   gameStore.addCharacter()
   gameStore.selectCharacter(gameStore.selectedCharacter.character)
 
-  nuxt.$sound.play("coin")
+  soundStore.play("coin")
 }
 </script>
 

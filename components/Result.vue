@@ -165,8 +165,8 @@ const emit = defineEmits<{
   (e: "next", scene: "lobby"): void
 }>()
 
-const nuxt = useNuxtApp()
 const gameStore = useGameStore()
+const soundStore = useSoundStore()
 
 const rounds = ref(0)
 const killed = ref(0)
@@ -263,7 +263,7 @@ onMounted(async () => {
 
 watch([rounds, killed, materials, weapons, coins, enforces, gamblings, total, bonus], () => {
   if (import.meta.server) return
-  nuxt.$sound.play("coin")
+  soundStore.play("coin")
 })
 </script>
 <style lang="scss" scoped>
