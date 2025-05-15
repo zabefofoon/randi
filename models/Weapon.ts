@@ -89,10 +89,10 @@ export class Weapons {
     const weaponData = bullet.getData("weaponData")
 
     enemy.takeDamage(weaponData, this.materials, this.enforces)
-    enemy.applyStunOne(weaponData, this.materials)
 
     this.enemies.applyStunMany(enemy, bullet, this.materials)
     this.enemies.applySplashDamage(enemy, bullet, this.materials, this.enforces)
+    enemy.applyStunOne(weaponData, this.materials)
 
     bullet.disableBody(true, true)
   }

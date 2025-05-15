@@ -194,6 +194,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
   applyStunOne(weapon: Weapon, materials: Materials) {
     const stunValue = weapon.stun + materials.calculateStat("cha")
+
     this.remainedStuns[weapon.index] = Math.min(
       stunValue,
       this.remainedStuns[weapon.index] + stunValue
@@ -278,7 +279,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     )
 
     return this.getData("slowed")
-      ? appliedWeaponActive * (1 - Math.min(0.9, this.getData("slowed")))
+      ? numberUtil.subtractPercent(appliedWeaponActive, this.getData("slowed"))
       : appliedWeaponActive
   }
 
@@ -413,6 +414,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     const finalDamage = Math.ceil(damage)
 
     if (weaponData.dotted) this.applyDot(weaponData, finalDamage, weaponData.dotted * 250, 250)
+
     if (weaponData.slowOne) {
       this.setData("slowed", weaponData.slowOne)
 
