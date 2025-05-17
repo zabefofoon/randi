@@ -15,6 +15,8 @@ export class Ring extends Weapon {
     magicalPenetration: 1,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
     splash: 0,
@@ -28,6 +30,7 @@ export class Ring extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -38,14 +41,14 @@ export class Ring extends Weapon {
           cls: CopperRing,
           materials: [
             { key: "vit", length: 2 },
-            { key: "agi", length: 1 },
+            { key: "agi", length: 2 },
           ],
         },
         {
           cls: FlowerRing,
           materials: [
             { key: "luk", length: 2 },
-            { key: "wis", length: 1 },
+            { key: "wis", length: 2 },
           ],
         },
       ],
@@ -66,12 +69,14 @@ export class CopperRing extends Weapon {
     cooltime: 1000,
     speed: 500,
     range: 125,
-    physicalDamage: 15,
-    magicalDamage: 0,
+    physicalDamage: 7,
+    magicalDamage: 7,
     physicalPenetration: 4,
-    magicalPenetration: 0,
+    magicalPenetration: 4,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 10,
+    magicalDecrease: 10,
     targetLength: 1,
 
     splash: 0,
@@ -85,6 +90,7 @@ export class CopperRing extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -95,14 +101,16 @@ export class CopperRing extends Weapon {
           cls: SilverRing,
           materials: [
             { key: "str", length: 3 },
-            { key: "int", length: 2 },
+            { key: "int", length: 3 },
+            { key: "cul", length: 2 },
           ],
         },
         {
           cls: JadeRing,
           materials: [
             { key: "cul", length: 3 },
-            { key: "cha", length: 2 },
+            { key: "cha", length: 3 },
+            { key: "vit", length: 2 },
           ],
         },
       ],
@@ -129,19 +137,22 @@ export class FlowerRing extends Weapon {
     magicalPenetration: 4,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
-    splash: 0,
+    splash: 80,
     stun: 0,
     stunMany: 0,
     slow: 0,
-    slowOne: 0,
+    slowOne: 10,
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 2),
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -152,14 +163,16 @@ export class FlowerRing extends Weapon {
           cls: LeatherRing,
           materials: [
             { key: "vit", length: 3 },
-            { key: "agi", length: 2 },
+            { key: "agi", length: 3 },
+            { key: "luk", length: 2 },
           ],
         },
         {
           cls: CandyRing,
           materials: [
             { key: "luk", length: 3 },
-            { key: "wis", length: 2 },
+            { key: "wis", length: 3 },
+            { key: "int", length: 2 },
           ],
         },
       ],
@@ -175,17 +188,19 @@ export class FlowerRing extends Weapon {
 export class SilverRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
-    name: "은도금반지",
+    name: "은반지",
     description: `“가짜라도 반짝이면 충분해.”`,
     cooltime: 1000,
     speed: 500,
     range: 125,
-    physicalDamage: 0,
-    magicalDamage: 55,
-    physicalPenetration: 0,
+    physicalDamage: 35,
+    magicalDamage: 35,
+    physicalPenetration: 5,
     magicalPenetration: 5,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 10,
+    magicalDecrease: 10,
     targetLength: 1,
 
     splash: 0,
@@ -193,12 +208,13 @@ export class SilverRing extends Weapon {
     stunMany: 0,
     slow: 0,
     slowOne: 0,
-    allCooltime: 0.15,
+    allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 3),
-    criticalChance: 0,
-    criticalDamage: 0,
+    criticalChance: 0.1,
+    criticalDamage: 2,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -208,17 +224,19 @@ export class SilverRing extends Weapon {
         {
           cls: GoldRing,
           materials: [
-            { key: "str", length: 3 },
+            { key: "str", length: 5 },
             { key: "int", length: 3 },
-            { key: "cul", length: 3 },
+            { key: "cul", length: 2 },
+            { key: "wis", length: 2 },
           ],
         },
         {
           cls: KnuckleRing,
           materials: [
+            { key: "agi", length: 5 },
             { key: "cha", length: 3 },
-            { key: "vit", length: 3 },
-            { key: "agi", length: 3 },
+            { key: "vit", length: 2 },
+            { key: "luk", length: 2 },
           ],
         },
       ],
@@ -239,15 +257,17 @@ export class JadeRing extends Weapon {
     cooltime: 1000,
     speed: 500,
     range: 125,
-    physicalDamage: 55,
+    physicalDamage: 75,
     magicalDamage: 0,
     physicalPenetration: 4,
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 20,
+    magicalDecrease: 0,
     targetLength: 1,
 
-    splash: 0,
+    splash: 80,
     stun: 0,
     stunMany: 0,
     slow: 0,
@@ -258,6 +278,7 @@ export class JadeRing extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -267,17 +288,19 @@ export class JadeRing extends Weapon {
         {
           cls: DigitalRing,
           materials: [
-            { key: "luk", length: 3 },
+            { key: "luk", length: 4 },
             { key: "wis", length: 3 },
             { key: "str", length: 3 },
+            { key: "agi", length: 2 },
           ],
         },
         {
           cls: CrystalRing,
           materials: [
-            { key: "int", length: 3 },
+            { key: "int", length: 5 },
             { key: "cul", length: 3 },
-            { key: "cha", length: 3 },
+            { key: "cha", length: 2 },
+            { key: "vit", length: 2 },
           ],
         },
       ],
@@ -298,25 +321,28 @@ export class LeatherRing extends Weapon {
     cooltime: 1000,
     speed: 500,
     range: 175,
-    physicalDamage: 60,
+    physicalDamage: 80,
     magicalDamage: 0,
     physicalPenetration: 6,
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
-    targetLength: 3,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
+    targetLength: 1,
 
-    splash: 0,
+    splash: 80,
     stun: 0,
     stunMany: 0,
     slow: 0,
-    slowOne: 0,
+    slowOne: 20,
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 5),
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -326,17 +352,19 @@ export class LeatherRing extends Weapon {
         {
           cls: RuneRing,
           materials: [
-            { key: "vit", length: 3 },
+            { key: "vit", length: 4 },
             { key: "agi", length: 3 },
             { key: "luk", length: 3 },
+            { key: "cul", length: 2 },
           ],
         },
         {
           cls: SignetRing,
           materials: [
-            { key: "wis", length: 3 },
+            { key: "wis", length: 4 },
             { key: "str", length: 3 },
             { key: "int", length: 3 },
+            { key: "agi", length: 2 },
           ],
         },
       ],
@@ -358,17 +386,19 @@ export class CandyRing extends Weapon {
     speed: 500,
     range: 125,
     physicalDamage: 0,
-    magicalDamage: 50,
+    magicalDamage: 70,
     physicalPenetration: 0,
     magicalPenetration: 5,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
-    splash: 0,
+    splash: 80,
     stun: 0,
-    stunMany: 0,
-    slow: 15,
+    stunMany: 200,
+    slow: 10,
     slowOne: 0,
     allCooltime: 0,
     index: 3,
@@ -376,6 +406,7 @@ export class CandyRing extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -385,17 +416,19 @@ export class CandyRing extends Weapon {
         {
           cls: SharpieRing,
           materials: [
-            { key: "wis", length: 3 },
-            { key: "str", length: 3 },
-            { key: "int", length: 3 },
+            { key: "int", length: 4 },
+            { key: "cul", length: 3 },
+            { key: "cha", length: 3 },
+            { key: "vit", length: 2 },
           ],
         },
         {
           cls: OnionRing,
           materials: [
-            { key: "cul", length: 3 },
+            { key: "cul", length: 4 },
             { key: "cha", length: 3 },
             { key: "vit", length: 3 },
+            { key: "wis", length: 2 },
           ],
         },
       ],
@@ -416,12 +449,14 @@ export class GoldRing extends Weapon {
     cooltime: 1000,
     speed: 500,
     range: 125,
-    physicalDamage: 350,
-    magicalDamage: 0,
+    physicalDamage: 175,
+    magicalDamage: 175,
     physicalPenetration: 13,
-    magicalPenetration: 0,
-    physicalAllPercent: 50,
+    magicalPenetration: 13,
+    physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 20,
+    magicalDecrease: 20,
     targetLength: 1,
 
     splash: 0,
@@ -432,9 +467,10 @@ export class GoldRing extends Weapon {
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 7),
-    criticalChance: 0,
-    criticalDamage: 0,
+    criticalChance: 0.2,
+    criticalDamage: 2,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -444,19 +480,19 @@ export class GoldRing extends Weapon {
         {
           cls: DiamondRing,
           materials: [
-            { key: "agi", length: 5 },
+            { key: "agi", length: 7 },
             { key: "luk", length: 4 },
-            { key: "wis", length: 4 },
-            { key: "str", length: 3 },
+            { key: "wis", length: 3 },
+            { key: "str", length: 2 },
           ],
         },
         {
           cls: RubyRing,
           materials: [
-            { key: "int", length: 4 },
+            { key: "int", length: 6 },
             { key: "cul", length: 4 },
             { key: "cha", length: 4 },
-            { key: "vit", length: 3 },
+            { key: "vit", length: 2 },
           ],
         },
       ],
@@ -483,6 +519,8 @@ export class KnuckleRing extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 30,
+    magicalDecrease: 0,
     targetLength: 2,
 
     splash: 0,
@@ -496,6 +534,7 @@ export class KnuckleRing extends Weapon {
     criticalChance: 0.1,
     criticalDamage: 3,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -505,19 +544,19 @@ export class KnuckleRing extends Weapon {
         {
           cls: OpalRing,
           materials: [
-            { key: "agi", length: 5 },
+            { key: "agi", length: 7 },
             { key: "luk", length: 4 },
-            { key: "wis", length: 4 },
-            { key: "str", length: 3 },
+            { key: "wis", length: 3 },
+            { key: "str", length: 2 },
           ],
         },
         {
           cls: ObsidianRing,
           materials: [
-            { key: "int", length: 4 },
+            { key: "int", length: 6 },
             { key: "cul", length: 4 },
             { key: "cha", length: 4 },
-            { key: "vit", length: 3 },
+            { key: "vit", length: 2 },
           ],
         },
       ],
@@ -544,9 +583,11 @@ export class DigitalRing extends Weapon {
     magicalPenetration: 12,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 30,
     targetLength: 1,
 
-    splash: 0,
+    splash: 80,
     stun: 0,
     stunMany: 0,
     slow: 0,
@@ -557,6 +598,7 @@ export class DigitalRing extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -566,19 +608,19 @@ export class DigitalRing extends Weapon {
         {
           cls: SapphireRing,
           materials: [
-            { key: "agi", length: 5 },
+            { key: "agi", length: 7 },
             { key: "luk", length: 4 },
-            { key: "wis", length: 4 },
-            { key: "str", length: 3 },
+            { key: "wis", length: 3 },
+            { key: "str", length: 2 },
           ],
         },
         {
           cls: RubyRing,
           materials: [
-            { key: "int", length: 4 },
+            { key: "int", length: 6 },
             { key: "cul", length: 4 },
             { key: "cha", length: 4 },
-            { key: "vit", length: 3 },
+            { key: "vit", length: 2 },
           ],
         },
       ],
@@ -605,19 +647,22 @@ export class CrystalRing extends Weapon {
     magicalPenetration: 11,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 30,
     targetLength: 1,
 
-    splash: 0,
+    splash: 80,
     stun: 0,
     stunMany: 0,
-    slow: 25,
-    slowOne: 0,
+    slow: 0,
+    slowOne: 15,
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 10),
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -627,19 +672,19 @@ export class CrystalRing extends Weapon {
         {
           cls: DiamondRing,
           materials: [
-            { key: "agi", length: 5 },
+            { key: "agi", length: 7 },
             { key: "luk", length: 4 },
-            { key: "wis", length: 4 },
-            { key: "str", length: 3 },
+            { key: "wis", length: 3 },
+            { key: "str", length: 2 },
           ],
         },
         {
           cls: ObsidianRing,
           materials: [
-            { key: "int", length: 4 },
+            { key: "int", length: 6 },
             { key: "cul", length: 4 },
             { key: "cha", length: 4 },
-            { key: "vit", length: 3 },
+            { key: "vit", length: 2 },
           ],
         },
       ],
@@ -665,20 +710,23 @@ export class RuneRing extends Weapon {
     physicalPenetration: 0,
     magicalPenetration: 12,
     physicalAllPercent: 0,
-    magicalAllPercent: 50,
-    targetLength: 1,
+    magicalAllPercent: 20,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
+    targetLength: 2,
 
-    splash: 0,
+    splash: 80,
     stun: 0,
     stunMany: 0,
     slow: 0,
-    slowOne: 0,
+    slowOne: 0.3,
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 11),
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -688,10 +736,10 @@ export class RuneRing extends Weapon {
         {
           cls: SapphireRing,
           materials: [
-            { key: "agi", length: 5 },
+            { key: "agi", length: 7 },
             { key: "luk", length: 4 },
-            { key: "wis", length: 4 },
-            { key: "str", length: 3 },
+            { key: "wis", length: 3 },
+            { key: "str", length: 2 },
           ],
         },
       ],
@@ -718,6 +766,8 @@ export class SignetRing extends Weapon {
     magicalPenetration: 13,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 2,
 
     splash: 0,
@@ -730,7 +780,8 @@ export class SignetRing extends Weapon {
     spritePosition: etcUtil.getWeaponSpritePosition(3, 12),
     criticalChance: 0,
     criticalDamage: 0,
-    dotted: 3,
+    dotted: 2,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -740,19 +791,19 @@ export class SignetRing extends Weapon {
         {
           cls: RubyRing,
           materials: [
-            { key: "int", length: 4 },
+            { key: "int", length: 6 },
             { key: "cul", length: 4 },
             { key: "cha", length: 4 },
-            { key: "vit", length: 3 },
+            { key: "vit", length: 2 },
           ],
         },
         {
           cls: Bugles,
           materials: [
-            { key: "agi", length: 5 },
+            { key: "agi", length: 7 },
             { key: "luk", length: 4 },
-            { key: "wis", length: 4 },
-            { key: "str", length: 3 },
+            { key: "wis", length: 3 },
+            { key: "str", length: 2 },
           ],
         },
       ],
@@ -779,11 +830,13 @@ export class SharpieRing extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
-    targetLength: 1,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
+    targetLength: 2,
 
-    splash: 0,
+    splash: 80,
     stun: 0,
-    stunMany: 0,
+    stunMany: 200,
     slow: 0,
     slowOne: 0,
     allCooltime: 0,
@@ -792,6 +845,7 @@ export class SharpieRing extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -801,10 +855,10 @@ export class SharpieRing extends Weapon {
         {
           cls: OpalRing,
           materials: [
-            { key: "int", length: 4 },
+            { key: "int", length: 6 },
             { key: "cul", length: 4 },
             { key: "cha", length: 4 },
-            { key: "vit", length: 3 },
+            { key: "vit", length: 2 },
           ],
         },
       ],
@@ -830,20 +884,23 @@ export class OnionRing extends Weapon {
     physicalPenetration: 0,
     magicalPenetration: 12,
     physicalAllPercent: 0,
-    magicalAllPercent: 0,
+    magicalAllPercent: 10,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
     splash: 80,
     stun: 0,
-    stunMany: 300,
+    stunMany: 0,
     slow: 0,
-    slowOne: 0,
+    slowOne: 20,
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 14),
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -853,10 +910,10 @@ export class OnionRing extends Weapon {
         {
           cls: Bugles,
           materials: [
-            { key: "agi", length: 5 },
+            { key: "agi", length: 7 },
             { key: "luk", length: 4 },
-            { key: "wis", length: 4 },
-            { key: "str", length: 3 },
+            { key: "wis", length: 3 },
+            { key: "str", length: 2 },
           ],
         },
       ],
@@ -877,25 +934,28 @@ export class DiamondRing extends Weapon {
     cooltime: 1000,
     speed: 500,
     range: 125,
-    physicalDamage: 1900,
-    magicalDamage: 0,
+    physicalDamage: 850,
+    magicalDamage: 850,
     physicalPenetration: 29,
-    magicalPenetration: 0,
+    magicalPenetration: 29,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
-    targetLength: 1,
+    physicalDecrease: 40,
+    magicalDecrease: 40,
+    targetLength: 2,
 
-    splash: 0,
+    splash: 80,
     stun: 0,
     stunMany: 0,
     slow: 0,
-    slowOne: 0,
+    slowOne: 15,
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 15),
-    criticalChance: 0.1,
-    criticalDamage: 10,
+    criticalChance: 0.2,
+    criticalDamage: 3,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -905,10 +965,10 @@ export class DiamondRing extends Weapon {
         {
           cls: BornRing,
           materials: [
-            { key: "int", length: 7 },
-            { key: "cul", length: 6 },
-            { key: "cha", length: 5 },
-            { key: "vit", length: 4 },
+            { key: "int", length: 9 },
+            { key: "cul", length: 5 },
+            { key: "cha", length: 4 },
+            { key: "vit", length: 2 },
           ],
         },
       ],
@@ -935,19 +995,22 @@ export class OpalRing extends Weapon {
     magicalPenetration: 31,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
-    targetLength: 1,
+    physicalDecrease: 0,
+    magicalDecrease: 40,
+    targetLength: 2,
 
-    splash: 0,
+    splash: 80,
     stun: 0,
-    stunMany: 0,
-    slow: 0,
+    stunMany: 200,
+    slow: 20,
     slowOne: 0,
-    allCooltime: 0.5,
+    allCooltime: 0.15,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 16),
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -957,10 +1020,10 @@ export class OpalRing extends Weapon {
         {
           cls: VampireRing,
           materials: [
-            { key: "agi", length: 7 },
-            { key: "luk", length: 6 },
-            { key: "wis", length: 5 },
-            { key: "str", length: 4 },
+            { key: "agi", length: 9 },
+            { key: "luk", length: 5 },
+            { key: "wis", length: 4 },
+            { key: "str", length: 2 },
           ],
         },
       ],
@@ -983,23 +1046,26 @@ export class ObsidianRing extends Weapon {
     range: 175,
     physicalDamage: 2400,
     magicalDamage: 0,
-    physicalPenetration: 0,
+    physicalPenetration: 36,
     magicalPenetration: 0,
-    physicalAllPercent: 42,
+    physicalAllPercent: 0,
     magicalAllPercent: 0,
-    targetLength: 3,
+    physicalDecrease: 40,
+    magicalDecrease: 0,
+    targetLength: 2,
 
-    splash: 0,
+    splash: 80,
     stun: 0,
     stunMany: 0,
     slow: 0,
-    slowOne: 0,
+    slowOne: 20,
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 17),
     criticalChance: 0,
     criticalDamage: 0,
-    dotted: 5,
+    dotted: 2,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -1009,10 +1075,10 @@ export class ObsidianRing extends Weapon {
         {
           cls: BornRing,
           materials: [
-            { key: "int", length: 7 },
-            { key: "cul", length: 6 },
-            { key: "cha", length: 5 },
-            { key: "vit", length: 4 },
+            { key: "int", length: 9 },
+            { key: "cul", length: 5 },
+            { key: "cha", length: 4 },
+            { key: "vit", length: 2 },
           ],
         },
       ],
@@ -1038,13 +1104,15 @@ export class SapphireRing extends Weapon {
     physicalPenetration: 0,
     magicalPenetration: 29,
     physicalAllPercent: 0,
-    magicalAllPercent: 0,
-    targetLength: 1,
+    magicalAllPercent: 20,
+    physicalDecrease: 0,
+    magicalDecrease: 40,
+    targetLength: 2,
 
-    splash: 0,
+    splash: 80,
     stun: 0,
     stunMany: 0,
-    slow: 50,
+    slow: 30,
     slowOne: 0,
     allCooltime: 0,
     index: 3,
@@ -1052,6 +1120,7 @@ export class SapphireRing extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -1061,10 +1130,10 @@ export class SapphireRing extends Weapon {
         {
           cls: Tattoo,
           materials: [
-            { key: "agi", length: 7 },
-            { key: "luk", length: 6 },
-            { key: "wis", length: 5 },
-            { key: "str", length: 4 },
+            { key: "agi", length: 9 },
+            { key: "luk", length: 5 },
+            { key: "wis", length: 4 },
+            { key: "str", length: 2 },
           ],
         },
       ],
@@ -1085,12 +1154,14 @@ export class RubyRing extends Weapon {
     cooltime: 1000,
     speed: 500,
     range: 125,
-    physicalDamage: 1900,
-    magicalDamage: 0,
-    physicalPenetration: 31,
-    magicalPenetration: 0,
+    physicalDamage: 0,
+    magicalDamage: 1900,
+    physicalPenetration: 0,
+    magicalPenetration: 31,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 35,
     targetLength: 1,
 
     splash: 80,
@@ -1104,6 +1175,7 @@ export class RubyRing extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -1113,10 +1185,10 @@ export class RubyRing extends Weapon {
         {
           cls: VampireRing,
           materials: [
-            { key: "int", length: 7 },
-            { key: "cul", length: 6 },
-            { key: "cha", length: 5 },
-            { key: "vit", length: 4 },
+            { key: "int", length: 9 },
+            { key: "cul", length: 5 },
+            { key: "cha", length: 4 },
+            { key: "vit", length: 2 },
           ],
         },
       ],
@@ -1137,25 +1209,28 @@ export class Bugles extends Weapon {
     cooltime: 1000,
     speed: 500,
     range: 125,
-    physicalDamage: 0,
-    magicalDamage: 1200,
-    physicalPenetration: 0,
+    physicalDamage: 600,
+    magicalDamage: 600,
+    physicalPenetration: 34,
     magicalPenetration: 34,
     physicalAllPercent: 30,
     magicalAllPercent: 30,
-    targetLength: 1,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
+    targetLength: 2,
 
-    splash: 0,
+    splash: 80,
     stun: 0,
     stunMany: 0,
     slow: 0,
-    slowOne: 0,
+    slowOne: 20,
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 20),
     criticalChance: 0,
     criticalDamage: 0,
-    dotted: 0,
+    dotted: 2,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -1165,10 +1240,10 @@ export class Bugles extends Weapon {
         {
           cls: FourLeafClover,
           materials: [
-            { key: "agi", length: 7 },
-            { key: "luk", length: 6 },
-            { key: "wis", length: 5 },
-            { key: "str", length: 4 },
+            { key: "agi", length: 9 },
+            { key: "luk", length: 5 },
+            { key: "wis", length: 4 },
+            { key: "str", length: 2 },
           ],
         },
       ],
@@ -1189,25 +1264,28 @@ export class BornRing extends Weapon {
     cooltime: 1000,
     speed: 500,
     range: 175,
-    physicalDamage: 5000,
-    magicalDamage: 0,
+    physicalDamage: 2500,
+    magicalDamage: 2500,
     physicalPenetration: 82,
-    magicalPenetration: 0,
+    magicalPenetration: 82,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
-    targetLength: 4,
+    physicalDecrease: 50,
+    magicalDecrease: 50,
+    targetLength: 3,
 
     splash: 80,
     stun: 0,
     stunMany: 0,
     slow: 0,
-    slowOne: 0,
+    slowOne: 15,
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 21),
-    criticalChance: 0,
-    criticalDamage: 0,
-    dotted: 0,
+    criticalChance: 0.2,
+    criticalDamage: 3,
+    dotted: 3,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -1236,13 +1314,15 @@ export class VampireRing extends Weapon {
     physicalPenetration: 0,
     magicalPenetration: 84,
     physicalAllPercent: 0,
-    magicalAllPercent: 100,
-    targetLength: 4,
+    magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 50,
+    targetLength: 3,
 
-    splash: 0,
+    splash: 80,
     stun: 0,
-    stunMany: 0,
-    slow: 0,
+    stunMany: 300,
+    slow: 30,
     slowOne: 0,
     allCooltime: 0,
     index: 3,
@@ -1250,6 +1330,7 @@ export class VampireRing extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -1277,21 +1358,24 @@ export class Tattoo extends Weapon {
     magicalDamage: 0,
     physicalPenetration: 800,
     magicalPenetration: 0,
-    physicalAllPercent: 84,
+    physicalAllPercent: 30,
     magicalAllPercent: 0,
-    targetLength: 1,
+    physicalDecrease: 50,
+    magicalDecrease: 0,
+    targetLength: 3,
 
-    splash: 0,
+    splash: 80,
     stun: 0,
     stunMany: 0,
     slow: 0,
-    slowOne: 0,
+    slowOne: 30,
     allCooltime: 0,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 23),
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -1315,25 +1399,28 @@ export class FourLeafClover extends Weapon {
     cooltime: 1000,
     speed: 500,
     range: 125,
-    physicalDamage: 0,
-    magicalDamage: 7777,
-    physicalPenetration: 0,
+    physicalDamage: 3777,
+    magicalDamage: 3777,
+    physicalPenetration: 77,
     magicalPenetration: 77,
-    physicalAllPercent: 0,
-    magicalAllPercent: 0,
-    targetLength: 1,
+    physicalAllPercent: 50,
+    magicalAllPercent: 50,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
+    targetLength: 2,
 
-    splash: 0,
+    splash: 80,
     stun: 0,
     stunMany: 0,
     slow: 0,
-    slowOne: 0,
-    allCooltime: 0.77,
+    slowOne: 30,
+    allCooltime: 0.3,
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 24),
     criticalChance: 0,
     criticalDamage: 0,
-    dotted: 0,
+    dotted: 3,
+    armerBreak: 0,
   }
 
   constructor() {

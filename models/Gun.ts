@@ -15,6 +15,8 @@ export class Gun extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
     splash: 0,
@@ -28,6 +30,7 @@ export class Gun extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -37,8 +40,9 @@ export class Gun extends Weapon {
         {
           cls: DoubleGun,
           materials: [
-            { key: "agi", length: 2 },
-            { key: "vit", length: 1 },
+            { key: "vit", length: 2 },
+            { key: "agi", length: 1 },
+            { key: "int", length: 1 },
           ],
         },
         {
@@ -46,6 +50,7 @@ export class Gun extends Weapon {
           materials: [
             { key: "cul", length: 2 },
             { key: "cha", length: 1 },
+            { key: "luk", length: 1 },
           ],
         },
       ],
@@ -72,6 +77,8 @@ export class ShotGun extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
     splash: 80,
@@ -85,6 +92,7 @@ export class ShotGun extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -94,15 +102,17 @@ export class ShotGun extends Weapon {
         {
           cls: MagicGun,
           materials: [
-            { key: "vit", length: 3 },
-            { key: "agi", length: 2 },
+            { key: "int", length: 3 },
+            { key: "cul", length: 3 },
+            { key: "vit", length: 2 },
           ],
         },
         {
           cls: AirGun,
           materials: [
             { key: "luk", length: 3 },
-            { key: "wis", length: 2 },
+            { key: "agi", length: 3 },
+            { key: "str", length: 2 },
           ],
         },
       ],
@@ -129,6 +139,8 @@ export class DoubleGun extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 2,
 
     splash: 0,
@@ -142,6 +154,7 @@ export class DoubleGun extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -151,16 +164,17 @@ export class DoubleGun extends Weapon {
         {
           cls: MachineGun,
           materials: [
+            { key: "agi", length: 4 },
             { key: "str", length: 3 },
-            { key: "agi", length: 2 },
-            { key: "wis", length: 1 },
+            { key: "cul", length: 1 },
           ],
         },
         {
           cls: FingerGun,
           materials: [
-            { key: "cul", length: 3 },
-            { key: "cha", length: 2 },
+            { key: "cha", length: 4 },
+            { key: "wis", length: 2 },
+            { key: "int", length: 2 },
           ],
         },
       ],
@@ -182,11 +196,13 @@ export class MagicGun extends Weapon {
     speed: 500,
     range: 160,
     physicalDamage: 0,
-    magicalDamage: 70,
+    magicalDamage: 90,
     physicalPenetration: 0,
     magicalPenetration: 6,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
     splash: 80,
@@ -200,6 +216,7 @@ export class MagicGun extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -209,17 +226,19 @@ export class MagicGun extends Weapon {
         {
           cls: BubbleGun,
           materials: [
-            { key: "vit", length: 3 },
-            { key: "agi", length: 3 },
-            { key: "luk", length: 3 },
+            { key: "int", length: 5 },
+            { key: "cul", length: 3 },
+            { key: "vit", length: 2 },
+            { key: "wis", length: 2 },
           ],
         },
         {
           cls: TazerGun,
           materials: [
+            { key: "cha", length: 5 },
             { key: "wis", length: 3 },
-            { key: "str", length: 3 },
-            { key: "int", length: 3 },
+            { key: "int", length: 2 },
+            { key: "agi", length: 2 },
           ],
         },
       ],
@@ -240,12 +259,14 @@ export class AirGun extends Weapon {
     cooltime: 1000,
     speed: 500,
     range: 110,
-    physicalDamage: 65,
+    physicalDamage: 85,
     magicalDamage: 0,
     physicalPenetration: 5,
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
     splash: 80,
@@ -259,6 +280,7 @@ export class AirGun extends Weapon {
     criticalChance: 0.2,
     criticalDamage: 2,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -268,17 +290,19 @@ export class AirGun extends Weapon {
         {
           cls: PulseGun,
           materials: [
-            { key: "cul", length: 3 },
-            { key: "cha", length: 3 },
-            { key: "vit", length: 3 },
+            { key: "cul", length: 4 },
+            { key: "int", length: 3 },
+            { key: "luk", length: 3 },
+            { key: "vit", length: 2 },
           ],
         },
         {
           cls: Firework,
           materials: [
-            { key: "agi", length: 3 },
-            { key: "luk", length: 3 },
-            { key: "wis", length: 3 },
+            { key: "vit", length: 5 },
+            { key: "str", length: 3 },
+            { key: "agi", length: 2 },
+            { key: "luk", length: 2 },
           ],
         },
       ],
@@ -299,12 +323,14 @@ export class MachineGun extends Weapon {
     cooltime: 200,
     speed: 500,
     range: 110,
-    physicalDamage: 15,
+    physicalDamage: 25,
     magicalDamage: 0,
     physicalPenetration: 5,
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 2,
 
     splash: 0,
@@ -318,6 +344,7 @@ export class MachineGun extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -327,17 +354,19 @@ export class MachineGun extends Weapon {
         {
           cls: SilentKiller,
           materials: [
+            { key: "agi", length: 5 },
             { key: "str", length: 3 },
-            { key: "int", length: 3 },
-            { key: "cul", length: 3 },
+            { key: "luk", length: 2 },
+            { key: "wis", length: 2 },
           ],
         },
         {
           cls: DrillGun,
           materials: [
-            { key: "cha", length: 3 },
-            { key: "vit", length: 3 },
-            { key: "agi", length: 3 },
+            { key: "str", length: 4 },
+            { key: "agi", length: 4 },
+            { key: "vit", length: 2 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -359,11 +388,13 @@ export class FingerGun extends Weapon {
     speed: 500,
     range: 160,
     physicalDamage: 0,
-    magicalDamage: 70,
+    magicalDamage: 90,
     physicalPenetration: 0,
     magicalPenetration: 6,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 2,
 
     splash: 0,
@@ -377,6 +408,7 @@ export class FingerGun extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -386,17 +418,19 @@ export class FingerGun extends Weapon {
         {
           cls: PepperSpray,
           materials: [
-            { key: "luk", length: 3 },
-            { key: "wis", length: 3 },
-            { key: "str", length: 3 },
+            { key: "cul", length: 4 },
+            { key: "int", length: 3 },
+            { key: "cha", length: 3 },
+            { key: "wis", length: 2 },
           ],
         },
         {
           cls: EyeGun,
           materials: [
+            { key: "wis", length: 5 },
             { key: "int", length: 3 },
-            { key: "cul", length: 3 },
-            { key: "cha", length: 3 },
+            { key: "cha", length: 2 },
+            { key: "luk", length: 2 },
           ],
         },
       ],
@@ -423,19 +457,22 @@ export class BubbleGun extends Weapon {
     magicalPenetration: 20,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 3,
 
-    splash: 0,
+    splash: 80,
     stun: 0,
     stunMany: 0,
-    slow: 30,
-    slowOne: 0,
+    slow: 0,
+    slowOne: 30,
     allCooltime: 0,
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 7),
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -445,19 +482,19 @@ export class BubbleGun extends Weapon {
         {
           cls: GrenadeLauncher,
           materials: [
-            { key: "vit", length: 5 },
+            { key: "vit", length: 7 },
             { key: "agi", length: 4 },
-            { key: "luk", length: 4 },
-            { key: "wis", length: 3 },
+            { key: "luk", length: 3 },
+            { key: "wis", length: 2 },
           ],
         },
         {
           cls: BlessedRevolver,
           materials: [
-            { key: "str", length: 5 },
+            { key: "str", length: 6 },
             { key: "int", length: 4 },
             { key: "cul", length: 4 },
-            { key: "cha", length: 3 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -484,6 +521,8 @@ export class TazerGun extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 2,
 
     splash: 80,
@@ -497,6 +536,7 @@ export class TazerGun extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -506,19 +546,19 @@ export class TazerGun extends Weapon {
         {
           cls: SilverBulletGun,
           materials: [
-            { key: "vit", length: 4 },
+            { key: "vit", length: 6 },
             { key: "agi", length: 4 },
-            { key: "luk", length: 4 },
-            { key: "wis", length: 4 },
+            { key: "luk", length: 3 },
+            { key: "wis", length: 3 },
           ],
         },
         {
           cls: Cannon,
           materials: [
-            { key: "str", length: 5 },
-            { key: "int", length: 4 },
+            { key: "str", length: 7 },
+            { key: "int", length: 3 },
             { key: "cul", length: 4 },
-            { key: "cha", length: 3 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -545,7 +585,9 @@ export class PulseGun extends Weapon {
     magicalPenetration: 14,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
-    targetLength: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
+    targetLength: 1,
 
     splash: 80,
     stun: 0,
@@ -558,6 +600,7 @@ export class PulseGun extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -567,19 +610,19 @@ export class PulseGun extends Weapon {
         {
           cls: PlasmaGun,
           materials: [
-            { key: "vit", length: 4 },
+            { key: "vit", length: 6 },
             { key: "agi", length: 4 },
-            { key: "luk", length: 4 },
+            { key: "luk", length: 2 },
             { key: "wis", length: 4 },
           ],
         },
         {
           cls: BlessedRevolver,
           materials: [
-            { key: "str", length: 5 },
-            { key: "int", length: 4 },
-            { key: "cul", length: 4 },
-            { key: "cha", length: 3 },
+            { key: "str", length: 6 },
+            { key: "int", length: 5 },
+            { key: "cul", length: 3 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -606,6 +649,8 @@ export class Firework extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 2,
 
     splash: 80,
@@ -619,6 +664,7 @@ export class Firework extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -628,19 +674,19 @@ export class Firework extends Weapon {
         {
           cls: GrenadeLauncher,
           materials: [
-            { key: "vit", length: 5 },
+            { key: "vit", length: 8 },
             { key: "agi", length: 4 },
-            { key: "luk", length: 4 },
-            { key: "wis", length: 3 },
+            { key: "luk", length: 2 },
+            { key: "wis", length: 2 },
           ],
         },
         {
           cls: Cannon,
           materials: [
-            { key: "str", length: 5 },
+            { key: "str", length: 7 },
             { key: "int", length: 4 },
-            { key: "cul", length: 4 },
-            { key: "cha", length: 3 },
+            { key: "cul", length: 3 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -667,6 +713,8 @@ export class SilentKiller extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
     splash: 0,
@@ -680,6 +728,7 @@ export class SilentKiller extends Weapon {
     criticalChance: 0.2,
     criticalDamage: 3,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -689,19 +738,19 @@ export class SilentKiller extends Weapon {
         {
           cls: PlasmaGun,
           materials: [
-            { key: "vit", length: 4 },
-            { key: "agi", length: 4 },
+            { key: "vit", length: 6 },
+            { key: "agi", length: 3 },
             { key: "luk", length: 4 },
-            { key: "wis", length: 4 },
+            { key: "wis", length: 3 },
           ],
         },
         {
           cls: CursedRevolver,
           materials: [
-            { key: "str", length: 5 },
-            { key: "int", length: 4 },
+            { key: "str", length: 7 },
+            { key: "int", length: 3 },
             { key: "cul", length: 4 },
-            { key: "cha", length: 3 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -728,6 +777,8 @@ export class DrillGun extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 2,
 
     splash: 0,
@@ -741,6 +792,7 @@ export class DrillGun extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 5,
   }
 
   constructor() {
@@ -750,19 +802,19 @@ export class DrillGun extends Weapon {
         {
           cls: PlasmaGun,
           materials: [
-            { key: "vit", length: 4 },
+            { key: "vit", length: 6 },
             { key: "agi", length: 4 },
             { key: "luk", length: 4 },
-            { key: "wis", length: 4 },
+            { key: "wis", length: 2 },
           ],
         },
         {
           cls: CursedRevolver,
           materials: [
-            { key: "str", length: 5 },
-            { key: "int", length: 4 },
-            { key: "cul", length: 4 },
-            { key: "cha", length: 3 },
+            { key: "str", length: 6 },
+            { key: "int", length: 5 },
+            { key: "cul", length: 3 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -789,9 +841,11 @@ export class PepperSpray extends Weapon {
     magicalPenetration: 14,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 2,
 
-    splash: 80,
+    splash: 0,
     stun: 0,
     stunMany: 0,
     slow: 0,
@@ -802,6 +856,7 @@ export class PepperSpray extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 3,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -811,10 +866,10 @@ export class PepperSpray extends Weapon {
         {
           cls: SilverBulletGun,
           materials: [
-            { key: "vit", length: 4 },
-            { key: "agi", length: 4 },
-            { key: "luk", length: 4 },
-            { key: "wis", length: 3 },
+            { key: "vit", length: 6 },
+            { key: "agi", length: 5 },
+            { key: "luk", length: 3 },
+            { key: "wis", length: 2 },
           ],
         },
       ],
@@ -841,6 +896,8 @@ export class EyeGun extends Weapon {
     magicalPenetration: 12,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 3,
 
     splash: 0,
@@ -854,6 +911,7 @@ export class EyeGun extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 5,
   }
 
   constructor() {
@@ -863,10 +921,10 @@ export class EyeGun extends Weapon {
         {
           cls: SilverBulletGun,
           materials: [
-            { key: "str", length: 4 },
-            { key: "int", length: 4 },
-            { key: "cul", length: 4 },
-            { key: "cha", length: 3 },
+            { key: "str", length: 6 },
+            { key: "int", length: 5 },
+            { key: "cul", length: 3 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -893,9 +951,11 @@ export class GrenadeLauncher extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
-    targetLength: 1,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
+    targetLength: 2,
 
-    splash: 100,
+    splash: 80,
     stun: 0,
     stunMany: 0,
     slow: 0,
@@ -906,6 +966,7 @@ export class GrenadeLauncher extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -915,10 +976,10 @@ export class GrenadeLauncher extends Weapon {
         {
           cls: Missile,
           materials: [
-            { key: "vit", length: 7 },
-            { key: "agi", length: 6 },
-            { key: "luk", length: 5 },
-            { key: "wis", length: 4 },
+            { key: "vit", length: 9 },
+            { key: "agi", length: 5 },
+            { key: "luk", length: 4 },
+            { key: "wis", length: 2 },
           ],
         },
       ],
@@ -945,6 +1006,8 @@ export class SilverBulletGun extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 3,
 
     splash: 0,
@@ -958,6 +1021,7 @@ export class SilverBulletGun extends Weapon {
     criticalChance: 0.2,
     criticalDamage: 3,
     dotted: 0,
+    armerBreak: 10,
   }
 
   constructor() {
@@ -967,10 +1031,10 @@ export class SilverBulletGun extends Weapon {
         {
           cls: HeartBreaker,
           materials: [
-            { key: "str", length: 7 },
-            { key: "int", length: 6 },
-            { key: "cul", length: 5 },
-            { key: "cha", length: 4 },
+            { key: "str", length: 8 },
+            { key: "agi", length: 5 },
+            { key: "luk", length: 5 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -997,6 +1061,8 @@ export class PlasmaGun extends Weapon {
     magicalPenetration: 29,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 3,
 
     splash: 80,
@@ -1010,6 +1076,7 @@ export class PlasmaGun extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 3,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -1019,10 +1086,10 @@ export class PlasmaGun extends Weapon {
         {
           cls: RadiationBeam,
           materials: [
-            { key: "vit", length: 7 },
-            { key: "agi", length: 6 },
-            { key: "luk", length: 5 },
-            { key: "wis", length: 4 },
+            { key: "int", length: 8 },
+            { key: "wis", length: 6 },
+            { key: "cul", length: 4 },
+            { key: "agi", length: 2 },
           ],
         },
       ],
@@ -1049,6 +1116,8 @@ export class Cannon extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
     splash: 80,
@@ -1062,6 +1131,7 @@ export class Cannon extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -1071,10 +1141,10 @@ export class Cannon extends Weapon {
         {
           cls: Missile,
           materials: [
-            { key: "str", length: 7 },
-            { key: "int", length: 6 },
-            { key: "cul", length: 5 },
-            { key: "cha", length: 4 },
+            { key: "str", length: 9 },
+            { key: "int", length: 5 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -1101,6 +1171,8 @@ export class BlessedRevolver extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 3,
 
     splash: 0,
@@ -1114,6 +1186,7 @@ export class BlessedRevolver extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -1123,10 +1196,10 @@ export class BlessedRevolver extends Weapon {
         {
           cls: HeartBreaker,
           materials: [
-            { key: "str", length: 7 },
+            { key: "str", length: 8 },
             { key: "int", length: 6 },
-            { key: "cul", length: 5 },
-            { key: "cha", length: 4 },
+            { key: "wis", length: 4 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -1153,19 +1226,22 @@ export class CursedRevolver extends Weapon {
     magicalPenetration: 31,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 3,
 
     splash: 0,
     stun: 0,
     stunMany: 0,
-    slow: 44,
-    slowOne: 0,
+    slow: 0,
+    slowOne: 44,
     allCooltime: 0,
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 20),
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 4,
   }
 
   constructor() {
@@ -1175,10 +1251,10 @@ export class CursedRevolver extends Weapon {
         {
           cls: Booger,
           materials: [
-            { key: "str", length: 7 },
-            { key: "int", length: 6 },
-            { key: "cul", length: 5 },
-            { key: "cha", length: 4 },
+            { key: "cul", length: 8 },
+            { key: "wis", length: 6 },
+            { key: "int", length: 4 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -1205,6 +1281,8 @@ export class HeartBreaker extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
     splash: 0,
@@ -1218,6 +1296,7 @@ export class HeartBreaker extends Weapon {
     criticalChance: 0.1,
     criticalDamage: 10,
     dotted: 0,
+    armerBreak: 20,
   }
 
   constructor() {
@@ -1247,7 +1326,9 @@ export class RadiationBeam extends Weapon {
     magicalPenetration: 82,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
-    targetLength: 4,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
+    targetLength: 3,
 
     splash: 80,
     stun: 0,
@@ -1260,6 +1341,7 @@ export class RadiationBeam extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 5,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -1280,7 +1362,7 @@ export class Missile extends Weapon {
     level: 6,
     name: "미사일",
     description: `“잠깐, 이건 반칙 아닌가?”`,
-    cooltime: 800,
+    cooltime: 1000,
     speed: 500,
     range: 160,
     physicalDamage: 4000,
@@ -1289,9 +1371,11 @@ export class Missile extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
-    targetLength: 4,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
+    targetLength: 3,
 
-    splash: 120,
+    splash: 80,
     stun: 0,
     stunMany: 500,
     slow: 0,
@@ -1302,6 +1386,7 @@ export class Missile extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -1331,12 +1416,14 @@ export class Booger extends Weapon {
     magicalPenetration: 4000,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 3,
 
     splash: 80,
     stun: 0,
     stunMany: 0,
-    slow: 99,
+    slow: 30,
     slowOne: 0,
     allCooltime: 0,
     index: 0,
@@ -1344,6 +1431,7 @@ export class Booger extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 15,
   }
 
   constructor() {

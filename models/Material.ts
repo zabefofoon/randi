@@ -49,7 +49,7 @@ export class Materials {
 }
 
 export abstract class Material {
-  key: "str" | "int" | "cul" | "cha" | "vit" | "agi" | "luk" | "wis"
+  key: keyof ClassToRaw<Materials>
 
   description: string
   physicalDamage: number // 물리 데미지

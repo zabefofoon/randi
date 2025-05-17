@@ -251,7 +251,7 @@ const weapons = ref<Weapons>()
 const materials = ref<Materials>(new Materials())
 
 const initialRemainnedTime = 3
-const roundTime = 45
+const roundTime = 40
 const enemyCountDeadline = 29
 
 const round = ref(0)
@@ -266,8 +266,8 @@ const isShowGameClearPopup = ref(false)
 const isShowGamblePopup = ref(false)
 const isShowConfigPopup = ref(false)
 
-const gachaChance = ref(1)
-const selectChance = ref(2)
+const gachaChance = ref(2)
+const selectChance = ref(1)
 const coins = ref(20)
 const killed = ref(0)
 const gamblings = ref(0)
@@ -529,9 +529,9 @@ onMounted(() => {
               isClear = true
             }
 
-            if (46 > remainnedTime.value && remainnedTime.value > 35)
+            if (41 > remainnedTime.value && remainnedTime.value > 30)
               enemies.spawnEnemy(round.value, coins)
-            if (round.value >= 10 && round.value % 10 === 0 && remainnedTime.value === 45)
+            if (round.value >= 10 && round.value % 10 === 0 && remainnedTime.value === roundTime)
               setTimeout(() => {
                 enemies.spawnBoss(round.value, coins)
                 isBossRemained = true

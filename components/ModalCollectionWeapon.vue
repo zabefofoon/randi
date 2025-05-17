@@ -2,7 +2,7 @@
   <UIModal
     enable-dim-click-close
     hide-close-button
-    inner-class="!max-w-[40cqw] | !bg-blue-950 | text-white font-bold | border-black border-[0.2cqw]"
+    inner-class="!max-w-[50cqw] | !bg-blue-950 | text-white font-bold | border-black border-[0.2cqw]"
     @close="emit('close')">
     <template #content>
       <div class="p-[1cqw] | flex flex-col gap-[1cqw]">

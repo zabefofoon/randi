@@ -211,7 +211,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   increaseHP(round: number): number {
     const _round = round - 1
     const roundGroup = Math.ceil(_round / 10)
-    const roundMultiplies = [1, 1, 1.1, 1.2, 1.3, 1.5, 2, 2.5]
+    const roundMultiplies = [1, 1, 1.1, 1.2, 1.5, 2, 2.5, 3]
     const result = (Math.pow(_round * 2, 2) + 10) * (Math.floor(_round / 10) + 1)
     return Math.ceil(result * (roundMultiplies?.[roundGroup] ?? 1))
   }
@@ -330,6 +330,11 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
   takeDamage(weaponData: Weapon, materials: Materials, enforces: Enforces, distInSplash?: number) {
     const currentHP = this.getData("hp") as number
+
+    this.physicalDefence -= weaponData.armerBreak
+    if (this.physicalDefence < 0) this.physicalDefence = 0
+    this.magicalDefence -= weaponData.armerBreak
+    if (this.magicalDefence < 0) this.magicalDefence = 0
 
     const _physicalDamage =
       distInSplash === undefined

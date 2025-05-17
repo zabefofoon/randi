@@ -18,6 +18,8 @@ export interface WeaponOptions {
   magicalDamage: number // 마법데미지
   physicalPenetration: number // 물리관통력
   magicalPenetration: number // 마법관통력
+  physicalDecrease: number // 물리방어력 저하
+  magicalDecrease: number // 마법방어력 저하
   physicalAllPercent: number // 물리피해상승 100이면 100퍼
   magicalAllPercent: number // 마법피해상승 100이면 100퍼
   targetLength: number // 몇마리 공격할건지
@@ -31,6 +33,7 @@ export interface WeaponOptions {
   criticalChance: number // 0.1이 10%
   criticalDamage: number // 2가 2배
   dotted: number // 3이면 3번
+  armerBreak: number // 아머브레이크
   index?: number
   nexts?: NextInfo[]
 }
@@ -131,6 +134,10 @@ export abstract class Weapon implements WeaponOptions {
   criticalChance = 0
   criticalDamage = 0
   dotted = 0
+  armerBreak = 0
+
+  physicalDecrease = 0
+  magicalDecrease = 0
 
   constructor(weapon: WeaponOptions) {
     Object.assign(this, weapon)

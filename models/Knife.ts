@@ -15,6 +15,8 @@ export class ButterKnife extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
     splash: 0,
@@ -28,6 +30,7 @@ export class ButterKnife extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -37,7 +40,7 @@ export class ButterKnife extends Weapon {
         {
           cls: KitchenKnife,
           materials: [
-            { key: "str", length: 1 },
+            { key: "str", length: 2 },
             { key: "vit", length: 1 },
             { key: "agi", length: 1 },
           ],
@@ -47,6 +50,7 @@ export class ButterKnife extends Weapon {
           materials: [
             { key: "luk", length: 2 },
             { key: "wis", length: 1 },
+            { key: "int", length: 1 },
           ],
         },
       ],
@@ -73,6 +77,8 @@ export class KitchenKnife extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
     splash: 0,
@@ -85,7 +91,8 @@ export class KitchenKnife extends Weapon {
     spritePosition: etcUtil.getWeaponSpritePosition(1, 1),
     criticalChance: 0,
     criticalDamage: 0,
-    dotted: 0,
+    dotted: 1,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -96,14 +103,16 @@ export class KitchenKnife extends Weapon {
           cls: SushiKnife,
           materials: [
             { key: "str", length: 3 },
-            { key: "int", length: 2 },
+            { key: "int", length: 3 },
+            { key: "luk", length: 2 },
           ],
         },
         {
           cls: Scissors,
           materials: [
             { key: "cul", length: 3 },
-            { key: "cha", length: 2 },
+            { key: "cha", length: 3 },
+            { key: "wis", length: 2 },
           ],
         },
       ],
@@ -130,6 +139,8 @@ export class CutterKnife extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
     splash: 0,
@@ -140,9 +151,10 @@ export class CutterKnife extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 2),
-    criticalChance: 0.3, // 0.1이 10%
+    criticalChance: 0.15, // 0.1이 10%
     criticalDamage: 2, // 3배
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -153,14 +165,16 @@ export class CutterKnife extends Weapon {
           cls: Hammer,
           materials: [
             { key: "vit", length: 3 },
-            { key: "agi", length: 2 },
+            { key: "agi", length: 3 },
+            { key: "str", length: 2 },
           ],
         },
         {
           cls: AX,
           materials: [
             { key: "luk", length: 3 },
-            { key: "wis", length: 2 },
+            { key: "wis", length: 3 },
+            { key: "str", length: 2 },
           ],
         },
       ],
@@ -181,12 +195,14 @@ export class SushiKnife extends Weapon {
     cooltime: 1000,
     speed: 500,
     range: 90,
-    physicalDamage: 50,
+    physicalDamage: 70,
     magicalDamage: 0,
     physicalPenetration: 4,
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
     splash: 0,
@@ -200,6 +216,7 @@ export class SushiKnife extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 2,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -209,17 +226,19 @@ export class SushiKnife extends Weapon {
         {
           cls: ButcherKnife,
           materials: [
-            { key: "str", length: 3 },
-            { key: "int", length: 3 },
-            { key: "cul", length: 3 },
+            { key: "str", length: 5 },
+            { key: "vit", length: 3 },
+            { key: "agi", length: 2 },
+            { key: "cha", length: 2 },
           ],
         },
         {
           cls: LongNails,
           materials: [
+            { key: "agi", length: 5 },
             { key: "cha", length: 3 },
-            { key: "vit", length: 3 },
-            { key: "agi", length: 3 },
+            { key: "luk", length: 2 },
+            { key: "cul", length: 2 },
           ],
         },
       ],
@@ -241,24 +260,27 @@ export class Scissors extends Weapon {
     speed: 500,
     range: 90,
     physicalDamage: 0,
-    magicalDamage: 65,
+    magicalDamage: 85,
     physicalPenetration: 0,
     magicalPenetration: 4,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
-    targetLength: 1,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
+    targetLength: 2,
 
     splash: 0,
     stun: 0,
     stunMany: 0,
     slow: 0,
-    slowOne: 40,
+    slowOne: 15,
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 4),
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -268,17 +290,19 @@ export class Scissors extends Weapon {
         {
           cls: SwissArmyKnife,
           materials: [
+            { key: "wis", length: 4 },
             { key: "luk", length: 3 },
-            { key: "wis", length: 3 },
-            { key: "str", length: 3 },
+            { key: "int", length: 3 },
+            { key: "str", length: 2 },
           ],
         },
         {
           cls: Fist,
           materials: [
-            { key: "int", length: 3 },
-            { key: "cul", length: 3 },
+            { key: "str", length: 5 },
             { key: "cha", length: 3 },
+            { key: "cul", length: 2 },
+            { key: "vit", length: 2 },
           ],
         },
       ],
@@ -299,25 +323,28 @@ export class Hammer extends Weapon {
     cooltime: 1000,
     speed: 500,
     range: 90,
-    physicalDamage: 55,
+    physicalDamage: 75,
     magicalDamage: 0,
     physicalPenetration: 5,
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
-    splash: 0,
-    stun: 300,
+    splash: 80,
+    stun: 200,
     stunMany: 0,
     slow: 0,
     slowOne: 0,
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 5),
-    criticalChance: 0,
-    criticalDamage: 0,
+    criticalChance: 0.2,
+    criticalDamage: 2,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -327,17 +354,19 @@ export class Hammer extends Weapon {
         {
           cls: CrossCutSaw,
           materials: [
-            { key: "vit", length: 3 },
-            { key: "agi", length: 3 },
-            { key: "luk", length: 3 },
+            { key: "str", length: 4 },
+            { key: "vit", length: 4 },
+            { key: "agi", length: 2 },
+            { key: "luk", length: 2 },
           ],
         },
         {
           cls: CrowBar,
           materials: [
-            { key: "wis", length: 3 },
-            { key: "str", length: 3 },
-            { key: "int", length: 3 },
+            { key: "str", length: 5 },
+            { key: "agi", length: 3 },
+            { key: "wis", length: 2 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -358,12 +387,14 @@ export class AX extends Weapon {
     cooltime: 1000,
     speed: 500,
     range: 90,
-    physicalDamage: 55,
+    physicalDamage: 75,
     magicalDamage: 0,
     physicalPenetration: 5,
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
     splash: 80,
@@ -374,9 +405,10 @@ export class AX extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 6),
-    criticalChance: 0,
-    criticalDamage: 0,
+    criticalChance: 0.15,
+    criticalDamage: 2,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -386,17 +418,19 @@ export class AX extends Weapon {
         {
           cls: Machete,
           materials: [
-            { key: "cul", length: 3 },
+            { key: "cul", length: 4 },
             { key: "cha", length: 3 },
             { key: "vit", length: 3 },
+            { key: "agi", length: 2 },
           ],
         },
         {
           cls: KoreanHandPlow,
           materials: [
-            { key: "agi", length: 3 },
+            { key: "agi", length: 5 },
             { key: "luk", length: 3 },
-            { key: "wis", length: 3 },
+            { key: "str", length: 2 },
+            { key: "wis", length: 2 },
           ],
         },
       ],
@@ -417,25 +451,28 @@ export class ButcherKnife extends Weapon {
     cooltime: 1000,
     speed: 500,
     range: 90,
-    physicalDamage: 280,
+    physicalDamage: 400,
     magicalDamage: 0,
-    physicalPenetration: 14,
+    physicalPenetration: 18,
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
     splash: 0,
     stun: 0,
     stunMany: 0,
     slow: 0,
-    slowOne: 20,
+    slowOne: 0,
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 7),
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 3,
+    armerBreak: 10,
   }
 
   constructor() {
@@ -445,19 +482,19 @@ export class ButcherKnife extends Weapon {
         {
           cls: BornSword,
           materials: [
-            { key: "str", length: 5 },
-            { key: "int", length: 4 },
-            { key: "cul", length: 4 },
-            { key: "cha", length: 3 },
+            { key: "str", length: 7 },
+            { key: "vit", length: 4 },
+            { key: "cul", length: 3 },
+            { key: "cha", length: 2 },
           ],
         },
         {
           cls: DualBlade,
           materials: [
-            { key: "vit", length: 4 },
-            { key: "agi", length: 4 },
+            { key: "agi", length: 7 },
             { key: "luk", length: 4 },
             { key: "wis", length: 3 },
+            { key: "vit", length: 2 },
           ],
         },
       ],
@@ -474,7 +511,7 @@ export class LongNails extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "긴손톱",
-    description: `“짐승의 본능.” - 빠른 연타, 치명 피해 낮음.`,
+    description: `“짐승의 본능.”`,
     cooltime: 200,
     speed: 500,
     range: 90,
@@ -484,7 +521,9 @@ export class LongNails extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
-    targetLength: 1,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
+    targetLength: 2,
 
     splash: 0,
     stun: 0,
@@ -496,7 +535,8 @@ export class LongNails extends Weapon {
     spritePosition: etcUtil.getWeaponSpritePosition(1, 8),
     criticalChance: 0,
     criticalDamage: 0,
-    dotted: 0,
+    dotted: 1,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -506,19 +546,19 @@ export class LongNails extends Weapon {
         {
           cls: SurgicalKnife,
           materials: [
-            { key: "str", length: 5 },
-            { key: "int", length: 4 },
-            { key: "cul", length: 4 },
-            { key: "cha", length: 3 },
+            { key: "int", length: 6 },
+            { key: "wis", length: 4 },
+            { key: "str", length: 4 },
+            { key: "agi", length: 2 },
           ],
         },
         {
           cls: CursedSword,
           materials: [
-            { key: "vit", length: 4 },
-            { key: "agi", length: 4 },
-            { key: "luk", length: 4 },
-            { key: "wis", length: 3 },
+            { key: "cul", length: 7 },
+            { key: "wis", length: 4 },
+            { key: "int", length: 3 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -545,6 +585,8 @@ export class SwissArmyKnife extends Weapon {
     magicalPenetration: 13,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
     splash: 0,
@@ -552,12 +594,13 @@ export class SwissArmyKnife extends Weapon {
     stunMany: 0,
     slow: 0,
     slowOne: 0,
-    allCooltime: 0.2,
+    allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 9),
-    criticalChance: 0,
-    criticalDamage: 0,
-    dotted: 0,
+    criticalChance: 0.1,
+    criticalDamage: 2,
+    dotted: 1,
+    armerBreak: 5,
   }
 
   constructor() {
@@ -567,19 +610,19 @@ export class SwissArmyKnife extends Weapon {
         {
           cls: BlessedSword,
           materials: [
-            { key: "str", length: 5 },
+            { key: "str", length: 6 },
             { key: "int", length: 4 },
-            { key: "cul", length: 4 },
-            { key: "cha", length: 3 },
+            { key: "wis", length: 4 },
+            { key: "cha", length: 2 },
           ],
         },
         {
           cls: DualBlade,
           materials: [
-            { key: "vit", length: 4 },
-            { key: "agi", length: 4 },
+            { key: "agi", length: 7 },
             { key: "luk", length: 4 },
-            { key: "wis", length: 3 },
+            { key: "vit", length: 3 },
+            { key: "wis", length: 2 },
           ],
         },
       ],
@@ -606,6 +649,8 @@ export class Fist extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
     splash: 0,
@@ -619,6 +664,7 @@ export class Fist extends Weapon {
     criticalChance: 0.15,
     criticalDamage: 3,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -628,19 +674,19 @@ export class Fist extends Weapon {
         {
           cls: BornSword,
           materials: [
-            { key: "str", length: 5 },
-            { key: "int", length: 4 },
-            { key: "cul", length: 4 },
+            { key: "str", length: 7 },
+            { key: "vit", length: 4 },
             { key: "cha", length: 3 },
+            { key: "cul", length: 2 },
           ],
         },
         {
           cls: CursedSword,
           materials: [
-            { key: "vit", length: 4 },
-            { key: "agi", length: 4 },
-            { key: "luk", length: 4 },
-            { key: "wis", length: 3 },
+            { key: "cul", length: 7 },
+            { key: "wis", length: 4 },
+            { key: "int", length: 3 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -667,6 +713,8 @@ export class CrossCutSaw extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 2,
 
     splash: 0,
@@ -677,9 +725,10 @@ export class CrossCutSaw extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 11),
-    criticalChance: 0,
-    criticalDamage: 0,
+    criticalChance: 0.2,
+    criticalDamage: 2,
     dotted: 0,
+    armerBreak: 5,
   }
 
   constructor() {
@@ -689,10 +738,10 @@ export class CrossCutSaw extends Weapon {
         {
           cls: BlessedSword,
           materials: [
-            { key: "str", length: 5 },
+            { key: "str", length: 6 },
             { key: "int", length: 4 },
             { key: "cul", length: 4 },
-            { key: "cha", length: 3 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -709,7 +758,7 @@ export class CrowBar extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
     name: "빠루",
-    description: `건축 현장의 다크호스.”`,
+    description: `"건축 현장의 다크호스.”`,
     cooltime: 1000,
     speed: 500,
     range: 90,
@@ -719,6 +768,8 @@ export class CrowBar extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
     splash: 0,
@@ -732,6 +783,7 @@ export class CrowBar extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -741,19 +793,19 @@ export class CrowBar extends Weapon {
         {
           cls: DualBlade,
           materials: [
-            { key: "vit", length: 4 },
-            { key: "agi", length: 4 },
+            { key: "agi", length: 7 },
             { key: "luk", length: 4 },
-            { key: "wis", length: 3 },
+            { key: "str", length: 3 },
+            { key: "wis", length: 2 },
           ],
         },
         {
           cls: BigAX,
           materials: [
-            { key: "str", length: 5 },
-            { key: "int", length: 4 },
-            { key: "cul", length: 4 },
-            { key: "cha", length: 3 },
+            { key: "str", length: 7 },
+            { key: "vit", length: 4 },
+            { key: "cul", length: 3 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -780,6 +832,8 @@ export class Machete extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
     splash: 80,
@@ -790,9 +844,10 @@ export class Machete extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 13),
-    criticalChance: 0,
-    criticalDamage: 0,
+    criticalChance: 0.15,
+    criticalDamage: 2,
     dotted: 0,
+    armerBreak: 5,
   }
 
   constructor() {
@@ -802,10 +857,10 @@ export class Machete extends Weapon {
         {
           cls: SurgicalKnife,
           materials: [
-            { key: "vit", length: 4 },
-            { key: "agi", length: 4 },
-            { key: "luk", length: 4 },
-            { key: "wis", length: 3 },
+            { key: "int", length: 6 },
+            { key: "wis", length: 4 },
+            { key: "str", length: 4 },
+            { key: "agi", length: 2 },
           ],
         },
       ],
@@ -823,8 +878,8 @@ export class KoreanHandPlow extends Weapon {
     level: 4,
     name: "호미",
     description: `“흙도 사람도 뒤집는다.”`,
-    cooltime: 500,
-    speed: 500,
+    cooltime: 1000,
+    speed: 1000,
     range: 90,
     physicalDamage: 280,
     magicalDamage: 0,
@@ -832,12 +887,14 @@ export class KoreanHandPlow extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
-    splash: 50,
-    stun: 0,
+    splash: 80,
+    stun: 200,
     stunMany: 0,
-    slow: 20,
+    slow: 0,
     slowOne: 0,
     allCooltime: 0,
     index: 1,
@@ -845,6 +902,7 @@ export class KoreanHandPlow extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -854,10 +912,10 @@ export class KoreanHandPlow extends Weapon {
         {
           cls: BigAX,
           materials: [
-            { key: "str", length: 5 },
-            { key: "int", length: 4 },
-            { key: "cul", length: 4 },
+            { key: "str", length: 7 },
+            { key: "vit", length: 4 },
             { key: "cha", length: 3 },
+            { key: "cul", length: 2 },
           ],
         },
       ],
@@ -884,19 +942,22 @@ export class BornSword extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 3,
 
     splash: 0,
     stun: 0,
     stunMany: 0,
     slow: 0,
-    slowOne: 0,
+    slowOne: 20,
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 15),
     criticalChance: 0,
     criticalDamage: 0,
-    dotted: 0,
+    dotted: 3,
+    armerBreak: 15,
   }
 
   constructor() {
@@ -906,10 +967,10 @@ export class BornSword extends Weapon {
         {
           cls: DragonSlayer,
           materials: [
-            { key: "vit", length: 7 },
-            { key: "agi", length: 6 },
-            { key: "luk", length: 5 },
-            { key: "wis", length: 4 },
+            { key: "str", length: 9 },
+            { key: "vit", length: 5 },
+            { key: "agi", length: 4 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -927,7 +988,7 @@ export class SurgicalKnife extends Weapon {
     level: 5,
     name: "메스",
     description: `“외과용 정밀 베기.”`,
-    cooltime: 600,
+    cooltime: 1000,
     speed: 500,
     range: 140,
     physicalDamage: 0,
@@ -936,6 +997,8 @@ export class SurgicalKnife extends Weapon {
     magicalPenetration: 50,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 2,
 
     splash: 0,
@@ -948,7 +1011,8 @@ export class SurgicalKnife extends Weapon {
     spritePosition: etcUtil.getWeaponSpritePosition(1, 16),
     criticalChance: 0,
     criticalDamage: 0,
-    dotted: 5,
+    dotted: 3,
+    armerBreak: 10,
   }
 
   constructor() {
@@ -958,10 +1022,10 @@ export class SurgicalKnife extends Weapon {
         {
           cls: SnotWhip,
           materials: [
-            { key: "str", length: 7 },
-            { key: "int", length: 6 },
-            { key: "cul", length: 5 },
-            { key: "cha", length: 4 },
+            { key: "int", length: 9 },
+            { key: "wis", length: 5 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -988,6 +1052,8 @@ export class BlessedSword extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 3,
 
     splash: 0,
@@ -995,12 +1061,13 @@ export class BlessedSword extends Weapon {
     stunMany: 0,
     slow: 0,
     slowOne: 0,
-    allCooltime: 0.3,
+    allCooltime: 0.2,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 18),
-    criticalChance: 0,
-    criticalDamage: 0,
+    criticalChance: 0.2,
+    criticalDamage: 3,
     dotted: 0,
+    armerBreak: 10,
   }
 
   constructor() {
@@ -1010,10 +1077,10 @@ export class BlessedSword extends Weapon {
         {
           cls: LaserSword,
           materials: [
-            { key: "vit", length: 7 },
-            { key: "agi", length: 6 },
-            { key: "luk", length: 5 },
-            { key: "wis", length: 4 },
+            { key: "agi", length: 9 },
+            { key: "int", length: 5 },
+            { key: "luk", length: 4 },
+            { key: "wis", length: 2 },
           ],
         },
       ],
@@ -1040,6 +1107,8 @@ export class CursedSword extends Weapon {
     magicalPenetration: 44,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 3,
 
     splash: 0,
@@ -1052,7 +1121,8 @@ export class CursedSword extends Weapon {
     spritePosition: etcUtil.getWeaponSpritePosition(1, 17),
     criticalChance: 0,
     criticalDamage: 0,
-    dotted: 0,
+    dotted: 4,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -1060,12 +1130,12 @@ export class CursedSword extends Weapon {
       ...CursedSword.meta,
       nexts: [
         {
-          cls: DragonSlayer,
+          cls: DeathScythe,
           materials: [
-            { key: "str", length: 7 },
-            { key: "int", length: 6 },
-            { key: "cul", length: 5 },
-            { key: "cha", length: 4 },
+            { key: "int", length: 9 },
+            { key: "luk", length: 5 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -1092,6 +1162,8 @@ export class DualBlade extends Weapon {
     magicalPenetration: 29,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 3,
 
     splash: 0,
@@ -1105,6 +1177,7 @@ export class DualBlade extends Weapon {
     criticalChance: 0.1,
     criticalDamage: 3,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -1114,10 +1187,10 @@ export class DualBlade extends Weapon {
         {
           cls: SnotWhip,
           materials: [
-            { key: "vit", length: 7 },
-            { key: "agi", length: 6 },
-            { key: "luk", length: 5 },
+            { key: "int", length: 9 },
+            { key: "cul", length: 5 },
             { key: "wis", length: 4 },
+            { key: "luk", length: 2 },
           ],
         },
       ],
@@ -1144,6 +1217,8 @@ export class BigAX extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
     splash: 100,
@@ -1157,6 +1232,7 @@ export class BigAX extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -1164,12 +1240,12 @@ export class BigAX extends Weapon {
       ...BigAX.meta,
       nexts: [
         {
-          cls: DeathScythe,
+          cls: DragonSlayer,
           materials: [
-            { key: "str", length: 7 },
-            { key: "int", length: 6 },
-            { key: "cul", length: 5 },
-            { key: "cha", length: 4 },
+            { key: "str", length: 9 },
+            { key: "vit", length: 5 },
+            { key: "agi", length: 4 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -1196,19 +1272,22 @@ export class DragonSlayer extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 3,
 
     splash: 0,
     stun: 0,
     stunMany: 0,
     slow: 0,
-    slowOne: 0,
+    slowOne: 30,
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 21),
     criticalChance: 0,
     criticalDamage: 0,
-    dotted: 5,
+    dotted: 4,
+    armerBreak: 15,
   }
 
   constructor() {
@@ -1238,19 +1317,22 @@ export class SnotWhip extends Weapon {
     magicalPenetration: 82,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
-    targetLength: 4,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
+    targetLength: 3,
 
-    splash: 0,
+    splash: 80,
     stun: 0,
     stunMany: 0,
-    slow: 50,
-    slowOne: 99,
+    slow: 0,
+    slowOne: 30,
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 22),
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 3,
   }
 
   constructor() {
@@ -1280,6 +1362,8 @@ export class LaserSword extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
     splash: 80,
@@ -1287,12 +1371,13 @@ export class LaserSword extends Weapon {
     stunMany: 0,
     slow: 0,
     slowOne: 0,
-    allCooltime: 0,
+    allCooltime: 0.3,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 23),
-    criticalChance: 0,
-    criticalDamage: 0,
+    criticalChance: 0.3,
+    criticalDamage: 3,
     dotted: 0,
+    armerBreak: 15,
   }
 
   constructor() {
@@ -1316,12 +1401,14 @@ export class DeathScythe extends Weapon {
     cooltime: 1000,
     speed: 500,
     range: 90,
-    physicalDamage: 4444,
-    magicalDamage: 0,
-    physicalPenetration: 4444,
-    magicalPenetration: 0,
+    physicalDamage: 0,
+    magicalDamage: 444,
+    physicalPenetration: 0,
+    magicalPenetration: 444,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
     splash: 0,
@@ -1335,6 +1422,7 @@ export class DeathScythe extends Weapon {
     criticalChance: 0.44,
     criticalDamage: 44,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {

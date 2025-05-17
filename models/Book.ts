@@ -15,6 +15,8 @@ export class Book extends Weapon {
     magicalPenetration: 1,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
     splash: 0,
     stun: 0,
@@ -27,6 +29,7 @@ export class Book extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -37,14 +40,14 @@ export class Book extends Weapon {
           cls: ThickBook,
           materials: [
             { key: "vit", length: 2 },
-            { key: "agi", length: 1 },
+            { key: "agi", length: 2 },
           ],
         },
         {
           cls: ThinBook,
           materials: [
             { key: "luk", length: 2 },
-            { key: "wis", length: 1 },
+            { key: "wis", length: 2 },
           ],
         },
       ],
@@ -69,8 +72,10 @@ export class ThickBook extends Weapon {
     magicalDamage: 0,
     physicalPenetration: 3,
     magicalPenetration: 0,
-    physicalAllPercent: 0,
+    physicalAllPercent: 5,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
     splash: 0,
     stun: 0,
@@ -83,6 +88,7 @@ export class ThickBook extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -93,14 +99,16 @@ export class ThickBook extends Weapon {
           cls: SpringBook,
           materials: [
             { key: "str", length: 3 },
-            { key: "int", length: 2 },
+            { key: "int", length: 3 },
+            { key: "cul", length: 2 },
           ],
         },
         {
           cls: TextBook,
           materials: [
             { key: "cul", length: 3 },
-            { key: "cha", length: 2 },
+            { key: "cha", length: 3 },
+            { key: "wis", length: 2 },
           ],
         },
       ],
@@ -124,21 +132,24 @@ export class ThinBook extends Weapon {
     physicalDamage: 0,
     magicalDamage: 13,
     physicalPenetration: 0,
-    magicalPenetration: 1,
+    magicalPenetration: 4,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
     splash: 0,
     stun: 0,
     stunMany: 0,
     slow: 0,
     slowOne: 0,
-    allCooltime: 0.1,
+    allCooltime: 0.03,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 2),
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -149,14 +160,16 @@ export class ThinBook extends Weapon {
           cls: Map,
           materials: [
             { key: "vit", length: 3 },
-            { key: "agi", length: 2 },
+            { key: "agi", length: 3 },
+            { key: "luk", length: 2 },
           ],
         },
         {
           cls: PictureBook,
           materials: [
             { key: "luk", length: 3 },
-            { key: "wis", length: 2 },
+            { key: "wis", length: 3 },
+            { key: "int", length: 2 },
           ],
         },
       ],
@@ -177,17 +190,19 @@ export class SpringBook extends Weapon {
     cooltime: 1000,
     speed: 500,
     range: 100,
-    physicalDamage: 55,
-    magicalDamage: 0,
-    physicalPenetration: 6,
-    magicalPenetration: 0,
-    physicalAllPercent: 0,
-    magicalAllPercent: 0,
-    targetLength: 1,
+    physicalDamage: 35,
+    magicalDamage: 35,
+    physicalPenetration: 3,
+    magicalPenetration: 3,
+    physicalAllPercent: 7,
+    magicalAllPercent: 7,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
+    targetLength: 2,
 
-    splash: 80,
+    splash: 0,
     stun: 0,
-    stunMany: 100,
+    stunMany: 0,
     slow: 0,
     slowOne: 0,
     allCooltime: 0,
@@ -196,6 +211,7 @@ export class SpringBook extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -205,17 +221,19 @@ export class SpringBook extends Weapon {
         {
           cls: MagicBook,
           materials: [
-            { key: "str", length: 3 },
-            { key: "int", length: 3 },
+            { key: "int", length: 5 },
             { key: "cul", length: 3 },
+            { key: "str", length: 2 },
+            { key: "wis", length: 2 },
           ],
         },
         {
           cls: MobilePhone,
           materials: [
+            { key: "agi", length: 5 },
             { key: "cha", length: 3 },
-            { key: "vit", length: 3 },
-            { key: "agi", length: 3 },
+            { key: "vit", length: 2 },
+            { key: "luk", length: 2 },
           ],
         },
       ],
@@ -236,25 +254,28 @@ export class TextBook extends Weapon {
     cooltime: 1000,
     speed: 500,
     range: 150,
-    physicalDamage: 0,
-    magicalDamage: 55,
-    physicalPenetration: 0,
-    magicalPenetration: 5,
-    physicalAllPercent: 0,
-    magicalAllPercent: 0,
-    targetLength: 2,
+    physicalDamage: 35,
+    magicalDamage: 35,
+    physicalPenetration: 3,
+    magicalPenetration: 3,
+    physicalAllPercent: 7,
+    magicalAllPercent: 7,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
+    targetLength: 1,
 
-    splash: 0,
+    splash: 80,
     stun: 0,
     stunMany: 0,
     slow: 0,
     slowOne: 0,
-    allCooltime: 0.15,
+    allCooltime: 0,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 4),
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -264,17 +285,19 @@ export class TextBook extends Weapon {
         {
           cls: Regulations,
           materials: [
+            { key: "wis", length: 4 },
             { key: "luk", length: 3 },
-            { key: "wis", length: 3 },
-            { key: "str", length: 3 },
+            { key: "int", length: 3 },
+            { key: "str", length: 2 },
           ],
         },
         {
           cls: WorkBook,
           materials: [
-            { key: "int", length: 3 },
+            { key: "int", length: 4 },
             { key: "cul", length: 3 },
             { key: "cha", length: 3 },
+            { key: "agi", length: 2 },
           ],
         },
       ],
@@ -296,11 +319,13 @@ export class Map extends Weapon {
     speed: 500,
     range: 100,
     physicalDamage: 0,
-    magicalDamage: 52,
+    magicalDamage: 72,
     physicalPenetration: 0,
     magicalPenetration: 5,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
     splash: 80,
@@ -308,12 +333,13 @@ export class Map extends Weapon {
     stunMany: 0,
     slow: 0,
     slowOne: 0,
-    allCooltime: 0,
+    allCooltime: 0.07,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 5),
-    criticalChance: 0,
-    criticalDamage: 0,
+    criticalChance: 0.2,
+    criticalDamage: 2,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -323,17 +349,19 @@ export class Map extends Weapon {
         {
           cls: TreasureMap,
           materials: [
-            { key: "vit", length: 3 },
+            { key: "vit", length: 4 },
             { key: "agi", length: 3 },
             { key: "luk", length: 3 },
+            { key: "cul", length: 2 },
           ],
         },
         {
           cls: EvacuationMap,
           materials: [
-            { key: "wis", length: 3 },
+            { key: "wis", length: 4 },
             { key: "str", length: 3 },
             { key: "int", length: 3 },
+            { key: "agi", length: 2 },
           ],
         },
       ],
@@ -355,24 +383,27 @@ export class PictureBook extends Weapon {
     speed: 500,
     range: 100,
     physicalDamage: 0,
-    magicalDamage: 63,
+    magicalDamage: 83,
     physicalPenetration: 0,
     magicalPenetration: 6,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
-    splash: 0,
+    splash: 80,
     stun: 0,
     stunMany: 0,
     slow: 0,
     slowOne: 0,
-    allCooltime: 0,
+    allCooltime: 0.05,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 6),
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -382,17 +413,19 @@ export class PictureBook extends Weapon {
         {
           cls: Diary,
           materials: [
-            { key: "cul", length: 3 },
+            { key: "cul", length: 4 },
             { key: "cha", length: 3 },
             { key: "vit", length: 3 },
+            { key: "wis", length: 2 },
           ],
         },
         {
           cls: Menu,
           materials: [
-            { key: "agi", length: 3 },
+            { key: "agi", length: 4 },
             { key: "luk", length: 3 },
             { key: "wis", length: 3 },
+            { key: "cul", length: 2 },
           ],
         },
       ],
@@ -419,7 +452,9 @@ export class MagicBook extends Weapon {
     magicalPenetration: 14,
     physicalAllPercent: 0,
     magicalAllPercent: 12,
-    targetLength: 1,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
+    targetLength: 2,
 
     splash: 0,
     stun: 0,
@@ -432,6 +467,7 @@ export class MagicBook extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -441,16 +477,16 @@ export class MagicBook extends Weapon {
         {
           cls: Revelation,
           materials: [
-            { key: "str", length: 5 },
-            { key: "int", length: 4 },
+            { key: "int", length: 6 },
             { key: "cul", length: 4 },
-            { key: "cha", length: 3 },
+            { key: "cha", length: 4 },
+            { key: "str", length: 2 },
           ],
         },
         {
           cls: HellMap,
           materials: [
-            { key: "vit", length: 4 },
+            { key: "vit", length: 5 },
             { key: "agi", length: 4 },
             { key: "luk", length: 4 },
             { key: "wis", length: 3 },
@@ -480,7 +516,9 @@ export class MobilePhone extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 12,
     magicalAllPercent: 0,
-    targetLength: 3,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
+    targetLength: 2,
 
     splash: 0,
     stun: 0,
@@ -493,6 +531,7 @@ export class MobilePhone extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -502,19 +541,19 @@ export class MobilePhone extends Weapon {
         {
           cls: Labtop,
           materials: [
-            { key: "str", length: 5 },
+            { key: "str", length: 7 },
             { key: "int", length: 4 },
-            { key: "cul", length: 4 },
-            { key: "cha", length: 3 },
+            { key: "cul", length: 3 },
+            { key: "cha", length: 2 },
           ],
         },
         {
           cls: AnswerSheet,
           materials: [
-            { key: "vit", length: 4 },
-            { key: "agi", length: 4 },
+            { key: "agi", length: 7 },
             { key: "luk", length: 4 },
-            { key: "wis", length: 3 },
+            { key: "vit", length: 3 },
+            { key: "wis", length: 2 },
           ],
         },
       ],
@@ -540,7 +579,9 @@ export class Regulations extends Weapon {
     physicalPenetration: 0,
     magicalPenetration: 14,
     physicalAllPercent: 0,
-    magicalAllPercent: 0,
+    magicalAllPercent: 12,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 3,
 
     splash: 0,
@@ -554,6 +595,7 @@ export class Regulations extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -563,16 +605,16 @@ export class Regulations extends Weapon {
         {
           cls: LawBook,
           materials: [
-            { key: "str", length: 5 },
+            { key: "str", length: 6 },
             { key: "int", length: 4 },
             { key: "cul", length: 4 },
-            { key: "cha", length: 3 },
+            { key: "cha", length: 2 },
           ],
         },
         {
           cls: HellMap,
           materials: [
-            { key: "vit", length: 4 },
+            { key: "vit", length: 5 },
             { key: "agi", length: 4 },
             { key: "luk", length: 4 },
             { key: "wis", length: 3 },
@@ -598,13 +640,15 @@ export class WorkBook extends Weapon {
     range: 100,
     physicalDamage: 250,
     magicalDamage: 0,
-    physicalPenetration: 0,
-    magicalPenetration: 16,
+    physicalPenetration: 16,
+    magicalPenetration: 0,
     physicalAllPercent: 15,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
-    splash: 0,
+    splash: 80,
     stun: 0,
     stunMany: 0,
     slow: 0,
@@ -614,7 +658,8 @@ export class WorkBook extends Weapon {
     spritePosition: etcUtil.getWeaponSpritePosition(2, 10),
     criticalChance: 0,
     criticalDamage: 0,
-    dotted: 4,
+    dotted: 3,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -624,19 +669,19 @@ export class WorkBook extends Weapon {
         {
           cls: Revelation,
           materials: [
-            { key: "str", length: 5 },
-            { key: "int", length: 4 },
+            { key: "int", length: 6 },
             { key: "cul", length: 4 },
-            { key: "cha", length: 3 },
+            { key: "cha", length: 4 },
+            { key: "str", length: 2 },
           ],
         },
         {
           cls: AnswerSheet,
           materials: [
-            { key: "vit", length: 4 },
-            { key: "agi", length: 4 },
+            { key: "agi", length: 7 },
             { key: "luk", length: 4 },
-            { key: "wis", length: 3 },
+            { key: "vit", length: 3 },
+            { key: "wis", length: 2 },
           ],
         },
       ],
@@ -663,6 +708,8 @@ export class TreasureMap extends Weapon {
     magicalPenetration: 12,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 2,
 
     splash: 0,
@@ -670,12 +717,13 @@ export class TreasureMap extends Weapon {
     stunMany: 0,
     slow: 0,
     slowOne: 0,
-    allCooltime: 0,
+    allCooltime: 0.1,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 11),
     criticalChance: 0.2,
     criticalDamage: 3,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -685,10 +733,10 @@ export class TreasureMap extends Weapon {
         {
           cls: LawBook,
           materials: [
-            { key: "str", length: 5 },
+            { key: "str", length: 6 },
             { key: "int", length: 4 },
             { key: "cul", length: 4 },
-            { key: "cha", length: 3 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -715,6 +763,8 @@ export class EvacuationMap extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 2,
 
     splash: 0,
@@ -722,12 +772,13 @@ export class EvacuationMap extends Weapon {
     stunMany: 0,
     slow: 0,
     slowOne: 0,
-    allCooltime: 0,
+    allCooltime: 0.1,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 12),
     criticalChance: 0.2,
-    criticalDamage: 3,
-    dotted: 0,
+    criticalDamage: 2,
+    dotted: 1,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -737,7 +788,7 @@ export class EvacuationMap extends Weapon {
         {
           cls: HellMap,
           materials: [
-            { key: "vit", length: 4 },
+            { key: "vit", length: 5 },
             { key: "agi", length: 4 },
             { key: "luk", length: 4 },
             { key: "wis", length: 3 },
@@ -746,10 +797,10 @@ export class EvacuationMap extends Weapon {
         {
           cls: OrderForm,
           materials: [
-            { key: "str", length: 5 },
+            { key: "str", length: 6 },
             { key: "int", length: 4 },
             { key: "cul", length: 4 },
-            { key: "cha", length: 3 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -776,6 +827,8 @@ export class Diary extends Weapon {
     magicalPenetration: 13,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
     splash: 80,
@@ -783,12 +836,13 @@ export class Diary extends Weapon {
     stunMany: 100,
     slow: 0,
     slowOne: 0,
-    allCooltime: 0,
+    allCooltime: 0.07,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 13),
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -798,7 +852,7 @@ export class Diary extends Weapon {
         {
           cls: Labtop,
           materials: [
-            { key: "vit", length: 4 },
+            { key: "vit", length: 5 },
             { key: "agi", length: 4 },
             { key: "luk", length: 4 },
             { key: "wis", length: 3 },
@@ -828,19 +882,22 @@ export class Menu extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 1,
 
     splash: 80,
     stun: 0,
     stunMany: 0,
-    slow: 30,
-    slowOne: 0,
-    allCooltime: 0,
+    slow: 0,
+    slowOne: 30,
+    allCooltime: 0.07,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 14),
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -850,10 +907,10 @@ export class Menu extends Weapon {
         {
           cls: OrderForm,
           materials: [
-            { key: "str", length: 5 },
+            { key: "str", length: 6 },
             { key: "int", length: 4 },
             { key: "cul", length: 4 },
-            { key: "cha", length: 3 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -879,7 +936,9 @@ export class Revelation extends Weapon {
     physicalPenetration: 0,
     magicalPenetration: 26,
     physicalAllPercent: 0,
-    magicalAllPercent: 0,
+    magicalAllPercent: 20,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 2,
 
     splash: 0,
@@ -890,9 +949,10 @@ export class Revelation extends Weapon {
     allCooltime: 0,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 15),
-    criticalChance: 0.3,
+    criticalChance: 0.2,
     criticalDamage: 3,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -902,10 +962,10 @@ export class Revelation extends Weapon {
         {
           cls: Grimoire,
           materials: [
-            { key: "vit", length: 7 },
-            { key: "agi", length: 6 },
-            { key: "luk", length: 5 },
-            { key: "wis", length: 4 },
+            { key: "int", length: 9 },
+            { key: "wis", length: 5 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -930,8 +990,10 @@ export class Labtop extends Weapon {
     magicalDamage: 0,
     physicalPenetration: 28,
     magicalPenetration: 0,
-    physicalAllPercent: 0,
+    physicalAllPercent: 20,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 2,
 
     splash: 0,
@@ -939,12 +1001,13 @@ export class Labtop extends Weapon {
     stunMany: 0,
     slow: 0,
     slowOne: 0,
-    allCooltime: 0.4,
+    allCooltime: 0.15,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 16),
-    criticalChance: 0,
-    criticalDamage: 0,
+    criticalChance: 0.2,
+    criticalDamage: 3,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -954,10 +1017,10 @@ export class Labtop extends Weapon {
         {
           cls: TabletPC,
           materials: [
-            { key: "str", length: 7 },
-            { key: "int", length: 6 },
-            { key: "cul", length: 5 },
-            { key: "cha", length: 4 },
+            { key: "str", length: 9 },
+            { key: "int", length: 5 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -980,11 +1043,13 @@ export class AnswerSheet extends Weapon {
     range: 100,
     physicalDamage: 1800,
     magicalDamage: 0,
-    physicalPenetration: 0,
+    physicalPenetration: 26,
     magicalPenetration: 0,
     physicalAllPercent: 27,
     magicalAllPercent: 0,
-    targetLength: 1,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
+    targetLength: 2,
 
     splash: 0,
     stun: 0,
@@ -997,6 +1062,7 @@ export class AnswerSheet extends Weapon {
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 10,
   }
 
   constructor() {
@@ -1006,10 +1072,10 @@ export class AnswerSheet extends Weapon {
         {
           cls: TabletPC,
           materials: [
-            { key: "vit", length: 7 },
-            { key: "agi", length: 6 },
-            { key: "luk", length: 5 },
-            { key: "wis", length: 4 },
+            { key: "vit", length: 9 },
+            { key: "agi", length: 5 },
+            { key: "luk", length: 4 },
+            { key: "wis", length: 2 },
           ],
         },
       ],
@@ -1035,20 +1101,23 @@ export class LawBook extends Weapon {
     physicalPenetration: 0,
     magicalPenetration: 29,
     physicalAllPercent: 0,
-    magicalAllPercent: 0,
-    targetLength: 1,
+    magicalAllPercent: 25,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
+    targetLength: 2,
 
     splash: 80,
     stun: 0,
-    stunMany: 300,
+    stunMany: 0,
     slow: 0,
-    slowOne: 0,
-    allCooltime: 0,
+    slowOne: 25,
+    allCooltime: 0.15,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 18),
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -1058,10 +1127,10 @@ export class LawBook extends Weapon {
         {
           cls: Constitution,
           materials: [
-            { key: "str", length: 7 },
-            { key: "int", length: 6 },
-            { key: "cul", length: 5 },
-            { key: "cha", length: 4 },
+            { key: "int", length: 9 },
+            { key: "wis", length: 5 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -1087,20 +1156,23 @@ export class HellMap extends Weapon {
     physicalPenetration: 0,
     magicalPenetration: 44,
     physicalAllPercent: 0,
-    magicalAllPercent: 0,
-    targetLength: 3,
+    magicalAllPercent: 30,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
+    targetLength: 2,
 
-    splash: 0,
+    splash: 80,
     stun: 0,
     stunMany: 0,
     slow: 0,
-    slowOne: 50,
+    slowOne: 20,
     allCooltime: 0,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 19),
     criticalChance: 0,
     criticalDamage: 0,
-    dotted: 5,
+    dotted: 2,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -1110,10 +1182,10 @@ export class HellMap extends Weapon {
         {
           cls: Grimoire,
           materials: [
-            { key: "vit", length: 7 },
-            { key: "agi", length: 6 },
-            { key: "luk", length: 5 },
-            { key: "wis", length: 4 },
+            { key: "int", length: 9 },
+            { key: "wis", length: 5 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -1140,19 +1212,22 @@ export class OrderForm extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
-    targetLength: 3,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
+    targetLength: 2,
 
     splash: 80,
     stun: 0,
     stunMany: 0,
     slow: 0,
-    slowOne: 0,
-    allCooltime: 0,
+    slowOne: 10,
+    allCooltime: 0.1,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 20),
     criticalChance: 0.2,
     criticalDamage: 3,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -1162,10 +1237,10 @@ export class OrderForm extends Weapon {
         {
           cls: Counterfeit,
           materials: [
-            { key: "str", length: 7 },
-            { key: "int", length: 6 },
-            { key: "cul", length: 5 },
-            { key: "cha", length: 4 },
+            { key: "str", length: 9 },
+            { key: "int", length: 5 },
+            { key: "cul", length: 4 },
+            { key: "cha", length: 2 },
           ],
         },
       ],
@@ -1191,20 +1266,23 @@ export class Grimoire extends Weapon {
     physicalPenetration: 0,
     magicalPenetration: 540,
     physicalAllPercent: 0,
-    magicalAllPercent: 80,
-    targetLength: 3,
+    magicalAllPercent: 50,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
+    targetLength: 2,
 
-    splash: 0,
+    splash: 80,
     stun: 0,
     stunMany: 0,
     slow: 0,
-    slowOne: 0,
+    slowOne: 30,
     allCooltime: 0,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 21),
-    criticalChance: 0,
-    criticalDamage: 0,
-    dotted: 0,
+    criticalChance: 0.2,
+    criticalDamage: 3,
+    dotted: 3,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -1232,21 +1310,24 @@ export class TabletPC extends Weapon {
     magicalDamage: 0,
     physicalPenetration: 84,
     magicalPenetration: 0,
-    physicalAllPercent: 0,
+    physicalAllPercent: 50,
     magicalAllPercent: 0,
-    targetLength: 4,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
+    targetLength: 3,
 
     splash: 0,
     stun: 0,
     stunMany: 0,
     slow: 0,
     slowOne: 0,
-    allCooltime: 0.5,
+    allCooltime: 0.3,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 22),
-    criticalChance: 0,
-    criticalDamage: 0,
+    criticalChance: 0.2,
+    criticalDamage: 3,
     dotted: 0,
+    armerBreak: 15,
   }
 
   constructor() {
@@ -1276,6 +1357,8 @@ export class Constitution extends Weapon {
     magicalPenetration: 444,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 4,
 
     splash: 0,
@@ -1283,12 +1366,13 @@ export class Constitution extends Weapon {
     stunMany: 0,
     slow: 44,
     slowOne: 44,
-    allCooltime: 0,
+    allCooltime: 0.2,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 23),
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 0,
+    armerBreak: 0,
   }
 
   constructor() {
@@ -1318,19 +1402,22 @@ export class Counterfeit extends Weapon {
     magicalPenetration: 0,
     physicalAllPercent: 0,
     magicalAllPercent: 0,
+    physicalDecrease: 0,
+    magicalDecrease: 0,
     targetLength: 4,
 
     splash: 0,
     stun: 0,
     stunMany: 0,
     slow: 0,
-    slowOne: 0,
-    allCooltime: 0,
+    slowOne: 30,
+    allCooltime: 0.2,
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 24),
     criticalChance: 0,
     criticalDamage: 0,
     dotted: 8,
+    armerBreak: 0,
   }
 
   constructor() {
