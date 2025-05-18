@@ -146,6 +146,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   private activeDots: Phaser.Time.TimerEvent[] = []
   remainedStuns = [0, 0, 0, 0]
   stunTimer?: Phaser.Time.TimerEvent
+  isAppliedDcrease = false
 
   constructor(
     scene: Phaser.Scene,
@@ -226,6 +227,23 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.distanceWithPlayer = distance
   }
 
+  applyDecrease(weapons: (Weapon | undefined)[]) {
+    if (this.isAppliedDcrease) return
+    this.isAppliedDcrease = true
+    weapons
+      .filter((weapon): weapon is Weapon => !!weapon)
+      .forEach((weapon) => {
+        this.physicalDefence = numberUtil.subtractPercent(
+          this.physicalDefence,
+          weapon.physicalDecrease
+        )
+        this.magicalDefence = numberUtil.subtractPercent(
+          this.magicalDefence,
+          weapon.magicalDecrease
+        )
+      })
+  }
+
   moveEnemyAlongPath(weapons: (Weapon | undefined)[], materials: Materials) {
     if (this.remainedStuns.some((item) => item > 0)) {
       this.body?.velocity.set(0, 0)
@@ -278,9 +296,11 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       isAllWeaponActiveLevel * 5
     )
 
-    return this.getData("slowed")
+    const result = this.getData("slowed")
       ? numberUtil.subtractPercent(appliedWeaponActive, this.getData("slowed"))
       : appliedWeaponActive
+
+    return Math.max(1, result)
   }
 
   updateEnemyHpBar() {
@@ -421,7 +441,8 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     if (weaponData.dotted) this.applyDot(weaponData, finalDamage, weaponData.dotted * 250, 250)
 
     if (weaponData.slowOne) {
-      this.setData("slowed", weaponData.slowOne)
+      const slowed = this.getData("slowed")
+      this.setData("slowed", slowed + weaponData.slowOne)
 
       this.hitSlowTimer?.remove()
 

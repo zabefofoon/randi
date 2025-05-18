@@ -547,6 +547,7 @@ onMounted(() => {
         enemies.updateDistances(player.x, player.y)
         enemies.children.forEach((enemy) => {
           enemy.moveEnemyAlongPath(weapons.value!.weapons, materials.value)
+          enemy.applyDecrease(weapons.value!.weapons)
           enemy.updateEnemyHpBar()
         })
 
