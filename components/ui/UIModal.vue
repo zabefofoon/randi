@@ -4,6 +4,7 @@
     class="modal">
     <div
       class="dim"
+      :class="dimClass"
       :style="{ pointerEvents: enableDimClickClose ? 'auto' : 'none' }"
       @click="dimClickClose()"></div>
     <div
@@ -45,6 +46,7 @@ const props = defineProps<{
   titleClass?: string | string[]
   enableDimClickClose?: boolean
   hideCloseButton?: boolean
+  dimClass?: string
 }>()
 
 const emit = defineEmits<{

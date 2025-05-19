@@ -37,10 +37,10 @@ export default {
     return `calc(100% * ${index} / ${PURCHASE_LENGTH}) 0`
   },
 
-  restartAnimation(el: HTMLElement) {
-    el.classList.remove("pop-animate")
+  restartAnimation(el: HTMLElement, className = "pop-animate") {
+    el.classList.remove(className)
     void el.offsetWidth
-    el.classList.add("pop-animate")
+    el.classList.add(className)
   },
 
   getLevelColorHex(level: number) {

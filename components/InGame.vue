@@ -1,15 +1,5 @@
 <template>
   <div class="w-screen h-screen | flex items-center justify-center | bg-black">
-    <ModalGameOver
-      v-if="isShowGameOverPopup"
-      @close="isShowGameOverPopup = false" />
-    <ModalGameClear
-      v-if="isShowGameClearPopup"
-      @close="isShowGameClearPopup = false" />
-    <ModalConfigs
-      v-if="isShowConfigPopup"
-      @close="isShowConfigPopup = false"
-      @exit="exit" />
     <ModalGamble
       v-if="enforces && weapons && isShowGamblePopup"
       v-model:selected-index="selectedGambleIndex"
@@ -32,6 +22,20 @@
       v-model:select-chance="selectChance"
       :materials="materials"
       @close="isShowMaterialsPopup = false" />
+    <ModalTextEffect
+      v-if="isShowTextEffect"
+      :text="isShowTextEffect" />
+    <ModalGameOver
+      v-if="isShowGameOverPopup"
+      @close="isShowGameOverPopup = false" />
+    <ModalGameClear
+      v-if="isShowGameClearPopup"
+      @close="isShowGameClearPopup = false" />
+    <ModalConfigs
+      v-if="isShowConfigPopup"
+      @close="isShowConfigPopup = false"
+      @exit="exit" />
+
     <div class="content | relative | aspect-video max-w-full max-h-full | bg-white">
       <main class="relative | w-full h-full | flex flex-col justify-center items-center">
         <div
@@ -265,6 +269,7 @@ const isShowGameOverPopup = ref(false)
 const isShowGameClearPopup = ref(false)
 const isShowGamblePopup = ref(false)
 const isShowConfigPopup = ref(false)
+const isShowTextEffect = ref("")
 
 const gachaChance = ref(2)
 const selectChance = ref(1)
@@ -292,7 +297,7 @@ let damageRect: Phaser.GameObjects.Rectangle
 
 onMounted(() => {
   if (!phaserContainer.value) return
-  window.speed = 1
+  window.speed = 1.1
 
   if (gameStore.checkSelectedPurchaseItem(PayBack)) gameStore.spendPurchaseItem(PayBack)
   if (gameStore.checkSelectedPurchaseItem(Sharper)) gameStore.spendPurchaseItem(Sharper)
@@ -475,11 +480,30 @@ onMounted(() => {
             if (scene.data.get("paused")) return
 
             remainnedTime.value--
+
             if (remainnedTime.value % 5 === 0) {
               remainnedEnemies.value = enemies.group.children.size
             }
+
             if (remainnedTime.value < 0) {
               round.value++
+
+              if (round.value % 10 === 0) {
+                isShowTextEffect.value = `ROUND ${round.value}`
+                soundStore.play("round")
+
+                scene.time.delayedCall(1200, () => {
+                  isShowTextEffect.value = "EMERGENCY"
+                  soundStore.play("round")
+
+                  scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
+                })
+              } else {
+                isShowTextEffect.value = `ROUND ${round.value}`
+                scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
+                soundStore.play("round")
+              }
+
               remainnedTime.value = roundTime
 
               if (round.value !== 1) {
@@ -502,6 +526,7 @@ onMounted(() => {
               }
               if (isBossRemained) {
                 scene.physics.pause()
+                isShowTextEffect.value = ""
                 isShowGameOverPopup.value = true
               }
             }
