@@ -61,4 +61,15 @@ export default {
         return 0xffffff
     }
   },
+
+  softTint(hex: number, intensity = 0.4) {
+    const src = Phaser.Display.Color.IntegerToRGB(hex) // {r,g,b}
+    const mix = Phaser.Display.Color.Interpolate.ColorWithColor(
+      { r: 255, g: 255, b: 255 }, // 흰색
+      src,
+      1,
+      intensity // 0=흰색, 1=원색
+    )
+    return Phaser.Display.Color.GetColor(mix.r, mix.g, mix.b)
+  },
 }

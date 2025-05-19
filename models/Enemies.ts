@@ -352,9 +352,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     const currentHP = this.getData("hp") as number
 
     this.physicalDefence -= weaponData.armerBreak
-    if (this.physicalDefence < 0) this.physicalDefence = 0
     this.magicalDefence -= weaponData.armerBreak
-    if (this.magicalDefence < 0) this.magicalDefence = 0
 
     const _physicalDamage =
       distInSplash === undefined
@@ -491,13 +489,22 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   }
 
   calculateReducedDamage(damage: number, defense: number, penetration = 0): number {
-    const k = 100
-    const maxReduction = 0.8
+    const k = 100 // 완만하게 꺾이는 상수
+    const cap = 0.8 // 감소·증폭 최대 80 %
 
-    const reducedDefense = Math.max(0, defense - penetration)
+    const adjusted = defense - penetration
 
-    const reductionRate = Math.min(reducedDefense / (reducedDefense + k), maxReduction)
-    return damage ? Math.max(1, Math.floor(damage * (1 - reductionRate))) : damage
+    let multiplier: number
+
+    if (adjusted >= 0) {
+      const reduction = Math.min(adjusted / (adjusted + k), cap)
+      multiplier = 1 - reduction
+    } else {
+      const amp = Math.min(Math.abs(adjusted) / (Math.abs(adjusted) + k), cap)
+      multiplier = 1 + amp
+    }
+
+    return damage ? Math.max(1, Math.floor(damage * multiplier)) : damage
   }
 
   die() {

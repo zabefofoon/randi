@@ -281,6 +281,10 @@ let scene: Phaser.Scene
 let isBossRemained = false
 let isClear = false
 
+let layer1: Phaser.Tilemaps.TilemapLayer | undefined
+let layer2: Phaser.Tilemaps.TilemapLayer | undefined
+let layer3: Phaser.Tilemaps.TilemapLayer | undefined
+
 const isTouchDevice =
   "ontouchstart" in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0
 
@@ -403,9 +407,9 @@ onMounted(() => {
         const tileset = map.addTilesetImage("mainlevbuild2", "tiles")
         const tileset2 = map.addTilesetImage("mainlevbuild2", "tiles")
         const tileset3 = map.addTilesetImage("mainlevbuild2", "tiles")
-        if (tileset) map.createLayer("layer1", tileset, 0, 0)
-        if (tileset2) map.createLayer("layer2", tileset2, 0, 0)
-        if (tileset3) map.createLayer("layer3", tileset3, 0, 0)
+        if (tileset) layer1 = map.createLayer("layer1", tileset, 0, 0) ?? undefined
+        if (tileset2) layer2 = map.createLayer("layer2", tileset2, 0, 0) ?? undefined
+        if (tileset3) layer3 = map.createLayer("layer3", tileset3, 0, 0) ?? undefined
 
         cursors = scene.input.keyboard!.createCursorKeys()
 
@@ -463,6 +467,7 @@ onMounted(() => {
         scene.events.on("enemy-spawn", () => {
           remainnedEnemies.value++
         })
+
         scene.time.addEvent({
           delay: 1000 / window.speed,
           repeat: -1,
@@ -865,6 +870,17 @@ watch(isShowGameClearPopup, (value) => {
   if (!value) exit()
   else pause()
 })
+
+watch(
+  round,
+  (round) => {
+    const ceiled = Math.max(1, Math.ceil(round / 10))
+    layer1?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))
+    layer2?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))
+    layer3?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))
+  },
+  { immediate: true }
+)
 </script>
 
 <style lang="scss" scoped>

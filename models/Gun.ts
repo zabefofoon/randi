@@ -902,7 +902,7 @@ export class EyeGun extends Weapon {
 
     splash: 0,
     stun: 0,
-    stunMany: 0,
+    stunMany: 300,
     slow: 0,
     slowOne: 0,
     allCooltime: 0,
