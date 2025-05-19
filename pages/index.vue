@@ -80,7 +80,8 @@ onMounted(() => {
 watch(currentScene, (scene) =>
   setTimeout(() => {
     if (scene === "inGame") {
-      soundStore.playBGM("bgm", 0.1)
+      const volume = soundStore.useBGMSound ? 0.1 : 0.001
+      soundStore.playBGM("bgm", volume)
     } else {
       soundStore.stopBGM()
       soundStore.play("door")

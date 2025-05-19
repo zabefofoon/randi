@@ -8,20 +8,20 @@
       :weapons="weapons"
       :materials="materials"
       :enforces="enforces"
-      @close="isShowGamblePopup = false" />
+      @close="showGamblePopup(false)" />
     <ModalWeapons
       v-if="weapons && isShowWeaponsPopup"
       v-model:selected-index="selectedWeaponIndex"
       v-model:is-all-weapon-effect="isAllWeaponEffect"
       :weapons="weapons"
       :materials="materials"
-      @close="isShowWeaponsPopup = false" />
+      @close="showWeaponsPopup(false)" />
     <ModalMaterials
       v-if="isShowMaterialsPopup"
       v-model:gacha-chance="gachaChance"
       v-model:select-chance="selectChance"
       :materials="materials"
-      @close="isShowMaterialsPopup = false" />
+      @close="showMaterialsPopup(false)" />
     <ModalTextEffect
       v-if="isShowTextEffect"
       :text="isShowTextEffect" />
@@ -33,8 +33,21 @@
       @close="isShowGameClearPopup = false" />
     <ModalConfigs
       v-if="isShowConfigPopup"
-      @close="isShowConfigPopup = false"
-      @exit="exit" />
+      @close="showConfigPopup(false)">
+      <div class="w-full | border-t border-gray-900 border-[1px] | mb-[1.5cqw]"></div>
+      <div class="flex gap-[0.5cqw]">
+        <button
+          class="grid place-items-center | relative bg-blue-900 | px-[2cqw] py-[0.5cqw] | border-black border-[0.21cqw] rounded-lg | leading-none"
+          @click="showConfigPopup(false)">
+          <span class="text-outline text-[1.7cqw] font-bold">계속하기</span>
+        </button>
+        <button
+          class="grid place-items-center | relative bg-orange-700 | px-[2cqw] py-[0.5cqw] | border-black border-[0.21cqw] rounded-lg | leading-none"
+          @click="exit()">
+          <span class="text-outline text-[1.7cqw] font-bold"> 종료하기 </span>
+        </button>
+      </div>
+    </ModalConfigs>
 
     <div class="content | relative | aspect-video max-w-full max-h-full | bg-white">
       <main class="relative | w-full h-full | flex flex-col justify-center items-center">
@@ -103,7 +116,7 @@
           <!-- 설정버튼 -->
           <button
             class="bg-blue-950 | mt-[0.2cqh] pr-[0.5cqw] | flex items-center justify-between | rounded-lg border-black border-[0.25cqw]"
-            @click="isShowConfigPopup = true">
+            @click="showConfigPopup(true)">
             <div
               class="stat-sprites | w-[2.5cqw] aspect-square"
               :style="{
@@ -166,7 +179,7 @@
           <!-- 무기버튼 -->
           <button
             class="flex items-center gap-[0.5cqw] bg-orange-700 | h-fit pr-[1.5cqw] pl-[0.5cqw] py-[0.2cqw] | rounded-lg border-black border-[0.2cqw]"
-            @click="isShowGamblePopup = true">
+            @click="showGamblePopup(true)">
             <div
               class="stat-sprites | w-[3cqw] aspect-square"
               :style="{
@@ -181,7 +194,7 @@
           <!-- 무기버튼 -->
           <button
             class="flex items-center gap-[0.5cqw] bg-blue-950 | h-fit pr-[1.5cqw] pl-[0.5cqw] py-[0.2cqw] | rounded-lg border-black border-[0.2cqw]"
-            @click="isShowWeaponsPopup = true">
+            @click="showWeaponsPopup(true)">
             <div
               class="stat-sprites | w-[3cqw] aspect-square"
               :style="{
@@ -200,7 +213,7 @@
               'bg-amber-500': selectChance > 0,
               'bg-blue-950': selectChance <= 0,
             }"
-            @click="isShowMaterialsPopup = true">
+            @click="showMaterialsPopup(true)">
             <div
               class="stat-sprites | w-[3cqw] aspect-square"
               :style="{
@@ -264,11 +277,31 @@ const remainnedEnemies = ref(0)
 const activeJoystick = ref<number>()
 
 const isShowMaterialsPopup = ref(false)
+const showMaterialsPopup = (value: boolean) => {
+  isShowMaterialsPopup.value = value
+  if (value) soundStore.play("select")
+}
+
 const isShowWeaponsPopup = ref(false)
+const showWeaponsPopup = (value: boolean) => {
+  isShowWeaponsPopup.value = value
+  if (value) soundStore.play("select")
+}
+
 const isShowGameOverPopup = ref(false)
 const isShowGameClearPopup = ref(false)
+
 const isShowGamblePopup = ref(false)
+const showGamblePopup = (value: boolean) => {
+  isShowGamblePopup.value = value
+  if (value) soundStore.play("select")
+}
 const isShowConfigPopup = ref(false)
+const showConfigPopup = (value: boolean) => {
+  isShowConfigPopup.value = value
+  if (value) soundStore.play("select")
+}
+
 const isShowTextEffect = ref("")
 
 const gachaChance = ref(2)
@@ -493,6 +526,8 @@ onMounted(() => {
                 soundStore.play("round")
 
                 scene.time.delayedCall(1200, () => {
+                  if (scene.data.get("paused")) return
+
                   isShowTextEffect.value = "EMERGENCY"
                   soundStore.play("round")
 

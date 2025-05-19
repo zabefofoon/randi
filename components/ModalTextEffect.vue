@@ -27,12 +27,20 @@ const props = defineProps<{
   text: string
 }>()
 
-defineEmits<{
+const emit = defineEmits<{
   (e: "close"): void
 }>()
 
 const topEl = ref<HTMLElement>()
 const bottomEl = ref<HTMLElement>()
+let timer: NodeJS.Timeout
+onMounted(() => {
+  timer = setTimeout(() => emit("close"), 2400)
+})
+
+onBeforeUnmount(() => {
+  clearTimeout(timer)
+})
 
 watch(
   () => props.text,

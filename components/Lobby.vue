@@ -1,11 +1,29 @@
 <template>
   <div class="w-screen h-screen | flex items-center justify-center | bg-black">
+    <ModalConfigs
+      v-if="isShowConfigPopup"
+      @close="showConfigPopup(false)" />
+
     <div class="content | relative | aspect-video max-w-full max-h-full">
       <img
         class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full | select-none pointer-events-none"
         src="/assets/images/main.webp" />
+
       <main
         class="backdrop-blur-anim | relative | w-full h-full | flex flex-col justify-center items-center">
+        <div class="absolute right-[1cqw] top-[1cqw] | flex items-center gap-[1cqw]">
+          <button
+            class="bg-blue-950 | pr-[0.5cqw] | flex items-center justify-between | rounded-lg border-black border-[0.25cqw]"
+            @click="showConfigPopup(true)">
+            <div
+              class="stat-sprites | w-[2.5cqw] aspect-square"
+              :style="{
+                backgroundPosition: etcUtil.getSpritePosition(19),
+              }"></div>
+            <span class="text-[1.3cqw] text-white font-bold text-outline">설정</span>
+          </button>
+        </div>
+
         <h1
           class="fade-up | gasoek-one-regular | relative z-[1] | mt-[5cqw] | leading-none text-center text-[5cqw] font-bold text-outline text-white">
           <span class="text-red-500">N</span>
@@ -43,12 +61,21 @@ const emit = defineEmits<{
 }>()
 
 const gameStore = useGameStore()
+const soundStore = useSoundStore()
+
+const isShowConfigPopup = ref(false)
+
+const showConfigPopup = (value: boolean) => {
+  isShowConfigPopup.value = value
+  if (value) soundStore.play("select")
+}
 
 onMounted(() => {
   gameStore.initMoney()
   gameStore.initCharacters()
   gameStore.initPurchasedItems()
   gameStore.initCollection()
+  soundStore.initSounds()
 })
 </script>
 <style lang="scss" scoped>

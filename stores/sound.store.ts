@@ -1,3 +1,6 @@
+import store from "store2"
+import { LOCAL_SOUND_BGM, LOCAL_SOUND_EFFECT } from "~/const"
+
 interface SoundInstanceMap {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any
@@ -5,6 +8,9 @@ interface SoundInstanceMap {
 
 export const useSoundStore = defineStore("sound", () => {
   const nuxt = useNuxtApp()
+
+  const useBGMSound = ref(true)
+  const useEffectSound = ref(true)
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const bgmInstance = ref<any>()
@@ -26,7 +32,6 @@ export const useSoundStore = defineStore("sound", () => {
     nuxt.$sound.registerSound("assets/sounds/weapons.mp3", "weapons")
     nuxt.$sound.registerSound("assets/sounds/round.mp3", "round")
 
-    prepareInstances("bgm", 5)
     prepareInstances("door", 3)
     prepareInstances("coin", 8)
     prepareInstances("select", 3)
@@ -54,12 +59,23 @@ export const useSoundStore = defineStore("sound", () => {
   }
 
   const play = (id: string) => {
-    if (!instances[id]?.length) prepareInstances(id)
+    if (!useEffectSound.value) return
 
-    const instance = instances[id].find((ins) => !ins.playState || ins.playState === "finished")
+    // 풀 초기화
+    if (!instances[id]) instances[id] = []
 
-    if (instance) instance.play()
-    else nuxt.$sound.play(id)
+    // 사용 가능한 인스턴스 찾기
+    let instance = instances[id].find((ins) => !ins.playState || ins.playState === "finished")
+
+    // 없으면 새로 만들어서 풀에 push
+    if (!instance) {
+      instance = nuxt.$sound.createInstance(id)
+      instances[id].push(instance)
+    }
+
+    // 현재 음효 설정에 맞춰 볼륨
+    instance.volume = 1
+    instance.play()
   }
 
   const playBGM = (id: string, volume = 0.5) => {
@@ -72,7 +88,33 @@ export const useSoundStore = defineStore("sound", () => {
     bgmInstance.value = undefined
   }
 
+  const toggleBGM = () => {
+    useBGMSound.value = !useBGMSound.value
+    store.set(LOCAL_SOUND_BGM, useBGMSound.value)
+    if (bgmInstance.value?.volume == null) return
+
+    if (useBGMSound.value) bgmInstance.value.volume = 0.1
+    else bgmInstance.value.volume = 0.001
+  }
+
+  const toggleEffect = () => {
+    useEffectSound.value = !useEffectSound.value
+    store.set(LOCAL_SOUND_EFFECT, useEffectSound.value)
+    Object.values(instances)
+      .flat()
+      .forEach((instance) => {
+        if (useEffectSound.value) instance.volume = 1
+        else instance.volume = 0
+      })
+  }
+
+  const initSounds = () => {
+    useBGMSound.value = store.get(LOCAL_SOUND_BGM)
+    useEffectSound.value = store.get(LOCAL_SOUND_EFFECT)
+  }
+
   return {
+    instances,
     preloadSounds,
     prepareInstances,
     play,
@@ -80,5 +122,13 @@ export const useSoundStore = defineStore("sound", () => {
 
     playBGM,
     stopBGM,
+
+    useBGMSound,
+    useEffectSound,
+
+    toggleBGM,
+    toggleEffect,
+
+    initSounds,
   }
 })
