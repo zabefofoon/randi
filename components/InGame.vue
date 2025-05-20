@@ -526,8 +526,6 @@ onMounted(() => {
                 soundStore.play("round")
 
                 scene.time.delayedCall(1200, () => {
-                  if (scene.data.get("paused")) return
-
                   isShowTextEffect.value = "EMERGENCY"
                   soundStore.play("round")
 
