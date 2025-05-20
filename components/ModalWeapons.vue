@@ -2,7 +2,7 @@
   <UIModal
     enable-dim-click-close
     hide-close-button
-    inner-class="!max-w-[56cqw] | !bg-transparent"
+    inner-class="!max-w-[60cqw] | !bg-transparent"
     @close="emit('close')">
     <template #content>
       <div class="flex items-center gap-[1cqw]">
@@ -48,13 +48,16 @@
                 'text-fuchsia-400': weapon?.level === 5,
                 'text-red-400': weapon?.level === 6,
               }">
-              {{ weapon?.name ?? "????" }}
+              <span
+                v-if="weapon?.name"
+                v-t="weapon.name"></span>
+              <span v-else>????</span>
             </figcaption>
           </figure>
         </div>
         <div
           class="w-full | flex flex-col items-center justify-center | p-[1cqw] | bg-blue-950 | text-white | rounded-lg border-black border-[0.2cqw]">
-          <div>
+          <div class="min-w-[66%]">
             <h2
               class="text-outline text-[2cqw] font-bold | mb-[0.5cqw]"
               :class="{
@@ -67,14 +70,17 @@
                 'text-red-400': selectedWeapon?.level === 6,
               }">
               <template v-if="selectedWeapon?.name">
-                Lv.{{ selectedWeapon.level }} {{ selectedWeapon.name }}
+                Lv.{{ selectedWeapon.level }} <span v-t="selectedWeapon.name"></span>
               </template>
               <template v-else>????</template>
             </h2>
             <h3
               class="text-outline text-[1.5cqw] font-bold"
               :class="{ 'text-center': !selectedWeapon }">
-              {{ selectedWeapon?.description ?? "????" }}
+              <span
+                v-if="selectedWeapon?.description"
+                v-t="selectedWeapon?.description"></span>
+              <span v-else>????</span>
             </h3>
             <WeaponCharacteristic
               v-if="selectedWeapon"
@@ -107,19 +113,27 @@
                   }">
                   <div
                     v-if="gameStore.checkHasCollection(item.cls.meta.name)"
-                    class="weapon-sprites | w-[3.5cqw] aspect-square | rounded-lg border-black border-[0.2cqw]"
+                    class="weapon-sprites | w-[4cqw] aspect-square | rounded-lg border-black border-[0.2cqw]"
                     :style="{ 'background-position': item.cls.meta.spritePosition }"></div>
                   <div
                     v-else
-                    class="w-[3.5cqw] aspect-square | rounded-lg border-black border-[0.2cqw] | flex items-center justify-center">
+                    class="w-[4cqw] aspect-square | rounded-lg border-black border-[0.2cqw] | flex items-center justify-center">
                     <span class="gasoek-one-regular font-bold text-[2cqw]">?</span>
                   </div>
                 </div>
 
                 <div class="flex flex-col gap-[0.2cqw]">
-                  <div class="flex items-center">
+                  <div class="flex items-center gap-[0.5cqw]">
                     <span class="text-outline text-[1.5cqw] font-bold">
-                      Lv.{{ item.cls.meta.level }} {{ item.cls.meta?.name }} 조합
+                      Lv.{{ item.cls.meta.level }} <span v-t="item.cls.meta?.name"></span>
+                    </span>
+                    <span
+                      v-if="getNeedLevel(item)"
+                      class="text-[1.2cqw] | font-bold text-outline"
+                      :class="{
+                        'text-red-500': !checkHasLevel(item),
+                      }">
+                      ({{ getNeedLevel(item) }})
                     </span>
                   </div>
                   <div class="flex | text-outline text-[1.3cqw] text-left font-bold">
@@ -132,14 +146,13 @@
                         :class="{
                           'text-red-500': materials[material.key].length < material.length,
                         }">
-                        {{ material.key }} {{ material.length }}개
+                        {{
+                          i18n.t("NeedMaterialUnit", {
+                            key: i18n.t(material.key),
+                            length: material.length,
+                          })
+                        }}
                       </span>
-                    </div>
-                    <div
-                      :class="{
-                        'text-red-500': !checkHasLevel(item),
-                      }">
-                      {{ getNeedLevel(item) }}
                     </div>
                   </div>
                 </div>
@@ -157,9 +170,11 @@
                 'bg-orange-700': isWeaponGettable,
                 'bg-gray-700': !isWeaponGettable,
               }">
-              뽑기
+              {{ i18n.t("MaterialGatcha") }}
             </span>
-            <span class="text-[1.2cqw]">(랜덤 {{ needLength }}개 필요)</span>
+            <span class="text-outline text-[1.2cqw] font-bold">
+              {{ i18n.t("NeedMaterials", { length: needLength }) }}
+            </span>
           </button>
         </div>
       </div>
@@ -186,6 +201,8 @@ const emit = defineEmits<{
 
 const selectedIndex = defineModel<number>("selectedIndex", { default: 0 })
 const isAllWeaponEffect = defineModel<boolean>("isAllWeaponEffect", { default: false })
+
+const i18n = useI18n()
 
 const gameStore = useGameStore()
 const soundStore = useSoundStore()
@@ -275,11 +292,11 @@ const checkHasLevel = (item: NextInfo) => {
 const getNeedLevel = (item: NextInfo) => {
   switch (item.cls.meta.level) {
     case 4:
-      return ` + Lv.3 무기 2개`
+      return i18n.t("NeedWeapons", { level: 3, length: 2 })
     case 5:
-      return ` + Lv.4 무기 3개`
+      return i18n.t("NeedWeapons", { level: 4, length: 3 })
     case 6:
-      return ` + Lv.5 무기 4개`
+      return i18n.t("NeedWeapons", { level: 5, length: 4 })
   }
 }
 

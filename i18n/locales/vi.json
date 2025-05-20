@@ -1,0 +1,413 @@
+{
+  "RandomDefence": "Phòng thủ ngẫu nhiên",
+  "TitleBite": "<span class='title-red'>B</span><span class='title-orange'>I</span><span class='title-blue'>T</span><span class='title-green'>E</span> JOIN",
+
+  "GameStart": "Bắt đầu trò chơi",
+  "Collection": "Bộ sưu tập",
+  "Review": "Đánh giá",
+  "Config": "Cài đặt",
+  "Back": "Quay lại",
+  "Start": "Bắt đầu",
+  "Buy": "Mua",
+
+  "WelcomeReword": "Thưởng đăng nhập: Nhận 1.000 Xu",
+  "HavePurchaseItem": "(Bạn có {length} vật phẩm)",
+  "UsePurchase": "Trang bị",
+  "UnusePurchase": "Gỡ ra",
+
+  "Reword": "PHẦN THƯỞNG",
+  "RoundPoint": "Điểm vòng",
+  "KillPoint": "Điểm hạ gục",
+  "StatPoint": "Điểm thuộc tính",
+  "WeaponPoint": "Điểm vũ khí",
+  "GoldPoint": "Điểm vàng",
+  "EnforcePoint": "Điểm cường hóa",
+  "GamblePoint": "Điểm cược",
+  "CharacterPoint": "Điểm nhân vật",
+
+  "Clear": "HOÀN THÀNH!",
+  "Resume": "Tiếp tục",
+  "Quit": "Thoát",
+
+  "Gamble": "Cược",
+  "Weapon": "Vũ khí",
+  "Stat": "Thuộc tính",
+  "MaterialGatcha": "Gacha",
+
+  "Joker": "Joker",
+  "JokerDesc": "Biến một lượt rút ngẫu nhiên thành rút chọn (1 lần).",
+
+  "MaterialSelectable": "Chọn",
+  "HaveLength": "{length} vật phẩm",
+  "GambleMoney": "Cược {money} Xu",
+  "GambleMoneyPeriod": "-{money} ~ -{money} Xu",
+
+  "NeedMaterials": "(Cần {length} thuộc tính)",
+  "NeedMaterialUnit": "{length} {key}",
+
+  "Coin": "Xu",
+
+  "Enforce": "Cường hóa",
+  "EnforcePhysical": "Sức mạnh vật lý +1",
+  "EnforcePhysicalPercent": "Sức mạnh vật lý +1%",
+  "EnforceMagical": "Sức mạnh phép +1",
+  "EnforceMagicalPercent": "Sức mạnh phép +1%",
+  "EnforceCooldown": "Hồi chiêu -1%",
+
+  "GetRewards": "Nhận thưởng",
+
+  "NeedWeapons": "Cần {length} vũ khí Cấp {level}",
+  "NoLuck": "Không may",
+
+  "NylonMask": "Nylon Mask",
+  "NylonMaskDescription": "Người đàn ông bí ẩn đeo mặt nạ. Đồn rằng anh ta rất giàu…",
+  "NylonMaskSpecificity": "* Nhận thêm 30% phần thưởng",
+
+  "TrunkKing": "Trunk King",
+  "TrunkKingDescription": "Người đàn ông trung niên da trắng, cổ đỏ. Nổi tiếng cực khỏe.",
+  "TrunkKingSpecificity": "* Sát thương vật lý +1% mỗi vòng",
+
+  "Gun": "Súng lục",
+  "GunDesc": "“Viên đạn 9 mm quen thuộc với mọi người.”",
+
+  "ShotGun": "Súng săn",
+  "ShotGunDesc": "“Đoàng! Tường đạn chì lan tỏa.”",
+
+  "DoubleGun": "Hai súng lục",
+  "DoubleGunDesc": "“Hai tay, hai cò, lửa gấp đôi.”",
+
+  "MagicGun": "Súng phép",
+  "MagicGunDesc": "“Lời nguyện bay khỏi nòng súng.”",
+
+  "AirGun": "Súng hơi",
+  "AirGunDesc": "“Phát bắn gió nén lặng lẽ.”",
+
+  "MachineGun": "Súng máy",
+  "MachineGunDesc": "“Từ nay đạn tiêu theo giây.”",
+
+  "FingerGun": "Súng ngón tay",
+  "FingerGunDesc": "“Không nghe lời thì ngón tay là súng.”",
+
+  "BubbleGun": "Súng bọt",
+  "BubbleGunDesc": "“Trông dịu dàng nhưng coi chừng ngạt thở.”",
+
+  "TazerGun": "Taser",
+  "TazerGunDesc": "“Tạch! Tĩnh điện kèm theo.”",
+
+  "PulseGun": "Súng xung",
+  "PulseGunDesc": "“Làn sóng xanh xuyên thẳng.”",
+
+  "Firework": "Pháo hoa",
+  "FireworkDesc": "“Cho lễ hội ư? Không—cho chiến trường.”",
+
+  "SilentKiller": "Súng giảm thanh",
+  "SilentKillerDesc": "“Âm thầm nhưng chắc chắn.”",
+
+  "DrillGun": "Súng khoan",
+  "DrillGunDesc": "“Nòng quay, ác mộng quay.”",
+
+  "PepperSpray": "Bình xịt tiêu",
+  "PepperSprayDesc": "“Bảo đảm chảy nước mắt!”",
+
+  "EyeGun": "Ánh nhìn tử thần",
+  "EyeGunDesc": "“Ánh mắt nhanh hơn lời nói.”",
+
+  "GrenadeLauncher": "Súng phóng lựu",
+  "GrenadeLauncherDesc": "“Quỹ đạo cong, công lý nổ tung.”",
+
+  "SilverBulletGun": "Súng đạn bạc",
+  "SilverBulletGunDesc": "“Thảm họa bạc dưới ánh trăng.”",
+
+  "PlasmaGun": "Súng plasma",
+  "PlasmaGunDesc": "“Thiêu đối thủ bằng ánh sáng và nhiệt.”",
+
+  "Cannon": "Đại bác",
+  "CannonDesc": "“Nhỏ nhưng hỏa lực thật.”",
+
+  "BlessedRevolver": "Revolver thần thánh",
+  "BlessedRevolverDesc": "“Ánh sáng thiêng nở nơi miệng súng.”",
+
+  "CursedRevolver": "Revolver nguyền rủa",
+  "CursedRevolverDesc": "“Hơi lạnh đen thoát ra từ nòng.”",
+
+  "HeartBreaker": "Kẻ phá tim",
+  "HeartBreakerDesc": "“Một phát đánh rung tim.”",
+
+  "RadiationBeam": "Tia phóng xạ",
+  "RadiationBeamDesc": "“Hậu họa vô hình.”",
+
+  "Missile": "Tên lửa",
+  "MissileDesc": "“Khoan—có gian lận không đấy?”",
+
+  "Booger": "Gỉ mũi",
+  "BoogerDesc": "“Đừng xem thường vì bẩn nhé!”",
+
+  "ButterKnife": "Dao bơ",
+  "ButterKnifeDesc": "“Dùng phết bánh nhưng đâm vẫn đau.”",
+
+  "KitchenKnife": "Dao bếp",
+  "KitchenKnifeDesc": "“Bạn thân của đầu bếp.”",
+
+  "CutterKnife": "Dao rọc giấy",
+  "CutterKnifeDesc": "“Lưỡi càng sắc, nguy hiểm càng cao.”",
+
+  "SushiKnife": "Dao sushi",
+  "SushiKnifeDesc": "“Lạng thịt mượt mà.”",
+
+  "Scissors": "Kéo",
+  "ScissorsDesc": "“Cắt cũng là trói buộc.”",
+
+  "Hammer": "Búa",
+  "HammerDesc": "“Đóng đinh ư? Không—đập sọ.”",
+
+  "AX": "Rìu",
+  "AXDesc": "“Nặng tay, chắc lực.”",
+
+  "ButcherKnife": "Dao phay",
+  "ButcherKnifeDesc": "“Gân xương kêu rắc.”",
+
+  "LongNails": "Móng dài",
+  "LongNailsDesc": "“Bản năng dã thú.”",
+
+  "SwissArmyKnife": "Dao đa năng Thụy Sĩ",
+  "SwissArmyKnifeDesc": "“Tiện khắp mọi nơi.”",
+
+  "Fist": "Nắm đấm",
+  "FistDesc": "“Cuối cùng hãy tin vào nắm tay.”",
+
+  "CrossCutSaw": "Cưa",
+  "CrossCutSawDesc": "“Xẻ sâu như khắc gỗ.”",
+
+  "CsowBar": "Xà beng",
+  "CrowBarDesc": "“Át chủ bài công trình.”",
+
+  "Machete": "Dao rựa",
+  "MacheteDesc": "“Lưỡi của người mở lối rừng.”",
+
+  "KoreanHandPlow": "Cuốc tay Hàn",
+  "KoreanHandPlowDesc": "“Lật đất—lật người.”",
+
+  "BornSword": "Kiếm xương",
+  "BornSwordDesc": "“Rèn bằng xương, phá xương.”",
+
+  "SurgicalKnife": "Dao mổ",
+  "SurgicalKnifeDesc": "“Cắt chuẩn y khoa.”",
+
+  "BlessedSword": "Kiếm thiêng",
+  "BlessedSwordDesc": "“Lưỡi tinh khiết tắm nước thánh.”",
+
+  "CursedSword": "Kiếm nguyền",
+  "CursedSwordDesc": "“Càng cầm lâu tiếng thì thầm càng to.”",
+
+  "DualBlade": "Song kiếm",
+  "DualBladeDesc": "“Hai tay hai lưỡi—thép múa.”",
+
+  "BigAX": "Đại phủ",
+  "BigAXDesc": "“Rìu đã to, rắc rối càng to.”",
+
+  "DragonSlayer": "Kẻ diệt rồng",
+  "DragonSlayerDesc": "“Lưỡi sắt khổng lồ sinh ra để hạ rồng.”",
+
+  "SnotWhip": "Roi nước mũi",
+  "SnotWhipDesc": "“Nhầy nhụa, dính dáp, bẹt!”",
+
+  "LaserSword": "Kiếm laser",
+  "LaserSwordDesc": "“Đến từ tương lai.”",
+
+  "DeathScythe": "Lưỡi hái tử thần",
+  "DeathScytheDesc": "“Cắt ranh giới sinh tử.”",
+
+  "Book": "Sổ tay",
+  "BookDesc": "“Trang trắng, tiềm năng vô biên.”",
+
+  "ThickBook": "Sách dày",
+  "ThickBookDesc": "“Kiến thức nặng tay đau.”",
+
+  "ThinBook": "Sách mỏng",
+  "ThinBookDesc": "“Dễ mang nhất.”",
+
+  "SpringBook": "Sổ lò xo",
+  "SpringBookDesc": "“Mở dễ, ném dễ.”",
+
+  "TextBook": "Giáo trình",
+  "TextBookDesc": "“Sức mạnh của chuẩn mực.”",
+
+  "Map": "Bản đồ",
+  "MapDesc": "“Biết đường thì sống.”",
+
+  "PictureBook": "Sách tranh",
+  "PictureBookDesc": "“Hình ảnh đầy quyền năng.”",
+
+  "MagicBook": "Sách phép",
+  "MagicBookDesc": "“Một câu chú, mưa tên.”",
+
+  "MobilePhone": "Điện thoại",
+  "MobilePhoneDesc": "“Gọi là phụ, chơi game là chính.”",
+
+  "Regulations": "Sổ quy tắc",
+  "RegulationsDesc": "“Quy tắc là sức mạnh.”",
+
+  "WorkBook": "Sách bài tập",
+  "WorkBookDesc": "“Bỏ mặc nó, nó sẽ theo bạn.”",
+
+  "TreasureMap": "Bản đồ kho báu",
+  "TreasureMapDesc": "“Mắt dán vào dấu X.”",
+
+  "EvacuationMap": "Sơ đồ thoát hiểm",
+  "EvacuationMapDesc": "“Lối thoát khẩn cấp: hướng kia.”",
+
+  "Diary": "Nhật ký",
+  "DiaryDesc": "“Cảm xúc khắc lên giấy.”",
+
+  "Menu": "Thực đơn",
+  "MenuDesc": "“Đói thì ăn trước đánh sau.”",
+
+  "Revelation": "Khải huyền",
+  "RevelationDesc": "“Bí mật của tận cùng và khởi đầu.”",
+
+  "Labtop": "Laptop",
+  "LabtopDesc": "“Chứa mọi kiến thức.”",
+
+  "AnswerSheet": "Phiếu trả lời",
+  "AnswerSheetDesc": "“Cho đáp án, đòi giá đắt.”",
+
+  "LawBook": "Sách luật",
+  "LawBookDesc": "“Luật khiến mọi người cúi đầu.”",
+
+  "HellMap": "Bản đồ địa ngục",
+  "HellMapDesc": "“Chào mừng tới sơ đồ hành hạ.”",
+
+  "OrderForm": "Phiếu đặt hàng",
+  "OrderFormDesc": "“Hợp đồng ký bằng máu.”",
+
+  "Grimoire": "Grimoire",
+  "GrimoireDesc": "“Chữ viết sống.”",
+
+  "TabletPC": "Máy tính bảng",
+  "TabletPCDesc": "“Cổng đa chiều di động.”",
+
+  "Constitution": "Luật địa ngục",
+  "ConstitutionDesc": "“Kinh văn, luật lệ và tra tấn.”",
+
+  "Counterfeit": "Sổ cái",
+  "CounterfeitDesc": "“Sẽ ghi nhớ đến cùng.”",
+
+  "Ring": "Nhẫn",
+  "RingDesc": "“Lời hứa lớn trong vòng tròn nhỏ.”",
+
+  "CopperRing": "Nhẫn đồng",
+  "CopperRingDesc": "“Có thể làm ngón tay xanh.”",
+
+  "FlowerRing": "Nhẫn hoa",
+  "FlowerRingDesc": "“Hồi phục bằng hương dịu.”",
+
+  "SilverRing": "Nhẫn bạc",
+  "SilverRingDesc": "“Giả nhưng vẫn sáng.”",
+
+  "JadeRing": "Nhẫn ngọc",
+  "JadeRingDesc": "“Đá linh hồn trong trẻo.”",
+
+  "LeatherRing": "Nhẫn da",
+  "LeatherRingDesc": "“Nhẹ, êm tay.”",
+
+  "CandyRing": "Nhẫn kẹo",
+  "CandyRingDesc": "“Ngọt chốc lát, sâu răng mãi.”",
+
+  "GoldRing": "Nhẫn vàng",
+  "GoldRingDesc": "“Ánh giàu sang và tham lam.”",
+
+  "KnuckleRing": "Nhẫn đấm",
+  "KnuckleRingDesc": "“Nắm đấm cứng hơn nắm đấm.”",
+
+  "DigitalRing": "Nhẫn kỹ thuật số",
+  "DigitalRingDesc": "“Thực dụng như mong đợi.”",
+
+  "CrystalRing": "Nhẫn pha lê",
+  "CrystalRingDesc": "“Đá nạp trong suốt.”",
+
+  "RuneRing": "Nhẫn rune",
+  "RuneRingDesc": "“Ký tự khắc phát sáng.”",
+
+  "SignetRing": "Nhẫn dấu",
+  "SignetRingDesc": "“Đây là lời hứa của chúng ta.”",
+
+  "SharpieRing": "Nhẫn Sharpie",
+  "SharpieRingDesc": "“Phác họa giấc mơ nhẫn.”",
+
+  "OnionRing": "Onion Ring",
+  "OnionRingDesc": "“Mùi gắt nhưng vị ngon.”",
+
+  "DiamondRing": "Nhẫn kim cương",
+  "DiamondRingDesc": "“Uy tín vượt giàu sang.”",
+
+  "OpalRing": "Nhẫn opal",
+  "OpalRingDesc": "“Bảo hộ sắc cầu vồng.”",
+
+  "ObsidianRing": "Nhẫn obsidian",
+  "ObsidianRingDesc": "“Bóng tối nuốt ánh sáng.”",
+
+  "SapphireRing": "Nhẫn sapphire",
+  "SapphireRingDesc": "“Lấp lánh xanh nước lạnh.”",
+
+  "RubyRing": "Nhẫn ruby",
+  "RubyRingDesc": "“Đá giữ ngọn lửa đỏ.”",
+
+  "Bugles": "Bugles",
+  "BuglesDesc": "“Vị tuổi thơ khó quên.”",
+
+  "BornRing": "Nhẫn xương",
+  "BornRingDesc": "“Trang sức sánh bước tử thần.”",
+
+  "VampireRing": "Ấn ma cà rồng",
+  "VampireRingDesc": "“Khế ước máu.”",
+
+  "Tattoo": "Hình xăm",
+  "TattooDesc": "“Lời hứa vĩnh cửu khắc trên da.”",
+
+  "FourLeafClover": "Cỏ bốn lá",
+  "FourLeafCloverDesc": "“May mắn khó tìm.”",
+
+  "Payback": "Hoàn cược",
+  "PaybackDesc": "Trong một ván, cược tiền thua được hoàn lại một phần.",
+
+  "Sharper": "Gian lận",
+  "SharperDesc": "Trong một ván, tỉ lệ nâng cấp thành công x2.",
+
+  "str": "Sức mạnh",
+  "int": "Trí tuệ",
+  "cul": "Văn hóa",
+  "cha": "Khí chất",
+  "vit": "Thể lực",
+  "agi": "Nhanh nhẹn",
+  "luk": "May mắn",
+  "wis": "Khôn ngoan",
+
+  "StrDesc": "Sát thương<br/>Vật lý +1",
+  "IntDesc": "Sát thương<br/>Phép +1",
+  "CulDesc": "Làm chậm<br/>+1%",
+  "ChaDesc": "Choáng<br/>+0,1 s",
+  "VitDesc": "Splash +5",
+  "LukDesc": "Xuyên giáp +1",
+  "WisDesc": "Xuyên phép +1",
+  "AgiDesc": "Hồi chiêu -1%",
+
+  "PhysicalDamage": "· Sát thương vật lý: {number}",
+  "PhysicalPenetration": "· Xuyên giáp vật lý: {number}",
+  "PhysicalAllPercent": "· Tăng tấn công vật lý: {number}%",
+  "PhysicalDecrease": "· Giảm phòng thủ vật lý: {number}%",
+  "MagicalDamage": "· Sát thương phép: {number}",
+  "MagicalPenetration": "· Xuyên kháng phép: {number}",
+  "MagicalAllPercent": "· Tăng tấn công phép: {number}%",
+  "MagicalDecrease": "· Giảm phòng thủ phép: {number}%",
+  "TargetLength": "· Tấn công cùng lúc {number} mục tiêu",
+  "Splash": "· Splash: {number}",
+  "Cooldown": "· Hồi chiêu: {number}s",
+  "AllCooldown": "· Hồi chiêu toàn cục: {number}%",
+  "Stun": "· Choáng: {number}s",
+  "StunMany": "· Choáng diện rộng: {number}s",
+  "Slow": "· Làm chậm diện rộng: {number}%",
+  "SlowOne": "· Làm chậm đơn: {number}%",
+  "Critical": "· {number1}% cơ hội gây {number2}× sát thương",
+  "Dot": "· Sát thương theo thời gian ({number} tick)",
+  "Armerbreak": "· Phá giáp: {number}"
+}

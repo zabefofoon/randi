@@ -19,8 +19,8 @@
             backgroundPosition: etcUtil.getSpritePosition(12 + index),
           }"></div>
         <figcaption
-          class="-mt-[0.5cqw] | text-[1.2cqw] text-center"
-          v-html="enforce.description"></figcaption>
+          v-t="enforce.description"
+          class="-mt-[0.5cqw] | text-[1.2cqw] text-center | font-bold text-outline"></figcaption>
         <div class="flex items-center">
           <div
             v-if="!enforce.max || enforce.length < enforce.max"
@@ -40,7 +40,9 @@
           class="w-full select-none | bg-orange-700 | border-black border-[0.2cqw] rounded-lg | my-[1cqw] px-[0.5cqw] | disabled:bg-gray-800 disabled:text-gray-500"
           :disabled="enforces.getExpense(enforce) > coins || !enforces.checkGachable(enforce.name)"
           @click="gacha(enforce, index)">
-          <span class="block | font-bold text-[1.8cqw] text-outline">뽑기</span>
+          <span
+            v-t="'MaterialGatcha'"
+            class="block | font-bold text-[1.8cqw] text-outline"></span>
         </button>
       </figure>
     </div>

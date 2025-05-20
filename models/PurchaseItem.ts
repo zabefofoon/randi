@@ -23,8 +23,8 @@ export abstract class PurchaseItem {
 export class PayBack extends PurchaseItem {
   static override readonly meta: PurchaseItemOptions = {
     id: "payBack",
-    name: "페이백",
-    description: "한 게임동안, 돈 도박 실패시, 일정 금액을 돌려받는다.",
+    name: "Payback",
+    description: "PaybackDesc",
     price: 1000,
     spriteIndex: 0,
   }
@@ -36,8 +36,8 @@ export class PayBack extends PurchaseItem {
 export class Sharper extends PurchaseItem {
   static override readonly meta: PurchaseItemOptions = {
     id: "sharper",
-    name: "타짜",
-    description: "한 게임 동안, 강화 성공률을 2배 높인다.",
+    name: "Sharper",
+    description: "SharperDesc",
     price: 2000,
     spriteIndex: 1,
   }
@@ -49,8 +49,8 @@ export class Sharper extends PurchaseItem {
 export class Joker extends PurchaseItem {
   static override readonly meta: PurchaseItemOptions = {
     id: "joker",
-    name: "조커",
-    description: "랜덤 뽑기를 선택 뽑기로 1회 바꾼다.",
+    name: "Joker",
+    description: "JokerDesc",
     price: 1000,
     spriteIndex: 2,
   }

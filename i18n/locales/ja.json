@@ -1,0 +1,418 @@
+{
+  "RandomDefence": "ランダムディフェンス",
+  "TitleBite": "<span class='title-red'>B</span><span class='title-orange'>I</span><span class='title-blue'>T</span><span class='title-green'>E</span> JOIN",
+
+  "GameStart": "ゲーム開始",
+  "Collection": "コレクション",
+  "Review": "レビュー",
+  "Config": "設定",
+  "Back": "戻る",
+  "Start": "スタート",
+  "Buy": "購入",
+
+  "WelcomeReword": "ログインボーナス：コイン1,000枚獲得",
+  "HavePurchaseItem": "({length} 個所持)",
+  "UsePurchase": "装備",
+  "UnusePurchase": "外す",
+
+  "Reword": "報酬",
+  "RoundPoint": "ラウンドポイント",
+  "KillPoint": "キルポイント",
+  "StatPoint": "ステータスポイント",
+  "WeaponPoint": "武器ポイント",
+  "GoldPoint": "ゴールドポイント",
+  "EnforcePoint": "強化ポイント",
+  "GamblePoint": "ギャンブルポイント",
+  "CharacterPoint": "キャラクターポイント",
+
+  "Clear": "クリア！",
+  "Resume": "続ける",
+  "Quit": "終了",
+
+  "Gamble": "ギャンブル",
+  "Weapon": "武器",
+  "Stat": "ステータス",
+  "MaterialGatcha": "ガチャ",
+
+  "Joker": "ジョーカー",
+  "JokerDesc": "ランダム抽選を1回だけ選択抽選に変更する。",
+
+  "MaterialSelectable": "選択",
+  "HaveLength": "{length} 個",
+  "GambleMoney": "{money} コインを賭ける",
+  "GambleMoneyPeriod": "-{money} コイン ~ -{money} コイン",
+
+  "NeedMaterials": "（{length} ステータスが必要）",
+  "NeedMaterialUnit": "{length} {key}",
+
+  "Coin": "コイン",
+
+  "Enforce": "強化",
+  "EnforcePhysical": "物理攻撃力 +1",
+  "EnforcePhysicalPercent": "物理攻撃力 +1%",
+  "EnforceMagical": "魔法攻撃力 +1",
+  "EnforceMagicalPercent": "魔法攻撃力 +1%",
+  "EnforceCooldown": "クールダウン -1%",
+
+  "GetRewards": "報酬を受け取る",
+
+  "NeedWeapons": "Lv.{level} の武器 {length} 個が必要",
+  "NoLuck": "ハズレ",
+
+  "NylonMask": "Nylon Mask",
+  "NylonMaskDescription": "覆面をかぶった謎の男。大金持ちらしい…",
+  "NylonMaskSpecificity": "* 取得報酬 +30%",
+
+  "TrunkKing": "Trunk King",
+  "TrunkKingDescription": "赤い首の中年白人男性。怪力で有名。",
+  "TrunkKingSpecificity": "* 毎ラウンド物理攻撃力が1%上昇",
+
+  "Gun": "ピストル",
+  "GunDesc": "「誰もが馴染み深い9mm弾。」",
+
+  "ShotGun": "ショットガン",
+  "ShotGunDesc": "「ドン！散弾の壁が広がる。」",
+
+  "DoubleGun": "デュアルピストル",
+  "DoubleGunDesc": "「両手に2つの引き金、火力2倍。」",
+
+  "MagicGun": "マジックピストル",
+  "MagicGunDesc": "「祈りを込めて撃ち放つ。」",
+
+  "AirGun": "エアガン",
+  "AirGunDesc": "「圧縮空気の静かな一撃。」",
+
+  "MachineGun": "マシンガン",
+  "MachineGunDesc": "「これからは弾薬が秒単位で消える。」",
+
+  "FingerGun": "フィンガーガン",
+  "FingerGunDesc": "「言うことを聞かないヤツには指が銃。」",
+
+  "BubbleGun": "バブルブラスター",
+  "BubbleGunDesc": "「優しそうに見えて窒息注意。」",
+
+  "TazerGun": "テイザー",
+  "TazerGunDesc": "「ビリッ！静電気付き。」",
+
+  "PulseGun": "パルスガン",
+  "PulseGunDesc": "「緑の波動が一直線に貫く。」",
+
+  "Firework": "花火",
+  "FireworkDesc": "「祭り用？いいや戦場用。」",
+
+  "SilentKiller": "サイレンサーピストル",
+  "SilentKillerDesc": "「静かに、しかし確実に。」",
+
+  "DrillGun": "ドリルガン",
+  "DrillGunDesc": "「回転する銃身、回転する悪夢。」",
+
+  "PepperSpray": "ペッパースプレー",
+  "PepperSprayDesc": "「涙目必至！」",
+
+  "EyeGun": "デスグレア",
+  "EyeGunDesc": "「言葉より速い視線。」",
+
+  "GrenadeLauncher": "グレネードランチャー",
+  "GrenadeLauncherDesc": "「弧を描き、爆ぜる正義。」",
+
+  "SilverBulletGun": "シルバーブレットガン",
+  "SilverBulletGunDesc": "「月光を宿す銀の災厄。」",
+
+  "PlasmaGun": "プラズマガン",
+  "PlasmaGunDesc": "「光と熱で敵を焼く。」",
+
+  "Cannon": "カノン砲",
+  "CannonDesc": "「小さいが本物の火力。」",
+
+  "BlessedRevolver": "ブレスドリボルバー",
+  "BlessedRevolverDesc": "「銃口から聖なる光が咲く。」",
+
+  "CursedRevolver": "カースドリボルバー",
+  "CursedRevolverDesc": "「銃身から黒い冷気が漏れる。」",
+
+  "HeartBreaker": "ハートブレイカー",
+  "HeartBreakerDesc": "「心臓を揺さぶる一撃。」",
+
+  "RadiationBeam": "放射線ビーム",
+  "RadiationBeamDesc": "「見えざる余波。」",
+
+  "Missile": "ミサイル",
+  "MissileDesc": "「ちょっと待て、反則じゃ？」",
+
+  "Booger": "鼻くそ",
+  "BoogerDesc": "「汚いからと侮るな！」",
+
+  "ButterKnife": "バターナイフ",
+  "ButterKnifeDesc": "「パン用でも刺されば痛い。」",
+
+  "KitchenKnife": "包丁",
+  "KitchenKnifeDesc": "「料理人の相棒。」",
+
+  "CutterKnife": "カッターナイフ",
+  "CutterKnifeDesc": "「刃が出ているほど危険。」",
+
+  "SushiKnife": "柳刃包丁",
+  "SushiKnifeDesc": "「身が滑らかに切れる。」",
+
+  "Scissors": "ハサミ",
+  "ScissorsDesc": "「切ることはすなわち束縛。」",
+
+  "Hammer": "ハンマー",
+  "HammerDesc": "「釘打ち用？いや頭蓋割り用。」",
+
+  "AX": "斧",
+  "AXDesc": "「手応えがずっしり。」",
+
+  "ButcherKnife": "ブッチャーナイフ",
+  "ButcherKnifeDesc": "「筋も骨もグシャ。」",
+
+  "LongNails": "ロングクロー",
+  "LongNailsDesc": "「獣の本能。」",
+
+  "SwissArmyKnife": "アーミーナイフ",
+  "SwissArmyKnifeDesc": "「万能でどこでも役立つ。」",
+
+  "Fist": "拳",
+  "FistDesc": "「最後に頼れるのは拳。」",
+
+  "CrossCutSaw": "のこぎり",
+  "CrossCutSawDesc": "「彫るように食い込む。」",
+
+  "CsowBar": "バール",
+  "CrowBarDesc": "「建設現場のダークホース。」",
+
+  "Machete": "マチェーテ",
+  "MacheteDesc": "「ジャングル開拓者の刃。」",
+
+  "KoreanHandPlow": "ホミ",
+  "KoreanHandPlowDesc": "「土も人もひっくり返す。」",
+
+  "BornSword": "ボーンソード",
+  "BornSwordDesc": "「骨で鍛えた骨砕き。」",
+
+  "SurgicalKnife": "メス",
+  "SurgicalKnifeDesc": "「外科用の精密切断。」",
+
+  "BlessedSword": "ブレスドソード",
+  "BlessedSwordDesc": "「聖水に浸した清らかな刃。」",
+
+  "CursedSword": "カースドソード",
+  "CursedSwordDesc": "「握るほど囁きが聞こえる。」",
+
+  "DualBlade": "デュアルブレード",
+  "DualBladeDesc": "「両手に二刃、舞う刃。」",
+
+  "BigAX": "大型斧",
+  "BigAXDesc": "「斧は大きい、問題も大きい。」",
+
+  "DragonSlayer": "ドラゴンスレイヤー",
+  "DragonSlayerDesc": "「竜を倒すために生まれた巨大鉄剣。」",
+
+  "SnotWhip": "鼻水ムチ",
+  "SnotWhipDesc": "「ネバネバベチャッ！」",
+
+  "LaserSword": "レーザーソード",
+  "LaserSwordDesc": "「未来からの来訪。」",
+
+  "DeathScythe": "死神の鎌",
+  "DeathScytheDesc": "「生と死の境目を断つ。」",
+
+  "Book": "ノート",
+  "BookDesc": "「余白こそ無限の可能性。」",
+
+  "ThickBook": "分厚い本",
+  "ThickBookDesc": "「重すぎる知識で腕が疲れる。」",
+
+  "ThinBook": "薄い本",
+  "ThinBookDesc": "「携帯性抜群。」",
+
+  "SpringBook": "リングノート",
+  "SpringBookDesc": "「開きやすく投げやすい。」",
+
+  "TextBook": "教科書",
+  "TextBookDesc": "「王道の力。」",
+
+  "Map": "地図",
+  "MapDesc": "「道を知れば生き残る。」",
+
+  "PictureBook": "絵本",
+  "PictureBookDesc": "「絵の力は強い。」",
+
+  "MagicBook": "魔導書",
+  "MagicBookDesc": "「一行の呪文で矢の雨。」",
+
+  "MobilePhone": "携帯電話",
+  "MobilePhoneDesc": "「通話はおまけ、ゲームが本業。」",
+
+  "Regulations": "規則集",
+  "RegulationsDesc": "「規則こそ力。」",
+
+  "WorkBook": "問題集",
+  "WorkBookDesc": "「解かないと追いかけてくる。」",
+
+  "TreasureMap": "宝の地図",
+  "TreasureMapDesc": "「X印に目が奪われる。」",
+
+  "EvacuationMap": "避難案内図",
+  "EvacuationMapDesc": "「非常口はあちら。」",
+
+  "Diary": "日記帳",
+  "DiaryDesc": "「感情が紙に刻まれる。」",
+
+  "Menu": "メニュー表",
+  "MenuDesc": "「腹が減ったら戦うよりご飯。」",
+
+  "Revelation": "黙示録",
+  "RevelationDesc": "「終わりと始まりの秘密。」",
+
+  "Labtop": "ノートパソコン",
+  "LabtopDesc": "「あらゆる知識を収める。」",
+
+  "AnswerSheet": "解答用紙",
+  "AnswerSheetDesc": "「答えを示すが代償は大きい。」",
+
+  "LawBook": "法典",
+  "LawBookDesc": "「法は万人を屈服させる。」",
+
+  "HellMap": "地獄案内図",
+  "HellMapDesc": "「ようこそ、苦痛の設計図へ。」",
+
+  "OrderForm": "注文書",
+  "OrderFormDesc": "「契約のサインは血で。」",
+
+  "Grimoire": "グリモワール",
+  "GrimoireDesc": "「生きた文字。」",
+
+  "TabletPC": "タブレット",
+  "TabletPCDesc": "「携帯型多次元ポータル。」",
+
+  "Constitution": "地獄の法",
+  "ConstitutionDesc": "「経典と律法、そして拷問。」",
+
+  "Counterfeit": "台帳",
+  "CounterfeitDesc": "「最後まで記録し続ける。」",
+
+  "Ring": "リング",
+  "RingDesc": "「小さな輪に大きな約束。」",
+
+  "CopperRing": "銅の指輪",
+  "CopperRingDesc": "「指が緑になるかも。」",
+
+  "FlowerRing": "花の指輪",
+  "FlowerRingDesc": "「ほのかな香りで癒し。」",
+
+  "SilverRing": "銀の指輪",
+  "SilverRingDesc": "「偽物でも輝けば十分。」",
+
+  "JadeRing": "翡翠の指輪",
+  "JadeRingDesc": "「澄んだ魂の石。」",
+
+  "LeatherRing": "革の指輪",
+  "LeatherRingDesc": "「軽くて柔らかい手触り。」",
+
+  "CandyRing": "キャンディリング",
+  "CandyRingDesc": "「甘さは一瞬、虫歯は永遠。」",
+
+  "GoldRing": "金の指輪",
+  "GoldRingDesc": "「輝く富と欲望。」",
+
+  "KnuckleRing": "ナックルリング",
+  "KnuckleRingDesc": "「拳より硬い拳。」",
+
+  "DigitalRing": "デジタルリング",
+  "DigitalRingDesc": "「やはり実用主義。」",
+
+  "CrystalRing": "クリスタルリング",
+  "CrystalRingDesc": "「透明な充電石。」",
+
+  "RuneRing": "ルーンリング",
+  "RuneRingDesc": "「刻まれた紋様が光る。」",
+
+  "SignetRing": "印章リング",
+  "SignetRingDesc": "「これは私たちの約束。」",
+
+  "SharpieRing": "シャーピーリング",
+  "SharpieRingDesc": "「リングの夢を描く。」",
+
+  "OnionRing": "オニオンリング",
+  "OnionRingDesc": "「匂いは強いが味は抜群。」",
+
+  "DiamondRing": "ダイヤモンドリング",
+  "DiamondRingDesc": "「富を超えた威信。」",
+
+  "OpalRing": "オパールリング",
+  "OpalRingDesc": "「虹色の守護。」",
+
+  "ObsidianRing": "黒曜石リング",
+  "ObsidianRingDesc": "「闇が光を飲み込む。」",
+
+  "SapphireRing": "サファイアリング",
+  "SapphireRingDesc": "「冷たい水色の輝き。」",
+
+  "RubyRing": "ルビーリング",
+  "RubyRingDesc": "「紅い炎を宿す宝石。」",
+
+  "Bugles": "バグルス",
+  "BuglesDesc": "「子供時代の懐かしい味。」",
+
+  "BornRing": "骨の指輪",
+  "BornRingDesc": "「死と共に歩む装飾。」",
+
+  "VampireRing": "ヴァンパイアシール",
+  "VampireRingDesc": "「血の契約。」",
+
+  "Tattoo": "タトゥー",
+  "TattooDesc": "「肌に刻む永遠の約束。」",
+
+  "FourLeafClover": "四つ葉のクローバー",
+  "FourLeafCloverDesc": "「見つけにくい幸運。」",
+
+  "Payback": "ペイバック",
+  "PaybackDesc": "1ゲームの間、賭けに負けても一部コインが返金される。",
+
+  "Sharper": "イカサマ師",
+  "SharperDesc": "1ゲームの間、強化成功率が2倍になる。",
+
+  "str": "力",
+  "int": "知力",
+  "cul": "教養",
+  "cha": "カリスマ",
+  "vit": "体力",
+  "agi": "敏捷",
+  "luk": "運",
+  "wis": "知恵",
+
+  "StrDesc": "物理<br/>ダメージ +1",
+  "IntDesc": "魔法<br/>ダメージ +1",
+  "CulDesc": "スロー<br/>+1%",
+  "ChaDesc": "スタン<br/>+0.1秒",
+  "VitDesc": "スプラッシュ +5",
+  "LukDesc": "アーマー<br/>貫通 +1",
+  "WisDesc": "魔法貫通 +1",
+  "AgiDesc": "クールダウン -1%",
+
+  "PhysicalDamage": "· 物理ダメージ: {number}",
+  "PhysicalPenetration": "· 物理貫通: {number}",
+  "PhysicalAllPercent": "· 物理攻撃力 +{number}%",
+  "PhysicalDecrease": "· 物理防御力 -{number}%",
+
+  "MagicalDamage": "· 魔法ダメージ: {number}",
+  "MagicalPenetration": "· 魔法貫通: {number}",
+  "MagicalAllPercent": "· 魔法攻撃力 +{number}%",
+  "MagicalDecrease": "· 魔法防御力 -{number}%",
+
+  "TargetLength": "· 同時に{number}体攻撃",
+  "Splash": "· スプラッシュ: {number}",
+  "Cooldown": "· クールダウン: {number}秒",
+  "AllCooldown": "· 全体クールダウン: {number}%",
+
+  "Stun": "· スタン: {number}秒",
+  "StunMany": "· 範囲スタン: {number}秒",
+
+  "Slow": "· 範囲スロー: {number}%",
+  "SlowOne": "· 単体スロー: {number}%",
+
+  "Critical": "· {number1}%の確率で{number2}倍ダメージ",
+  "Dot": "· DOTダメージ ({number}回)",
+  "Armerbreak": "· アーマーブレイク: {number}"
+}

@@ -9,9 +9,9 @@ export class Enforces {
 
   constructor() {
     this.items = [
-      { name: "physical", description: "물리공격력 +1", length: 0, max: 50 },
-      { name: "magical", description: "마법공격력 +1", length: 0, max: 50 },
-      { name: "cooldown", description: "쿨타임 1%", length: 0, max: 30 },
+      { name: "physical", description: "EnforcePhysical", length: 0, max: 50 },
+      { name: "magical", description: "EnforceMagical", length: 0, max: 50 },
+      { name: "cooldown", description: "EnforceCooldown", length: 0, max: 30 },
     ]
   }
   checkGachable(name: EnforceItem["name"]) {
@@ -29,8 +29,8 @@ export class Enforces {
 
     found.length += 1
     if (found.length >= 10)
-      if (name === "physical") found.description = "물리공격력 +1%"
-      else if (name === "magical") found.description = "마법공격력 +1%"
+      if (name === "physical") found.description = "EnforcePhysicalPercent"
+      else if (name === "magical") found.description = "EnforceMagicalPercent"
   }
 
   getExpense(enforce: EnforceItem) {

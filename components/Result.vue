@@ -9,7 +9,9 @@
         <div
           class="pannel | flex flex-col gap-[1cqw] | w-[80%] aspect-video | border-[0.2cqw] border-black rounded-lg | p-[1cqw]"
           style="background: rgba(0 0 0 / 80%); backdrop-filter: blur(5px)">
-          <div class="gasoek-one-regular | text-[4cqw] text-center">REWORD</div>
+          <div
+            v-t="'Reword'"
+            class="gasoek-one-regular | text-[4cqw] text-center"></div>
 
           <div class="flex gap-[0.5cqw] flex-1">
             <div
@@ -21,7 +23,7 @@
                     :style="{
                       backgroundPosition: etcUtil.getSpritePosition(18),
                     }"></div>
-                  <span>라운드 점수</span>
+                  <span v-t="'RoundPoint'"></span>
                 </div>
                 <div>
                   {{ stringUtil.attachComma(rounds) }}
@@ -34,7 +36,7 @@
                     :style="{
                       backgroundPosition: etcUtil.getSpritePosition(17),
                     }"></div>
-                  <span>처치한 적</span>
+                  <span v-t="'KillPoint'"></span>
                 </div>
                 <div>
                   {{ stringUtil.attachComma(killed) }}
@@ -47,7 +49,7 @@
                     :style="{
                       backgroundPosition: etcUtil.getSpritePosition(9),
                     }"></div>
-                  <span>스텟 점수</span>
+                  <span v-t="'StatPoint'"></span>
                 </div>
                 <div>
                   {{ stringUtil.attachComma(materials) }}
@@ -60,7 +62,7 @@
                     :style="{
                       backgroundPosition: etcUtil.getSpritePosition(8),
                     }"></div>
-                  <span>무기 점수</span>
+                  <span v-t="'WeaponPoint'"></span>
                 </div>
                 <div>
                   {{ stringUtil.attachComma(weapons) }}
@@ -73,7 +75,7 @@
                     :style="{
                       backgroundPosition: etcUtil.getSpritePosition(11),
                     }"></div>
-                  <span>골드 점수</span>
+                  <span v-t="'GoldPoint'"></span>
                 </div>
                 <div>
                   {{ stringUtil.attachComma(coins) }}
@@ -86,7 +88,7 @@
                     :style="{
                       backgroundPosition: etcUtil.getSpritePosition(0),
                     }"></div>
-                  <span>강화 점수</span>
+                  <span v-t="'EnforcePoint'"></span>
                 </div>
                 <div>
                   {{ stringUtil.attachComma(enforces) }}
@@ -99,7 +101,7 @@
                     :style="{
                       backgroundPosition: etcUtil.getSpritePosition(10),
                     }"></div>
-                  <span>도박 점수</span>
+                  <span v-t="'GamblePoint'"></span>
                 </div>
                 <div>
                   {{ stringUtil.attachComma(gamblings) }}
@@ -116,7 +118,7 @@
                         gameStore.selectedCharacterIndex
                       ),
                     }"></div>
-                  <span>캐릭터 점수</span>
+                  <span v-t="'CharacterPoint'"></span>
                 </div>
                 <div>
                   {{ stringUtil.attachComma(bonus) }}
@@ -127,9 +129,8 @@
               class="relative | flex-1 flex flex-col items-center justify-center | border-[0.15cqw] border-blue-950 rounded-lg | p-[1cqw]">
               <div
                 v-if="isShowClear"
-                class="clear-anim | gasoek-one-regular | absolute left-[4cqw] top-[7cqw] | text-[3cqw]">
-                CLEAR!
-              </div>
+                v-t="'Clear'"
+                class="clear-anim | gasoek-one-regular | absolute left-[4cqw] top-[7cqw] | text-[3cqw]"></div>
               <div class="mt-[0.2cqh] | flex items-center justify-between | pr-[0.5cqw] rounded-lg">
                 <div
                   class="stat-sprites | w-[8cqw] aspect-square"
@@ -144,14 +145,18 @@
           </div>
           <div class="flex flex-col items-center gap-[0.4cqw]">
             <button
-              class="w-full max-w-[33%] | px-[1cqw] py-[0.2cqw] | border-[0.2cqw] border-black rounded-full | bg-blue-900"
-              @click="emit('next', 'lobby')">
-              <span class="block | text-[1.8cqw] font-bold text-outline"> 로비로 가기 </span>
-            </button>
-            <button
               class="w-full max-w-[33%] | px-[1cqw] py-[0.2cqw] | border-[0.2cqw] border-black rounded-full | bg-orange-700"
               @click="emit('next', 'lobby')">
-              <span class="block | text-[1.8cqw] font-bold text-outline"> 리뷰쓰기 </span>
+              <span
+                v-t="'Review'"
+                class="block | text-[1.8cqw] font-bold text-outline"></span>
+            </button>
+            <button
+              class="w-full max-w-[33%] | px-[1cqw] py-[0.2cqw] | border-[0.2cqw] border-black rounded-full | bg-blue-900"
+              @click="emit('next', 'lobby')">
+              <span
+                v-t="'Back'"
+                class="block | text-[1.8cqw] font-bold text-outline"></span>
             </button>
           </div>
         </div>

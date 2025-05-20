@@ -2,7 +2,7 @@
   <UIModal
     enable-dim-click-close
     hide-close-button
-    inner-class="!max-w-[50cqw] | !bg-transparent"
+    inner-class="!max-w-[55cqw] | !bg-transparent"
     @close="emit('close')">
     <template #content>
       <div class="flex items-center gap-[1cqw]">
@@ -23,9 +23,9 @@
               :style="{
                 backgroundPosition: etcUtil.getSpritePosition(menu.spriteIndex),
               }"></div>
-            <figcaption class="text-outline text-[1.5cqw] font-bold text-white">
-              {{ menu.name }}
-            </figcaption>
+            <figcaption
+              v-t="menu.name"
+              class="text-outline text-[1.5cqw] font-bold text-white"></figcaption>
           </figure>
         </div>
         <div
@@ -73,15 +73,15 @@ const soundStore = useSoundStore()
 
 const menus = [
   {
-    name: "돈",
+    name: "Coin",
     spriteIndex: 11,
   },
   {
-    name: "강화",
+    name: "Enforce",
     spriteIndex: 8,
   },
   {
-    name: "스텟",
+    name: "Stat",
     spriteIndex: 9,
   },
 ]

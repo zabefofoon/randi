@@ -89,7 +89,7 @@ export class Material1 extends Material {
       cooltime: 0,
       armorPenetration: 0,
       magicPenetration: 0,
-      description: "물리공격력 + 1",
+      description: "StrDesc",
       slow: 0,
     })
   }
@@ -107,7 +107,7 @@ export class Material2 extends Material {
       cooltime: 0,
       armorPenetration: 0,
       magicPenetration: 0,
-      description: "마법공격력 + 1",
+      description: "IntDesc",
       slow: 0,
     })
   }
@@ -125,7 +125,7 @@ export class Material3 extends Material {
       cooltime: 0,
       armorPenetration: 0,
       magicPenetration: 0,
-      description: "슬로우 1%",
+      description: "CulDesc",
       slow: 0,
     })
   }
@@ -143,7 +143,7 @@ export class Material4 extends Material {
       cooltime: 0,
       armorPenetration: 0,
       magicPenetration: 0,
-      description: "스턴  0.1초",
+      description: "ChaDesc",
       slow: 0,
     })
   }
@@ -161,7 +161,7 @@ export class Material5 extends Material {
       cooltime: 0,
       armorPenetration: 0,
       magicPenetration: 0,
-      description: "스플래시 + 5",
+      description: "VitDesc",
       slow: 0,
     })
   }
@@ -179,7 +179,7 @@ export class Material6 extends Material {
       cooltime: 0.01,
       armorPenetration: 0,
       magicPenetration: 0,
-      description: "쿨타임 1%",
+      description: "AgiDesc",
       slow: 0,
     })
   }
@@ -197,7 +197,7 @@ export class Material7 extends Material {
       cooltime: 0,
       armorPenetration: 1,
       magicPenetration: 0,
-      description: "방어관통력 + 1",
+      description: "LukDesc",
       slow: 0,
     })
   }
@@ -215,7 +215,7 @@ export class Material8 extends Material {
       cooltime: 0,
       armorPenetration: 0,
       magicPenetration: 1,
-      description: "마법관통력 + 1",
+      description: "WisDesc",
       slow: 0,
     })
   }

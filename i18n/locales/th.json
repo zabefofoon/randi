@@ -1,0 +1,415 @@
+{
+  "RandomDefence": "ป้องกันสุ่ม",
+  "TitleBite": "<span class='title-red'>B</span><span class='title-orange'>I</span><span class='title-blue'>T</span><span class='title-green'>E</span> JOIN",
+
+  "GameStart": "เริ่มเกม",
+  "Collection": "คอลเลกชัน",
+  "Review": "รีวิว",
+  "Config": "การตั้งค่า",
+  "Back": "ย้อนกลับ",
+  "Start": "เริ่ม",
+  "Buy": "ซื้อ",
+
+  "WelcomeReword": "รางวัลล็อกอิน: รับแล้ว 1,000 เหรียญ",
+  "HavePurchaseItem": "(คุณมี {length} ไอเทม)",
+  "UsePurchase": "สวมใส่",
+  "UnusePurchase": "ถอด",
+
+  "Reword": "รางวัล",
+  "RoundPoint": "คะแนนรอบ",
+  "KillPoint": "คะแนนสังหาร",
+  "StatPoint": "คะแนนค่าสถานะ",
+  "WeaponPoint": "คะแนนอาวุธ",
+  "GoldPoint": "คะแนนทอง",
+  "EnforcePoint": "คะแนนเสริมพลัง",
+  "GamblePoint": "คะแนนเสี่ยงโชค",
+  "CharacterPoint": "คะแนนตัวละคร",
+
+  "Clear": "ผ่าน!",
+  "Resume": "ดำเนินต่อ",
+  "Quit": "ออก",
+
+  "Gamble": "เสี่ยงโชค",
+  "Weapon": "อาวุธ",
+  "Stat": "ค่าสถานะ",
+  "MaterialGatcha": "กาชา",
+
+  "Joker": "โจ๊กเกอร์",
+  "JokerDesc": "เปลี่ยนการสุ่ม 1 ครั้งให้เลือกได้ 1 ครั้ง",
+
+  "MaterialSelectable": "เลือก",
+  "HaveLength": "{length} ไอเทม",
+  "GambleMoney": "เดิมพัน {money} เหรียญ",
+  "GambleMoneyPeriod": "-{money} ~ -{money} เหรียญ",
+
+  "NeedMaterials": "(ต้องใช้ค่าสถานะ {length})",
+  "NeedMaterialUnit": "{length} {key}",
+
+  "Coin": "เหรียญ",
+
+  "Enforce": "เสริมพลัง",
+  "EnforcePhysical": "พลังโจมตีกายภาพ +1",
+  "EnforcePhysicalPercent": "พลังโจมตีกายภาพ +1%",
+  "EnforceMagical": "พลังเวท +1",
+  "EnforceMagicalPercent": "พลังเวท +1%",
+  "EnforceCooldown": "คูลดาวน์ -1%",
+
+  "GetRewards": "รับรางวัล",
+
+  "NeedWeapons": "ต้องมีอาวุธ Lv.{level} จำนวน {length} ชิ้น",
+  "NoLuck": "ไม่โชคดี",
+
+  "NylonMask": "Nylon Mask",
+  "NylonMaskDescription": "ชายปริศนาสวมหน้ากาก ลือกันว่าร่ำรวยมหาศาล…",
+  "NylonMaskSpecificity": "* รับโบนัสรางวัลเพิ่ม 30%",
+
+  "TrunkKing": "Trunk King",
+  "TrunkKingDescription": "ชายผิวขาววัยกลางคนคอแดง แข็งแรงเหลือเชื่อ",
+  "TrunkKingSpecificity": "* โจมตีกายภาพ +1% ทุก ๆ รอบ",
+
+  "Gun": "ปืนพก",
+  "GunDesc": "“กระสุน 9 มม. ที่ทุกคนคุ้นเคย”",
+
+  "ShotGun": "ช็อตกัน",
+  "ShotGunDesc": "“บึ้ม! ลูกปรายกระจายเป็นกำแพง”",
+
+  "DoubleGun": "ปืนพกคู่",
+  "DoubleGunDesc": "“สองมือ สองไกปืน ไฟสองเท่า”",
+
+  "MagicGun": "ปืนเวท",
+  "MagicGunDesc": "“ยิงคำอธิษฐานออกจากลำกล้อง”",
+
+  "AirGun": "ปืนลม",
+  "AirGunDesc": "“ลมอัดหนึ่งนัดเงียบกริบ”",
+
+  "MachineGun": "ปืนกล",
+  "MachineGunDesc": "“ตั้งแต่นี้กระสุนละลายเป็นวินาที”",
+
+  "FingerGun": "ปืนมือ",
+  "FingerGunDesc": "“พูดไม่รู้เรื่อง งั้นใช้นิ้วแทนปืน”",
+
+  "BubbleGun": "ปืนฟอง",
+  "BubbleGunDesc": "“ดูอ่อนโยน แต่อาจทำให้ขาดอากาศ”",
+
+  "TazerGun": "เทเซอร์",
+  "TazerGunDesc": "“ช็อต! ไฟฟ้าสถิตแถมฟรี”",
+
+  "PulseGun": "ปืนพัลส์",
+  "PulseGunDesc": "“คลื่นสีเขียวเจาะตรง”",
+
+  "Firework": "ดอกไม้ไฟ",
+  "FireworkDesc": "“ของเล่นงานเทศกาล? ไม่ใช่ สนามรบ!”",
+
+  "SilentKiller": "ปืนเก็บเสียง",
+  "SilentKillerDesc": "“เงียบ แต่ชัวร์”",
+
+  "DrillGun": "ปืนสว่าน",
+  "DrillGunDesc": "“ลำกล้องหมุน ฝันร้ายหมุนตาม”",
+
+  "PepperSpray": "สเปรย์พริกไทย",
+  "PepperSprayDesc": "“น้ำตาไหลชัวร์!”",
+
+  "EyeGun": "สายตาสังหาร",
+  "EyeGunDesc": "“แววตาไวยิ่งกว่าคำพูด”",
+
+  "GrenadeLauncher": "เครื่องยิงลูกระเบิด",
+  "GrenadeLauncherDesc": "“วิถีโค้ง ความยุติธรรมระเบิด”",
+
+  "SilverBulletGun": "ปืนกระสุนเงิน",
+  "SilverBulletGunDesc": "“ภัยเงินภายใต้แสงจันทร์”",
+
+  "PlasmaGun": "ปืนพลาสมา",
+  "PlasmaGunDesc": "“เผาศัตรูด้วยแสงและความร้อน”",
+
+  "Cannon": "ปืนใหญ่",
+  "CannonDesc": "“เล็กแต่แรงจริง”",
+
+  "BlessedRevolver": "รีวอลเวอร์ศักดิ์สิทธิ์",
+  "BlessedRevolverDesc": "“แสงศักดิ์สิทธิ์พุ่งจากปากกระบอก”",
+
+  "CursedRevolver": "รีวอลเวอร์คำสาป",
+  "CursedRevolverDesc": "“ความเย็นมืดทะลักจากลำกล้อง”",
+
+  "HeartBreaker": "ฮาร์ตเบรกเกอร์",
+  "HeartBreakerDesc": "“หนึ่งนัดสั่นหัวใจ”",
+
+  "RadiationBeam": "ลำแสงรังสี",
+  "RadiationBeamDesc": "“ผลร้ายที่มองไม่เห็น”",
+
+  "Missile": "มิสไซล์",
+  "MissileDesc": "“เดี๋ยว นี่โกงหรือเปล่า?”",
+
+  "Booger": "ขี้มูก",
+  "BoogerDesc": "“อย่าดูถูกเพราะมันสกปรก!”",
+
+  "ButterKnife": "มีดทาเนย",
+  "ButterKnifeDesc": "“ไว้ทาขนมปัง แต่แทงก็เจ็บ”",
+
+  "KitchenKnife": "มีดครัว",
+  "KitchenKnifeDesc": "“เพื่อนคู่ใจเชฟ”",
+
+  "CutterKnife": "คัตเตอร์",
+  "CutterKnifeDesc": "“คมเท่าไร อันตรายเท่านั้น”",
+
+  "SushiKnife": "มีดซูชิ",
+  "SushiKnifeDesc": "“แล่เนื้อเรียบลื่น”",
+
+  "Scissors": "กรรไกร",
+  "ScissorsDesc": "“การตัดคือการผูกมัด”",
+
+  "Hammer": "ค้อน",
+  "HammerDesc": "“ตอกตะปู? ไม่ สิกระโหลก”",
+
+  "AX": "ขวาน",
+  "AXDesc": "“น้ำหนักเต็มมือ”",
+
+  "ButcherKnife": "มีดสับ",
+  "ButcherKnifeDesc": "“เอ็นกระดูกกรอบ!”",
+
+  "LongNails": "เล็บยาว",
+  "LongNailsDesc": "“สัญชาตญาณสัตว์”",
+
+  "SwissArmyKnife": "มีดพกสวิส",
+  "SwissArmyKnifeDesc": "“สารพัดประโยชน์ทุกที่”",
+
+  "Fist": "กำปั้น",
+  "FistDesc": "“ท้ายที่สุดเชื่อในหมัด”",
+
+  "CrossCutSaw": "เลื่อย",
+  "CrossCutSawDesc": "“เจาะลึกดั่งแกะสลัก”",
+
+  "CsowBar": "ชะแลง",
+  "CrowBarDesc": "“ตัวแสบแห่งไซต์ก่อสร้าง”",
+
+  "Machete": "มีดพร้า",
+  "MacheteDesc": "“คมของผู้บุกเบิกป่า”",
+
+  "KoreanHandPlow": "จอบมือเกาหลี",
+  "KoreanHandPlowDesc": "“พลิกดิน พลิกคน”",
+
+  "BornSword": "ดาบกระดูก",
+  "BornSwordDesc": "“ตีจากกระดูก ทำลายกระดูก”",
+
+  "SurgicalKnife": "มีดผ่าตัด",
+  "SurgicalKnifeDesc": "“ตัดละเอียดระดับศัลยกรรม”",
+
+  "BlessedSword": "ดาบศักดิ์สิทธิ์",
+  "BlessedSwordDesc": "“คมใส แช่น้ำศักดิ์สิทธิ์”",
+
+  "CursedSword": "ดาบคำสาป",
+  "CursedSwordDesc": "“ยิ่งถือ ยิ่งได้ยินเสียงกระซิบ”",
+
+  "DualBlade": "ดาบคู่",
+  "DualBladeDesc": "“สองมือ สองคม เหล็กเต้น”",
+
+  "BigAX": "ขวานใหญ่",
+  "BigAXDesc": "“ขวานใหญ่ ปัญหาใหญ่”",
+
+  "DragonSlayer": "ผู้พิฆาตมังกร",
+  "DragonSlayerDesc": "“คมเหล็กยักษ์เกิดมาโค่นมังกร”",
+
+  "SnotWhip": "แส้ขี้มูก",
+  "SnotWhipDesc": "“เหนียวหนึบ เปียกแฉะ!”",
+
+  "LaserSword": "ดาบเลเซอร์",
+  "LaserSwordDesc": "“มาจากอนาคต”",
+
+  "DeathScythe": "เคียวมรณะ",
+  "DeathScytheDesc": "“ผ่าพรมแดนชีวิตกับความตาย”",
+
+  "Book": "สมุดโน้ต",
+  "BookDesc": "“หน้าว่างคือศักยภาพไม่สิ้นสุด”",
+
+  "ThickBook": "หนังสือหนา",
+  "ThickBookDesc": "“ความรู้หนักจนเมื่อยแขน”",
+
+  "ThinBook": "หนังสือบาง",
+  "ThinBookDesc": "“พกพาสะดวกสุด”",
+
+  "SpringBook": "สมุดสปริง",
+  "SpringBookDesc": "“เปิดง่าย ขว้างง่าย”",
+
+  "TextBook": "ตำราเรียน",
+  "TextBookDesc": "“พลังแห่งมาตรฐาน”",
+
+  "Map": "แผนที่",
+  "MapDesc": "“รู้ทาง จึงรอด”",
+
+  "PictureBook": "หนังสือภาพ",
+  "PictureBookDesc": "“ภาพทรงพลัง”",
+
+  "MagicBook": "คัมภีร์เวท",
+  "MagicBookDesc": "“คาถาหนึ่งบรรทัด ลูกศรรัว”",
+
+  "MobilePhone": "โทรศัพท์",
+  "MobilePhoneDesc": "“โทรเป็นของแถม เล่นเกมคือหลัก”",
+
+  "Regulations": "คู่มือกฎ",
+  "RegulationsDesc": "“กฎคือพลัง”",
+
+  "WorkBook": "แบบฝึกหัด",
+  "WorkBookDesc": "“ไม่ทำ มันตามติด”",
+
+  "TreasureMap": "แผนที่สมบัติ",
+  "TreasureMapDesc": "“สายตาจับจ้องที่ X”",
+
+  "EvacuationMap": "ผังอพยพ",
+  "EvacuationMapDesc": "“ทางหนีฉุกเฉิน: ทางนี้”",
+
+  "Diary": "ไดอารี่",
+  "DiaryDesc": "“อารมณ์ถูกจารึกบนกระดาษ”",
+
+  "Menu": "เมนู",
+  "MenuDesc": "“หิวเมื่อไร อาหารมาก่อนสู้”",
+
+  "Revelation": "คัมภีร์วิวรณ์",
+  "RevelationDesc": "“ความลับต้นและปลาย”",
+
+  "Labtop": "แล็ปท็อป",
+  "LabtopDesc": "“รวมทุกความรู้ไว้”",
+
+  "AnswerSheet": "กระดาษคำตอบ",
+  "AnswerSheetDesc": "“ให้คำตอบ แต่ค่าตอบแทนแพง”",
+
+  "LawBook": "หนังสือกฎหมาย",
+  "LawBookDesc": "“กฎหมายทำให้ทุกคนก้มต่ำ”",
+
+  "HellMap": "แผนผังนรก",
+  "HellMapDesc": "“ยินดีต้อนรับสู่ผังแห่งความทรมาน”",
+
+  "OrderForm": "ใบสั่งซื้อ",
+  "OrderFormDesc": "“สัญญาเซ็นด้วยเลือด”",
+
+  "Grimoire": "กริมัวร์",
+  "GrimoireDesc": "“อักษรมีชีวิต”",
+
+  "TabletPC": "แท็บเล็ต",
+  "TabletPCDesc": "“พอร์ทัลหลายมิติพกพา”",
+
+  "Constitution": "กฎหมายโลกันต์",
+  "ConstitutionDesc": "“คัมภีร์ กฎหมาย และการทรมาน”",
+
+  "Counterfeit": "สมุดบัญชี",
+  "CounterfeitDesc": "“จะจดจำจนวาระสุดท้าย”",
+
+  "Ring": "แหวน",
+  "RingDesc": "“คำสัญญาใหญ่ในวงเล็ก”",
+
+  "CopperRing": "แหวนทองแดง",
+  "CopperRingDesc": "“อาจทำให้นิ้วเขียว”",
+
+  "FlowerRing": "แหวนดอกไม้",
+  "FlowerRingDesc": "“เยียวยาด้วยกลิ่นหอม”",
+
+  "SilverRing": "แหวนเงิน",
+  "SilverRingDesc": "“ปลอมแต่ก็ยังแวววาว”",
+
+  "JadeRing": "แหวนหยก",
+  "JadeRingDesc": "“หินวิญญาณใส”",
+
+  "LeatherRing": "แหวนหนัง",
+  "LeatherRingDesc": "“เบา นุ่มมือ”",
+
+  "CandyRing": "แหวนน้ำตาล",
+  "CandyRingDesc": "“หวานชั่วครู่ ฟันผุชั่วกาล”",
+
+  "GoldRing": "แหวนทอง",
+  "GoldRingDesc": "“แสงแห่งความมั่งคั่งและโลภะ”",
+
+  "KnuckleRing": "สนับมือแหวน",
+  "KnuckleRingDesc": "“หมัดแข็งกว่าหมัด”",
+
+  "DigitalRing": "แหวนดิจิทัล",
+  "DigitalRingDesc": "“สมกับสายใช้งานจริง”",
+
+  "CrystalRing": "แหวนคริสตัล",
+  "CrystalRingDesc": "“ก้อนชาร์จโปร่งใส”",
+
+  "RuneRing": "แหวนรูน",
+  "RuneRingDesc": "“อักขระส่องแสง”",
+
+  "SignetRing": "แหวนตรา",
+  "SignetRingDesc": "“นี่คือคำสัญญาของเรา”",
+
+  "SharpieRing": "แหวนปากกา",
+  "SharpieRingDesc": "“วาดฝันแห่งแหวน”",
+
+  "OnionRing": "ออเนียนริง",
+  "OnionRingDesc": "“กลิ่นแรง แต่รสเลิศ”",
+
+  "DiamondRing": "แหวนเพชร",
+  "DiamondRingDesc": "“ศักดิ์ศรีเหนือความมั่งคั่ง”",
+
+  "OpalRing": "แหวนโอปอล",
+  "OpalRingDesc": "“ปกป้องสีรุ้ง”",
+
+  "ObsidianRing": "แหวนออบซิเดียน",
+  "ObsidianRingDesc": "“ความมืดกลืนแสง”",
+
+  "SapphireRing": "แหวนไพลิน",
+  "SapphireRingDesc": "“ประกายฟ้าน้ำเย็น”",
+
+  "RubyRing": "แหวนทับทิม",
+  "RubyRingDesc": "“อัญมณีมีเปลวสีแดง”",
+
+  "Bugles": "บิวเกิลส์",
+  "BuglesDesc": "“รสชาติความทรงจำวัยเด็ก”",
+
+  "BornRing": "แหวนกระดูก",
+  "BornRingDesc": "“เครื่องประดับร่วมทางความตาย”",
+
+  "VampireRing": "ผนึกแวมไพร์",
+  "VampireRingDesc": "“สัญญาเลือด”",
+
+  "Tattoo": "รอยสัก",
+  "TattooDesc": "“คำสัญญานิรันดร์บนผิว”",
+
+  "FourLeafClover": "ใบโคลเวอร์สี่แฉก",
+  "FourLeafCloverDesc": "“โชคหายาก”",
+
+  "Payback": "คืนทุน",
+  "PaybackDesc": "ระหว่างเกม การเดิมพันเงินที่แพ้จะได้คืนบางส่วน",
+
+  "Sharper": "เซียนไพ่",
+  "SharperDesc": "ระหว่างเกม อัตราสำเร็จการอัปเกรด x2",
+
+  "str": "พลัง",
+  "int": "เชาวน์",
+  "cul": "วัฒนธรรม",
+  "cha": "เสน่ห์",
+  "vit": "พลังชีวิต",
+  "agi": "ความคล่อง",
+  "luk": "โชค",
+  "wis": "สติปัญญา",
+
+  "StrDesc": "ดาเมจกายภาพ<br/>+1",
+  "IntDesc": "ดาเมจเวท<br/>+1",
+  "CulDesc": "สโลว์<br/>+1%",
+  "ChaDesc": "สตั้น<br/>+0.1 วิ",
+  "VitDesc": "สแปลช +5",
+  "LukDesc": "ทะลวงเกราะ +1",
+  "WisDesc": "ทะลวงเวท +1",
+  "AgiDesc": "คูลดาวน์ -1%",
+
+  "PhysicalDamage": "· ดาเมจกายภาพ: {number}",
+  "PhysicalPenetration": "· เจาะเกราะกายภาพ: {number}",
+  "PhysicalAllPercent": "· เพิ่มโจมตีกายภาพ: {number}%",
+  "PhysicalDecrease": "· ลดป้องกันกายภาพ: {number}%",
+
+  "MagicalDamage": "· ดาเมจเวท: {number}",
+  "MagicalPenetration": "· เจาะเกราะเวท: {number}",
+  "MagicalAllPercent": "· เพิ่มโจมตีเวท: {number}%",
+  "MagicalDecrease": "· ลดป้องกันเวท: {number}%",
+
+  "TargetLength": "· โจมตี {number} เป้าพร้อมกัน",
+  "Splash": "· สแปลช: {number}",
+  "Cooldown": "· คูลดาวน์: {number}วินาที",
+  "AllCooldown": "· คูลดาวน์รวม: {number}%",
+  "Stun": "· สตั้น: {number}วินาที",
+  "StunMany": "· สตั้นพื้นที่: {number}วินาที",
+  "Slow": "· สโลว์พื้นที่: {number}%",
+  "SlowOne": "· สโลว์เดี่ยว: {number}%",
+  "Critical": "· โอกาส {number1}% ทำดาเมจ {number2}×",
+  "Dot": "· ดาเมจต่อเนื่อง ({number} ครั้ง)",
+  "Armerbreak": "· ทำลายเกราะ: {number}"
+}

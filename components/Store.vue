@@ -32,13 +32,22 @@
               </div>
 
               <div class="w-full font-bold text-outline">
-                <h4 class="text-[1.5cqw]">
-                  {{ purchaseItem.meta.name }}
+                <h4
+                  v-t="purchaseItem.meta.name"
+                  class="text-[1.5cqw]">
+                  <span
+                    v-if="gameStore.purchasedItems[purchaseItem.meta.id]"
+                    class="text-[1.2cqw]">
+                    {{
+                      i18n.t("HavePurchaseItem", {
+                        length: gameStore.purchasedItems[purchaseItem.meta.id] || 0,
+                      })
+                    }}
+                  </span>
                 </h4>
-                <p class="text-[1.2cqw]">
-                  {{ purchaseItem.meta.description }}
-                  ({{ gameStore.purchasedItems[purchaseItem.meta.id] || 0 }}개 소지중)
-                </p>
+                <p
+                  v-t="purchaseItem.meta.description"
+                  class="text-[1.2cqw]"></p>
               </div>
               <div class="flex gap-[0.5cqw]">
                 <button
@@ -74,14 +83,12 @@
                   @click="togglePurchaseItem(purchaseItem)">
                   <p
                     v-if="gameStore.checkSelectedPurchaseItem(purchaseItem)"
-                    class="text-outline text-[1.5cqw] font-bold">
-                    해제하기
-                  </p>
+                    v-t="'UnusePurchase'"
+                    class="text-outline text-[1.5cqw] font-bold"></p>
                   <p
                     v-else
-                    class="text-outline text-[1.5cqw] font-bold">
-                    사용하기
-                  </p>
+                    v-t="'UsePurchase'"
+                    class="text-outline text-[1.5cqw] font-bold"></p>
                 </button>
               </div>
             </div>
@@ -91,16 +98,16 @@
               class="flex flex-col gap-[0.5cqw] | bg-blue-900 rounded-lg"
               @click="goPrev()">
               <span
+                v-t="'Back'"
                 class="px-[2cqw] py-[0.5cqw] | border-black border-[0.2cqw] rounded-lg | text-[1.5cqw] font-bold text-outline">
-                돌아가기
               </span>
             </button>
             <button
               class="flex flex-col gap-[0.5cqw]"
               @click="emit('next', 'inGame')">
               <span
+                v-t="'Start'"
                 class="bg-orange-700 | px-[2cqw] py-[0.5cqw] | border-black border-[0.2cqw] rounded-lg | text-[1.5cqw] font-bold text-outline">
-                시작하기
               </span>
             </button>
           </div>
@@ -117,9 +124,9 @@ const emit = defineEmits<{
   (e: "next", scene: "select" | "inGame"): void
 }>()
 
+const i18n = useI18n()
 const gameStore = useGameStore()
 const soundStore = useSoundStore()
-
 const purchase = (item: typeof PurchaseItem) => {
   gameStore.setCurrentMoney(gameStore.currentMoney - item.meta.price)
   gameStore.addPurchaseItem(item)

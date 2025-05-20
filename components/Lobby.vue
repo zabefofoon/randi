@@ -2,7 +2,39 @@
   <div class="w-screen h-screen | flex items-center justify-center | bg-black">
     <ModalConfigs
       v-if="isShowConfigPopup"
-      @close="showConfigPopup(false)" />
+      @close="showConfigPopup(false)">
+      <div class="flex flex-col gap-[0.5cqw] | w-full">
+        <div class="flex justify-between gap-[5cqw] mb-[0.5cqw]">
+          <span class="text-outline text-[1.7cqw] font-bold">LANGUAGE</span>
+        </div>
+        <UIDropdown
+          :position="{
+            x: 'LEFT',
+            y: 'BOTTOM',
+          }">
+          <template #button="{ showOptions }">
+            <button
+              class="text-[1.7cqw] font-bold text-outline py-[0.3cqw] | rounded-lg border-[0.2cqw] border-black | | bg-amber-500 w-full"
+              @click="showOptions()">
+              {{ i18n.localeProperties.value.name }}
+            </button>
+          </template>
+          <template #options>
+            <div
+              class="w-full | flex flex-col gap-[0.2cqw] | bg-blue-900 | max-h-[20cqh] overflow-auto | pointer-events-auto | border-[0.2cqw] border-black rounded-lg">
+              <button
+                v-for="(locale, index) in i18n.locales.value"
+                :key="locale.code"
+                class="w-full | text-outline font-bold text-[1.5cqw] | py-[0.5cqw] | border-dotted border-b border-black"
+                :class="{ 'border-0': index === i18n.locales.value.length - 1 }"
+                @click="i18n.setLocale(locale.code)">
+                {{ locale.name }}
+              </button>
+            </div>
+          </template>
+        </UIDropdown>
+      </div>
+    </ModalConfigs>
 
     <div class="content | relative | aspect-video max-w-full max-h-full">
       <img
@@ -20,34 +52,39 @@
               :style="{
                 backgroundPosition: etcUtil.getSpritePosition(19),
               }"></div>
-            <span class="text-[1.3cqw] text-white font-bold text-outline">설정</span>
+            <span
+              v-t="'Config'"
+              class="text-[1.3cqw] text-white font-bold text-outline"></span>
           </button>
         </div>
 
         <h1
-          class="fade-up | gasoek-one-regular | relative z-[1] | mt-[5cqw] | leading-none text-center text-[5cqw] font-bold text-outline text-white">
-          <span class="text-red-500">N</span>
-          <span class="text-orange-500">Y</span>
-          <span class="text-blue-500">L</span>
-          <span class="text-green-500">O</span>
-          <span class="text-violet-500">N</span> MASK<br />
-          RANDOM DEFENCE
+          class="fade-up | gasoek-one-regular | relative z-[1] | mt-[5cqw] | leading-none text-center text-[7cqw] font-bold text-outline text-white">
+          <span v-html="i18n.t('TitleBite')"></span>
+          <br />
+          <span v-t="'RandomDefence'"></span>
         </h1>
         <div
           class="dissolve | flex flex-col items-center gap-[0.5cqw] | mt-[2cqw] | font-bold text-[2.5cqw] text-white">
           <button
-            class="w-[20cqw] | flex items-center justify-center | relative rounded-lg border-black border-[0.2cqw] | px-[1cqw] | bg-orange-700"
+            class="min-w-[20cqw] | flex items-center justify-center | relative rounded-lg border-black border-[0.2cqw] | px-[1cqw] | bg-orange-700"
             @click="emit('next', 'select')">
-            <div class="text-outline">Game Start</div>
+            <div
+              v-t="'GameStart'"
+              class="text-outline"></div>
           </button>
           <button
             class="w-[20cqw] | flex items-center justify-center | relative rounded-lg border-black border-[0.2cqw] | px-[1cqw] | bg-blue-950"
             @click="emit('next', 'collection')">
-            <div class="text-outline">Collection</div>
+            <div
+              v-t="'Collection'"
+              class="text-outline"></div>
           </button>
           <button
             class="w-[20cqw] | flex items-center justify-center | relative rounded-lg border-black border-[0.2cqw] | px-[1cqw] | bg-blue-950">
-            <div class="text-outline">Review</div>
+            <div
+              v-t="'Review'"
+              class="text-outline"></div>
           </button>
         </div>
       </main>
@@ -60,6 +97,7 @@ const emit = defineEmits<{
   (e: "next", scene: "inGame" | "select" | "store" | "collection"): void
 }>()
 
+const i18n = useI18n()
 const gameStore = useGameStore()
 const soundStore = useSoundStore()
 

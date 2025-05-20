@@ -19,11 +19,23 @@ export default defineNuxtConfig({
     "@nuxt/fonts",
   ],
   i18n: {
-    strategy: "no_prefix",
-    defaultLocale: "ko",
-    detectBrowserLanguage: false,
-    skipSettingLocaleOnNavigate: false,
-
+    strategy: "prefix_and_default",
+    locales: [
+      { code: "en", iso: "en-US", name: "English" },
+      { code: "pt-BR", iso: "pt-BR", name: "Português (Brasil)" },
+      { code: "es", iso: "es-ES", name: "Español" },
+      { code: "de", iso: "de-DE", name: "Deutsch" },
+      { code: "fr", iso: "fr-FR", name: "Français" },
+      { code: "ru", iso: "ru-RU", name: "Русский" },
+      { code: "id", iso: "id-ID", name: "Bahasa Indonesia" },
+      { code: "th", iso: "th-TH", name: "ไทย" },
+      { code: "vi", iso: "vi-VN", name: "Tiếng Việt" },
+      { code: "zh-Hans", iso: "zh-CN", name: "简体中文" },
+      { code: "zh-Hant", iso: "zh-TW", name: "繁體中文" },
+      { code: "ja", iso: "ja-JP", name: "日本語" },
+      { code: "ko", iso: "ko-KR", name: "한국어" },
+    ],
+    defaultLocale: "en",
     compilation: {
       strictMessage: false,
     },
@@ -31,6 +43,12 @@ export default defineNuxtConfig({
       optimizeTranslationDirective: false,
     },
     vueI18n: "~/i18n/i18n.config.ts",
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: "i18n_redirected",
+      alwaysRedirect: true, // 사용자의 언어가 변경될 때마다 언어를 리다이렉트
+      fallbackLocale: "en", // 감지된 언어가 지원되지 않을 경우 사용할 기본 언어
+    },
   },
   eslint: {
     checker: true,

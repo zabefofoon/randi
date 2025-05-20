@@ -26,11 +26,11 @@
 
           <div class="flex flex-col gap-[0.5cqw]">
             <p class="text-outline text-[1.8cqw] font-bold">
-              Lv.{{ weapon.meta.level }} {{ weapon.meta.name }}
+              Lv.{{ weapon.meta.level }} <span v-t="weapon.meta.name"></span>
             </p>
-            <p class="text-outline text-[1.5cqw] font-bold">
-              {{ weapon.meta.description }}
-            </p>
+            <p
+              v-t="weapon.meta.description"
+              class="text-outline text-[1.5cqw] font-bold"></p>
           </div>
         </figure>
         <WeaponCharacteristic :weapon="weapon.meta" />
@@ -66,9 +66,11 @@
                 v-if="gameStore.checkHasCollection(next.cls.meta.name)"
                 class="flex flex-col gap-[0.2cqw] items-start">
                 <span class="text-[1.6cqw]">
-                  Lv.{{ next.cls.meta.level }} {{ next.cls.meta.name }}
+                  Lv.{{ next.cls.meta.level }} <span v-t="next.cls.meta.name"></span>
                 </span>
-                <span class="text-[1.3cqw]">{{ next.cls.meta.description }}</span>
+                <span
+                  v-t="next.cls.meta.description"
+                  class="text-[1.3cqw]"></span>
               </div>
               <span v-else> ???? </span>
             </div>

@@ -34,17 +34,21 @@
     <ModalConfigs
       v-if="isShowConfigPopup"
       @close="showConfigPopup(false)">
-      <div class="w-full | border-t border-gray-900 border-[1px] | mb-[1.5cqw]"></div>
-      <div class="flex gap-[0.5cqw]">
-        <button
-          class="grid place-items-center | relative bg-blue-900 | px-[2cqw] py-[0.5cqw] | border-black border-[0.21cqw] rounded-lg | leading-none"
-          @click="showConfigPopup(false)">
-          <span class="text-outline text-[1.7cqw] font-bold">계속하기</span>
-        </button>
+      <div class="w-full | border-t border-gray-900 border-[1px] | my-[1cqw]"></div>
+      <div class="w-full | flex flex-col gap-[0.5cqw]">
         <button
           class="grid place-items-center | relative bg-orange-700 | px-[2cqw] py-[0.5cqw] | border-black border-[0.21cqw] rounded-lg | leading-none"
           @click="exit()">
-          <span class="text-outline text-[1.7cqw] font-bold"> 종료하기 </span>
+          <span
+            v-t="'Quit'"
+            class="text-outline text-[1.7cqw] font-bold"></span>
+        </button>
+        <button
+          class="grid place-items-center | relative bg-blue-900 | px-[2cqw] py-[0.5cqw] | border-black border-[0.21cqw] rounded-lg | leading-none"
+          @click="showConfigPopup(false)">
+          <span
+            v-t="'Resume'"
+            class="text-outline text-[1.7cqw] font-bold"></span>
         </button>
       </div>
     </ModalConfigs>
@@ -122,7 +126,9 @@
               :style="{
                 backgroundPosition: etcUtil.getSpritePosition(19),
               }"></div>
-            <span class="text-[1.3cqw] text-white font-bold text-outline">설정</span>
+            <span
+              v-t="'Config'"
+              class="text-[1.3cqw] text-white font-bold text-outline"></span>
           </button>
           <!-- 설정버튼 -->
         </div>
@@ -185,8 +191,9 @@
               :style="{
                 backgroundPosition: etcUtil.getSpritePosition(10),
               }"></div>
-            <span class="block text-white | text-[1.8cqw] font-bold text-outline leading-none">
-              도박
+            <span
+              v-t="'Gamble'"
+              class="block text-white | text-[1.8cqw] font-bold text-outline leading-none">
             </span>
           </button>
           <!-- 무기버튼 -->
@@ -200,8 +207,9 @@
               :style="{
                 backgroundPosition: etcUtil.getSpritePosition(8),
               }"></div>
-            <span class="block text-white | text-[1.8cqw] font-bold text-outline leading-none">
-              무기
+            <span
+              v-t="'Weapon'"
+              class="block text-white | text-[1.8cqw] font-bold text-outline leading-none">
             </span>
           </button>
           <!-- 무기버튼 -->
@@ -219,8 +227,9 @@
               :style="{
                 backgroundPosition: etcUtil.getSpritePosition(9),
               }"></div>
-            <span class="block | text-white text-[1.8cqw] font-bold text-outline leading-none">
-              스텟
+            <span
+              v-t="'Stat'"
+              class="block | text-white text-[1.8cqw] font-bold text-outline leading-none">
             </span>
             <div
               v-if="gachaChance + selectChance > 0"
@@ -315,7 +324,7 @@ const selectedGambleIndex = ref(0)
 
 const isAllWeaponEffect = ref(false)
 
-let scene: Phaser.Scene
+let scene: Phaser.Scene & { dmgPool: Phaser.GameObjects.Group }
 let isBossRemained = false
 let isClear = false
 
@@ -417,7 +426,7 @@ onMounted(() => {
         })
       },
       create(this: Phaser.Scene) {
-        scene = this as Phaser.Scene
+        scene = this as Phaser.Scene & { dmgPool: Phaser.GameObjects.Group }
         scene.data.set("splashSeq", 0)
         // scene.physics.world.timeScale = 0.5
         damageRect = scene.add

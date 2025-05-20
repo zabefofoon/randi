@@ -1,0 +1,418 @@
+{
+  "RandomDefence": "Pertahanan Acak",
+  "TitleBite": "<span class='title-red'>B</span><span class='title-orange'>I</span><span class='title-blue'>T</span><span class='title-green'>E</span> JOIN",
+
+  "GameStart": "Mulai Permainan",
+  "Collection": "Koleksi",
+  "Review": "Ulasan",
+  "Config": "Pengaturan",
+  "Back": "Kembali",
+  "Start": "Mulai",
+  "Buy": "Beli",
+
+  "WelcomeReword": "Bonus Masuk: 1.000 Koin diterima",
+  "HavePurchaseItem": "(Anda memiliki {length} item)",
+  "UsePurchase": "Kenakan",
+  "UnusePurchase": "Lepas",
+
+  "Reword": "HADIAH",
+  "RoundPoint": "Poin Ronde",
+  "KillPoint": "Poin Pembunuhan",
+  "StatPoint": "Poin Status",
+  "WeaponPoint": "Poin Senjata",
+  "GoldPoint": "Poin Emas",
+  "EnforcePoint": "Poin Penguatan",
+  "GamblePoint": "Poin Judi",
+  "CharacterPoint": "Poin Karakter",
+
+  "Clear": "BERHASIL!",
+  "Resume": "Lanjut",
+  "Quit": "Keluar",
+
+  "Gamble": "Judi",
+  "Weapon": "Senjata",
+  "Stat": "Status",
+  "MaterialGatcha": "Gacha",
+
+  "Joker": "Joker",
+  "JokerDesc": "Mengubah satu undian acak menjadi undian pilihan (1 kali).",
+
+  "MaterialSelectable": "Pilih",
+  "HaveLength": "{length} item",
+  "GambleMoney": "Taruh {money} Koin",
+  "GambleMoneyPeriod": "-{money} Koin ~ -{money} Koin",
+
+  "NeedMaterials": "(Butuh {length} status)",
+  "NeedMaterialUnit": "{length} {key}",
+
+  "Coin": "Koin",
+
+  "Enforce": "Perkuat",
+  "EnforcePhysical": "Kekuatan fisik +1",
+  "EnforcePhysicalPercent": "Kekuatan fisik +1%",
+  "EnforceMagical": "Kekuatan magis +1",
+  "EnforceMagicalPercent": "Kekuatan magis +1%",
+  "EnforceCooldown": "Cooldown -1%",
+
+  "GetRewards": "Ambil Hadiah",
+
+  "NeedWeapons": "Butuh {length} senjata Lv.{level}",
+  "NoLuck": "Kurang Beruntung",
+
+  "NylonMask": "Nylon Mask",
+  "NylonMaskDescription": "Pria misterius bertopeng. Kabarnya ia sangat kaya...",
+  "NylonMaskSpecificity": "* Mendapat bonus hadiah +30%",
+
+  "TrunkKing": "Trunk King",
+  "TrunkKingDescription": "Pria kulit putih paruh baya berleher merah. Terkenal sangat kuat.",
+  "TrunkKingSpecificity": "* Serangan fisik naik 1% setiap ronde",
+
+  "Gun": "Pistol",
+  "GunDesc": "“Peluru 9 mm yang akrab bagi semua orang.”",
+
+  "ShotGun": "Senapan Pompa",
+  "ShotGunDesc": "“Dor! Dinding timah yang menyebar.”",
+
+  "DoubleGun": "Pistol Ganda",
+  "DoubleGunDesc": "“Dua tangan, dua pelatuk, dua kali ledakan.”",
+
+  "MagicGun": "Pistol Sihir",
+  "MagicGunDesc": "“Doa melesat dari laras.”",
+
+  "AirGun": "Senapan Angin",
+  "AirGunDesc": "“Satu tembakan sunyi dari angin terkompres.”",
+
+  "MachineGun": "Senapan Mesin",
+  "MachineGunDesc": "“Sekarang amunisi habis per detik.”",
+
+  "FingerGun": "Pistol Jari",
+  "FingerGunDesc": "“Jika kata-kata gagal, jari jadi senjata.”",
+
+  "BubbleGun": "Pelontar Gelembung",
+  "BubbleGunDesc": "“Terlihat lembut, tapi hati-hati tercekik.”",
+
+  "TazerGun": "Taser",
+  "TazerGunDesc": "“Zzzap! Kejut statis termasuk.”",
+
+  "PulseGun": "Senjata Pulsa",
+  "PulseGunDesc": "“Gelombang hijau menembus lurus.”",
+
+  "Firework": "Kembang Api",
+  "FireworkDesc": "“Untuk pesta? Tidak—untuk perang.”",
+
+  "SilentKiller": "Pistol Peredam",
+  "SilentKillerDesc": "“Sunyi, tapi pasti.”",
+
+  "DrillGun": "Bor",
+  "DrillGunDesc": "“Laras berputar, mimpi buruk berputar.”",
+
+  "PepperSpray": "Semprotan Merica",
+  "PepperSprayDesc": "“Air mata dijamin!”",
+
+  "EyeGun": "Tatapan Maut",
+  "EyeGunDesc": "“Tatapan lebih cepat dari kata.”",
+
+  "GrenadeLauncher": "Pelontar Granat",
+  "GrenadeLauncherDesc": "“Lintasan lengkung, keadilan meledak.”",
+
+  "SilverBulletGun": "Senjata Peluru Perak",
+  "SilverBulletGunDesc": "“Bencana perak berkilau bulan.”",
+
+  "PlasmaGun": "Senjata Plasma",
+  "PlasmaGunDesc": "“Bakar musuh dengan cahaya dan panas.”",
+
+  "Cannon": "Meriam",
+  "CannonDesc": "“Kecil, tapi daya rusaknya nyata.”",
+
+  "BlessedRevolver": "Revolver Diberkati",
+  "BlessedRevolverDesc": "“Cahaya suci mekar di ujung laras.”",
+
+  "CursedRevolver": "Revolver Terkutuk",
+  "CursedRevolverDesc": "“Dingin hitam mengalir keluar.”",
+
+  "HeartBreaker": "Pemusnah Hati",
+  "HeartBreakerDesc": "“Satu tembakan yang mengguncang jantung.”",
+
+  "RadiationBeam": "Sinar Radiasi",
+  "RadiationBeamDesc": "“Badai tak terlihat di belakang.”",
+
+  "Missile": "Rudal",
+  "MissileDesc": "“Tunggu—ini curang, ya?”",
+
+  "Booger": "Ingus",
+  "BoogerDesc": "“Jangan remehkan hanya karena kotor!”",
+
+  "ButterKnife": "Pisau Mentega",
+  "ButterKnifeDesc": "“Untuk roti hangat, tetap sakit kalau menusuk.”",
+
+  "KitchenKnife": "Pisau Dapur",
+  "KitchenKnifeDesc": "“Teman koki sejati.”",
+
+  "CutterKnife": "Kuter",
+  "CutterKnifeDesc": "“Makin tajam, makin bahaya.”",
+
+  "SushiKnife": "Pisau Sushi",
+  "SushiKnifeDesc": "“Memotong daging dengan mulus.”",
+
+  "Scissors": "Gunting",
+  "ScissorsDesc": "“Memotong berarti mengikat.”",
+
+  "Hammer": "Palu",
+  "HammerDesc": "“Untuk paku? Tidak—untuk tengkorak.”",
+
+  "AX": "Kapak",
+  "AXDesc": "“Pegangan terasa berat.”",
+
+  "ButcherKnife": "Pisau Jagal",
+  "ButcherKnifeDesc": "“Urat dan tulang—krek.”",
+
+  "LongNails": "Cakar Panjang",
+  "LongNailsDesc": "“Naluri binatang.”",
+
+  "SwissArmyKnife": "Pisau Swiss",
+  "SwissArmyKnifeDesc": "“Multifungsi di mana saja.”",
+
+  "Fist": "Tinju",
+  "FistDesc": "“Pada akhirnya, percayalah pada tinju.”",
+
+  "CrossCutSaw": "Gergaji",
+  "CrossCutSawDesc": "“Menggerogoti seperti ukiran.”",
+
+  "CsowBar": "Linggis",
+  "CrowBarDesc": "“Kuda hitam di proyek bangunan.”",
+
+  "Machete": "Parang",
+  "MacheteDesc": "“Pedang penjelajah hutan.”",
+
+  "KoreanHandPlow": "Cangkul Korea",
+  "KoreanHandPlowDesc": "“Membalik tanah—dan orang.”",
+
+  "BornSword": "Pedang Tulang",
+  "BornSwordDesc": "“Ditempa tulang, penghancur tulang.”",
+
+  "SurgicalKnife": "Pisau Bedah",
+  "SurgicalKnifeDesc": "“Irisan presisi bedah.”",
+
+  "BlessedSword": "Pedang Diberkati",
+  "BlessedSwordDesc": "“Mata murni direndam air suci.”",
+
+  "CursedSword": "Pedang Terkutuk",
+  "CursedSwordDesc": "“Bisikan kian keras semakin lama dipakai.”",
+
+  "DualBlade": "Pedang Ganda",
+  "DualBladeDesc": "“Dua tangan, dua bilah—baja menari.”",
+
+  "BigAX": "Kapak Besar",
+  "BigAXDesc": "“Kapak besar—masalah besar.”",
+
+  "DragonSlayer": "Pembasmi Naga",
+  "DragonSlayerDesc": "“Bilah besi raksasa lahir untuk membunuh naga.”",
+
+  "SnotWhip": "Cambuk Ingus",
+  "SnotWhipDesc": "“Lengket, liat, plok!”",
+
+  "LaserSword": "Pedang Laser",
+  "LaserSwordDesc": "“Datang dari masa depan.”",
+
+  "DeathScythe": "Sabit Kematian",
+  "DeathScytheDesc": "“Memotong batas hidup dan mati.”",
+
+  "Book": "Buku Catatan",
+  "BookDesc": "“Ruang kosong, potensi tak terbatas.”",
+
+  "ThickBook": "Buku Tebal",
+  "ThickBookDesc": "“Ilmu berat, lengan pegal.”",
+
+  "ThinBook": "Buku Tipis",
+  "ThinBookDesc": "“Portabilitas maksimal.”",
+
+  "SpringBook": "Buku Spiral",
+  "SpringBookDesc": "“Mudah dibuka, mudah dilempar.”",
+
+  "TextBook": "Buku Pelajaran",
+  "TextBookDesc": "“Kekuatan standar.”",
+
+  "Map": "Peta",
+  "MapDesc": "“Tahu jalan, bertahan hidup.”",
+
+  "PictureBook": "Buku Bergambar",
+  "PictureBookDesc": "“Gambar memiliki kekuatan.”",
+
+  "MagicBook": "Buku Mantra",
+  "MagicBookDesc": "“Satu mantra, hujan panah.”",
+
+  "MobilePhone": "Telepon Genggam",
+  "MobilePhoneDesc": "“Nelpon bonus; main game utama.”",
+
+  "Regulations": "Buku Aturan",
+  "RegulationsDesc": "“Aturan adalah kekuatan.”",
+
+  "WorkBook": "Buku Latihan",
+  "WorkBookDesc": "“Abaikan, dia akan mengikuti.”",
+
+  "TreasureMap": "Peta Harta",
+  "TreasureMapDesc": "“Matamu terkunci pada X.”",
+
+  "EvacuationMap": "Peta Evakuasi",
+  "EvacuationMapDesc": "“Pintu darurat: sana.”",
+
+  "Diary": "Buku Harian",
+  "DiaryDesc": "“Emosi tercetak di kertas.”",
+
+  "Menu": "Menu",
+  "MenuDesc": "“Lapar? Makan dulu sebelum bertarung.”",
+
+  "Revelation": "Kitab Wahyu",
+  "RevelationDesc": "“Rahasia akhir dan awal.”",
+
+  "Labtop": "Laptop",
+  "LabtopDesc": "“Menyimpan semua pengetahuan.”",
+
+  "AnswerSheet": "Lembar Jawaban",
+  "AnswerSheetDesc": "“Memberi jawaban, menuntut harga mahal.”",
+
+  "LawBook": "Kitab Hukum",
+  "LawBookDesc": "“Hukum menundukkan semua.”",
+
+  "HellMap": "Panduan Neraka",
+  "HellMapDesc": "“Selamat datang di skema siksaan.”",
+
+  "OrderForm": "Formulir Pesanan",
+  "OrderFormDesc": "“Kontrak ditandatangani darah.”",
+
+  "Grimoire": "Grimori",
+  "GrimoireDesc": "“Tulisan hidup.”",
+
+  "TabletPC": "Tablet",
+  "TabletPCDesc": "“Portal multidimensi portabel.”",
+
+  "Constitution": "Hukum Inferno",
+  "ConstitutionDesc": "“Kitab, hukum, dan siksaan.”",
+
+  "Counterfeit": "Buku Besar",
+  "CounterfeitDesc": "“Akan diingat sampai akhir.”",
+
+  "Ring": "Cincin",
+  "RingDesc": "“Janji besar dalam lingkaran kecil.”",
+
+  "CopperRing": "Cincin Tembaga",
+  "CopperRingDesc": "“Bisa membuat jari hijau.”",
+
+  "FlowerRing": "Cincin Bunga",
+  "FlowerRingDesc": "“Menyembuhkan dengan aroma lembut.”",
+
+  "SilverRing": "Cincin Perak",
+  "SilverRingDesc": "“Kilau palsu tetap kilau.”",
+
+  "JadeRing": "Cincin Giok",
+  "JadeRingDesc": "“Batu jiwa yang jernih.”",
+
+  "LeatherRing": "Cincin Kulit",
+  "LeatherRingDesc": "“Ringan, rasa lembut.”",
+
+  "CandyRing": "Cincin Permen",
+  "CandyRingDesc": "“Manis sekejap; gigi berlubang selamanya.”",
+
+  "GoldRing": "Cincin Emas",
+  "GoldRingDesc": "“Kilau kekayaan dan kerakusan.”",
+
+  "KnuckleRing": "Cincin Buku Jari",
+  "KnuckleRingDesc": "“Tinju lebih keras dari tinju.”",
+
+  "DigitalRing": "Cincin Digital",
+  "DigitalRingDesc": "“Praktis, seperti yang diharapkan.”",
+
+  "CrystalRing": "Cincin Kristal",
+  "CrystalRingDesc": "“Batu isi daya transparan.”",
+
+  "RuneRing": "Cincin Rune",
+  "RuneRingDesc": "“Simbol terukir bersinar.”",
+
+  "SignetRing": "Cincin Signet",
+  "SignetRingDesc": "“Ini janji kita.”",
+
+  "SharpieRing": "Cincin Sharpie",
+  "SharpieRingDesc": "“Menggambar mimpi cincin.”",
+
+  "OnionRing": "Onion Ring",
+  "OnionRingDesc": "“Bau kuat, rasa nikmat.”",
+
+  "DiamondRing": "Cincin Berlian",
+  "DiamondRingDesc": "“Prestise melampaui kekayaan.”",
+
+  "OpalRing": "Cincin Opal",
+  "OpalRingDesc": "“Perlindungan warna pelangi.”",
+
+  "ObsidianRing": "Cincin Obsidian",
+  "ObsidianRingDesc": "“Kegelapan melahap cahaya.”",
+
+  "SapphireRing": "Cincin Safir",
+  "SapphireRingDesc": "“Kilau biru air yang dingin.”",
+
+  "RubyRing": "Cincin Ruby",
+  "RubyRingDesc": "“Permata menyimpan api merah.”",
+
+  "Bugles": "Bugles",
+  "BuglesDesc": "“Gigitan nostalgia masa kecil.”",
+
+  "BornRing": "Cincin Tulang",
+  "BornRingDesc": "“Perhiasan yang berjalan bersama kematian.”",
+
+  "VampireRing": "Segel Vampir",
+  "VampireRingDesc": "“Kontrak darah.”",
+
+  "Tattoo": "Tato",
+  "TattooDesc": "“Janji abadi terukir di kulit.”",
+
+  "FourLeafClover": "Semanggi Empat Daun",
+  "FourLeafCloverDesc": "“Keberuntungan yang sulit ditemukan.”",
+
+  "Payback": "Ganti Rugi",
+  "PaybackDesc": "Selama satu game, taruhan uang yang gagal mengembalikan sebagian koin.",
+
+  "Sharper": "Penipu Kartu",
+  "SharperDesc": "Selama satu game, peluang sukses upgrade menjadi 2×.",
+
+  "str": "Kekuatan",
+  "int": "Kecerdasan",
+  "cul": "Budaya",
+  "cha": "Karismatika",
+  "vit": "Vitalitas",
+  "agi": "Kelincahan",
+  "luk": "Keberuntungan",
+  "wis": "Kebijaksanaan",
+
+  "StrDesc": "Serangan<br/>Fisik +1",
+  "IntDesc": "Serangan<br/>Magis +1",
+  "CulDesc": "Pelambatan<br/>+1%",
+  "ChaDesc": "Stun<br/>+0,1 dtk",
+  "VitDesc": "Splash +5",
+  "LukDesc": "Penetrasi<br/>Armor +1",
+  "WisDesc": "Penetrasi<br/>Magis +1",
+  "AgiDesc": "Cooldown -1%",
+
+  "PhysicalDamage": "· Serangan Fisik: {number}",
+  "PhysicalPenetration": "· Penetrasi Fisik: {number}",
+  "PhysicalAllPercent": "· Serangan Fisik +{number}%",
+  "PhysicalDecrease": "· Pertahanan Fisik -{number}%",
+
+  "MagicalDamage": "· Serangan Magis: {number}",
+  "MagicalPenetration": "· Penetrasi Magis: {number}",
+  "MagicalAllPercent": "· Serangan Magis +{number}%",
+  "MagicalDecrease": "· Pertahanan Magis -{number}%",
+
+  "TargetLength": "· Menyerang {number} target sekaligus",
+  "Splash": "· Splash: {number}",
+  "Cooldown": "· Cooldown: {number}s",
+  "AllCooldown": "· Cooldown Global: {number}%",
+
+  "Stun": "· Stun: {number}s",
+  "StunMany": "· Stun Area: {number}s",
+
+  "Slow": "· Slow Area: {number}%",
+  "SlowOne": "· Slow Target Tunggal: {number}%",
+
+  "Critical": "· {number1}% peluang {number2}× damage",
+  "Dot": "· Damage per Detik ({number} kali)",
+  "Armerbreak": "· Armor Break: {number}"
+}

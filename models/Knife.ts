@@ -4,8 +4,8 @@ import { Weapon, type WeaponOptions } from "./Weapon"
 export class ButterKnife extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 1,
-    name: "버터칼",
-    description: `“따뜻한 식빵용이지만 찌르면 아프다.”`,
+    name: "ButterKnife",
+    description: `ButterKnifeDesc`,
     cooltime: 1000,
     speed: 500,
     range: 90,
@@ -66,8 +66,8 @@ export class ButterKnife extends Weapon {
 export class KitchenKnife extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 2,
-    name: "식칼",
-    description: `“주방 장인의 친구.”`,
+    name: "KitchenKnife",
+    description: `KitchenKnifeDesc`,
     cooltime: 1000,
     speed: 500,
     range: 90,
@@ -128,8 +128,8 @@ export class KitchenKnife extends Weapon {
 export class CutterKnife extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 2,
-    name: "커터칼",
-    description: `“칼날이 잘 드러나는 만큼 위험도 높다.”`,
+    name: "CutterKnife",
+    description: `CutterKnifeDesc`,
     cooltime: 1000,
     speed: 500,
     range: 90,
@@ -190,8 +190,8 @@ export class CutterKnife extends Weapon {
 export class SushiKnife extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
-    name: "회칼",
-    description: `“살점이 매끄럽게 잘린다.”`,
+    name: "SushiKnife",
+    description: `SushiKnifeDesc`,
     cooltime: 1000,
     speed: 500,
     range: 90,
@@ -254,8 +254,8 @@ export class SushiKnife extends Weapon {
 export class Scissors extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
-    name: "가위",
-    description: `“잘라낸다는 건 곧 구속이라는 뜻.”`,
+    name: "Scissors",
+    description: `ScissorsDesc`,
     cooltime: 1000,
     speed: 500,
     range: 140,
@@ -318,8 +318,8 @@ export class Scissors extends Weapon {
 export class Hammer extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
-    name: "망치",
-    description: `“못 박기용? 아니, 두개골 깨기용.”`,
+    name: "Hammer",
+    description: `HammerDesc`,
     cooltime: 1000,
     speed: 500,
     range: 90,
@@ -382,8 +382,8 @@ export class Hammer extends Weapon {
 export class AX extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
-    name: "도끼",
-    description: `“손맛이 묵직하다.”`,
+    name: "AX",
+    description: `AXDesc`,
     cooltime: 1000,
     speed: 500,
     range: 90,
@@ -446,8 +446,8 @@ export class AX extends Weapon {
 export class ButcherKnife extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "정육칼",
-    description: `	“힘줄도 뼈도 꾸욱.”`,
+    name: "ButcherKnife",
+    description: `ButcherKnifeKnife`,
     cooltime: 1000,
     speed: 500,
     range: 90,
@@ -510,8 +510,8 @@ export class ButcherKnife extends Weapon {
 export class LongNails extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "긴손톱",
-    description: `“짐승의 본능.”`,
+    name: "LongNails",
+    description: `LongNailsDesc`,
     cooltime: 200,
     speed: 500,
     range: 140,
@@ -574,8 +574,8 @@ export class LongNails extends Weapon {
 export class SwissArmyKnife extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "맥가이버칼",
-    description: `어디든지 요긴하게 쓰이는 만능칼”`,
+    name: "SwissArmyKnife",
+    description: `SwissArmyKnifeDesc`,
     cooltime: 1000,
     speed: 500,
     range: 90,
@@ -638,8 +638,8 @@ export class SwissArmyKnife extends Weapon {
 export class Fist extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "주먹",
-    description: `믿을건 역시 주먹”`,
+    name: "Fist",
+    description: `FistDesc`,
     cooltime: 1000,
     speed: 500,
     range: 90,
@@ -702,8 +702,8 @@ export class Fist extends Weapon {
 export class CrossCutSaw extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "톱",
-    description: `“도려내듯 파고든다.”`,
+    name: "CrossCutSaw",
+    description: `CrossCutSawDesc`,
     cooltime: 1000,
     speed: 500,
     range: 140,
@@ -757,8 +757,8 @@ export class CrossCutSaw extends Weapon {
 export class CrowBar extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "빠루",
-    description: `"건축 현장의 다크호스.”`,
+    name: "CsowBar",
+    description: `CrowBarDesc`,
     cooltime: 1000,
     speed: 500,
     range: 90,
@@ -821,8 +821,8 @@ export class CrowBar extends Weapon {
 export class Machete extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "마체테",
-    description: `“정글 개척자의 칼.”`,
+    name: "Machete",
+    description: `MacheteDesc`,
     cooltime: 1000,
     speed: 500,
     range: 90,
@@ -876,8 +876,8 @@ export class Machete extends Weapon {
 export class KoreanHandPlow extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "호미",
-    description: `“흙도 사람도 뒤집는다.”`,
+    name: "KoreanHandPlow",
+    description: `KoreanHandPlowDesc`,
     cooltime: 1000,
     speed: 1000,
     range: 90,
@@ -931,8 +931,8 @@ export class KoreanHandPlow extends Weapon {
 export class BornSword extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
-    name: "뼈칼",
-    description: `“뼈를 깎아 만든 뼈 파괴자.”`,
+    name: "BornSword",
+    description: `BornSwordDesc`,
     cooltime: 1000,
     speed: 500,
     range: 140,
@@ -986,8 +986,8 @@ export class BornSword extends Weapon {
 export class SurgicalKnife extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
-    name: "메스",
-    description: `“외과용 정밀 베기.”`,
+    name: "SurgicalKnife",
+    description: `SurgicalKnifeDesc`,
     cooltime: 1000,
     speed: 500,
     range: 140,
@@ -1041,8 +1041,8 @@ export class SurgicalKnife extends Weapon {
 export class BlessedSword extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
-    name: "축복받은칼",
-    description: `“성수에 담가낸 깨끗한 날.”`,
+    name: "BlessedSword",
+    description: `BlessedSwordDesc`,
     cooltime: 1000,
     speed: 500,
     range: 140,
@@ -1096,8 +1096,8 @@ export class BlessedSword extends Weapon {
 export class CursedSword extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
-    name: "저주받은칼",
-    description: `“들면 들수록 속삭임이 들려온다.”`,
+    name: "CursedSword",
+    description: `CursedSwordDesc`,
     cooltime: 1000,
     speed: 500,
     range: 140,
@@ -1151,8 +1151,8 @@ export class CursedSword extends Weapon {
 export class DualBlade extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
-    name: "쌍칼",
-    description: `“두 손엔 두 개, 춤추는 칼날.”`,
+    name: "DualBlade",
+    description: `DualBladeDesc`,
     cooltime: 200,
     speed: 500,
     range: 140,
@@ -1206,8 +1206,8 @@ export class DualBlade extends Weapon {
 export class BigAX extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
-    name: "대형도끼",
-    description: `“도끼는 컸고, 문제도 컸다.”`,
+    name: "BigAX",
+    description: `BigAXDesc`,
     cooltime: 1000,
     speed: 500,
     range: 90,
@@ -1261,8 +1261,8 @@ export class BigAX extends Weapon {
 export class DragonSlayer extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
-    name: "드래곤슬레이어",
-    description: `“용을 잡기 위해 태어난 거대 철검.”`,
+    name: "DragonSlayer",
+    description: `DragonSlayerDesc`,
     cooltime: 1000,
     speed: 500,
     range: 140,
@@ -1306,8 +1306,8 @@ export class DragonSlayer extends Weapon {
 export class SnotWhip extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
-    name: "콧물채찍",
-    description: `“질겅질겅 끈적!”`,
+    name: "SnotWhip",
+    description: `SnotWhipDesc`,
     cooltime: 1000,
     speed: 500,
     range: 140,
@@ -1351,8 +1351,8 @@ export class SnotWhip extends Weapon {
 export class LaserSword extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
-    name: "레이저소드",
-    description: `“미래에서 왔다.”`,
+    name: "LaserSword",
+    description: `LaserSwordDesc`,
     cooltime: 200,
     speed: 500,
     range: 90,
@@ -1396,8 +1396,8 @@ export class LaserSword extends Weapon {
 export class DeathScythe extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
-    name: "사신의낫",
-    description: `“삶과 죽음의 경계를 베어낸다.”`,
+    name: "DeathScythe",
+    description: `DeathScytheDesc`,
     cooltime: 1000,
     speed: 500,
     range: 90,

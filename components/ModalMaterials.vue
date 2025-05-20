@@ -21,12 +21,17 @@
               :style="{
                 backgroundPosition: etcUtil.getSpritePosition(index),
               }"></div>
-            <figcaption class="flex flex-col items-center">
-              <span class="text-outline text-[1.6cqw] font-bold">
-                {{ materials[key].info.key }}
+            <figcaption class="flex flex-col items-center gap-[0.5cqw]">
+              <span
+                v-t="materials[key].info.key"
+                class="text-outline text-[1.6cqw] font-bold">
               </span>
-              <span class="text-outline text-[1.3cqw]">{{ materials[key].info.description }}</span>
-              <span class="text-outline text-[1.3cqw]">{{ materials[key].length }}개</span>
+              <span
+                class="text-outline text-[1.3cqw] text-center leading-none | border-y border-dotted border-blue-600 | py-[0.5cqw]"
+                v-html="i18n.t(materials[key].info.description)"></span>
+              <span class="text-outline text-[1.3cqw]">
+                {{ $t("HaveLength", { length: materials[key].length }) }}
+              </span>
             </figcaption>
           </figure>
         </div>
@@ -34,7 +39,9 @@
           <button
             v-if="selectChance > 0"
             class="grid place-items-center | relative bg-amber-500 | mt-[2cqw] px-[1.5cqw] py-[0.5cqw] | border-black border-[0.14cqw] rounded-lg | leading-none">
-            <span class="text-outline text-[1.7cqw] font-bold">선택가능</span>
+            <span
+              v-t="'MaterialSelectable'"
+              class="text-outline text-[1.7cqw] font-bold"></span>
             <div
               v-if="selectChance > 0"
               class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2">
@@ -53,7 +60,9 @@
               :style="{
                 backgroundPosition: etcUtil.getPurchaseSpritePosition(Joker.meta.spriteIndex),
               }"></div>
-            <span class="text-outline text-[1.7cqw] font-bold">조커</span>
+            <span
+              v-t="'Joker'"
+              class="text-outline text-[1.7cqw] font-bold"></span>
             <div
               v-if="jokerLength > 0"
               class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2">
@@ -71,7 +80,9 @@
             }"
             :disabled="gachaChance < 1"
             @click="gacha">
-            <span class="text-outline text-[1.7cqw] font-bold">랜덤뽑기</span>
+            <span
+              v-t="'MaterialGatcha'"
+              class="text-outline text-[1.7cqw] font-bold"></span>
             <div
               v-if="gachaChance > 0"
               class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2">
@@ -101,6 +112,8 @@ const emit = defineEmits<{
 
 const gachaChance = defineModel<number>("gachaChance", { default: 0 })
 const selectChance = defineModel<number>("selectChance", { default: 0 })
+
+const i18n = useI18n()
 
 const gameStore = useGameStore()
 const soundStore = useSoundStore()

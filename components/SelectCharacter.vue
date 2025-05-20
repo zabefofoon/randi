@@ -63,16 +63,16 @@
             class="w-full h-full | flex flex-col items-center justify-center gap-[1cqw] text-center">
             <template v-if="gameStore.checkCharacter(gameStore.selectedCharacter)">
               <span
-                class="text-outline text-[2.8cqw] font-bold"
-                v-html="gameStore.selectedCharacter.meta.name">
+                v-t="gameStore.selectedCharacter.meta.name"
+                class="text-outline text-[2.8cqw] font-bold">
               </span>
               <span
-                class="text-outline text-[1.5cqw] font-bold"
-                v-html="gameStore.selectedCharacter.meta.description">
+                v-t="gameStore.selectedCharacter.meta.description"
+                class="text-outline text-[1.5cqw] font-bold">
               </span>
               <span
-                class="text-outline text-[1.5cqw] font-bold"
-                v-html="gameStore.selectedCharacter.meta.specificity">
+                v-t="gameStore.selectedCharacter.meta.specificity"
+                class="text-outline text-[1.5cqw] font-bold">
               </span>
             </template>
             <div
@@ -95,16 +95,16 @@
               class="flex flex-col gap-[0.5cqw]"
               @click="emit('next', 'lobby')">
               <span
+                v-t="'Back'"
                 class="bg-blue-900 | px-[2cqw] py-[0.5cqw] | border-black border-[0.2cqw] rounded-lg | text-[1.5cqw] font-bold text-outline">
-                돌아가기
               </span>
             </button>
             <button
               class="flex flex-col gap-[0.5cqw]"
               @click="emit('next', 'store')">
               <span
+                v-t="'Start'"
                 class="bg-orange-700 | px-[2cqw] py-[0.5cqw] | border-black border-[0.2cqw] rounded-lg | text-[1.5cqw] font-bold text-outline">
-                시작하기
               </span>
             </button>
           </div>
@@ -116,6 +116,7 @@
               :disabled="gameStore.selectedCharacter.character.meta.price > gameStore.currentMoney"
               @click="purchase">
               <span
+                v-t="'Buy'"
                 class="px-[2cqw] py-[0.5cqw] | border-black border-[0.2cqw] rounded-lg | text-[1.5cqw] font-bold text-outline"
                 :class="{
                   'bg-gray-700':
@@ -123,7 +124,6 @@
                   'bg-orange-700':
                     gameStore.selectedCharacter.character.meta.price <= gameStore.currentMoney,
                 }">
-                구매하기
               </span>
             </button>
           </div>

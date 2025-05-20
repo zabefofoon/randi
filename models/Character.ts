@@ -26,9 +26,9 @@ export abstract class Character {
 export class NylonMask extends Character {
   static override readonly meta: CharacterOptions = {
     id: "nylonMask",
-    name: "Nylon Mask",
-    description: "복면을 쓴 의문의 사내. 소문으로는 돈이 많다던데...",
-    specificity: "* 보상 보너스 30% 추가 획득",
+    name: "NylonMask",
+    description: "NylonMaskDescription",
+    specificity: "NylonMaskSpecificity",
     price: 0,
   }
   constructor() {
@@ -39,9 +39,9 @@ export class NylonMask extends Character {
 export class TrunkKing extends Character {
   static override readonly meta: CharacterOptions = {
     id: "trunkKing",
-    name: "Trunk King",
-    description: "빨간 목을 가진 백인 중년. 강력한 힘을 자랑한다.",
-    specificity: "* 매 라운드마다, 물리 공격력 1%씩 증가",
+    name: "TrunkKing",
+    description: "TrunkKingDescription",
+    specificity: "TrunkKingSpecificity",
     price: 2000,
   }
   constructor() {

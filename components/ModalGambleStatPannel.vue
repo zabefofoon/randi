@@ -46,7 +46,9 @@
         :disabled="coins < needCoins"
         @click="gacha()">
         <div class="flex items-center justify-center gap-[0.5cqw]">
-          <span class="text-outline text-[1.5cqw] font-bold">랜덤 뽑기</span>
+          <span
+            v-t="'MaterialGatcha'"
+            class="text-outline text-[1.5cqw] font-bold"></span>
         </div>
       </button>
     </div>
@@ -62,6 +64,7 @@ const props = defineProps<{
 const coins = defineModel<number>("coins", { default: 0 })
 const gamblings = defineModel<number>("gamblings", { default: 0 })
 
+const i18n = useI18n()
 const soundStore = useSoundStore()
 
 const cardEls = ref<HTMLDivElement[]>()
@@ -73,7 +76,7 @@ const getCardBack = (index: number) => {
   Object.keys(props.materials)
 
   const spriteIndex = index === -1 ? 16 : index
-  const label = index === -1 ? "꽝" : Object.keys(props.materials)[index]
+  const label = index === -1 ? i18n.t("NoLuck") : Object.keys(props.materials)[index]
 
   return {
     spriteIndex,

@@ -1,0 +1,415 @@
+{
+  "RandomDefence": "隨機防禦",
+  "TitleBite": "<span class='title-red'>B</span><span class='title-orange'>I</span><span class='title-blue'>T</span><span class='title-green'>E</span> JOIN",
+
+  "GameStart": "開始遊戲",
+  "Collection": "收藏",
+  "Review": "評價",
+  "Config": "設定",
+  "Back": "返回",
+  "Start": "開始",
+  "Buy": "購買",
+
+  "WelcomeReword": "登入獎勵：已獲得 1,000 金幣",
+  "HavePurchaseItem": "（你擁有 {length} 件物品）",
+  "UsePurchase": "裝備",
+  "UnusePurchase": "卸下",
+
+  "Reword": "獎勵",
+  "RoundPoint": "回合點數",
+  "KillPoint": "擊殺點數",
+  "StatPoint": "屬性點數",
+  "WeaponPoint": "武器點數",
+  "GoldPoint": "金幣點數",
+  "EnforcePoint": "強化點數",
+  "GamblePoint": "賭博點數",
+  "CharacterPoint": "角色點數",
+
+  "Clear": "通關！",
+  "Resume": "繼續",
+  "Quit": "退出",
+
+  "Gamble": "賭博",
+  "Weapon": "武器",
+  "Stat": "屬性",
+  "MaterialGatcha": "抽卡",
+
+  "Joker": "王牌",
+  "JokerDesc": "將一次隨機抽卡轉為自選抽卡（僅 1 次）。",
+
+  "MaterialSelectable": "選擇",
+  "HaveLength": "{length} 件",
+  "GambleMoney": "投注 {money} 金幣",
+  "GambleMoneyPeriod": "-{money} 金幣 ~ -{money} 金幣",
+
+  "NeedMaterials": "（需要 {length} 屬性）",
+  "NeedMaterialUnit": "{length} {key}",
+
+  "Coin": "金幣",
+
+  "Enforce": "強化",
+  "EnforcePhysical": "物理攻擊 +1",
+  "EnforcePhysicalPercent": "物理攻擊 +1%",
+  "EnforceMagical": "魔法攻擊 +1",
+  "EnforceMagicalPercent": "魔法攻擊 +1%",
+  "EnforceCooldown": "冷卻時間 -1%",
+
+  "GetRewards": "領取獎勵",
+
+  "NeedWeapons": "需要 {length} 件 {level} 級武器",
+  "NoLuck": "未中獎",
+
+  "NylonMask": "Nylon Mask",
+  "NylonMaskDescription": "戴著面具的神祕男子，據說十分富有……",
+  "NylonMaskSpecificity": "* 額外獲得 30% 獎勵",
+
+  "TrunkKing": "Trunk King",
+  "TrunkKingDescription": "脖子曬得通紅的中年白人男，以怪力聞名。",
+  "TrunkKingSpecificity": "* 每回合物理攻擊力提高 1%",
+
+  "Gun": "手槍",
+  "GunDesc": "「人人熟悉的 9 mm 子彈。」",
+
+  "ShotGun": "霰彈槍",
+  "ShotGunDesc": "「砰！鉛彈散成牆。」",
+
+  "DoubleGun": "雙持手槍",
+  "DoubleGunDesc": "「雙手雙扳機，火力加倍。」",
+
+  "MagicGun": "魔法手槍",
+  "MagicGunDesc": "「祈禱自槍口升起。」",
+
+  "AirGun": "氣槍",
+  "AirGunDesc": "「聚風射出的寂靜一擊。」",
+
+  "MachineGun": "機槍",
+  "MachineGunDesc": "「從現在起子彈按秒消耗。」",
+
+  "FingerGun": "指槍",
+  "FingerGunDesc": "「不聽話？手指就是槍。」",
+
+  "BubbleGun": "泡泡槍",
+  "BubbleGunDesc": "「看似溫柔，小心窒息。」",
+
+  "TazerGun": "電擊槍",
+  "TazerGunDesc": "「呲啦！附送靜電。」",
+
+  "PulseGun": "脈衝槍",
+  "PulseGunDesc": "「綠色波動直穿而過。」",
+
+  "Firework": "煙花",
+  "FireworkDesc": "「節慶用？不——戰場用。」",
+
+  "SilentKiller": "消音手槍",
+  "SilentKillerDesc": "「安靜，但致命。」",
+
+  "DrillGun": "鑽頭槍",
+  "DrillGunDesc": "「旋轉槍管，旋轉惡夢。」",
+
+  "PepperSpray": "防狼噴霧",
+  "PepperSprayDesc": "「保證流淚！」",
+
+  "EyeGun": "死亡凝視",
+  "EyeGunDesc": "「目光比言語更快。」",
+
+  "GrenadeLauncher": "榴彈發射器",
+  "GrenadeLauncherDesc": "「弧線軌跡，爆炸正義。」",
+
+  "SilverBulletGun": "銀彈槍",
+  "SilverBulletGunDesc": "「月光下的銀色災厄。」",
+
+  "PlasmaGun": "等離子槍",
+  "PlasmaGunDesc": "「用光與熱焚敵。」",
+
+  "Cannon": "小炮",
+  "CannonDesc": "「雖小，火力實。」",
+
+  "BlessedRevolver": "聖光左輪",
+  "BlessedRevolverDesc": "「聖光在槍口綻放。」",
+
+  "CursedRevolver": "詛咒左輪",
+  "CursedRevolverDesc": "「黑色寒氣逸出槍管。」",
+
+  "HeartBreaker": "碎心者",
+  "HeartBreakerDesc": "「震撼心臟的一擊。」",
+
+  "RadiationBeam": "輻射光束",
+  "RadiationBeamDesc": "「無形的後患。」",
+
+  "Missile": "飛彈",
+  "MissileDesc": "「等等，這不算作弊嗎？」",
+
+  "Booger": "鼻屎",
+  "BoogerDesc": "「別因髒就小看它！」",
+
+  "ButterKnife": "奶油刀",
+  "ButterKnifeDesc": "「抹麵包用，捅人也疼。」",
+
+  "KitchenKnife": "廚刀",
+  "KitchenKnifeDesc": "「大廚的好夥伴。」",
+
+  "CutterKnife": "美工刀",
+  "CutterKnifeDesc": "「刀刃越露越危險。」",
+
+  "SushiKnife": "壽司刀",
+  "SushiKnifeDesc": "「切肉如鏡般光滑。」",
+
+  "Scissors": "剪刀",
+  "ScissorsDesc": "「剪斷即束縛。」",
+
+  "Hammer": "錘子",
+  "HammerDesc": "「釘子？不——敲頭骨。」",
+
+  "AX": "斧頭",
+  "AXDesc": "「沉甸甸的手感。」",
+
+  "ButcherKnife": "屠刀",
+  "ButcherKnifeDesc": "「筋骨『咔嚓』。」",
+
+  "LongNails": "長爪",
+  "LongNailsDesc": "「野獸本能。」",
+
+  "SwissArmyKnife": "瑞士刀",
+  "SwissArmyKnifeDesc": "「多功能，處處好用。」",
+
+  "Fist": "拳頭",
+  "FistDesc": "「最後還是信拳頭。」",
+
+  "CrossCutSaw": "鋸子",
+  "CrossCutSawDesc": "「鑿刻般切入。」",
+
+  "CsowBar": "撬棍",
+  "CrowBarDesc": "「工地黑馬。」",
+
+  "Machete": "開山刀",
+  "MacheteDesc": "「叢林開路者之刃。」",
+
+  "KoreanHandPlow": "韓式手鋤",
+  "KoreanHandPlowDesc": "「翻土亦翻人。」",
+
+  "BornSword": "骨劍",
+  "BornSwordDesc": "「骨鑄骨碎。」",
+
+  "SurgicalKnife": "手術刀",
+  "SurgicalKnifeDesc": "「外科級精準切割。」",
+
+  "BlessedSword": "聖劍",
+  "BlessedSwordDesc": "「聖水浸刃，潔淨無暇。」",
+
+  "CursedSword": "咒劍",
+  "CursedSwordDesc": "「握得越久囈語越響。」",
+
+  "DualBlade": "雙刃",
+  "DualBladeDesc": "「雙手雙刃，鋼舞翻飛。」",
+
+  "BigAX": "巨斧",
+  "BigAXDesc": "「斧大，麻煩也大。」",
+
+  "DragonSlayer": "屠龍者",
+  "DragonSlayerDesc": "「為斬龍而生的巨鐵劍。」",
+
+  "SnotWhip": "鼻涕鞭",
+  "SnotWhipDesc": "「黏黏糊糊，啪！」",
+
+  "LaserSword": "雷射劍",
+  "LaserSwordDesc": "「來自未來。」",
+
+  "DeathScythe": "死神鐮",
+  "DeathScytheDesc": "「斬斷生死邊界。」",
+
+  "Book": "筆記本",
+  "BookDesc": "「空白即無限可能。」",
+
+  "ThickBook": "厚書",
+  "ThickBookDesc": "「知識厚重，手臂酸痛。」",
+
+  "ThinBook": "薄書",
+  "ThinBookDesc": "「攜帶最方便。」",
+
+  "SpringBook": "彈簧本",
+  "SpringBookDesc": "「易翻亦易擲。」",
+
+  "TextBook": "教材",
+  "TextBookDesc": "「正統之力。」",
+
+  "Map": "地圖",
+  "MapDesc": "「知路方能生存。」",
+
+  "PictureBook": "畫冊",
+  "PictureBookDesc": "「圖像的力量驚人。」",
+
+  "MagicBook": "魔法書",
+  "MagicBookDesc": "「一咒萬箭齊發。」",
+
+  "MobilePhone": "手機",
+  "MobilePhoneDesc": "「通話附帶，遊戲本職。」",
+
+  "Regulations": "規則書",
+  "RegulationsDesc": "「規則即力量。」",
+
+  "WorkBook": "練習本",
+  "WorkBookDesc": "「不做題，它跟你。」",
+
+  "TreasureMap": "寶藏圖",
+  "TreasureMapDesc": "「目光鎖定 X。」",
+
+  "EvacuationMap": "疏散圖",
+  "EvacuationMapDesc": "「緊急出口在那邊。」",
+
+  "Diary": "日記本",
+  "DiaryDesc": "「情感寫於紙上。」",
+
+  "Menu": "菜單",
+  "MenuDesc": "「餓了先吃再打。」",
+
+  "Revelation": "啟示錄",
+  "RevelationDesc": "「終與始的祕密。」",
+
+  "Labtop": "筆記型電腦",
+  "LabtopDesc": "「承載千萬知識。」",
+
+  "AnswerSheet": "答題卡",
+  "AnswerSheetDesc": "「給答案，要代價。」",
+
+  "LawBook": "法典",
+  "LawBookDesc": "「法律使眾人低頭。」",
+
+  "HellMap": "地獄導圖",
+  "HellMapDesc": "「歡迎來到痛苦藍圖。」",
+
+  "OrderForm": "訂單",
+  "OrderFormDesc": "「契約以血簽。」",
+
+  "Grimoire": "魔典",
+  "GrimoireDesc": "「活字跳動。」",
+
+  "TabletPC": "平板電腦",
+  "TabletPCDesc": "「便攜多維入口。」",
+
+  "Constitution": "地獄法典",
+  "ConstitutionDesc": "「經文、律法與刑罰。」",
+
+  "Counterfeit": "帳簿",
+  "CounterfeitDesc": "「會記錄到最後。」",
+
+  "Ring": "戒指",
+  "RingDesc": "「小小圓環，大大承諾。」",
+
+  "CopperRing": "銅戒",
+  "CopperRingDesc": "「可能讓手指變綠。」",
+
+  "FlowerRing": "花戒",
+  "FlowerRingDesc": "「淡淡香氣治癒人心。」",
+
+  "SilverRing": "銀戒",
+  "SilverRingDesc": "「假貨也能閃耀。」",
+
+  "JadeRing": "玉戒",
+  "JadeRingDesc": "「澄澈靈魂之石。」",
+
+  "LeatherRing": "皮戒",
+  "LeatherRingDesc": "「輕盈柔軟手感。」",
+
+  "CandyRing": "糖果戒",
+  "CandyRingDesc": "「甜一瞬，蛀牙一生。」",
+
+  "GoldRing": "金戒",
+  "GoldRingDesc": "「閃耀的財富與貪婪。」",
+
+  "KnuckleRing": "護拳戒",
+  "KnuckleRingDesc": "「拳更硬。」",
+
+  "DigitalRing": "數字戒",
+  "DigitalRingDesc": "「果然實用至上。」",
+
+  "CrystalRing": "水晶戒",
+  "CrystalRingDesc": "「透明充能石。」",
+
+  "RuneRing": "符文戒",
+  "RuneRingDesc": "「刻符散發光芒。」",
+
+  "SignetRing": "印戒",
+  "SignetRingDesc": "「這是我們的誓約。」",
+
+  "SharpieRing": "塗鴉戒",
+  "SharpieRingDesc": "「描繪戒指之夢。」",
+
+  "OnionRing": "洋蔥圈",
+  "OnionRingDesc": "「氣味嗆鼻，味道極佳。」",
+
+  "DiamondRing": "鑽石戒",
+  "DiamondRingDesc": "「威望超越財富。」",
+
+  "OpalRing": "蛋白石戒",
+  "OpalRingDesc": "「彩虹般守護。」",
+
+  "ObsidianRing": "黑曜石戒",
+  "ObsidianRingDesc": "「黑暗吞噬光芒。」",
+
+  "SapphireRing": "藍寶石戒",
+  "SapphireRingDesc": "「冰藍水光閃耀。」",
+
+  "RubyRing": "紅寶石戒",
+  "RubyRingDesc": "「蘊藏猩紅之焰。」",
+
+  "Bugles": "脆玉米角",
+  "BuglesDesc": "「童年回憶的味道。」",
+
+  "BornRing": "骨戒",
+  "BornRingDesc": "「與死亡同行的飾品。」",
+
+  "VampireRing": "吸血印戒",
+  "VampireRingDesc": "「血之契約。」",
+
+  "Tattoo": "刺青",
+  "TattooDesc": "「刻於肌膚的永恆誓約。」",
+
+  "FourLeafClover": "四葉幸運草",
+  "FourLeafCloverDesc": "「難得一見的幸運。」",
+
+  "Payback": "返還",
+  "PaybackDesc": "在本局內，金錢賭輸可返還部分金幣。",
+
+  "Sharper": "老千",
+  "SharperDesc": "在本局內，強化成功率 ×2。",
+
+  "str": "力量",
+  "int": "智力",
+  "cul": "文化",
+  "cha": "魅力",
+  "vit": "體質",
+  "agi": "敏捷",
+  "luk": "幸運",
+  "wis": "智慧",
+
+  "StrDesc": "物理<br/>傷害 +1",
+  "IntDesc": "魔法<br/>傷害 +1",
+  "CulDesc": "減速<br/>+1%",
+  "ChaDesc": "暈眩<br/>+0.1 秒",
+  "VitDesc": "濺射 +5",
+  "LukDesc": "護甲穿透 +1",
+  "WisDesc": "魔法穿透 +1",
+  "AgiDesc": "冷卻 -1%",
+
+  "PhysicalDamage": "· 物理傷害：{number}",
+  "PhysicalPenetration": "· 物理穿透：{number}",
+  "PhysicalAllPercent": "· 物理攻擊提升：{number}%",
+  "PhysicalDecrease": "· 物理防禦降低：{number}%",
+
+  "MagicalDamage": "· 魔法傷害：{number}",
+  "MagicalPenetration": "· 魔法穿透：{number}",
+  "MagicalAllPercent": "· 魔法攻擊提升：{number}%",
+  "MagicalDecrease": "· 魔法防禦降低：{number}%",
+
+  "TargetLength": "· 同時攻擊 {number} 個目標",
+  "Splash": "· 濺射：{number}",
+  "Cooldown": "· 冷卻：{number} 秒",
+  "AllCooldown": "· 全局冷卻：{number}%",
+  "Stun": "· 暈眩：{number} 秒",
+  "StunMany": "· 範圍暈眩：{number} 秒",
+  "Slow": "· 範圍減速：{number}%",
+  "SlowOne": "· 單體減速：{number}%",
+  "Critical": "· {number1}% 機率造成 {number2}× 傷害",
+  "Dot": "· 持續傷害（{number} 次）",
+  "Armerbreak": "· 破甲：{number}"
+}

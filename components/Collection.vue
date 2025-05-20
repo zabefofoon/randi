@@ -11,7 +11,8 @@
       <div class="flex gap-[1cqw] | relative z-[1] | w-3/4 h-4/5 overflow-hidden">
         <div
           class="w-full h-full | flex flex-col items-center gap-[1cqw] | p-[1cqw] | bg-blue-950 | rounded-lg border-black border-[0.2cqw]">
-          <div class="w-full h-full overflow-auto | grid grid-cols-7 gap-[1cqw]">
+          <div
+            class="w-full h-full overflow-auto | grid grid-cols-7 gap-x-[1cqw] gap-y-[1.5cqw] items-start">
             <figure
               v-for="weapon in weapons"
               :key="weapon.meta.name"
@@ -34,9 +35,9 @@
                     :style="{ 'background-position': weapon.meta.spritePosition }"
                     @click="showWeaponModal(weapon)"></div>
                 </div>
-                <figcaption class="text-outline font-bold text-[1.4cqw]">
-                  {{ weapon.meta.name }}
-                </figcaption>
+                <figcaption
+                  v-t="weapon.meta.name"
+                  class="text-outline font-bold text-[1.4cqw] text-center"></figcaption>
               </template>
               <template v-else>
                 <div
@@ -52,8 +53,8 @@
               class="flex flex-col gap-[0.5cqw] | bg-blue-900 rounded-lg"
               @click="emit('next', 'lobby')">
               <span
-                class="px-[2cqw] py-[0.5cqw] | border-black border-[0.2cqw] rounded-lg | text-[1.5cqw] font-bold text-outline">
-                돌아가기
+                v-t="'Back'"
+                class="px-[2cqw] py-[0.5cqw] | border-black border-[0.2cqw] rounded-lg | text-[1.8cqw] font-bold text-outline">
               </span>
             </button>
           </div>

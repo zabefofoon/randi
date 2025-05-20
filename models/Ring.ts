@@ -4,8 +4,8 @@ import { Weapon, type WeaponOptions } from "./Weapon"
 export class Ring extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 1,
-    name: "반지",
-    description: `“작은 원에 담긴 큰 약속.”`,
+    name: "Ring",
+    description: `RingDesc`,
     cooltime: 1000,
     speed: 500,
     range: 125,
@@ -64,8 +64,8 @@ export class Ring extends Weapon {
 export class CopperRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 2,
-    name: "구리반지",
-    description: `“손가락이 초록으로 물들 수 있다.”`,
+    name: "CopperRing",
+    description: `CopperRingDesc`,
     cooltime: 1000,
     speed: 500,
     range: 125,
@@ -126,8 +126,8 @@ export class CopperRing extends Weapon {
 export class FlowerRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 2,
-    name: "꽃반지",
-    description: `“은은한 향기로 치유.”`,
+    name: "FlowerRing",
+    description: `FlowerRingDesc`,
     cooltime: 1000,
     speed: 500,
     range: 125,
@@ -188,8 +188,8 @@ export class FlowerRing extends Weapon {
 export class SilverRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
-    name: "은반지",
-    description: `“가짜라도 반짝이면 충분해.”`,
+    name: "SilverRing",
+    description: `SilverRingDesc`,
     cooltime: 1000,
     speed: 500,
     range: 125,
@@ -252,8 +252,8 @@ export class SilverRing extends Weapon {
 export class JadeRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
-    name: "옥반지",
-    description: `“맑은 영혼의 돌.”`,
+    name: "JadeRing",
+    description: `JadeRingDesc`,
     cooltime: 1000,
     speed: 500,
     range: 125,
@@ -316,8 +316,8 @@ export class JadeRing extends Weapon {
 export class LeatherRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
-    name: "가죽반지",
-    description: `“가볍고 부드러운 손맛.”`,
+    name: "LeatherRing",
+    description: `LeatherRingDesc`,
     cooltime: 1000,
     speed: 500,
     range: 175,
@@ -380,8 +380,8 @@ export class LeatherRing extends Weapon {
 export class CandyRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
-    name: "사탕반지",
-    description: "“단맛은 잠깐, 충치는 영원.”",
+    name: "CandyRing",
+    description: "CandyRingDesc",
     cooltime: 1000,
     speed: 500,
     range: 125,
@@ -444,8 +444,8 @@ export class CandyRing extends Weapon {
 export class GoldRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "금반지",
-    description: `“빛나는 부와 탐욕.”`,
+    name: "GoldRing",
+    description: `GoldRingDesc`,
     cooltime: 1000,
     speed: 500,
     range: 125,
@@ -508,8 +508,8 @@ export class GoldRing extends Weapon {
 export class KnuckleRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "호신용반지",
-    description: "“주먹보다 단단한 주먹.”",
+    name: "KnuckleRing",
+    description: "KnuckleRingDesc",
     cooltime: 1000,
     speed: 500,
     range: 175,
@@ -572,8 +572,8 @@ export class KnuckleRing extends Weapon {
 export class DigitalRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "디지털링",
-    description: "“역시 실용주의”",
+    name: "DigitalRing",
+    description: "DigitalRingDesc",
     cooltime: 1000,
     speed: 500,
     range: 125,
@@ -636,8 +636,8 @@ export class DigitalRing extends Weapon {
 export class CrystalRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "수정반지",
-    description: "“투명한 충전석.”",
+    name: "CrystalRing",
+    description: "CrystalRingDesc",
     cooltime: 1000,
     speed: 500,
     range: 125,
@@ -700,8 +700,8 @@ export class CrystalRing extends Weapon {
 export class RuneRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "룬반지",
-    description: "“새겨진 문양이 빛난다.”",
+    name: "RuneRing",
+    description: "RuneRingDesc",
     cooltime: 1000,
     speed: 500,
     range: 175,
@@ -755,8 +755,8 @@ export class RuneRing extends Weapon {
 export class SignetRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "도장반지",
-    description: "“이것은 우리의 약속”",
+    name: "SignetRing",
+    description: "SignetRingDesc",
     cooltime: 1000,
     speed: 500,
     range: 175,
@@ -819,8 +819,8 @@ export class SignetRing extends Weapon {
 export class SharpieRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "반지그림",
-    description: "“반지의 꿈을 그리다.”",
+    name: "SharpieRing",
+    description: "SharpieRingDesc",
     cooltime: 1000,
     speed: 500,
     range: 175,
@@ -874,8 +874,8 @@ export class SharpieRing extends Weapon {
 export class OnionRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "양파링",
-    description: "“냄새는 강하지만 맛은 굿.”",
+    name: "OnionRing",
+    description: "OnionRingDesc",
     cooltime: 1000,
     speed: 500,
     range: 125,
@@ -929,8 +929,8 @@ export class OnionRing extends Weapon {
 export class DiamondRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
-    name: "다이아반지",
-    description: "“부를 넘어선 위신.”",
+    name: "DiamondRing",
+    description: "DiamondRingDesc",
     cooltime: 1000,
     speed: 500,
     range: 175,
@@ -984,8 +984,8 @@ export class DiamondRing extends Weapon {
 export class OpalRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
-    name: "오팔반지",
-    description: "“무지갯빛 보호.”",
+    name: "OpalRing",
+    description: "OpalRingDesc",
     cooltime: 1000,
     speed: 500,
     range: 175,
@@ -1039,8 +1039,8 @@ export class OpalRing extends Weapon {
 export class ObsidianRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
-    name: "흑요석반지",
-    description: "“어둠이 빛을 삼킨다.”",
+    name: "ObsidianRing",
+    description: "ObsidianRingDesc",
     cooltime: 1000,
     speed: 500,
     range: 175,
@@ -1094,8 +1094,8 @@ export class ObsidianRing extends Weapon {
 export class SapphireRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
-    name: "사파이어반지",
-    description: "	“차가운 물빛.”",
+    name: "SapphireRing",
+    description: "SapphireRingDesc",
     cooltime: 1000,
     speed: 500,
     range: 175,
@@ -1149,8 +1149,8 @@ export class SapphireRing extends Weapon {
 export class RubyRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
-    name: "루비반지",
-    description: "“붉은 불꽃을 머금은 보석.”",
+    name: "RubyRing",
+    description: "RubyRingDesc",
     cooltime: 1000,
     speed: 500,
     range: 125,
@@ -1204,8 +1204,8 @@ export class RubyRing extends Weapon {
 export class Bugles extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
-    name: "꼬깔과자",
-    description: "“어릴 적 추억의 맛.”",
+    name: "Bugles",
+    description: "BuglesDesc",
     cooltime: 1000,
     speed: 500,
     range: 175,
@@ -1259,8 +1259,8 @@ export class Bugles extends Weapon {
 export class BornRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
-    name: "해골반지",
-    description: "“죽음과 동행하는 장식.”",
+    name: "BornRing",
+    description: "BornRingDesc",
     cooltime: 1000,
     speed: 500,
     range: 175,
@@ -1304,8 +1304,8 @@ export class BornRing extends Weapon {
 export class VampireRing extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
-    name: "뱀파이어인장",
-    description: "“피의 계약.”",
+    name: "VampireRing",
+    description: "VampireRingDesc",
     cooltime: 1000,
     speed: 500,
     range: 175,
@@ -1349,8 +1349,8 @@ export class VampireRing extends Weapon {
 export class Tattoo extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
-    name: "타투",
-    description: `“살에 새긴 영원한 약속.”`,
+    name: "Tattoo",
+    description: `TattooDesc`,
     cooltime: 1000,
     speed: 500,
     range: 175,
@@ -1394,8 +1394,8 @@ export class Tattoo extends Weapon {
 export class FourLeafClover extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
-    name: "네잎클로버",
-    description: "“찾기 힘든 행운.”",
+    name: "FourLeafClover",
+    description: "FourLeafCloverDesc",
     cooltime: 1000,
     speed: 500,
     range: 175,

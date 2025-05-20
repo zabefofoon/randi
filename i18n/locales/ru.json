@@ -1,0 +1,415 @@
+{
+  "RandomDefence": "Случайная защита",
+  "TitleBite": "<span class='title-red'>B</span><span class='title-orange'>I</span><span class='title-blue'>T</span><span class='title-green'>E</span> JOIN",
+
+  "GameStart": "Начать игру",
+  "Collection": "Коллекция",
+  "Review": "Обзор",
+  "Config": "Настройки",
+  "Back": "Назад",
+  "Start": "Старт",
+  "Buy": "Купить",
+
+  "WelcomeReword": "Бонус за вход: начислено 1 000 монет",
+  "HavePurchaseItem": "(У вас {length} предметов)",
+  "UsePurchase": "Надеть",
+  "UnusePurchase": "Снять",
+
+  "Reword": "НАГРАДА",
+  "RoundPoint": "Очки раунда",
+  "KillPoint": "Очки убийств",
+  "StatPoint": "Очки характеристик",
+  "WeaponPoint": "Очки оружия",
+  "GoldPoint": "Очки золота",
+  "EnforcePoint": "Очки усиления",
+  "GamblePoint": "Очки азарта",
+  "CharacterPoint": "Очки персонажа",
+
+  "Clear": "ПРОЙДЕНО!",
+  "Resume": "Продолжить",
+  "Quit": "Выйти",
+
+  "Gamble": "Азарт",
+  "Weapon": "Оружие",
+  "Stat": "Стат",
+  "MaterialGatcha": "Гача",
+
+  "Joker": "Джокер",
+  "JokerDesc": "Один случайный розыгрыш превращается в выборочный (1 раз).",
+
+  "MaterialSelectable": "Выбрать",
+  "HaveLength": "{length} предметов",
+  "GambleMoney": "Ставка {money} монет",
+  "GambleMoneyPeriod": "-{money} мон. ~ -{money} мон.",
+
+  "NeedMaterials": "(Нужно {length} характеристик)",
+  "NeedMaterialUnit": "{length} {key}",
+
+  "Coin": "Монета",
+
+  "Enforce": "Усилить",
+  "EnforcePhysical": "Физическая сила +1",
+  "EnforcePhysicalPercent": "Физическая сила +1 %",
+  "EnforceMagical": "Магическая сила +1",
+  "EnforceMagicalPercent": "Магическая сила +1 %",
+  "EnforceCooldown": "Перезарядка −1 %",
+
+  "GetRewards": "Забрать награду",
+
+  "NeedWeapons": "Нужно {length} оружия Ур.{level}",
+  "NoLuck": "Не повезло",
+
+  "NylonMask": "Nylon Mask",
+  "NylonMaskDescription": "Таинственный человек в маске. Говорят, он баснословно богат…",
+  "NylonMaskSpecificity": "* Доп. +30 % к наградам",
+
+  "TrunkKing": "Trunk King",
+  "TrunkKingDescription": "Средних лет белый мужчина с красной шеей. Славится колоссальной силой.",
+  "TrunkKingSpecificity": "* Физическая атака ↑1 % каждый раунд",
+
+  "Gun": "Пистолет",
+  "GunDesc": "«Знакомый всем 9-мм выстрел.»",
+
+  "ShotGun": "Дробовик",
+  "ShotGunDesc": "«Бах! Стена разлетающихся дробин.»",
+
+  "DoubleGun": "Пара пистолетов",
+  "DoubleGunDesc": "«Две руки, два курка, двойной огонь.»",
+
+  "MagicGun": "Маг-пистолет",
+  "MagicGunDesc": "«Молитва вылетает из ствола.»",
+
+  "AirGun": "Пневмат",
+  "AirGunDesc": "«Тихий выстрел сжатым воздухом.»",
+
+  "MachineGun": "Пулемёт",
+  "MachineGunDesc": "«Теперь патроны тают по секундам.»",
+
+  "FingerGun": "Палец-пистолет",
+  "FingerGunDesc": "«Не слушается? Палец — тоже ствол.»",
+
+  "BubbleGun": "Пузырямёт",
+  "BubbleGunDesc": "«Выглядит мило, но можно задохнуться.»",
+
+  "TazerGun": "Тейзер",
+  "TazerGunDesc": "«Жжах! Статический бонус.»",
+
+  "PulseGun": "Пульсовая пушка",
+  "PulseGunDesc": "«Зелёная волна прошивает насквозь.»",
+
+  "Firework": "Фейерверк",
+  "FireworkDesc": "«Праздник? Нет — бой.»",
+
+  "SilentKiller": "Тихий убийца",
+  "SilentKillerDesc": "«Бесшумно и наверняка.»",
+
+  "DrillGun": "Дрель-ган",
+  "DrillGunDesc": "«Вертящийся ствол, вертящийся кошмар.»",
+
+  "PepperSpray": "Перцовый спрей",
+  "PepperSprayDesc": "«Слёзы гарантированы!»",
+
+  "EyeGun": "Смертельный взгляд",
+  "EyeGunDesc": "«Взгляд быстрее слова.»",
+
+  "GrenadeLauncher": "Гранатомёт",
+  "GrenadeLauncherDesc": "«Дуга полёта, взрыв справедливости.»",
+
+  "SilverBulletGun": "Серебряная пуля",
+  "SilverBulletGunDesc": "«Лунное серебро несёт беду.»",
+
+  "PlasmaGun": "Плазмаган",
+  "PlasmaGunDesc": "«Сожги врагов светом и жаром.»",
+
+  "Cannon": "Пушка",
+  "CannonDesc": "«Мал, да удал.»",
+
+  "BlessedRevolver": "Благословенный револьвер",
+  "BlessedRevolverDesc": "«Святой свет вспыхивает у дула.»",
+
+  "CursedRevolver": "Проклятый револьвер",
+  "CursedRevolverDesc": "«Чёрный холод сочится из ствола.»",
+
+  "HeartBreaker": "Хартбрейкер",
+  "HeartBreakerDesc": "«Выстрел, что бьёт по сердцу.»",
+
+  "RadiationBeam": "Луч радиации",
+  "RadiationBeamDesc": "«Невидимый послевкус.»",
+
+  "Missile": "Ракета",
+  "MissileDesc": "«Эй, это же нечестно!»",
+
+  "Booger": "Козявка",
+  "BoogerDesc": "«Не недооценивай, хоть и противно!»",
+
+  "ButterKnife": "Нож для масла",
+  "ButterKnifeDesc": "«Для тёплого хлеба, но ранит больно.»",
+
+  "KitchenKnife": "Кухонный нож",
+  "KitchenKnifeDesc": "«Друг шеф-повара.»",
+
+  "CutterKnife": "Канцелярский нож",
+  "CutterKnifeDesc": "«Чем острее лезвие, тем опасней.»",
+
+  "SushiKnife": "Суши-нож",
+  "SushiKnifeDesc": "«Режет мясо гладко.»",
+
+  "Scissors": "Ножницы",
+  "ScissorsDesc": "«Резать = сковывать.»",
+
+  "Hammer": "Молоток",
+  "HammerDesc": "«Гвозди? Нет — черепа.»",
+
+  "AX": "Топор",
+  "AXDesc": "«Тяжёлая отдача в руке.»",
+
+  "ButcherKnife": "Тесак",
+  "ButcherKnifeDesc": "«Жилы и кости — хрусть.»",
+
+  "LongNails": "Длинные когти",
+  "LongNailsDesc": "«Инстинкт зверя.»",
+
+  "SwissArmyKnife": "Швейцарский нож",
+  "SwissArmyKnifeDesc": "«Полезен везде и всегда.»",
+
+  "Fist": "Кулак",
+  "FistDesc": "«В конце концов верь кулаку.»",
+
+  "CrossCutSaw": "Пила",
+  "CrossCutSawDesc": "«Врезается, как резец.»",
+
+  "CsowBar": "Лом",
+  "CrowBarDesc": "«Тёмная лошадка стройки.»",
+
+  "Machete": "Мачете",
+  "MacheteDesc": "«Клинок покорителей джунглей.»",
+
+  "KoreanHandPlow": "Хоми",
+  "KoreanHandPlowDesc": "«Переворачивает землю — и людей.»",
+
+  "BornSword": "Костяной меч",
+  "BornSwordDesc": "«Кость кует, кость крушит.»",
+
+  "SurgicalKnife": "Скальпель",
+  "SurgicalKnifeDesc": "«Хирургическая точность.»",
+
+  "BlessedSword": "Благословенный меч",
+  "BlessedSwordDesc": "«Чистый клинок в святой воде.»",
+
+  "CursedSword": "Проклятый меч",
+  "CursedSwordDesc": "«Чем дольше держишь, тем громче шёпот.»",
+
+  "DualBlade": "Двойные клинки",
+  "DualBladeDesc": "«Две руки, два лезвия — танец стали.»",
+
+  "BigAX": "Большой топор",
+  "BigAXDesc": "«Топор велик, и беда велика.»",
+
+  "DragonSlayer": "Драконоборец",
+  "DragonSlayerDesc": "«Гигантский меч, созданный рубить драконов.»",
+
+  "SnotWhip": "Сопливый кнут",
+  "SnotWhipDesc": "«Тягучий, липкий, шлёп!»",
+
+  "LaserSword": "Лазерный меч",
+  "LaserSwordDesc": "«Пришёл из будущего.»",
+
+  "DeathScythe": "Коса смерти",
+  "DeathScytheDesc": "«Секает грань жизни и смерти.»",
+
+  "Book": "Блокнот",
+  "BookDesc": "«Пустые страницы — бесконечный потенциал.»",
+
+  "ThickBook": "Толстая книга",
+  "ThickBookDesc": "«Знания настолько тяжкие, что ноют руки.»",
+
+  "ThinBook": "Тонкая книга",
+  "ThinBookDesc": "«Максимальная портативность.»",
+
+  "SpringBook": "Спиральный блокнот",
+  "SpringBookDesc": "«Легко открыть, легко бросить.»",
+
+  "TextBook": "Учебник",
+  "TextBookDesc": "«Сила классики.»",
+
+  "Map": "Карта",
+  "MapDesc": "«Знай путь — выживешь.»",
+
+  "PictureBook": "Книга с картинками",
+  "PictureBookDesc": "«Иллюстрации обладают силой.»",
+
+  "MagicBook": "Книга заклинаний",
+  "MagicBookDesc": "«Одна строка — град стрел.»",
+
+  "MobilePhone": "Телефон",
+  "MobilePhoneDesc": "«Звонки бонус, игры — дело.»",
+
+  "Regulations": "Свод правил",
+  "RegulationsDesc": "«Правила — это сила.»",
+
+  "WorkBook": "Сборник заданий",
+  "WorkBookDesc": "«Игнорируй — и он тебя настигнет.»",
+
+  "TreasureMap": "Карта сокровищ",
+  "TreasureMapDesc": "«Глаза приковывает X.»",
+
+  "EvacuationMap": "План эвакуации",
+  "EvacuationMapDesc": "«Запасной выход — туда.»",
+
+  "Diary": "Дневник",
+  "DiaryDesc": "«Эмоции на бумаге.»",
+
+  "Menu": "Меню",
+  "MenuDesc": "«Голоден — сначала еда, потом бой.»",
+
+  "Revelation": "Откровение",
+  "RevelationDesc": "«Тайны конца и начала.»",
+
+  "Labtop": "Ноутбук",
+  "LabtopDesc": "«Содержит все знания.»",
+
+  "AnswerSheet": "Бланк ответов",
+  "AnswerSheetDesc": "«Дает ответы, берёт высокую плату.»",
+
+  "LawBook": "Книга законов",
+  "LawBookDesc": "«Закон склоняет всех.»",
+
+  "HellMap": "Путеводитель по аду",
+  "HellMapDesc": "«Добро пожаловать в схему мучений.»",
+
+  "OrderForm": "Бланк заказа",
+  "OrderFormDesc": "«Контракты подписаны кровью.»",
+
+  "Grimoire": "Гримуар",
+  "GrimoireDesc": "«Живое письмо.»",
+
+  "TabletPC": "Планшет",
+  "TabletPCDesc": "«Портативный многомерный портал.»",
+
+  "Constitution": "Адский законник",
+  "ConstitutionDesc": "«Писание, закон и пытки.»",
+
+  "Counterfeit": "Книга учёта",
+  "CounterfeitDesc": "«Запомнит до самого конца.»",
+
+  "Ring": "Кольцо",
+  "RingDesc": "«Большое обещание в малом круге.»",
+
+  "CopperRing": "Медное кольцо",
+  "CopperRingDesc": "«Может позеленить палец.»",
+
+  "FlowerRing": "Цветочное кольцо",
+  "FlowerRingDesc": "«Лечит нежным ароматом.»",
+
+  "SilverRing": "Серебряное кольцо",
+  "SilverRingDesc": "«Даже подделка сверкает.»",
+
+  "JadeRing": "Нефритовое кольцо",
+  "JadeRingDesc": "«Камень чистой души.»",
+
+  "LeatherRing": "Кожаное кольцо",
+  "LeatherRingDesc": "«Лёгкое и мягкое.»",
+
+  "CandyRing": "Кольцо-леденец",
+  "CandyRingDesc": "«Сладко мгновенье, кариес навечно.»",
+
+  "GoldRing": "Золотое кольцо",
+  "GoldRingDesc": "«Блеск богатства и жадности.»",
+
+  "KnuckleRing": "Кастет-кольцо",
+  "KnuckleRingDesc": "«Кулак крепче кулака.»",
+
+  "DigitalRing": "Цифровое кольцо",
+  "DigitalRingDesc": "«Практичность, как и ожидалось.»",
+
+  "CrystalRing": "Кристаллическое кольцо",
+  "CrystalRingDesc": "«Прозрачный зарядный камень.»",
+
+  "RuneRing": "Руническое кольцо",
+  "RuneRingDesc": "«Выцарапанные руны сияют.»",
+
+  "SignetRing": "Печатка",
+  "SignetRingDesc": "«Это наше обещание.»",
+
+  "SharpieRing": "Кольцо-Маркер",
+  "SharpieRingDesc": "«Рисуя мечту о кольцах.»",
+
+  "OnionRing": "Луковое кольцо",
+  "OnionRingDesc": "«Запах резкий, вкус отличный.»",
+
+  "DiamondRing": "Бриллиантовое кольцо",
+  "DiamondRingDesc": "«Престиж сверх богатства.»",
+
+  "OpalRing": "Опаловое кольцо",
+  "OpalRingDesc": "«Радужная защита.»",
+
+  "ObsidianRing": "Обсидиановое кольцо",
+  "ObsidianRingDesc": "«Тьма поглощает свет.»",
+
+  "SapphireRing": "Сапфировое кольцо",
+  "SapphireRingDesc": "«Холодный водяной блеск.»",
+
+  "RubyRing": "Рубиновое кольцо",
+  "RubyRingDesc": "«Камень со scarlet-пламенем внутри.»",
+
+  "Bugles": "Баглс",
+  "BuglesDesc": "«Вкус детской ностальгии.»",
+
+  "BornRing": "Костяное кольцо",
+  "BornRingDesc": "«Украшение, шагающее со смертью.»",
+
+  "VampireRing": "Печать вампира",
+  "VampireRingDesc": "«Кровавый договор.»",
+
+  "Tattoo": "Тату",
+  "TattooDesc": "«Вечное обещание на коже.»",
+
+  "FourLeafClover": "Четырёхлистный клевер",
+  "FourLeafCloverDesc": "«Труднодоступная удача.»",
+
+  "Payback": "Возврат",
+  "PaybackDesc": "В течение одной игры часть ставки возвращается при проигрыше.",
+
+  "Sharper": "Картёжник",
+  "SharperDesc": "В течение одной игры шанс успеха улучшения ×2.",
+
+  "str": "Сила",
+  "int": "Интеллект",
+  "cul": "Культура",
+  "cha": "Харизма",
+  "vit": "Выносливость",
+  "agi": "Ловкость",
+  "luk": "Удача",
+  "wis": "Мудрость",
+
+  "StrDesc": "Физич.<br/>урон +1",
+  "IntDesc": "Магич.<br/>урон +1",
+  "CulDesc": "Замедление<br/>+1 %",
+  "ChaDesc": "Оглушение<br/>+0,1 с",
+  "VitDesc": "Сплэш +5",
+  "LukDesc": "Пробитие<br/>брони +1",
+  "WisDesc": "Маг. пробитие +1",
+  "AgiDesc": "Перезарядка −1 %",
+
+  "PhysicalDamage": "· Физический урон: {number}",
+  "PhysicalPenetration": "· Физ. пробитие: {number}",
+  "PhysicalAllPercent": "· Увелич. физ. атаки: {number}%",
+  "PhysicalDecrease": "· Снижение физ. защиты: {number}%",
+
+  "MagicalDamage": "· Магический урон: {number}",
+  "MagicalPenetration": "· Маг. пробитие: {number}",
+  "MagicalAllPercent": "· Увелич. маг. атаки: {number}%",
+  "MagicalDecrease": "· Снижение маг. защиты: {number}%",
+
+  "TargetLength": "· Атакует {number} целей одновременно",
+  "Splash": "· Сплэш: {number}",
+  "Cooldown": "· Перезарядка: {number} с",
+  "AllCooldown": "· Общая перезарядка: {number}%",
+  "Stun": "· Оглушение: {number} с",
+  "StunMany": "· Оглушение по области: {number} с",
+  "Slow": "· Замедление по области: {number}%",
+  "SlowOne": "· Замедление одиночной цели: {number}%",
+  "Critical": "· {number1}% шанс нанести {number2}× урон",
+  "Dot": "· Урон по времени ({number} тиков)",
+  "Armerbreak": "· Слом брони: {number}"
+}

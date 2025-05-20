@@ -11,9 +11,9 @@
     <SelectCharacter
       v-if="currentScene === 'select'"
       @next="currentScene = $event" />
-    <ClientOnly v-if="currentScene === 'inGame'">
-      <InGame @next="currentScene = $event" />
-    </ClientOnly>
+    <InGame
+      v-if="currentScene === 'inGame'"
+      @next="currentScene = $event" />
     <Result
       v-if="currentScene === 'result'"
       @next="currentScene = $event" />
@@ -30,6 +30,8 @@
 import store from "store2"
 import { LAST_ACCESS } from "~/const"
 const TODAY = new Date().toISOString().slice(0, 10)
+
+const i18n = useI18n()
 const snackbarStore = useSnackbarStore()
 const gameStore = useGameStore()
 const soundStore = useSoundStore()
@@ -68,11 +70,11 @@ onMounted(() => {
 
   if (checkFirstAccessToday()) {
     snackbarStore.showSnackbar({
-      message: "접속 보상 100코인 적립",
+      message: i18n.t("WelcomeReword"),
       type: "success",
     })
 
-    gameStore.setCurrentMoney(gameStore.currentMoney + 100)
+    gameStore.setCurrentMoney(gameStore.currentMoney + 1000)
   }
 
   store.set(LAST_ACCESS, TODAY)

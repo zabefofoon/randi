@@ -4,8 +4,8 @@ import { Weapon, type WeaponOptions } from "./Weapon"
 export class Book extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 1,
-    name: "공책",
-    description: `“여백뿐인 가능성.”`,
+    name: "Book",
+    description: `BookDesc`,
     cooltime: 1000,
     speed: 500,
     range: 100,
@@ -63,8 +63,8 @@ export class Book extends Weapon {
 export class ThickBook extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 2,
-    name: "두꺼운책",
-    description: `“잡으면 팔 아픈 지식.”`,
+    name: "ThickBook",
+    description: `ThickBookDesc`,
     cooltime: 1000,
     speed: 500,
     range: 100,
@@ -124,8 +124,8 @@ export class ThickBook extends Weapon {
 export class ThinBook extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 2,
-    name: "얇은책",
-    description: `“휴대성 만점.”`,
+    name: "ThinBook",
+    description: `ThinBookDesc`,
     cooltime: 1000,
     speed: 500,
     range: 100,
@@ -185,8 +185,8 @@ export class ThinBook extends Weapon {
 export class SpringBook extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
-    name: "스프링책",
-    description: `“펼치기 쉽고 던지기도 쉽다.”`,
+    name: "SpringBook",
+    description: `SpringBookDesc`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -249,8 +249,8 @@ export class SpringBook extends Weapon {
 export class TextBook extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
-    name: "교과서",
-    description: `“정석의 힘.”`,
+    name: "TextBook",
+    description: `TextBookDesc`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -313,8 +313,8 @@ export class TextBook extends Weapon {
 export class Map extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
-    name: "지도",
-    description: `“길만 알면 살아남는다.”`,
+    name: "Map",
+    description: `MapDesc`,
     cooltime: 1000,
     speed: 500,
     range: 100,
@@ -377,8 +377,8 @@ export class Map extends Weapon {
 export class PictureBook extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
-    name: "그림책",
-    description: `“그림은 힘이 세다.”`,
+    name: "PictureBook",
+    description: `PictureBookDesc`,
     cooltime: 1000,
     speed: 500,
     range: 100,
@@ -441,8 +441,8 @@ export class PictureBook extends Weapon {
 export class MagicBook extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "마법책",
-    description: `“주문 한 줄에 화살 한 다발.”`,
+    name: "MagicBook",
+    description: `MagicBookDesc`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -505,8 +505,8 @@ export class MagicBook extends Weapon {
 export class MobilePhone extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "핸드폰",
-    description: `“전화는 덤, 게임은 본업.”`,
+    name: "MobilePhone",
+    description: `MobilePhoneDesc`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -569,8 +569,8 @@ export class MobilePhone extends Weapon {
 export class Regulations extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "규칙서",
-    description: `“규칙이 곧 힘이다.”`,
+    name: "Regulations",
+    description: `RegulationsDesc`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -633,8 +633,8 @@ export class Regulations extends Weapon {
 export class WorkBook extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "문제집",
-    description: `“풀지 않으면 계속 따라온다.”`,
+    name: "WorkBook",
+    description: `WorkBookDesc`,
     cooltime: 1000,
     speed: 500,
     range: 100,
@@ -697,8 +697,8 @@ export class WorkBook extends Weapon {
 export class TreasureMap extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "보물지도",
-    description: `“X표시에 눈이 간다.”`,
+    name: "TreasureMap",
+    description: `TreasureMapDesc`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -752,8 +752,8 @@ export class TreasureMap extends Weapon {
 export class EvacuationMap extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "피난안내도",
-    description: `“비상구는 저쪽.”`,
+    name: "EvacuationMap",
+    description: `EvacuationMapDesc`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -816,8 +816,8 @@ export class EvacuationMap extends Weapon {
 export class Diary extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "일기장",
-    description: `“감정이 적힌 종이.”`,
+    name: "Diary",
+    description: `DiaryDesc`,
     cooltime: 1000,
     speed: 500,
     range: 100,
@@ -871,8 +871,8 @@ export class Diary extends Weapon {
 export class Menu extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "메뉴판",
-    description: `“배고플 땐 공격보다 밥.”`,
+    name: "Menu",
+    description: `MenuDesc`,
     cooltime: 1000,
     speed: 500,
     range: 100,
@@ -926,8 +926,8 @@ export class Menu extends Weapon {
 export class Revelation extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
-    name: "계시록",
-    description: `“끝과 시작의 비밀.”`,
+    name: "Revelation",
+    description: `RevelationDesc`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -981,8 +981,8 @@ export class Revelation extends Weapon {
 export class Labtop extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
-    name: "노트북",
-    description: `“모든 지식을 담는다.”`,
+    name: "Labtop",
+    description: `LabtopDesc`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -1036,8 +1036,8 @@ export class Labtop extends Weapon {
 export class AnswerSheet extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
-    name: "답안지",
-    description: `“정답은 알려주지만 대가는 혹독.”`,
+    name: "AnswerSheet",
+    description: `AnswerSheetDesc`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -1091,8 +1091,8 @@ export class AnswerSheet extends Weapon {
 export class LawBook extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
-    name: "법책",
-    description: `“법은 만인을 굴복시킨다.”`,
+    name: "LawBook",
+    description: `LawBookDesc`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -1146,8 +1146,8 @@ export class LawBook extends Weapon {
 export class HellMap extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
-    name: "지옥안내도",
-    description: `“환영합니다, 단편도표.”`,
+    name: "HellMap",
+    description: `HellMapDesc`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -1201,8 +1201,8 @@ export class HellMap extends Weapon {
 export class OrderForm extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
-    name: "주문서",
-    description: `“계약서에 사인은 피.”`,
+    name: "OrderForm",
+    description: `OrderFormDesc`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -1256,8 +1256,8 @@ export class OrderForm extends Weapon {
 export class Grimoire extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
-    name: "마도서",
-    description: `“살아있는 글귀.”`,
+    name: "Grimoire",
+    description: `GrimoireDesc`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -1301,8 +1301,8 @@ export class Grimoire extends Weapon {
 export class TabletPC extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
-    name: "타블릿피씨",
-    description: `“휴대용 다차원 포털.”`,
+    name: "TabletPC",
+    description: `TabletPCDesc`,
     cooltime: 1000,
     speed: 500,
     range: 150,
@@ -1346,8 +1346,8 @@ export class TabletPC extends Weapon {
 export class Constitution extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
-    name: "지옥의법",
-    description: `	“불경과 율법, 그리고 고문.”`,
+    name: "Constitution",
+    description: `ConstitutionDesc`,
     cooltime: 444,
     speed: 500,
     range: 150,
@@ -1391,8 +1391,8 @@ export class Constitution extends Weapon {
 export class Counterfeit extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
-    name: "장부",
-    description: `“끝까지 기억할것이다.”`,
+    name: "Counterfeit",
+    description: `CounterfeitDesc`,
     cooltime: 1000,
     speed: 500,
     range: 150,

@@ -4,8 +4,8 @@ import { Weapon, type WeaponOptions } from "./Weapon"
 export class Gun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 1,
-    name: "일반권총",
-    description: `“누구에게나 익숙한 9mm 한‑발.”`,
+    name: "Gun",
+    description: `GunDesc`,
     cooltime: 1000,
     speed: 500,
     range: 110,
@@ -66,8 +66,8 @@ export class Gun extends Weapon {
 export class ShotGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 2,
-    name: "산탄총",
-    description: `“펑! 하고 퍼지는 쇠구슬의 벽.”`,
+    name: "ShotGun",
+    description: `ShotGunDesc`,
     cooltime: 1000,
     speed: 500,
     range: 110,
@@ -128,8 +128,8 @@ export class ShotGun extends Weapon {
 export class DoubleGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 2,
-    name: "일반쌍권총",
-    description: `“두 손, 두 방아쇠, 두 배의 불꽃.”`,
+    name: "DoubleGun",
+    description: `DoubleGunDesc`,
     cooltime: 1000,
     speed: 500,
     range: 160,
@@ -190,8 +190,8 @@ export class DoubleGun extends Weapon {
 export class MagicGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
-    name: "마법권총",
-    description: `“총열에 기도를 담아 쏘아 올린다.”`,
+    name: "MagicGun",
+    description: "MagicGunDesc",
     cooltime: 1000,
     speed: 500,
     range: 160,
@@ -254,8 +254,8 @@ export class MagicGun extends Weapon {
 export class AirGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
-    name: "공기총",
-    description: `“바람을 모아 쏘는 조용한 한 방.”`,
+    name: "AirGun",
+    description: `AirGunDesc`,
     cooltime: 1000,
     speed: 500,
     range: 110,
@@ -318,8 +318,8 @@ export class AirGun extends Weapon {
 export class MachineGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
-    name: "기관총",
-    description: `“이제부터는 ‘분’ 단위가 아니라 ‘초’ 단위로 탄약을 쓴다.”`,
+    name: "MachineGun",
+    description: `MachineGunDesc`,
     cooltime: 200,
     speed: 500,
     range: 160,
@@ -382,8 +382,8 @@ export class MachineGun extends Weapon {
 export class FingerGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 3,
-    name: "삿대질",
-    description: `“말 안 듣는 놈한테는 손가락이 총.”`,
+    name: "FingerGun",
+    description: `FingerGunDesc`,
     cooltime: 1000,
     speed: 500,
     range: 160,
@@ -446,8 +446,8 @@ export class FingerGun extends Weapon {
 export class BubbleGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "거품발사기",
-    description: `“상냥한 듯 보이지만 질식사 주의.”`,
+    name: "BubbleGun",
+    description: `BubbleGunDesc`,
     cooltime: 1000,
     speed: 500,
     range: 160,
@@ -510,8 +510,8 @@ export class BubbleGun extends Weapon {
 export class TazerGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "전기충격기",
-    description: `“찌릿! - 정전기는 덤.”`,
+    name: "TazerGun",
+    description: `TazerGunDesc`,
     cooltime: 1000,
     speed: 500,
     range: 160,
@@ -574,8 +574,8 @@ export class TazerGun extends Weapon {
 export class PulseGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "펄스건",
-    description: `“초록빛 파동이 관통한다.”`,
+    name: "PulseGun",
+    description: `PulseGunDesc`,
     cooltime: 1000,
     speed: 500,
     range: 160,
@@ -638,8 +638,8 @@ export class PulseGun extends Weapon {
 export class Firework extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "폭죽",
-    description: `“축제용? 아니 전장용.”`,
+    name: "Firework",
+    description: `FireworkDesc`,
     cooltime: 1000,
     speed: 500,
     range: 160,
@@ -702,8 +702,8 @@ export class Firework extends Weapon {
 export class SilentKiller extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "소음기권총",
-    description: `“조용히, 하지만 확실히.”`,
+    name: "SilentKiller",
+    description: `SilentKillerDesc`,
     cooltime: 1000,
     speed: 500,
     range: 110,
@@ -766,8 +766,8 @@ export class SilentKiller extends Weapon {
 export class DrillGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "드릴",
-    description: `“회전하는 총열, 회전하는 악몽.”`,
+    name: "DrillGun",
+    description: `DrillGunDesc`,
     cooltime: 200,
     speed: 500,
     range: 160,
@@ -830,8 +830,8 @@ export class DrillGun extends Weapon {
 export class PepperSpray extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "후추스프레이",
-    description: `“눈물 쏙!”`,
+    name: "PepperSpray",
+    description: `PepperSprayDesc`,
     cooltime: 1000,
     speed: 500,
     range: 160,
@@ -885,8 +885,8 @@ export class PepperSpray extends Weapon {
 export class EyeGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 4,
-    name: "눈총",
-    description: `“말보다 빠른 눈빛.”`,
+    name: "EyeGun",
+    description: `EyeGunDesc`,
     cooltime: 1000,
     speed: 500,
     range: 160,
@@ -940,8 +940,8 @@ export class EyeGun extends Weapon {
 export class GrenadeLauncher extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
-    name: "유탄발사기",
-    description: `“아크 궤적, 폭발하는 정의.”`,
+    name: "GrenadeLauncher",
+    description: `GrenadeLauncherDesc`,
     cooltime: 1000,
     speed: 500,
     range: 160,
@@ -995,8 +995,8 @@ export class GrenadeLauncher extends Weapon {
 export class SilverBulletGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
-    name: "은탄총",
-    description: `“달빛을 품은 은의 재앙.”`,
+    name: "SilverBulletGun",
+    description: `SilverBulletGunDesc`,
     cooltime: 800,
     speed: 500,
     range: 160,
@@ -1050,8 +1050,8 @@ export class SilverBulletGun extends Weapon {
 export class PlasmaGun extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
-    name: "플라즈마총",
-    description: `	“빛과 열로 적을 태운다.”`,
+    name: "PlasmaGun",
+    description: `PlasmaGunDesc`,
     cooltime: 1000,
     speed: 500,
     range: 160,
@@ -1105,8 +1105,8 @@ export class PlasmaGun extends Weapon {
 export class Cannon extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
-    name: "대포",
-    description: "“작지만 성능은 진짜.”",
+    name: "Cannon",
+    description: "CannonDesc",
     cooltime: 1000,
     speed: 500,
     range: 110,
@@ -1160,8 +1160,8 @@ export class Cannon extends Weapon {
 export class BlessedRevolver extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
-    name: "축복받은총",
-    description: `“성스러운 빛이 총열 끝에서 피어난다.”`,
+    name: "BlessedRevolver",
+    description: `BlessedRevolverDesc`,
     cooltime: 1000,
     speed: 500,
     range: 160,
@@ -1215,8 +1215,8 @@ export class BlessedRevolver extends Weapon {
 export class CursedRevolver extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 5,
-    name: "저주받은총",
-    description: `“총열에서 검은 한기가 뿜어져 나온다.”`,
+    name: "CursedRevolver",
+    description: `CursedRevolverDesc`,
     cooltime: 1000,
     speed: 500,
     range: 160,
@@ -1270,8 +1270,8 @@ export class CursedRevolver extends Weapon {
 export class HeartBreaker extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
-    name: "하트브레이커",
-    description: `“심장을 두드리는 한 방.”`,
+    name: "HeartBreaker",
+    description: `HeartBreakerDesc`,
     cooltime: 1000,
     speed: 500,
     range: 110,
@@ -1315,8 +1315,8 @@ export class HeartBreaker extends Weapon {
 export class RadiationBeam extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
-    name: "방사능총",
-    description: `“보이지 않는 후폭풍.”`,
+    name: "RadiationBeam",
+    description: `RadiationBeamDesc`,
     cooltime: 1000,
     speed: 500,
     range: 160,
@@ -1360,8 +1360,8 @@ export class RadiationBeam extends Weapon {
 export class Missile extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
-    name: "미사일",
-    description: `“잠깐, 이건 반칙 아닌가?”`,
+    name: "Missile",
+    description: `MissileDesc`,
     cooltime: 1000,
     speed: 500,
     range: 160,
@@ -1405,8 +1405,8 @@ export class Missile extends Weapon {
 export class Booger extends Weapon {
   static override readonly meta: WeaponOptions = {
     level: 6,
-    name: "코딱지",
-    description: `“더럽다고 무시하지 마!”`,
+    name: "Booger",
+    description: `BoogerDesc`,
     cooltime: 1000,
     speed: 500,
     range: 160,

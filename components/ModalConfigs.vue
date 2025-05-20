@@ -3,7 +3,7 @@
     enable-dim-click-close
     hide-close-button
     inner-class="!w-fit !max-w-[unset] | !bg-blue-950"
-    content-wrap-class="!overflow-hidden"
+    content-wrap-class="!overflow-visible"
     @close="emit('close')">
     <template #content>
       <div
@@ -43,6 +43,7 @@
             </button>
           </div>
         </div>
+
         <slot></slot>
       </div>
     </template>
@@ -56,6 +57,8 @@ const emit = defineEmits<{
 
 const soundStore = useSoundStore()
 
+const i18n = useI18n()
+
 const toggleBGM = () => {
   soundStore.play("select")
   soundStore.toggleBGM()
@@ -64,4 +67,8 @@ const toggleEffect = () => {
   soundStore.play("select")
   soundStore.toggleEffect()
 }
+
+onMounted(() => {
+  console.log(i18n)
+})
 </script>

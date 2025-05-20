@@ -1,0 +1,418 @@
+{
+  "RandomDefence": "Zufallsverteidigung",
+  "TitleBite": "<span class='title-red'>B</span><span class='title-orange'>I</span><span class='title-blue'>T</span><span class='title-green'>E</span> JOIN",
+
+  "GameStart": "Spiel starten",
+  "Collection": "Sammlung",
+  "Review": "Bewertung",
+  "Config": "Einstellungen",
+  "Back": "Zurück",
+  "Start": "Start",
+  "Buy": "Kaufen",
+
+  "WelcomeReword": "Login-Bonus: 1 000 Münzen gutgeschrieben",
+  "HavePurchaseItem": "(Du besitzt {length} Gegenstände)",
+  "UsePurchase": "Ausrüsten",
+  "UnusePurchase": "Ablegen",
+
+  "Reword": "BELOHNUNG",
+  "RoundPoint": "Rundenpunkte",
+  "KillPoint": "Abschusspunkte",
+  "StatPoint": "Stat-Punkte",
+  "WeaponPoint": "Waffenpunkte",
+  "GoldPoint": "Goldpunkte",
+  "EnforcePoint": "Verstärkungspunkte",
+  "GamblePoint": "Glücksspielpunkte",
+  "CharacterPoint": "Charakterpunkte",
+
+  "Clear": "GESCHAFFT!",
+  "Resume": "Fortsetzen",
+  "Quit": "Beenden",
+
+  "Gamble": "Glücksspiel",
+  "Weapon": "Waffe",
+  "Stat": "Status",
+  "MaterialGatcha": "Gacha",
+
+  "Joker": "Joker",
+  "JokerDesc": "Wandelt einmal eine Zufallsauswahl in eine Wahloption um.",
+
+  "MaterialSelectable": "Auswählen",
+  "HaveLength": "{length} Gegenstände",
+  "GambleMoney": "Setze {money} Münzen",
+  "GambleMoneyPeriod": "-{money} Münzen ~ -{money} Münzen",
+
+  "NeedMaterials": "(Benötigt {length} Stats)",
+  "NeedMaterialUnit": "{length} {key}",
+
+  "Coin": "Münze",
+
+  "Enforce": "Verstärken",
+  "EnforcePhysical": "Physische Kraft +1",
+  "EnforcePhysicalPercent": "Physische Kraft +1 %",
+  "EnforceMagical": "Magische Kraft +1",
+  "EnforceMagicalPercent": "Magische Kraft +1 %",
+  "EnforceCooldown": "Abklingzeit -1 %",
+
+  "GetRewards": "Belohnungen abholen",
+
+  "NeedWeapons": "Benötigt {length} Waffen Lv.{level}",
+  "NoLuck": "Kein Glück",
+
+  "NylonMask": "Nylon Mask",
+  "NylonMaskDescription": "Ein geheimnisvoller Mann mit Maske. Gerüchten zufolge ist er sehr wohlhabend …",
+  "NylonMaskSpecificity": "* Erhält 30 % zusätzliche Belohnungen",
+
+  "TrunkKing": "Trunk King",
+  "TrunkKingDescription": "Ein mittelalter weißer Mann mit rotem Hals. Berüchtigt für enorme Stärke.",
+  "TrunkKingSpecificity": "* Physischer Angriff steigt jede Runde um 1 %",
+
+  "Gun": "Pistole",
+  "GunDesc": "„Eine vertraute 9-mm-Patrone für jedermann.“",
+
+  "ShotGun": "Schrotflinte",
+  "ShotGunDesc": "„Peng! Eine Wand aus streuenden Schrotkugeln.“",
+
+  "DoubleGun": "Doppelpistolen",
+  "DoubleGunDesc": "„Zwei Hände, zwei Abzüge, doppelte Feuerkraft.“",
+
+  "MagicGun": "Magische Pistole",
+  "MagicGunDesc": "„Gebete steigen aus dem Lauf empor.“",
+
+  "AirGun": "Luftgewehr",
+  "AirGunDesc": "„Ein leiser Schuss aus verdichteter Luft.“",
+
+  "MachineGun": "Maschinengewehr",
+  "MachineGunDesc": "„Ab jetzt wird Munition pro Sekunde verbrannt.“",
+
+  "FingerGun": "Fingerpistole",
+  "FingerGunDesc": "„Wenn Worte versagen, wird der Finger zur Waffe.“",
+
+  "BubbleGun": "Blasenwerfer",
+  "BubbleGunDesc": "„Wirkt sanft, aber Vorsicht vor Erstickung.“",
+
+  "TazerGun": "Taser",
+  "TazerGunDesc": "„Zzzap! Statikschock inklusive.“",
+
+  "PulseGun": "Pulskanone",
+  "PulseGunDesc": "„Eine grüne Welle durchschlägt alles.“",
+
+  "Firework": "Feuerwerk",
+  "FireworkDesc": "„Für Feste? Nein – für das Schlachtfeld.“",
+
+  "SilentKiller": "Schalldämpferpistole",
+  "SilentKillerDesc": "„Leise, aber tödlich sicher.“",
+
+  "DrillGun": "Bohrkanone",
+  "DrillGunDesc": "„Ein rotierender Lauf, ein rotierender Albtraum.“",
+
+  "PepperSpray": "Pfefferspray",
+  "PepperSprayDesc": "„Tränen garantiert!“",
+
+  "EyeGun": "Todesblick",
+  "EyeGunDesc": "„Ein Blick schneller als Worte.“",
+
+  "GrenadeLauncher": "Granatwerfer",
+  "GrenadeLauncherDesc": "„Bogengeschoss, explodierende Gerechtigkeit.“",
+
+  "SilverBulletGun": "Silberkugel-Gewehr",
+  "SilverBulletGunDesc": "„Mondgeküsstes silbernes Unheil.“",
+
+  "PlasmaGun": "Plasmakanone",
+  "PlasmaGunDesc": "„Verbrennt Feinde mit Licht und Hitze.“",
+
+  "Cannon": "Kanone",
+  "CannonDesc": "„Klein, aber mit echter Feuerkraft.“",
+
+  "BlessedRevolver": "Gesegneter Revolver",
+  "BlessedRevolverDesc": "„Heiliges Licht erblüht an der Mündung.“",
+
+  "CursedRevolver": "Verfluchter Revolver",
+  "CursedRevolverDesc": "„Schwarze Kälte strömt aus dem Lauf.“",
+
+  "HeartBreaker": "Herzensbrecher",
+  "HeartBreakerDesc": "„Ein Schuss, der das Herz erzittern lässt.“",
+
+  "RadiationBeam": "Strahlenkanone",
+  "RadiationBeamDesc": "„Eine unsichtbare Nachwirkung.“",
+
+  "Missile": "Rakete",
+  "MissileDesc": "„Moment mal – ist das nicht Betrug?“",
+
+  "Booger": "Popel",
+  "BoogerDesc": "„Unterschätze es nicht nur, weil es eklig ist!“",
+
+  "ButterKnife": "Buttermesser",
+  "ButterKnifeDesc": "„Für warmen Toast gedacht, tut beim Stechen dennoch weh.“",
+
+  "KitchenKnife": "Küchenmesser",
+  "KitchenKnifeDesc": "„Der Freund des Küchenmeisters.“",
+
+  "CutterKnife": "Cuttermesser",
+  "CutterKnifeDesc": "„Je schärfer die Klinge, desto größer die Gefahr.“",
+
+  "SushiKnife": "Sushimesser",
+  "SushiKnifeDesc": "„Schneidet Fleisch glatt und sauber.“",
+
+  "Scissors": "Schere",
+  "ScissorsDesc": "„Schneiden heißt binden.“",
+
+  "Hammer": "Hammer",
+  "HammerDesc": "„Für Nägel? Nein – für Schädel.“",
+
+  "AX": "Axt",
+  "AXDesc": "„Liegt schwer in der Hand.“",
+
+  "ButcherKnife": "Metzgermesser",
+  "ButcherKnifeDesc": "„Sehnen und Knochen – knirsch.“",
+
+  "LongNails": "Lange Klauen",
+  "LongNailsDesc": "„Das Tier im Innern.“",
+
+  "SwissArmyKnife": "Schweizer Taschenmesser",
+  "SwissArmyKnifeDesc": "„Ein multifunktionales Werkzeug für überall.“",
+
+  "Fist": "Faust",
+  "FistDesc": "„Am Ende zählt die eigene Faust.“",
+
+  "CrossCutSaw": "Säge",
+  "CrossCutSawDesc": "„Schneidet ein wie meißelnd.“",
+
+  "CsowBar": "Brecheisen",
+  "CrowBarDesc": "„Das Überraschungstalent der Baustelle.“",
+
+  "Machete": "Machete",
+  "MacheteDesc": "„Die Klinge der Dschungelpioniere.“",
+
+  "KoreanHandPlow": "Koreanische Hacke",
+  "KoreanHandPlowDesc": "„Dreht Erde – und Menschen – um.“",
+
+  "BornSword": "Knochenschwert",
+  "BornSwordDesc": "„Aus Knochen gefertigt, zerbricht Knochen.“",
+
+  "SurgicalKnife": "Skalpell",
+  "SurgicalKnifeDesc": "„Präzisionsschnitte für Chirurgen.“",
+
+  "BlessedSword": "Gesegnetes Schwert",
+  "BlessedSwordDesc": "„Eine makellose Klinge, getränkt in Weihwasser.“",
+
+  "CursedSword": "Verfluchtes Schwert",
+  "CursedSwordDesc": "„Je länger du es führst, desto lauter werden die Flüstern.“",
+
+  "DualBlade": "Doppelklingen",
+  "DualBladeDesc": "„Zwei Hände, zwei Klingen – tanzender Stahl.“",
+
+  "BigAX": "Große Axt",
+  "BigAXDesc": "„Die Axt ist groß – ebenso die Probleme.“",
+
+  "DragonSlayer": "Drachentöter",
+  "DragonSlayerDesc": "„Eine riesige Eisenklinge, geschaffen um Drachen zu fällen.“",
+
+  "SnotWhip": "Rotzpeitsche",
+  "SnotWhipDesc": "„Klebrig, zäh, platsch!“",
+
+  "LaserSword": "Laserschwert",
+  "LaserSwordDesc": "„Direkt aus der Zukunft.“",
+
+  "DeathScythe": "Todes-Sense",
+  "DeathScytheDesc": "„Schneidet die Grenze zwischen Leben und Tod.“",
+
+  "Book": "Notizbuch",
+  "BookDesc": "„Leerer Raum, unendliches Potenzial.“",
+
+  "ThickBook": "Dicker Wälzer",
+  "ThickBookDesc": "„Wissen so schwer, dass die Arme schmerzen.“",
+
+  "ThinBook": "Dünnes Buch",
+  "ThinBookDesc": "„Maximale Portabilität.“",
+
+  "SpringBook": "Spiralblock",
+  "SpringBookDesc": "„Leicht zu öffnen, leicht zu werfen.“",
+
+  "TextBook": "Lehrbuch",
+  "TextBookDesc": "„Die Macht des Standards.“",
+
+  "Map": "Karte",
+  "MapDesc": "„Kennst du den Weg, überlebst du.“",
+
+  "PictureBook": "Bilderbuch",
+  "PictureBookDesc": "„Illustrationen haben Macht.“",
+
+  "MagicBook": "Zauberbuch",
+  "MagicBookDesc": "„Ein Zauberspruch, ein Pfeilhagel.“",
+
+  "MobilePhone": "Handy",
+  "MobilePhoneDesc": "„Telefonieren extra; Spielen Hauptsache.“",
+
+  "Regulations": "Regelwerk",
+  "RegulationsDesc": "„Regeln sind Macht.“",
+
+  "WorkBook": "Arbeitsheft",
+  "WorkBookDesc": "„Ignorierst du es, verfolgt es dich.“",
+
+  "TreasureMap": "Schatzkarte",
+  "TreasureMapDesc": "„Dein Blick fixiert das X.“",
+
+  "EvacuationMap": "Evakuierungsplan",
+  "EvacuationMapDesc": "„Notausgang: dort entlang.“",
+
+  "Diary": "Tagebuch",
+  "DiaryDesc": "„Gefühle auf Papier gedrückt.“",
+
+  "Menu": "Speisekarte",
+  "MenuDesc": "„Hungrig? Erst essen, dann kämpfen.“",
+
+  "Revelation": "Offenbarung",
+  "RevelationDesc": "„Geheimnisse von Ende und Anfang.“",
+
+  "Labtop": "Laptop",
+  "LabtopDesc": "„Beherbergt alles Wissen.“",
+
+  "AnswerSheet": "Antwortbogen",
+  "AnswerSheetDesc": "„Gibt Antworten, fordert einen hohen Preis.“",
+
+  "LawBook": "Gesetzbuch",
+  "LawBookDesc": "„Das Gesetz beugt alle.“",
+
+  "HellMap": "Höllenführer",
+  "HellMapDesc": "„Willkommen beim Plan der Pein.“",
+
+  "OrderForm": "Bestellformular",
+  "OrderFormDesc": "„Verträge, unterschrieben mit Blut.“",
+
+  "Grimoire": "Grimoire",
+  "GrimoireDesc": "„Lebende Schrift.“",
+
+  "TabletPC": "Tablet-PC",
+  "TabletPCDesc": "„Ein tragbares multidimensionales Portal.“",
+
+  "Constitution": "Infernogesetz",
+  "ConstitutionDesc": "„Schrift, Gesetz und Folter.“",
+
+  "Counterfeit": "Hauptbuch",
+  "CounterfeitDesc": "„Es wird sich bis zum Ende erinnern.“",
+
+  "Ring": "Ring",
+  "RingDesc": "„Ein großes Versprechen in einem kleinen Kreis.“",
+
+  "CopperRing": "Kupferring",
+  "CopperRingDesc": "„Kann deinen Finger grün verfärben.“",
+
+  "FlowerRing": "Blumenring",
+  "FlowerRingDesc": "„Heilt mit sanftem Duft.“",
+
+  "SilverRing": "Silberring",
+  "SilverRingDesc": "„Auch Schein glänzt.“",
+
+  "JadeRing": "Jadering",
+  "JadeRingDesc": "„Ein Stein klarer Seele.“",
+
+  "LeatherRing": "Lederring",
+  "LeatherRingDesc": "„Leicht, geschmeidig im Griff.“",
+
+  "CandyRing": "Bonbonring",
+  "CandyRingDesc": "„Kurz süß; Karies für immer.“",
+
+  "GoldRing": "Goldring",
+  "GoldRingDesc": "„Glänzender Reichtum und Gier.“",
+
+  "KnuckleRing": "Schlagring",
+  "KnuckleRingDesc": "„Eine Faust härter als eine Faust.“",
+
+  "DigitalRing": "Digitalring",
+  "DigitalRingDesc": "„Praktisch, wie erwartet.“",
+
+  "CrystalRing": "Kristallring",
+  "CrystalRingDesc": "„Ein transparenter Energiestein.“",
+
+  "RuneRing": "Runenring",
+  "RuneRingDesc": "„Eingravierte Symbole leuchten.“",
+
+  "SignetRing": "Siegelring",
+  "SignetRingDesc": "„Das ist unser Versprechen.“",
+
+  "SharpieRing": "Sharpie-Ring",
+  "SharpieRingDesc": "„Die Träume von Ringen skizzieren.“",
+
+  "OnionRing": "Zwiebelring",
+  "OnionRingDesc": "„Riecht stark, schmeckt großartig.“",
+
+  "DiamondRing": "Diamantring",
+  "DiamondRingDesc": "„Prestige jenseits von Reichtum.“",
+
+  "OpalRing": "Opalring",
+  "OpalRingDesc": "„Regenbogenfarbiger Schutz.“",
+
+  "ObsidianRing": "Obsidierring",
+  "ObsidianRingDesc": "„Dunkelheit verschlingt das Licht.“",
+
+  "SapphireRing": "Saphirring",
+  "SapphireRingDesc": "„Kalter wasserblauer Glanz.“",
+
+  "RubyRing": "Rubinring",
+  "RubyRingDesc": "„Ein Edelstein voller scharlachroter Flamme.“",
+
+  "Bugles": "Bugles",
+  "BuglesDesc": "„Ein Biss Kindheitsnostalgie.“",
+
+  "BornRing": "Knochering",
+  "BornRingDesc": "„Ein Schmuckstück, das mit dem Tod wandelt.“",
+
+  "VampireRing": "Vampirsiegel",
+  "VampireRingDesc": "„Ein Vertrag aus Blut.“",
+
+  "Tattoo": "Tattoo",
+  "TattooDesc": "„Ein ewiges Versprechen, in Fleisch geritzt.“",
+
+  "FourLeafClover": "Vierblättriges Kleeblatt",
+  "FourLeafCloverDesc": "„Schwer zu findendes Glück.“",
+
+  "Payback": "Payback",
+  "PaybackDesc": "Für eine Partie erhältst du bei verlorenen Geldwetten einen Teil des Einsatzes zurück.",
+
+  "Sharper": "Falschspieler",
+  "SharperDesc": "Für eine Partie verdoppelt sich die Upgrade-Erfolgsrate.",
+
+  "str": "Stärke",
+  "int": "Intelligenz",
+  "cul": "Kultur",
+  "cha": "Charisma",
+  "vit": "Vitalität",
+  "agi": "Agilität",
+  "luk": "Glück",
+  "wis": "Weisheit",
+
+  "StrDesc": "Physischer<br/>Schaden +1",
+  "IntDesc": "Magischer<br/>Schaden +1",
+  "CulDesc": "Verlangsamung<br/>+1 %",
+  "ChaDesc": "Betäubung<br/>+0,1 s",
+  "VitDesc": "Splash +5",
+  "LukDesc": "Rüstungs­durchdringung +1",
+  "WisDesc": "Magie­durchdringung +1",
+  "AgiDesc": "Abklingzeit -1 %",
+
+  "PhysicalDamage": "· Physischer Schaden: {number}",
+  "PhysicalPenetration": "· Physische Durchdringung: {number}",
+  "PhysicalAllPercent": "· Physischer Angriff +{number} %",
+  "PhysicalDecrease": "· Physische Verteidigung -{number} %",
+
+  "MagicalDamage": "· Magischer Schaden: {number}",
+  "MagicalPenetration": "· Magische Durchdringung: {number}",
+  "MagicalAllPercent": "· Magischer Angriff +{number} %",
+  "MagicalDecrease": "· Magische Verteidigung -{number} %",
+
+  "TargetLength": "· Greift {number} Ziele gleichzeitig an",
+  "Splash": "· Splash: {number}",
+  "Cooldown": "· Abklingzeit: {number}s",
+  "AllCooldown": "· Globale Abklingzeit: {number} %",
+
+  "Stun": "· Betäubung: {number}s",
+  "StunMany": "· Flächenbetäubung: {number}s",
+
+  "Slow": "· Flächenverlangsamung: {number} %",
+  "SlowOne": "· Einzelziel-Verlangsamung: {number} %",
+
+  "Critical": "· {number1} % Chance auf {number2}× Schaden",
+  "Dot": "· Schaden über Zeit ({number} Ticks)",
+  "Armerbreak": "· Rüstungsbruch: {number}"
+}
