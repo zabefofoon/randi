@@ -163,7 +163,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     scene.add.existing(this)
     scene.physics.add.existing(this)
-    const hp = this.isBoss ? this.increaseHP(this.round) * 3 : this.increaseHP(this.round)
+    const hp = this.isBoss ? this.increaseHP(this.round) * 4 : this.increaseHP(this.round)
 
     this.setData("hp", hp)
       .setData("pathIndex", 0)
@@ -174,11 +174,11 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     if (this.isBoss) this.setTint(0xff0000)
 
     this.physicalDefence = this.isBoss
-      ? numberUtil.addPercent(this.increaseDefence(this.round), 100)
+      ? numberUtil.addPercent(this.increaseDefence(this.round), 200)
       : this.increaseDefence(this.round)
 
     this.magicalDefence = this.isBoss
-      ? numberUtil.addPercent(this.increaseDefence(this.round), 100)
+      ? numberUtil.addPercent(this.increaseDefence(this.round), 200)
       : this.increaseDefence(this.round)
 
     this.pathes = paths
@@ -212,14 +212,14 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   increaseHP(round: number): number {
     const _round = round - 1
     const roundGroup = Math.ceil(_round / 10)
-    const roundMultiplies = [1, 1, 1.1, 1.2, 1.5, 2, 2.5, 3]
+    const roundMultiplies = [1, 1, 1.2, 1.5, 2, 3, 5, 10]
     const result = (Math.pow(_round * 2, 2) + 10) * (Math.floor(_round / 10) + 1)
     return Math.ceil(result * (roundMultiplies?.[roundGroup] ?? 1))
   }
 
   increaseDefence(round: number): number {
     const roundGroup = Math.ceil(round / 10)
-    const value = [0, 0, 5, 10, 30, 60, 120, 240][roundGroup]
+    const value = [0, 0, 10, 30, 70, 100, 200, 250][roundGroup]
     return value + round
   }
 

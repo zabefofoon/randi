@@ -914,21 +914,22 @@ watch(isShowConfigPopup, (value) => {
   if (value) pause()
   else resume()
 })
-watch(isShowMaterialsPopup, (value) => {
-  if (value) pause()
-  else resume()
+// watch(isShowMaterialsPopup, (value) => {
+//   if (value) pause()
+//   else resume()
+// })
+watch(isShowWeaponsPopup, (value) => {
+  if (!value && isAllWeaponEffect.value) allAttackAnimation()
+  // if (value) pause()
+  // else {
+  //   resume()
+  //   if (isAllWeaponEffect.value) allAttackAnimation()
+  // }
 })
-watch(isShowWeaponsPopup, async (value) => {
-  if (value) pause()
-  else {
-    resume()
-    if (isAllWeaponEffect.value) allAttackAnimation()
-  }
-})
-watch(isShowGamblePopup, (value) => {
-  if (value) pause()
-  else resume()
-})
+// watch(isShowGamblePopup, (value) => {
+//   if (value) pause()
+//   else resume()
+// })
 watch(isShowGameOverPopup, (value) => {
   if (!value) exit()
   else pause()
