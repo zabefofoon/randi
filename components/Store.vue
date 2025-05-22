@@ -32,9 +32,8 @@
               </div>
 
               <div class="w-full font-bold text-outline">
-                <h4
-                  v-t="purchaseItem.meta.name"
-                  class="text-[1.5cqw]">
+                <h4 class="text-[1.5cqw]">
+                  {{ i18n.t(purchaseItem.meta.name) }}
                   <span
                     v-if="gameStore.purchasedItems[purchaseItem.meta.id]"
                     class="text-[1.2cqw]">
