@@ -424,39 +424,43 @@ onMounted(() => {
         const scene = this as Phaser.Scene
         this.load.bitmapFont(
           "damageFont",
-          "assets/fonts/bit_map_text.png",
-          "assets/fonts/bit_map_text.xml"
+          `${useAssetBase()}assets/fonts/bit_map_text.png`,
+          `${useAssetBase()}assets/fonts/bit_map_text.xml`
         )
-        scene.load.image("bullet", "assets/images/bullet.png")
+        scene.load.image("bullet", `${useAssetBase()}assets/images/bullet.png`)
 
-        scene.load.spritesheet("gun-sprite", "assets/images/gun_sprite.png", {
+        scene.load.spritesheet("gun-sprite", `${useAssetBase()}assets/images/gun_sprite.png`, {
           frameWidth: 100,
           frameHeight: 100,
         })
-        scene.load.spritesheet("knife-sprite", "assets/images/knife_sprite.png", {
+        scene.load.spritesheet("knife-sprite", `${useAssetBase()}assets/images/knife_sprite.png`, {
           frameWidth: 100,
           frameHeight: 100,
         })
-        scene.load.spritesheet("book-sprite", "assets/images/book_sprite.png", {
+        scene.load.spritesheet("book-sprite", `${useAssetBase()}assets/images/book_sprite.png`, {
           frameWidth: 100,
           frameHeight: 100,
         })
-        scene.load.spritesheet("ring-sprite", "assets/images/ring_sprite.png", {
+        scene.load.spritesheet("ring-sprite", `${useAssetBase()}assets/images/ring_sprite.png`, {
           frameWidth: 100,
           frameHeight: 100,
         })
-        scene.load.spritesheet("thunder-sprite", "assets/images/thunder_sprite.png", {
-          frameWidth: 100,
-          frameHeight: 100,
-        })
+        scene.load.spritesheet(
+          "thunder-sprite",
+          `${useAssetBase()}assets/images/thunder_sprite.png`,
+          {
+            frameWidth: 100,
+            frameHeight: 100,
+          }
+        )
 
-        scene.load.image("tiles", "assets/images/mainlevbuild2.png")
-        scene.load.tilemapTiledJSON("map", "assets/jsons/map.json")
+        scene.load.image("tiles", `${useAssetBase()}assets/images/mainlevbuild2.png`)
+        scene.load.tilemapTiledJSON("map", `${useAssetBase()}assets/jsons/map.json`)
 
         if (gameStore.checkCharacter(gameStore.selectedCharacter)) {
           scene.load.spritesheet(
             "playerIdle",
-            `assets/images/${gameStore.selectedCharacter.meta.id}_idle.png`,
+            `${useAssetBase()}assets/images/${gameStore.selectedCharacter.meta.id}_idle.png`,
             {
               frameWidth: 128,
               frameHeight: 128,
@@ -464,7 +468,7 @@ onMounted(() => {
           )
           scene.load.spritesheet(
             "playerWork",
-            `assets/images/${gameStore.selectedCharacter.meta.id}_work.png`,
+            `${useAssetBase()}assets/images/${gameStore.selectedCharacter.meta.id}_work.png`,
             {
               frameWidth: 128,
               frameHeight: 128,
@@ -472,20 +476,28 @@ onMounted(() => {
           )
         }
 
-        scene.load.spritesheet("enemy", "assets/images/zombie_work.png", {
+        scene.load.spritesheet("enemy", `${useAssetBase()}assets/images/zombie_work.png`, {
           frameWidth: 96,
           frameHeight: 96,
         })
 
-        scene.load.spritesheet("weapons-animation", "assets/images/weapons_sprite1.png", {
-          frameWidth: 100,
-          frameHeight: 100,
-        })
+        scene.load.spritesheet(
+          "weapons-animation",
+          `${useAssetBase()}assets/images/weapons_sprite1.png`,
+          {
+            frameWidth: 100,
+            frameHeight: 100,
+          }
+        )
 
-        scene.load.spritesheet("weapons-animation2", "assets/images/weapons_sprite2.png", {
-          frameWidth: 100,
-          frameHeight: 100,
-        })
+        scene.load.spritesheet(
+          "weapons-animation2",
+          `${useAssetBase()}assets/images/weapons_sprite2.png`,
+          {
+            frameWidth: 100,
+            frameHeight: 100,
+          }
+        )
 
         scene.load.start()
         scene.load.on("progress", (value: number) => {
