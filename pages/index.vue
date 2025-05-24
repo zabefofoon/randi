@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="prevent-drag">
     <button
       class="full-screen | fixed top-[2vw] right-[2vw] z-[10] | border rounded-full p-[1vw] | bg-white"
       @click="fullScreen">

@@ -414,5 +414,9 @@
 
   "Critical": "· {number1} % de chance d’infliger {number2}× dégâts",
   "Dot": "· Dégâts sur la Durée ({number} ticks)",
-  "Armerbreak": "· Brise-Armure : {number}"
+  "Armerbreak": "· Brise-Armure : {number}",
+
+  "TutorialDesc1": "Approche-toi d’un ennemi et, dès que tu t’arrêtes de bouger, tu attaqueras automatiquement.",
+  "TutorialDesc2": "Tu ne peux pas attaquer en te déplaçant, alors fais attention.",
+  "TutorialDesc3": "Rappelle-toi : tout est question de pari !"
 }

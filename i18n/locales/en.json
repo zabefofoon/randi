@@ -290,5 +290,8 @@
   "SlowOne": "· Single-Target Slow: {number}%",
   "Critical": "· {number1}% chance to deal {number2}× damage",
   "Dot": "· Damage over Time ({number} ticks)",
-  "Armerbreak": "· Armor Break: {number}"
+  "Armerbreak": "· Armor Break: {number}",
+  "TutorialDesc1": "Move near an enemy, and when you stop moving you’ll automatically attack.",
+  "TutorialDesc2": "You can’t attack while moving, so be careful.",
+  "TutorialDesc3": "Remember—it's all about gambling!"
 }

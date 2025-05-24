@@ -409,5 +409,8 @@
   "SlowOne": "· Làm chậm đơn: {number}%",
   "Critical": "· {number1}% cơ hội gây {number2}× sát thương",
   "Dot": "· Sát thương theo thời gian ({number} tick)",
-  "Armerbreak": "· Phá giáp: {number}"
+  "Armerbreak": "· Phá giáp: {number}",
+  "TutorialDesc1": "Tiến lại gần kẻ thù và khi bạn dừng di chuyển, bạn sẽ tự động tấn công.",
+  "TutorialDesc2": "Bạn không thể tấn công trong khi di chuyển, vì vậy hãy cẩn thận.",
+  "TutorialDesc3": "Hãy nhớ: tất cả là về đánh cược!"
 }

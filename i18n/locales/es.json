@@ -414,5 +414,9 @@
 
   "Critical": "· {number1} % de probabilidad de infligir {number2}× daño",
   "Dot": "· Daño en el Tiempo ({number} ticks)",
-  "Armerbreak": "· Rompearmadura: {number}"
+  "Armerbreak": "· Rompearmadura: {number}",
+
+  "TutorialDesc1": "Acércate a un enemigo y, cuando dejes de moverte, atacarás automáticamente.",
+  "TutorialDesc2": "No puedes atacar mientras te mueves, así que ten cuidado.",
+  "TutorialDesc3": "Recuerda: ¡todo se trata de apostar!"
 }

@@ -411,5 +411,8 @@
   "SlowOne": "· 单体减速: {number}%",
   "Critical": "· {number1}% 概率造成 {number2}× 伤害",
   "Dot": "· 持续伤害 ({number} 次)",
-  "Armerbreak": "· 护甲破坏: {number}"
+  "Armerbreak": "· 护甲破坏: {number}",
+  "TutorialDesc1": "靠近敌人，当你停止移动时，会自动发动攻击。",
+  "TutorialDesc2": "移动时无法攻击，请小心。",
+  "TutorialDesc3": "记住：一切都关乎赌博！"
 }

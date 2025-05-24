@@ -414,5 +414,8 @@
 
   "Critical": "· {number1} % Chance auf {number2}× Schaden",
   "Dot": "· Schaden über Zeit ({number} Ticks)",
-  "Armerbreak": "· Rüstungsbruch: {number}"
+  "Armerbreak": "· Rüstungsbruch: {number}",
+  "TutorialDesc1": "Bewege dich nahe an einen Gegner heran, und sobald du stehen bleibst, greifst du automatisch an.",
+  "TutorialDesc2": "Du kannst nicht angreifen, während du dich bewegst, also sei vorsichtig.",
+  "TutorialDesc3": "Denk daran – alles dreht sich ums Glücksspiel!"
 }

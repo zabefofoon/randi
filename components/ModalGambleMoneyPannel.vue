@@ -22,11 +22,11 @@
         </span>
       </div>
     </div>
-    <div class="flex flex-col items-center gap-[0.5cqw] | w-full | mt-[1cqw]">
+    <div class="flex items-center gap-[0.5cqw] | w-full | mt-[1cqw]">
       <button
         v-for="unit in units"
         :key="unit"
-        class="w-full | flex-1 select-none flex items-center justify-between gap-[2cqw] | px-[1cqw] py-[0.5cqw] | border-black border-[0.2cqw] rounded-lg | disabled:bg-gray-800 disabled:text-gray-500"
+        class="w-full flex-1 select-none | flex items-center justify-center gap-[2cqw] | px-[1cqw] py-[0.5cqw] | border-black border-[0.2cqw] rounded-lg | disabled:bg-gray-800 disabled:text-gray-500"
         :class="{
           'bg-purple-500': unit === 10,
           'bg-yellow-400': unit === 100,
@@ -35,12 +35,9 @@
         :disabled="coins < unit"
         @click="gachaAnimated(unit)">
         <div class="flex items-center justify-center">
-          <span class="text-outline text-[1.5cqw] font-bold">
+          <span class="text-outline text-[1.3cqw] font-bold">
             {{ i18n.t("GambleMoney", { money: stringUtil.attachComma(unit) }) }}
           </span>
-        </div>
-        <div class="text-outline text-[1.3cqw] text-left font-bold">
-          {{ i18n.t("GambleMoneyPeriod", { money: stringUtil.attachComma(unit * 5) }) }}
         </div>
       </button>
     </div>

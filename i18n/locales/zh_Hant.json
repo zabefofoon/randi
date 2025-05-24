@@ -411,5 +411,8 @@
   "SlowOne": "· 單體減速：{number}%",
   "Critical": "· {number1}% 機率造成 {number2}× 傷害",
   "Dot": "· 持續傷害（{number} 次）",
-  "Armerbreak": "· 破甲：{number}"
+  "Armerbreak": "· 破甲：{number}",
+  "TutorialDesc1": "靠近敵人，當你停止移動時，會自動發動攻擊。",
+  "TutorialDesc2": "移動時無法攻擊，請小心。",
+  "TutorialDesc3": "記住：一切都關乎賭博！"
 }

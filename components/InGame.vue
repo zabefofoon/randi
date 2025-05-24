@@ -1,5 +1,12 @@
 <template>
   <div class="w-screen h-screen | flex items-center justify-center | bg-black">
+    <Transition name="fade">
+      <Tutorial
+        v-if="isShowTutorial"
+        :progress="progress"
+        @close="startGame" />
+    </Transition>
+
     <ModalGamble
       v-if="enforces && weapons && isShowGamblePopup"
       v-model:selected-index="selectedGambleIndex"
@@ -263,6 +270,10 @@ const emit = defineEmits<{
 const gameStore = useGameStore()
 const soundStore = useSoundStore()
 
+const isGameReady = ref(false)
+const isShowTutorial = ref(true)
+const progress = ref(0)
+
 const phaserContainer = ref<HTMLDivElement>()
 
 let game: Phaser.Game
@@ -423,6 +434,14 @@ onMounted(() => {
         scene.load.spritesheet("weapons-animation2", "assets/images/weapons_sprite2.png", {
           frameWidth: 100,
           frameHeight: 100,
+        })
+
+        scene.load.start()
+        scene.load.on("progress", (value: number) => {
+          progress.value = value
+        })
+        scene.load.once("complete", () => {
+          isGameReady.value = true
         })
       },
       create(this: Phaser.Scene) {
@@ -610,6 +629,8 @@ onMounted(() => {
               }, 500)
           },
         })
+
+        pause()
       },
       update(this: Phaser.Scene, time: number) {
         const scene = this as Phaser.Scene
@@ -897,6 +918,11 @@ const rewords = computed(() => ({
   gamblings: round.value ? gamblings.value : 0,
   isClear: isClear ? 1 : 0,
 }))
+
+const startGame = () => {
+  isShowTutorial.value = false
+  resume()
+}
 
 const exit = () => {
   gameStore.setRewords(rewords.value)

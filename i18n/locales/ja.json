@@ -414,5 +414,8 @@
 
   "Critical": "· {number1}%の確率で{number2}倍ダメージ",
   "Dot": "· DOTダメージ ({number}回)",
-  "Armerbreak": "· アーマーブレイク: {number}"
+  "Armerbreak": "· アーマーブレイク: {number}",
+  "TutorialDesc1": "敵に近づき、止まると自動で攻撃します。",
+  "TutorialDesc2": "移動中は攻撃できないので注意してください。",
+  "TutorialDesc3": "覚えておいてください：重要なのはギャンブルです！"
 }

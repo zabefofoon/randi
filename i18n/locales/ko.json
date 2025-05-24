@@ -290,5 +290,8 @@
   "SlowOne": "· 단일 슬로우 : {number}%",
   "Critical": "· {number1}% 확률의 {number2}배 데미지",
   "Dot": "· {number}번의 도트 데미지",
-  "Armerbreak": "· 아머브레이크: {number}"
+  "Armerbreak": "· 아머브레이크: {number}",
+  "TutorialDesc1": "적의 근처로 이동하고, 이동을 멈추면 자동으로 공격을 합니다.",
+  "TutorialDesc2": "이동 중에는 공격할 수 없으니 주의하세요.",
+  "TutorialDesc3": "중요한 건 도박!"
 }

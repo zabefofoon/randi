@@ -57,6 +57,7 @@ const props = withDefaults(
     gap: "0px",
     perview: 1,
     startIndex: 0,
+    active: true,
   }
 )
 

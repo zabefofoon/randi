@@ -6,7 +6,7 @@ export const I18N_COOKIE_MAX_AGE = 86400
 
 export const SCREEN_SIZE_LAPTOP = 1100
 
-export const CAROUSEL_AUTOPLAY_DELAY = 4000
+export const CAROUSEL_AUTOPLAY_DELAY = 3000
 
 export const GLOBAL_SPINNER_DELAY = 100
 export const LOADING_SSR = "ssr"

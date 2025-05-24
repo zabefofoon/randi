@@ -414,5 +414,8 @@
 
   "Critical": "· {number1}% peluang {number2}× damage",
   "Dot": "· Damage per Detik ({number} kali)",
-  "Armerbreak": "· Armor Break: {number}"
+  "Armerbreak": "· Armor Break: {number}",
+  "TutorialDesc1": "Dekatkan diri ke musuh dan, saat kamu berhenti bergerak, kamu akan menyerang secara otomatis.",
+  "TutorialDesc2": "Kamu tidak bisa menyerang saat bergerak, jadi berhati-hatilah.",
+  "TutorialDesc3": "Ingat: semuanya tentang berjudi!"
 }
