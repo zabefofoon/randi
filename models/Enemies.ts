@@ -65,11 +65,22 @@ export class Enemies {
     return pool
   }
 
-  spawnEnemy(round: number, coins: Ref<number>) {
+  spawnEnemy(round: number, coins: Ref<number>, index: number) {
     const { x, y } = this.pathes[0]
 
     this.group.add(
-      new Enemy(this.scene, x, y, false, "enemy", this.pathes, round, coins, this.selectedCharacter)
+      new Enemy(
+        this.scene,
+        x,
+        y,
+        false,
+        "enemy",
+        this.pathes,
+        round,
+        coins,
+        this.selectedCharacter,
+        index
+      )
     )
     this.scene.events.emit("enemy-spawn")
   }
@@ -78,7 +89,18 @@ export class Enemies {
     const { x, y } = this.pathes[0]
 
     this.group.add(
-      new Enemy(this.scene, x, y, true, "enemy", this.pathes, round, coins, this.selectedCharacter)
+      new Enemy(
+        this.scene,
+        x,
+        y,
+        true,
+        "enemy",
+        this.pathes,
+        round,
+        coins,
+        this.selectedCharacter,
+        0
+      )
     )
     this.scene.events.emit("enemy-spawn")
   }
@@ -159,7 +181,8 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     paths: { x: number; y: number }[],
     private round: number,
     private coins: Ref<number>,
-    private selectedCharacter: typeof Character | PurchaseCharacter
+    private selectedCharacter: typeof Character | PurchaseCharacter,
+    private index: number
   ) {
     super(scene, x, y, key)
 
@@ -169,6 +192,8 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     let hp = 0
     if (this.isBoss) {
       hp = this.increaseHP(this.round) * 4
+    } else if (this.isRage) {
+      hp = this.increaseHP(this.round) * 2
     } else {
       if (`${this.round}`.endsWith("9")) {
         hp = 1
@@ -183,6 +208,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       .setScale(0.75)
 
     if (this.isBoss) this.setTint(0xff0000)
+    if (this.isRage) this.setTint(0x00ff00)
 
     this.physicalDefence = this.isBoss
       ? numberUtil.addPercent(this.increaseDefence(this.round), 130)
@@ -208,6 +234,10 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       .setScale(0.9)
       .setDepth(this.depth + 1)
       .setFrame(9)
+  }
+
+  get isRage() {
+    return `${this.round}`.endsWith("5") && this.index === 0
   }
 
   applyStunOne(weapon: Weapon, materials: Materials) {
@@ -474,6 +504,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.scene.time.delayedCall(100, () => {
       this.clearTint()
       if (this.isBoss) this.setTint(0xff0000)
+      if (this.isRage) this.setTint(0x00ff00)
     })
 
     this.showDamageText(finalDamage, weaponData)
@@ -529,6 +560,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   die() {
     if (this.isBoss) this.scene.events.emit("boss-die")
     else this.scene.events.emit("enemy-die")
+    if (this.isRage) this.scene.events.emit("rage-die")
     ;(this.coins as unknown as number) += this.round
     const hpBar = this.getData("hpBar") as Phaser.GameObjects.Graphics
     if (hpBar) hpBar.destroy()

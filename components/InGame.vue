@@ -188,89 +188,107 @@
           v-model="activeJoystick"
           class="absolute bottom-[3cqw] left-[3cqw]" />
 
-        <div class="flex items-center gap-[1cqw] | absolute bottom-0 right-[1cqw]">
-          <!-- 무기버튼 -->
-          <button
-            class="flex items-center gap-[0.5cqw] bg-orange-700 | h-fit pr-[1.5cqw] pl-[0.5cqw] py-[0.2cqw] | rounded-lg border-black border-[0.2cqw]"
-            @click="showGamblePopup(true)">
-            <div
-              class="stat-sprites | w-[3cqw] aspect-square"
-              :style="{
-                backgroundPosition: etcUtil.getSpritePosition(10),
-              }"></div>
-            <span
-              v-t="'Gamble'"
-              class="block text-white | text-[1.8cqw] font-bold text-outline leading-none">
-            </span>
-          </button>
-          <!-- 무기버튼 -->
-
-          <!-- 무기버튼 -->
-          <button
-            class="flex items-center gap-[0.5cqw] bg-blue-950 | h-fit pr-[1.5cqw] pl-[0.5cqw] py-[0.2cqw] | rounded-lg border-black border-[0.2cqw]"
-            @click="showWeaponsPopup(true)">
-            <div
-              class="stat-sprites | w-[3cqw] aspect-square"
-              :style="{
-                backgroundPosition: etcUtil.getSpritePosition(8),
-              }"></div>
-            <span
-              v-t="'Weapon'"
-              class="block text-white | text-[1.8cqw] font-bold text-outline leading-none">
-            </span>
-          </button>
-          <!-- 무기버튼 -->
-
-          <!-- 스텟버튼 -->
-          <button
-            class="flex items-center gap-[0.5cqw] | relative | h-fit pr-[1.5cqw] pl-[0.5cqw] py-[0.2cqw] | rounded-lg border-black border-[0.2cqw]"
-            :class="{
-              'bg-amber-500': selectChance > 0,
-              'bg-blue-950': selectChance <= 0,
-            }"
-            @click="showMaterialsPopup(true)">
-            <div
-              class="stat-sprites | w-[3cqw] aspect-square"
-              :style="{
-                backgroundPosition: etcUtil.getSpritePosition(9),
-              }"></div>
-            <span
-              v-t="'Stat'"
-              class="block | text-white text-[1.8cqw] font-bold text-outline leading-none">
-            </span>
-            <div
-              v-if="gachaChance + selectChance > 0"
-              class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2">
-              <span
-                class="text-white | grid place-items-center | w-[2.2cqw] aspect-square | rounded-full | bg-red-500 | text-outline text-[1.2cqw] font-bold | border-black border-[0.14cqw]">
-                {{ selectChance + gachaChance }}
-              </span>
-            </div>
-          </button>
-          <!-- 스텟버튼 -->
-
-          <!-- 스킬 -->
-          <div
-            class="relative bg-black w-[8cqw] aspect-square rounded-tl-[5cqw] rounded-tr-[1cqw] rounded-bl-[1cqw] | pl-[0.2cqw] pt-[0.2cqw]">
-            <div
-              class="grid place-items-center | w-full h-full rounded-tl-[5cqw] rounded-tr-[1cqw] rounded-bl-[1cqw]"
-              :style="{
-                'clip-path': `inset(0 0 ${100 - (skillCooltime / thunderCoolTime) * 100}%  0)`,
-              }"
-              :class="{
-                'bg-gray-700': skillCooltime < thunderCoolTime,
-                'bg-blue-600': skillCooltime >= thunderCoolTime,
-              }">
-              <button
-                class="stat-sprites | mt-[0.5cqw] ml-[0.5cqw] | w-[6.5cqw] aspect-square outline-0"
+        <div class="flex items-end gap-[1cqw] | absolute bottom-0 right-[1cqw]">
+          <div class="flex gap-[1cqw] | mb-[1cqw]">
+            <!-- 무기버튼 -->
+            <button
+              class="flex items-center gap-[0.5cqw] bg-orange-700 | h-fit | pr-[1.5cqw] pl-[0.5cqw] py-[0.2cqw] | rounded-lg border-black border-[0.2cqw]"
+              @click="showGamblePopup(true)">
+              <div
+                class="stat-sprites | w-[3cqw] aspect-square"
                 :style="{
-                  backgroundPosition: etcUtil.getSpritePosition(20),
-                  filter: `grayscale(${skillCooltime < thunderCoolTime ? 1 : 0})`,
+                  backgroundPosition: etcUtil.getSpritePosition(10),
+                }"></div>
+              <span
+                v-t="'Gamble'"
+                class="block text-white | text-[1.8cqw] font-bold text-outline leading-none">
+              </span>
+            </button>
+            <!-- 무기버튼 -->
+
+            <!-- 무기버튼 -->
+            <button
+              class="flex items-center gap-[0.5cqw] bg-blue-950 | h-fit | pr-[1.5cqw] pl-[0.5cqw] py-[0.2cqw] | rounded-lg border-black border-[0.2cqw]"
+              @click="showWeaponsPopup(true)">
+              <div
+                class="stat-sprites | w-[3cqw] aspect-square"
+                :style="{
+                  backgroundPosition: etcUtil.getSpritePosition(8),
+                }"></div>
+              <span
+                v-t="'Weapon'"
+                class="block text-white | text-[1.8cqw] font-bold text-outline leading-none">
+              </span>
+            </button>
+            <!-- 무기버튼 -->
+
+            <!-- 스텟버튼 -->
+            <button
+              class="flex items-center gap-[0.5cqw] | relative | h-fit | pr-[1.5cqw] pl-[0.5cqw] py-[0.2cqw] | rounded-lg border-black border-[0.2cqw]"
+              :class="{
+                'bg-amber-500': selectChance > 0,
+                'bg-blue-950': selectChance <= 0,
+              }"
+              @click="showMaterialsPopup(true)">
+              <div
+                class="stat-sprites | w-[3cqw] aspect-square"
+                :style="{
+                  backgroundPosition: etcUtil.getSpritePosition(9),
+                }"></div>
+              <span
+                v-t="'Stat'"
+                class="block | text-white text-[1.8cqw] font-bold text-outline leading-none">
+              </span>
+              <div
+                v-if="gachaChance + selectChance > 0"
+                class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2">
+                <span
+                  class="text-white | grid place-items-center | w-[2.2cqw] aspect-square | rounded-full | bg-red-500 | text-outline text-[1.2cqw] font-bold | border-black border-[0.14cqw]">
+                  {{ selectChance + gachaChance }}
+                </span>
+              </div>
+            </button>
+            <!-- 스텟버튼 -->
+          </div>
+          <!-- 스킬 -->
+          <div class="flex flex-col gap-[0.2cqw]">
+            <div
+              class="relative bg-black w-[8cqw] aspect-square rounded-tl-[5cqw] rounded-tr-[1cqw] rounded-bl-[1cqw] | pl-[0.2cqw] pt-[0.2cqw]">
+              <div
+                class="grid place-items-center | w-full h-full rounded-tl-[5cqw] rounded-tr-[1cqw] rounded-bl-[1cqw]"
+                :style="{
+                  'clip-path': `inset(0 0 ${
+                    100 - (thunderSkillCooldown / thunderCoolTime) * 100
+                  }%  0)`,
                 }"
-                :disabled="skillCooltime < thunderCoolTime"
-                @click="scene.events.emit('thunder')"></button>
+                :class="{
+                  'bg-gray-700': thunderSkillCooldown < thunderCoolTime,
+                  'bg-blue-600': thunderSkillCooldown >= thunderCoolTime,
+                }">
+                <button
+                  class="stat-sprites | mt-[0.5cqw] ml-[0.5cqw] | w-[6.5cqw] aspect-square outline-0"
+                  :style="{
+                    backgroundPosition: etcUtil.getSpritePosition(20),
+                    filter: `grayscale(${thunderSkillCooldown < thunderCoolTime ? 1 : 0})`,
+                  }"
+                  :disabled="thunderSkillCooldown < thunderCoolTime"
+                  @click="scene.events.emit('thunder')"></button>
+              </div>
+            </div>
+            <div
+              v-if="hasRageMode"
+              class="relative bg-black w-[8cqw] aspect-square rounded-t-[1cqw] rounded-bl-[5cqw] rounded-br-[1cqw] | pl-[0.2cqw] pt-[0.2cqw]">
+              <div class="bg-green-600 | grid place-items-center | w-full h-full rounded-[inherit]">
+                <button
+                  class="stat-sprites | mb-[0.5cqw] ml-[0.5cqw] | w-[6.5cqw] aspect-square outline-0"
+                  :style="{
+                    backgroundPosition: etcUtil.getSpritePosition(21),
+                  }"
+                  @click="scene.events.emit('rage')"></button>
+              </div>
             </div>
           </div>
+
           <!-- 스킬 -->
         </div>
       </main>
@@ -360,7 +378,9 @@ const selectedGambleIndex = ref(0)
 
 const isAllWeaponEffect = ref(false)
 
-const skillCooltime = ref(0)
+const thunderSkillCooldown = ref(0)
+const isRageMode = ref(false)
+const hasRageMode = ref(false)
 
 let scene: Phaser.Scene & { dmgPool: Phaser.GameObjects.Group }
 let isBossRemained = false
@@ -570,14 +590,18 @@ onMounted(() => {
         scene.events.on("enemy-spawn", () => {
           remainnedEnemies.value++
         })
-
+        scene.events.on("rage-die", () => {
+          hasRageMode.value = true
+          selectChance.value += 1
+          gachaChance.value += 1
+        })
         scene.events.on("thunder", () => {
           isShowTextEffect.value = `THUNDER`
 
           scene.time.delayedCall(1200, () => {
             isShowTextEffect.value = ""
             scene.cameras.main.shake(100, 0.01)
-            skillCooltime.value = 0
+            thunderSkillCooldown.value = 0
             soundStore.play("thunder")
             ;[...enemies.children].forEach((enemy) => {
               enemy.thunderEffect
@@ -590,6 +614,36 @@ onMounted(() => {
             })
           })
         })
+
+        scene.events.on("rage", () => {
+          isShowTextEffect.value = `RAGE MODE`
+          hasRageMode.value = false
+          scene.time.delayedCall(1200, () => {
+            player.weaponsEffect
+              .setPosition(player.x, player.y)
+              .setFrame(8)
+              .setTint(0x00ff00)
+              .play("weapons-animation")
+            isRageMode.value = true
+            isShowTextEffect.value = ""
+            scene.cameras.main.shake(100, 0.01)
+
+            soundStore.play("thunder")
+            layer1?.setTint(etcUtil.softTint(0x00ff00, 0.7))
+            layer2?.setTint(etcUtil.softTint(0x00ff00, 0.7))
+            layer3?.setTint(etcUtil.softTint(0x00ff00, 0.7))
+            player.isRage = true
+            scene.time.delayedCall(5000, () => {
+              isRageMode.value = false
+              player.isRage = false
+              const ceiled = Math.max(1, Math.ceil(round.value / 10))
+              layer1?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))
+              layer2?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))
+              layer3?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))
+            })
+          })
+        })
+
         scene.time.addEvent({
           delay: 1000 / window.speed,
           repeat: -1,
@@ -597,7 +651,7 @@ onMounted(() => {
             if (scene.data.get("paused")) return
 
             remainnedTime.value--
-            if (skillCooltime.value <= thunderCoolTime) skillCooltime.value++
+            if (thunderSkillCooldown.value <= thunderCoolTime) thunderSkillCooldown.value++
 
             if (remainnedTime.value % 5 === 0) {
               remainnedEnemies.value = enemies.group.children.size
@@ -618,7 +672,7 @@ onMounted(() => {
                 })
               } else if (`${round.value}`.endsWith("5")) {
                 scene.time.delayedCall(1200, () => {
-                  isShowTextEffect.value = "SELECT"
+                  isShowTextEffect.value = "WARNING"
                   soundStore.play("round")
 
                   scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
@@ -694,7 +748,7 @@ onMounted(() => {
                 ? 41 > remainnedTime.value && remainnedTime.value > 25
                 : 41 > remainnedTime.value && remainnedTime.value > 30
 
-            if (spawnCondition) enemies.spawnEnemy(round.value, coins)
+            if (spawnCondition) enemies.spawnEnemy(round.value, coins, 40 - remainnedTime.value)
             if (round.value >= 10 && round.value % 10 === 0 && remainnedTime.value === roundTime)
               setTimeout(() => {
                 enemies.spawnBoss(round.value, coins)
@@ -718,7 +772,7 @@ onMounted(() => {
         })
 
         // 플레이어가 정지상태 && 쿨다운 → 발사
-        if (player.isIdle) {
+        if (isRageMode.value ? true : player.isIdle) {
           const allCooltimes = weapons.value!.weapons.reduce(
             (acc, current) => acc + (current?.allCooltime ?? 0),
             0
@@ -726,16 +780,16 @@ onMounted(() => {
           weapons.value!.weapons.forEach((weapon, index) => {
             if (!weapon) return
 
-            const isCooltime = weapon.checkIsCooltime(
-              time,
-              Math.min(
-                99,
-                (materials.value.calculateStat("agi") +
-                  allCooltimes +
-                  enforces.value!.aditionnalCooldown / 100) *
-                  100
-              )
-            )
+            const cooldown = isRageMode.value
+              ? 99
+              : Math.min(
+                  99,
+                  (materials.value.calculateStat("agi") +
+                    allCooltimes +
+                    enforces.value!.aditionnalCooldown / 100) *
+                    100
+                )
+            const isCooltime = weapon.checkIsCooltime(time, cooldown)
 
             if (isCooltime)
               player.getClosestEnemies(enemies, weapon.targetLength).forEach((enemy) => {
@@ -1041,6 +1095,8 @@ watch(isShowGameClearPopup, (value) => {
 watch(
   round,
   (round) => {
+    if (isRageMode.value) return
+
     const ceiled = Math.max(1, Math.ceil(round / 10))
     layer1?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))
     layer2?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))

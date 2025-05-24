@@ -8,6 +8,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   ring!: Phaser.GameObjects.Sprite
   weapons!: Phaser.GameObjects.Sprite
   weaponsEffect!: Phaser.GameObjects.Sprite
+  isRage = false
 
   constructor(scene: Phaser.Scene, x: number, y: number, key: string) {
     super(scene, x, y, key)
@@ -65,6 +66,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.book.setPosition(this.x, this.y)
     this.ring.setPosition(this.x, this.y)
     this.weapons.setPosition(this.x, this.y + 20)
+    this.weaponsEffect.setPosition(this.x, this.y)
   }
 
   updatePlayerHpBar() {
@@ -84,7 +86,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   handlePlayerMovement(cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
-    const speed = 120 * window.speed
+    const speed = this.isRage ? 170 * window.speed : 120 * window.speed
     let moving = false
 
     if (cursors.left.isDown) {
