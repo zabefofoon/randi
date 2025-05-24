@@ -620,8 +620,12 @@ onMounted(() => {
               isClear = true
             }
 
-            if (41 > remainnedTime.value && remainnedTime.value > 30)
-              enemies.spawnEnemy(round.value, coins)
+            const spawnCondition =
+              round.value > 30
+                ? 41 > remainnedTime.value && remainnedTime.value > 25
+                : 41 > remainnedTime.value && remainnedTime.value > 30
+
+            if (spawnCondition) enemies.spawnEnemy(round.value, coins)
             if (round.value >= 10 && round.value % 10 === 0 && remainnedTime.value === roundTime)
               setTimeout(() => {
                 enemies.spawnBoss(round.value, coins)

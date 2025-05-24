@@ -9,10 +9,6 @@
         <div
           class="pannel | flex flex-col gap-[1cqw] | w-[80%] aspect-video | border-[0.2cqw] border-black rounded-lg | p-[1cqw]"
           style="background: rgba(0 0 0 / 80%); backdrop-filter: blur(5px)">
-          <div
-            v-t="'Reword'"
-            class="gasoek-one-regular | text-[4cqw] text-center"></div>
-
           <div class="flex gap-[0.5cqw] flex-1">
             <div
               class="flex-1 | flex flex-col justify-center gap-[0.2cqw] | border-[0.15cqw] border-blue-950 rounded-lg | p-[1cqw]">
