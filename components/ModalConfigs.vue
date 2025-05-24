@@ -67,8 +67,4 @@ const toggleEffect = () => {
   soundStore.play("select")
   soundStore.toggleEffect()
 }
-
-onMounted(() => {
-  console.log(i18n)
-})
 </script>

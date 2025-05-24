@@ -65,7 +65,7 @@
         <div
           class="w-full | flex items-center gap-[0.5cqh] | px-[0.5cqw] | absolute top-[0.5cqw] | text-white font-bold">
           <div class="flex items-center gap-[1cqw] | bg-black w-fit | px-[0.5cqw] rounded-lg">
-            <span class="text-[1.5cqw]">Lv. {{ round }}</span>
+            <span class="text-[1.5cqw]">ROUND {{ round }}</span>
           </div>
           <div class="text-[1.2cqw] bg-black w-fit | px-[0.5cqw] rounded-lg">
             <span
@@ -188,7 +188,7 @@
           v-model="activeJoystick"
           class="absolute bottom-[3cqw] left-[3cqw]" />
 
-        <div class="flex items-center gap-[1cqw] | absolute bottom-[2cqw] right-[1cqw]">
+        <div class="flex items-center gap-[1cqw] | absolute bottom-0 right-[1cqw]">
           <!-- 무기버튼 -->
           <button
             class="flex items-center gap-[0.5cqw] bg-orange-700 | h-fit pr-[1.5cqw] pl-[0.5cqw] py-[0.2cqw] | rounded-lg border-black border-[0.2cqw]"
@@ -248,6 +248,30 @@
             </div>
           </button>
           <!-- 스텟버튼 -->
+
+          <!-- 스킬 -->
+          <div
+            class="relative bg-black w-[8cqw] aspect-square rounded-tl-[5cqw] rounded-tr-[1cqw] rounded-bl-[1cqw] | pl-[0.2cqw] pt-[0.2cqw]">
+            <div
+              class="grid place-items-center | w-full h-full rounded-tl-[5cqw] rounded-tr-[1cqw] rounded-bl-[1cqw]"
+              :style="{
+                'clip-path': `inset(0 0 ${100 - (skillCooltime / thunderCoolTime) * 100}%  0)`,
+              }"
+              :class="{
+                'bg-gray-700': skillCooltime < thunderCoolTime,
+                'bg-blue-600': skillCooltime >= thunderCoolTime,
+              }">
+              <button
+                class="stat-sprites | mt-[0.5cqw] ml-[0.5cqw] | w-[6.5cqw] aspect-square outline-0"
+                :style="{
+                  backgroundPosition: etcUtil.getSpritePosition(20),
+                  filter: `grayscale(${skillCooltime < thunderCoolTime ? 1 : 0})`,
+                }"
+                :disabled="skillCooltime < thunderCoolTime"
+                @click="scene.events.emit('thunder')"></button>
+            </div>
+          </div>
+          <!-- 스킬 -->
         </div>
       </main>
     </div>
@@ -261,8 +285,8 @@ import { Gun } from "~/models/Gun"
 import { Materials } from "~/models/Material"
 import { Player } from "~/models/Player"
 import { PayBack, Sharper } from "~/models/PurchaseItem"
+import { Thunder } from "~/models/Skill"
 import { Weapons, type Weapon } from "~/models/Weapon"
-
 const emit = defineEmits<{
   (e: "next", scene: "result"): void
 }>()
@@ -290,6 +314,7 @@ const materials = ref<Materials>(new Materials())
 const initialRemainnedTime = 3
 const roundTime = 40
 const enemyCountDeadline = 29
+const thunderCoolTime = 160
 
 const round = ref(0)
 const remainnedTime = ref(initialRemainnedTime)
@@ -334,6 +359,8 @@ const selectedWeaponIndex = ref(0)
 const selectedGambleIndex = ref(0)
 
 const isAllWeaponEffect = ref(false)
+
+const skillCooltime = ref(0)
 
 let scene: Phaser.Scene & { dmgPool: Phaser.GameObjects.Group }
 let isBossRemained = false
@@ -395,6 +422,10 @@ onMounted(() => {
           frameHeight: 100,
         })
         scene.load.spritesheet("ring-sprite", "assets/images/ring_sprite.png", {
+          frameWidth: 100,
+          frameHeight: 100,
+        })
+        scene.load.spritesheet("thunder-sprite", "assets/images/thunder_sprite.png", {
           frameWidth: 100,
           frameHeight: 100,
         })
@@ -492,6 +523,12 @@ onMounted(() => {
           repeat: -1,
         })
 
+        scene.anims.create({
+          key: "thunder-animation",
+          frames: scene.anims.generateFrameNumbers("thunder-sprite", { start: 0, end: 9 }),
+          frameRate: 9,
+        })
+
         enforces.value = new Enforces()
         weapons.value = new Weapons(scene, enemies, materials.value, enforces.value)
 
@@ -534,6 +571,25 @@ onMounted(() => {
           remainnedEnemies.value++
         })
 
+        scene.events.on("thunder", () => {
+          isShowTextEffect.value = `THUNDER`
+
+          scene.time.delayedCall(1200, () => {
+            isShowTextEffect.value = ""
+            scene.cameras.main.shake(100, 0.01)
+            skillCooltime.value = 0
+            soundStore.play("thunder")
+            ;[...enemies.children].forEach((enemy) => {
+              enemy.thunderEffect
+                .setPosition(enemy.x, enemy.y)
+                .setFrame(9)
+                .play("thunder-animation")
+
+              enemy.remainedStuns[0] = 1000 // 스턴
+              enemy.takeDamage(Thunder.of(), materials.value, enforces.value!)
+            })
+          })
+        })
         scene.time.addEvent({
           delay: 1000 / window.speed,
           repeat: -1,
@@ -541,6 +597,7 @@ onMounted(() => {
             if (scene.data.get("paused")) return
 
             remainnedTime.value--
+            if (skillCooltime.value <= thunderCoolTime) skillCooltime.value++
 
             if (remainnedTime.value % 5 === 0) {
               remainnedEnemies.value = enemies.group.children.size
@@ -549,20 +606,32 @@ onMounted(() => {
             if (remainnedTime.value < 0) {
               round.value++
 
-              if (round.value % 10 === 0) {
-                isShowTextEffect.value = `ROUND ${round.value}`
-                soundStore.play("round")
+              isShowTextEffect.value = `ROUND ${round.value}`
+              soundStore.play("round")
 
+              if (round.value % 10 === 0) {
                 scene.time.delayedCall(1200, () => {
                   isShowTextEffect.value = "EMERGENCY"
                   soundStore.play("round")
 
                   scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
                 })
+              } else if (`${round.value}`.endsWith("5")) {
+                scene.time.delayedCall(1200, () => {
+                  isShowTextEffect.value = "SELECT"
+                  soundStore.play("round")
+
+                  scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
+                })
+              } else if (`${round.value}`.endsWith("9")) {
+                scene.time.delayedCall(1200, () => {
+                  isShowTextEffect.value = "BREAKTIME"
+                  soundStore.play("round")
+
+                  scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
+                })
               } else {
-                isShowTextEffect.value = `ROUND ${round.value}`
                 scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
-                soundStore.play("round")
               }
 
               remainnedTime.value = roundTime

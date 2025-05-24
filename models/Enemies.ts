@@ -148,6 +148,8 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   stunTimer?: Phaser.Time.TimerEvent
   isAppliedDcrease = false
 
+  thunderEffect!: Phaser.GameObjects.Sprite
+
   constructor(
     scene: Phaser.Scene,
     x: number,
@@ -163,7 +165,16 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     scene.add.existing(this)
     scene.physics.add.existing(this)
-    const hp = this.isBoss ? this.increaseHP(this.round) * 4 : this.increaseHP(this.round)
+
+    let hp = 0
+    if (this.isBoss) {
+      hp = this.increaseHP(this.round) * 4
+    } else {
+      if (`${this.round}`.endsWith("9")) {
+        hp = 1
+        this.setTint(0xffff00)
+      } else hp = this.increaseHP(this.round)
+    }
 
     this.setData("hp", hp)
       .setData("pathIndex", 0)
@@ -174,11 +185,11 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     if (this.isBoss) this.setTint(0xff0000)
 
     this.physicalDefence = this.isBoss
-      ? numberUtil.addPercent(this.increaseDefence(this.round), 200)
+      ? numberUtil.addPercent(this.increaseDefence(this.round), 130)
       : this.increaseDefence(this.round)
 
     this.magicalDefence = this.isBoss
-      ? numberUtil.addPercent(this.increaseDefence(this.round), 200)
+      ? numberUtil.addPercent(this.increaseDefence(this.round), 130)
       : this.increaseDefence(this.round)
 
     this.pathes = paths
@@ -191,6 +202,12 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       callback: () => this.clearStunStack(),
       callbackScope: this,
     })
+
+    this.thunderEffect = this.scene.add
+      .sprite(x, y, "thunder-sprite", 0)
+      .setScale(0.9)
+      .setDepth(this.depth + 1)
+      .setFrame(9)
   }
 
   applyStunOne(weapon: Weapon, materials: Materials) {
@@ -219,7 +236,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
   increaseDefence(round: number): number {
     const roundGroup = Math.ceil(round / 10)
-    const value = [0, 0, 10, 30, 70, 100, 200, 250][roundGroup]
+    const value = [0, 0, 5, 15, 25, 35, 50, 100][roundGroup]
     return value + round
   }
 
@@ -434,7 +451,9 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     const isAllWeaponActiveLevel = this.scene.data.get("isAllWeaponActive") ?? 0
 
     damage = numberUtil.addPercent(damage, isAllWeaponActiveLevel * 20)
-    const finalDamage = Math.ceil(damage)
+
+    const finalDamage =
+      weaponData.name === "Thunder" ? Math.ceil((this.getData("maxHp") * 2) / 3) : Math.ceil(damage)
 
     if (weaponData.dotted) this.applyDot(weaponData, finalDamage, weaponData.dotted * 250, 250)
 
