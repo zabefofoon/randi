@@ -1,5 +1,8 @@
 <template>
   <div class="w-screen h-screen | flex items-center justify-center | bg-black">
+    <img
+      class="w-0 h-0"
+      src="/assets/images/tutorial.gif" />
     <ModalConfigs
       v-if="isShowConfigPopup"
       @close="showConfigPopup(false)">

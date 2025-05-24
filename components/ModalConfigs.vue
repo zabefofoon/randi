@@ -57,8 +57,6 @@ const emit = defineEmits<{
 
 const soundStore = useSoundStore()
 
-const i18n = useI18n()
-
 const toggleBGM = () => {
   soundStore.play("select")
   soundStore.toggleBGM()

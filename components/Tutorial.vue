@@ -7,7 +7,9 @@
 
       <div
         class="flex flex-col items-center justify-center gap-[1cqw] | relative z-[1] | w-[50cqw] pointer-events-none">
-        <UISpinner class="text-[2cqw]" />
+        <img
+          class="block max-w-[20cqw] rounded-xl"
+          src="/assets/images/tutorial.gif" />
         <UICarousel
           class="w-full h-[4cqw]"
           vertical
@@ -21,11 +23,16 @@
             </p>
           </UICarouselSlide>
         </UICarousel>
-        <p
-          v-if="progress <= 0.99"
-          class="text-[1cqw]">
-          {{ parseInt((progress * 100).toFixed(2)) }}%
-        </p>
+        <div class="absolute bottom-0 translate-y-[200%]">
+          <p
+            v-if="progress <= 0.99"
+            class="text-[1cqw]">
+            {{ parseInt((progress * 100).toFixed(2)) }}%
+          </p>
+          <UISpinner
+            v-else
+            class="text-[2cqw]" />
+        </div>
       </div>
     </div>
   </div>
