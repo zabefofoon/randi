@@ -213,6 +213,7 @@
         <VirtualJoystick
           v-if="isTouchDevice"
           v-model="activeJoystick"
+          :step-tutorial="stepTutorial"
           class="absolute bottom-[3cqw] left-[3cqw]"
           @step-next="stepTutorial = 'gacha'" />
         <UIDropdown
