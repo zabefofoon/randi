@@ -149,6 +149,7 @@ const select = (index: number) => {
   if (el) {
     el.classList.remove("pop-animate")
     el.classList.add("pop-animate")
+    etcUtil.restartAnimation(el)
     el.addEventListener("animationend", () => el?.classList.remove("pop-animate"))
   }
 }

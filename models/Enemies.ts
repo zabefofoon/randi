@@ -259,14 +259,14 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   increaseHP(round: number): number {
     const _round = round - 1
     const roundGroup = Math.ceil(_round / 10)
-    const roundMultiplies = [1, 1, 1.2, 1.5, 2, 3, 5, 10]
+    const roundMultiplies = [1, 1, 1.2, 1.5, 3, 6, 15, 10]
     const result = (Math.pow(_round * 2, 2) + 10) * (Math.floor(_round / 10) + 1)
     return Math.ceil(result * (roundMultiplies?.[roundGroup] ?? 1))
   }
 
   increaseDefence(round: number): number {
     const roundGroup = Math.ceil(round / 10)
-    const value = [0, 0, 5, 15, 25, 35, 80, 100][roundGroup]
+    const value = [0, 0, 5, 15, 40, 70, 150, 200][roundGroup]
     return value + round
   }
 
