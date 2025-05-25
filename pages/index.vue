@@ -32,6 +32,7 @@ import { LAST_ACCESS } from "~/const"
 const TODAY = new Date().toISOString().slice(0, 10)
 
 const i18n = useI18n()
+const { gtag } = useGtag()
 const snackbarStore = useSnackbarStore()
 const gameStore = useGameStore()
 const soundStore = useSoundStore()
@@ -88,6 +89,8 @@ watch(currentScene, (scene) =>
       soundStore.stopBGM()
       soundStore.play("door")
     }
+
+    gtag("event", "씬", { scene })
   })
 )
 </script>

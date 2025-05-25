@@ -298,6 +298,8 @@ const emit = defineEmits<{
 }>()
 
 const i18n = useI18n()
+const { gtag } = useGtag()
+
 const gameStore = useGameStore()
 const soundStore = useSoundStore()
 
@@ -391,8 +393,16 @@ onMounted(() => {
   if (!phaserContainer.value) return
   window.speed = 1.1
 
-  if (gameStore.checkSelectedPurchaseItem(PayBack)) gameStore.spendPurchaseItem(PayBack)
-  if (gameStore.checkSelectedPurchaseItem(Sharper)) gameStore.spendPurchaseItem(Sharper)
+  if (gameStore.checkSelectedPurchaseItem(PayBack)) {
+    gtag("event", "상점 아이템 사용", { name: "페이백" })
+    gameStore.spendPurchaseItem(PayBack)
+  }
+  if (gameStore.checkSelectedPurchaseItem(Sharper)) {
+    gtag("event", "상점 아이템 사용", { name: "타짜" })
+    gameStore.spendPurchaseItem(Sharper)
+  }
+
+  gtag("event", "캐릭터 사용", { name: gameStore.selectCharacter.name })
 
   game = new Phaser.Game({
     pixelArt: true,

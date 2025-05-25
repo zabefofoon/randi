@@ -203,6 +203,7 @@ const selectedIndex = defineModel<number>("selectedIndex", { default: 0 })
 const isAllWeaponEffect = defineModel<boolean>("isAllWeaponEffect", { default: false })
 
 const i18n = useI18n()
+const { gtag } = useGtag()
 
 const gameStore = useGameStore()
 const soundStore = useSoundStore()
@@ -259,6 +260,8 @@ const getNextWeapon = (item: NextInfo) => {
   loadAllAttack()
 
   soundStore.play("equip")
+
+  gtag("event", "무기선택", { weapon: cls.meta.name })
 }
 
 const isWeaponGettable = computed(() => {

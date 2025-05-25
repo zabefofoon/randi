@@ -114,6 +114,7 @@ const gachaChance = defineModel<number>("gachaChance", { default: 0 })
 const selectChance = defineModel<number>("selectChance", { default: 0 })
 
 const i18n = useI18n()
+const { gtag } = useGtag()
 
 const gameStore = useGameStore()
 const soundStore = useSoundStore()
@@ -162,6 +163,7 @@ const useJoker = () => {
   soundStore.play("stat")
   jokerLength.value--
   gameStore.spendPurchaseItem(Joker)
+  gtag("event", "상점 아이템 사용", { name: "조커" })
 }
 const initJokerLength = () => {
   if (gameStore.checkSelectedPurchaseItem(Joker))
