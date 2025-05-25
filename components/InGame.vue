@@ -152,6 +152,11 @@
                 :style="{
                   backgroundPosition: etcUtil.getSpritePosition(index),
                 }"></div>
+              <span
+                v-if="isShowMaterialsPopup || isShowWeaponsPopup"
+                class="text-[1.3cqw] text-white | mr-[0.5cqw]">
+                {{ i18n.t(key) }}
+              </span>
               <span class="text-[1.3cqw] text-white">
                 {{ materials[key].length }}
               </span>
@@ -251,7 +256,7 @@
             <!-- 스텟버튼 -->
           </div>
           <!-- 스킬 -->
-          <div class="flex flex-col gap-[0.2cqw]">
+          <div class="flex gap-[0.2cqw]">
             <div
               class="relative bg-black w-[8cqw] aspect-square rounded-tl-[5cqw] rounded-tr-[1cqw] rounded-bl-[1cqw] | pl-[0.2cqw] pt-[0.2cqw]">
               <div
@@ -277,7 +282,7 @@
             </div>
             <div
               v-if="hasRageMode"
-              class="relative bg-black w-[8cqw] aspect-square rounded-t-[1cqw] rounded-bl-[5cqw] rounded-br-[1cqw] | pl-[0.2cqw] pt-[0.2cqw]">
+              class="relative bg-black w-[8cqw] aspect-square rounded-[1cqw] | pl-[0.2cqw] pt-[0.2cqw]">
               <div class="bg-green-600 | grid place-items-center | w-full h-full rounded-[inherit]">
                 <button
                   class="stat-sprites | mb-[0.5cqw] ml-[0.5cqw] | w-[6.5cqw] aspect-square outline-0"
@@ -305,10 +310,12 @@ import { Player } from "~/models/Player"
 import { PayBack, Sharper } from "~/models/PurchaseItem"
 import { Thunder } from "~/models/Skill"
 import { Weapons, type Weapon } from "~/models/Weapon"
+
 const emit = defineEmits<{
   (e: "next", scene: "result"): void
 }>()
 
+const i18n = useI18n()
 const gameStore = useGameStore()
 const soundStore = useSoundStore()
 
