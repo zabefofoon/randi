@@ -67,6 +67,7 @@
           <br />
           <span v-t="'RandomDefence'"></span>
         </h1>
+
         <div
           class="dissolve | flex flex-col items-center gap-[0.5cqw] | mt-[2cqw] | font-bold text-[2.5cqw] text-white">
           <button
@@ -104,6 +105,12 @@
             </NuxtLink>
           </div>
         </div>
+
+        <h2
+          v-if="runtimeConfig.public.IS_ITCH_MODE"
+          class="dissolve | relative z-[1] | mt-[1cqw] | leading-none text-center text-[1.2cqw] font-bold text-outline text-gray-300">
+          DEMO
+        </h2>
       </main>
 
       <div
@@ -157,6 +164,7 @@ const emit = defineEmits<{
 
 const i18n = useI18n()
 const { gtag } = useGtag()
+const runtimeConfig = useRuntimeConfig()
 
 const gameStore = useGameStore()
 const soundStore = useSoundStore()

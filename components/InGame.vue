@@ -299,6 +299,7 @@ const emit = defineEmits<{
 
 const i18n = useI18n()
 const { gtag } = useGtag()
+const runtimeConfig = useRuntimeConfig()
 
 const gameStore = useGameStore()
 const soundStore = useSoundStore()
@@ -319,6 +320,8 @@ let cursors: Phaser.Types.Input.Keyboard.CursorKeys
 const enforces = ref<Enforces>()
 const weapons = ref<Weapons>()
 const materials = ref<Materials>(new Materials())
+
+const clearRound = runtimeConfig.public.IS_ITCH_MODE ? 20 : 60
 
 const initialRemainnedTime = 3
 const roundTime = 40
@@ -751,7 +754,7 @@ onMounted(() => {
               isShowGameOverPopup.value = true
             }
 
-            if (round.value === 60 && remainnedTime.value === 0) {
+            if (round.value === clearRound && remainnedTime.value === 0) {
               scene.physics.pause()
               isShowGameClearPopup.value = true
               isClear = true
