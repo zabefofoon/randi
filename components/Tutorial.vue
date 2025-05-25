@@ -23,7 +23,7 @@
             </p>
           </UICarouselSlide>
         </UICarousel>
-        <div class="absolute bottom-0 translate-y-[200%]">
+        <div class="absolute bottom-0 translate-y-[150%]">
           <p
             v-if="progress <= 0.99"
             class="text-[1cqw]">

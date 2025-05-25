@@ -349,6 +349,8 @@ const showGamblePopup = (value: boolean) => {
 }
 const isShowConfigPopup = ref(false)
 const showConfigPopup = (value: boolean) => {
+  if (stepTutorial.value) return
+
   isShowConfigPopup.value = value
   if (value) soundStore.play("select")
 }
@@ -1121,6 +1123,7 @@ watch(stepTutorial, (value) => {
     isShowTextEffect.value = `GAME START`
     scene.time.delayedCall(1200, () => {
       isShowTextEffect.value = ``
+      stepTutorial.value = undefined
       resume()
     })
   }
