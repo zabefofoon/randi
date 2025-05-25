@@ -424,5 +424,11 @@
   "StepTutorial3": "Hier Waffen erhalten",
   "StepTutorial4": "Hier Materialien erhalten",
   "StepTutorial5": "Im Notfall Fertigkeit einsetzen",
-  "StepTutorial6": "Pfeiltasten drücken, um die Figur zu bewegen"
+  "StepTutorial6": "Pfeiltasten drücken, um die Figur zu bewegen",
+
+  "Accept": "Akzeptieren",
+  "Decline": "Ablehnen",
+  "Terms": "Nutzungsbedingungen",
+  "Privacy": "Datenschutzerklärung",
+  "CookieDesc": "Diese Website verwendet Cookies, um unseren Service zu verbessern und personalisierte Werbung anzuzeigen.<br class='pcbr' />Durch Klicken auf „Akzeptieren“ stimmen Sie der Verwendung von Cookies zu."
 }

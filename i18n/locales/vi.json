@@ -419,5 +419,11 @@
   "StepTutorial3": "Rút vũ khí tại đây",
   "StepTutorial4": "Rút nguyên liệu tại đây",
   "StepTutorial5": "Dùng kỹ năng khi khẩn cấp",
-  "StepTutorial6": "Nhấn phím mũi tên để di chuyển nhân vật"
+  "StepTutorial6": "Nhấn phím mũi tên để di chuyển nhân vật",
+
+  "Accept": "Chấp nhận",
+  "Decline": "Từ chối",
+  "Terms": "Điều khoản dịch vụ",
+  "Privacy": "Chính sách quyền riêng tư",
+  "CookieDesc": "Trang web của chúng tôi sử dụng cookie để cải thiện dịch vụ và hiển thị quảng cáo được cá nhân hoá.<br class='pcbr' />Nhấp vào ‘Chấp nhận’ đồng nghĩa với việc bạn đồng ý cho phép sử dụng cookie."
 }

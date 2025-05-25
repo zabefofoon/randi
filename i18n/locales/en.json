@@ -300,5 +300,11 @@
   "StepTutorial3": "Draw weapons here",
   "StepTutorial4": "Draw materials here",
   "StepTutorial5": "Use skill in an emergency",
-  "StepTutorial6": "Press arrow keys to move the character"
+  "StepTutorial6": "Press arrow keys to move the character",
+
+  "Accept": "Accept",
+  "Decline": "Decline",
+  "Terms": "Terms of Service",
+  "Privacy": "Privacy Policy",
+  "CookieDesc": "Our site uses cookies to improve service and deliver personalized advertising.<br class='pcbr' />By clicking ‘Accept,’ you consent to the use of cookies."
 }

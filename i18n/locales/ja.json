@@ -424,5 +424,11 @@
   "StepTutorial3": "ここで武器を引く",
   "StepTutorial4": "ここで素材を引く",
   "StepTutorial5": "緊急時にスキルを使用",
-  "StepTutorial6": "矢印キーでキャラを移動"
+  "StepTutorial6": "矢印キーでキャラを移動",
+
+  "Accept": "同意する",
+  "Decline": "拒否する",
+  "Terms": "利用規約",
+  "Privacy": "プライバシーポリシー",
+  "CookieDesc": "当サイトではサービス向上とパーソナライズされた広告のためにクッキーを使用しています。<br class='pcbr' />「同意する」をクリックすると、クッキーの使用に同意したものとみなされます。"
 }

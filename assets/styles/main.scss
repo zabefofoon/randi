@@ -115,3 +115,19 @@ body {
 .title-green {
   color: #22c55e;
 }
+
+.mobr {
+  display: none;
+
+  @include global.mobile {
+    display: block;
+  }
+}
+
+.pcbr {
+  display: block;
+
+  @include global.mobile {
+    display: none;
+  }
+}

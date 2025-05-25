@@ -421,5 +421,11 @@
   "StepTutorial3": "在此抽取武器",
   "StepTutorial4": "在此抽取材料",
   "StepTutorial5": "緊急時使用技能",
-  "StepTutorial6": "按方向鍵移動角色"
+  "StepTutorial6": "按方向鍵移動角色",
+
+  "Accept": "接受",
+  "Decline": "拒絕",
+  "Terms": "服務條款",
+  "Privacy": "隱私政策",
+  "CookieDesc": "本網站使用 Cookie 以提升服務並提供個人化廣告。<br class='pcbr' />點擊「接受」即表示您同意我們使用 Cookie。"
 }

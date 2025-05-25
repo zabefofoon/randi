@@ -40,3 +40,5 @@ export interface Document extends HTMLDocument {
   msFullscreenElement?: Element
   webkitFullscreenElement?: Element
 }
+
+declare module "*.md"

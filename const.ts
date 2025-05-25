@@ -27,5 +27,6 @@ export const LOCAL_SOUND_EFFECT = "effect"
 export const LOCAL_SOUND_BGM = "bgm"
 export const LAST_ACCESS = "lastAccess"
 export const STEP_TUTORIAL = "stepTutorial"
+export const LOCAL_GTAG_COOKIE = "gtag"
 
 export const THUNDER_COOLTIME = 160

@@ -425,5 +425,11 @@
   "StepTutorial3": "Obtén armas aquí",
   "StepTutorial4": "Obtén materiales aquí",
   "StepTutorial5": "Usa la habilidad en caso de emergencia",
-  "StepTutorial6": "Presiona las flechas para mover al personaje"
+  "StepTutorial6": "Presiona las flechas para mover al personaje",
+
+  "Accept": "Aceptar",
+  "Decline": "Rechazar",
+  "Terms": "Términos de servicio",
+  "Privacy": "Política de privacidad",
+  "CookieDesc": "Nuestro sitio utiliza cookies para mejorar el servicio y mostrar publicidad personalizada.<br class='pcbr' />Al hacer clic en «Aceptar», consientes el uso de cookies."
 }

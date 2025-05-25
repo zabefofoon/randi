@@ -424,5 +424,11 @@
   "StepTutorial3": "Dapatkan senjata di sini",
   "StepTutorial4": "Dapatkan bahan di sini",
   "StepTutorial5": "Gunakan skill dalam keadaan darurat",
-  "StepTutorial6": "Tekan tombol panah untuk menggerakkan karakter"
+  "StepTutorial6": "Tekan tombol panah untuk menggerakkan karakter",
+
+  "Accept": "Setuju",
+  "Decline": "Tolak",
+  "Terms": "Syarat Layanan",
+  "Privacy": "Kebijakan Privasi",
+  "CookieDesc": "Situs kami menggunakan cookie untuk meningkatkan layanan dan menampilkan iklan yang dipersonalisasi.<br class='pcbr' />Dengan mengklik ‘Setuju’, Anda menyetujui penggunaan cookie."
 }

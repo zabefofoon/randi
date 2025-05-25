@@ -74,6 +74,7 @@ export default defineNuxtConfig({
   },
   css: ["~/assets/styles/main.scss"],
   vite: {
+    assetsInclude: ["**/*.md"],
     css: {
       preprocessorOptions: {
         scss: {

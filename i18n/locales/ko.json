@@ -299,5 +299,10 @@
   "StepTutorial3": "이곳에서 무기 뽑기",
   "StepTutorial4": "이곳에서 재료 뽑기",
   "StepTutorial5": "위급시 스킬 사용",
-  "StepTutorial6": "방향키를 눌러 캐릭터 이동"
+  "StepTutorial6": "방향키를 눌러 캐릭터 이동",
+  "Accept": "동의",
+  "Decline": "거부",
+  "Terms": "이용약관",
+  "Privacy": "개인정보 처리방침",
+  "CookieDesc": "저희 사이트는 서비스 개선과 개인 맞춤 광고를 위해 쿠키를 사용합니다.<br class='pcbr' />‘동의’ 를 눌러주시면 쿠키 저장에 동의하시는 것으로 간주합니다."
 }

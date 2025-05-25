@@ -419,5 +419,11 @@
   "StepTutorial3": "Adquira armas aqui",
   "StepTutorial4": "Adquira materiais aqui",
   "StepTutorial5": "Use a habilidade em emergência",
-  "StepTutorial6": "Pressione as setas para mover o personagem"
+  "StepTutorial6": "Pressione as setas para mover o personagem",
+
+  "Accept": "Aceitar",
+  "Decline": "Recusar",
+  "Terms": "Termos de serviço",
+  "Privacy": "Política de privacidade",
+  "CookieDesc": "Nosso site usa cookies para melhorar o serviço e exibir anúncios personalizados.<br class='pcbr' />Ao clicar em ‘Aceitar’, você concorda com o uso de cookies."
 }
