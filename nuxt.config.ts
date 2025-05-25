@@ -2,6 +2,24 @@ import path from "node:path"
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  gtag: {
+    id: "G-E9262Y0SML",
+    enabled: process.env.NODE_ENV === "production",
+    initCommands: [
+      // Setup up consent mode
+      [
+        "consent",
+        "default",
+        {
+          ad_user_data: "denied",
+          ad_personalization: "denied",
+          ad_storage: "denied",
+          analytics_storage: "denied",
+          wait_for_update: 500,
+        },
+      ],
+    ],
+  },
   ssr: false,
   // routeRules: {
   //   "/": { ssr: false },
@@ -17,6 +35,7 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "@nuxtjs/tailwindcss",
     "@nuxt/fonts",
+    "nuxt-gtag",
   ],
   i18n: {
     strategy: "prefix_and_default",
