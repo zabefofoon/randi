@@ -42,6 +42,28 @@
       v-if="isShowConfigPopup"
       @close="showConfigPopup(false)">
       <div class="w-full | border-t border-gray-900 border-[1px] | my-[1cqw]"></div>
+      <div class="flex flex-col gap-[0.5cqw] | w-full">
+        <div class="flex justify-between gap-[5cqw] mb-[0.5cqw]">
+          <span class="text-outline text-[1.7cqw] font-bold">TUTORIAL</span>
+        </div>
+        <div class="flex justify-between gap-[5cqw]">
+          <span class="text-outline text-[1.7cqw] font-bold">TUTORIAL</span>
+
+          <button
+            class="grid place-items-center | relative | px-[2cqw] py-[0.5cqw] | border-black border-[0.21cqw] rounded-lg | leading-none"
+            :class="{
+              'bg-amber-500': gameStore.isShowStepTutorial,
+              'bg-blue-900': !gameStore.isShowStepTutorial,
+            }"
+            @click="gameStore.setShowStepTutorial(!gameStore.isShowStepTutorial)">
+            <span class="text-outline text-[1.7cqw] font-bold | min-w-[5cqw]">
+              <template v-if="gameStore.isShowStepTutorial">ON</template>
+              <template v-else>OFF</template>
+            </span>
+          </button>
+        </div>
+      </div>
+      <div class="w-full | border-t border-gray-900 border-[1px] | my-[1cqw]"></div>
       <div class="w-full | flex flex-col gap-[0.5cqw]">
         <button
           class="grid place-items-center | relative bg-orange-700 | px-[2cqw] py-[0.5cqw] | border-black border-[0.21cqw] rounded-lg | leading-none"
@@ -60,7 +82,7 @@
       </div>
     </ModalConfigs>
 
-    <div class="content | relative | aspect-video max-w-full max-h-full | bg-white">
+    <div class="content | relative | aspect-video max-w-full max-h-full | overflow-hidden">
       <main class="relative | w-full h-full | flex flex-col justify-center items-center">
         <div
           class="w-full | flex items-center gap-[0.5cqh] | px-[0.5cqw] | absolute top-[0.5cqw] | text-white font-bold">
@@ -191,110 +213,67 @@
         <VirtualJoystick
           v-if="isTouchDevice"
           v-model="activeJoystick"
-          class="absolute bottom-[3cqw] left-[3cqw]" />
+          class="absolute bottom-[3cqw] left-[3cqw]"
+          @step-next="stepTutorial = 'gacha'" />
+        <UIDropdown
+          v-else
+          class="absolute bottom-[3cqw] left-[3cqw] pointer-events-none"
+          :value="stepTutorial === 'move'"
+          :style="{
+            opacity: stepTutorial === 'move' ? 1 : 0,
+          }"
+          use-arrow
+          prevent-hide-outside
+          :fit-options-parent="false"
+          :position="{
+            x: 'RIGHT',
+          }">
+          <template #button>
+            <img
+              class="w-[16cqw]"
+              src="/assets/images/keyboard.png" />
+          </template>
+          <template #options>
+            <div class="p-[0.5cqw] bg-white rounded-lg | flex gap-[0.5cqw]">
+              <p
+                v-t="'StepTutorial6'"
+                class="text-[1.5cqw] whitespace-nowrap text-right font-bold"></p>
+              <button
+                v-t="'Next'"
+                class="relative z-[1] | rounded-lg bg-orange-600 border-[0.2cqw] border-black | px-[1cqw] | text-outline whitespace-nowrap text-white text-[1.2cqw] font-bold | pointer-events-auto"
+                @click="stepTutorial = 'gacha'"></button>
+            </div>
+          </template>
+        </UIDropdown>
 
         <div class="flex items-end gap-[1cqw] | absolute bottom-0 right-[1cqw]">
           <div class="flex gap-[1cqw] | mb-[1cqw]">
-            <!-- 무기버튼 -->
-            <button
-              class="flex items-center gap-[0.5cqw] bg-orange-700 | h-fit | pr-[1.5cqw] pl-[0.5cqw] py-[0.2cqw] | rounded-lg border-black border-[0.2cqw]"
-              @click="showGamblePopup(true)">
-              <div
-                class="stat-sprites | w-[3cqw] aspect-square"
-                :style="{
-                  backgroundPosition: etcUtil.getSpritePosition(10),
-                }"></div>
-              <span
-                v-t="'Gamble'"
-                class="block text-white | text-[1.8cqw] font-bold text-outline leading-none">
-              </span>
-            </button>
-            <!-- 무기버튼 -->
-
-            <!-- 무기버튼 -->
-            <button
-              class="flex items-center gap-[0.5cqw] bg-blue-950 | h-fit | pr-[1.5cqw] pl-[0.5cqw] py-[0.2cqw] | rounded-lg border-black border-[0.2cqw]"
-              @click="showWeaponsPopup(true)">
-              <div
-                class="stat-sprites | w-[3cqw] aspect-square"
-                :style="{
-                  backgroundPosition: etcUtil.getSpritePosition(8),
-                }"></div>
-              <span
-                v-t="'Weapon'"
-                class="block text-white | text-[1.8cqw] font-bold text-outline leading-none">
-              </span>
-            </button>
-            <!-- 무기버튼 -->
-
-            <!-- 스텟버튼 -->
-            <button
-              class="flex items-center gap-[0.5cqw] | relative | h-fit | pr-[1.5cqw] pl-[0.5cqw] py-[0.2cqw] | rounded-lg border-black border-[0.2cqw]"
-              :class="{
-                'bg-amber-500': selectChance > 0,
-                'bg-blue-950': selectChance <= 0,
-              }"
-              @click="showMaterialsPopup(true)">
-              <div
-                class="stat-sprites | w-[3cqw] aspect-square"
-                :style="{
-                  backgroundPosition: etcUtil.getSpritePosition(9),
-                }"></div>
-              <span
-                v-t="'Stat'"
-                class="block | text-white text-[1.8cqw] font-bold text-outline leading-none">
-              </span>
-              <div
-                v-if="gachaChance + selectChance > 0"
-                class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2">
-                <span
-                  class="text-white | grid place-items-center | w-[2.2cqw] aspect-square | rounded-full | bg-red-500 | text-outline text-[1.2cqw] font-bold | border-black border-[0.14cqw]">
-                  {{ selectChance + gachaChance }}
-                </span>
-              </div>
-            </button>
-            <!-- 스텟버튼 -->
+            <InGameGachaButton
+              :step-tutorial="stepTutorial"
+              @show="showGamblePopup(true)"
+              @step-next="stepTutorial = 'weapon'" />
+            <InGameWeaponButton
+              :step-tutorial="stepTutorial"
+              @show="showWeaponsPopup(true)"
+              @step-next="stepTutorial = 'stat'" />
+            <InGameStatButton
+              :step-tutorial="stepTutorial"
+              :select-chance="selectChance"
+              :gacha-chance="gachaChance"
+              @show="showMaterialsPopup(true)"
+              @step-next="stepTutorial = 'skill'" />
           </div>
-          <!-- 스킬 -->
+
           <div class="flex gap-[0.2cqw]">
-            <div
-              class="relative bg-black w-[8cqw] aspect-square rounded-tl-[5cqw] rounded-tr-[1cqw] rounded-bl-[1cqw] | pl-[0.2cqw] pt-[0.2cqw]">
-              <div
-                class="grid place-items-center | w-full h-full rounded-tl-[5cqw] rounded-tr-[1cqw] rounded-bl-[1cqw]"
-                :style="{
-                  'clip-path': `inset(0 0 ${
-                    100 - (thunderSkillCooldown / thunderCoolTime) * 100
-                  }%  0)`,
-                }"
-                :class="{
-                  'bg-gray-700': thunderSkillCooldown < thunderCoolTime,
-                  'bg-blue-600': thunderSkillCooldown >= thunderCoolTime,
-                }">
-                <button
-                  class="stat-sprites | mt-[0.5cqw] ml-[0.5cqw] | w-[6.5cqw] aspect-square outline-0"
-                  :style="{
-                    backgroundPosition: etcUtil.getSpritePosition(20),
-                    filter: `grayscale(${thunderSkillCooldown < thunderCoolTime ? 1 : 0})`,
-                  }"
-                  :disabled="thunderSkillCooldown < thunderCoolTime"
-                  @click="scene.events.emit('thunder')"></button>
-              </div>
-            </div>
-            <div
+            <InGameSkillThunder
+              :step-tutorial="stepTutorial"
+              :cooltime="thunderSkillCooldown"
+              @activate="scene.events.emit('thunder')"
+              @step-next="stepTutorial = 'start'" />
+            <InGameSkillRage
               v-if="hasRageMode"
-              class="relative bg-black w-[8cqw] aspect-square rounded-[1cqw] | pl-[0.2cqw] pt-[0.2cqw]">
-              <div class="bg-green-600 | grid place-items-center | w-full h-full rounded-[inherit]">
-                <button
-                  class="stat-sprites | mb-[0.5cqw] ml-[0.5cqw] | w-[6.5cqw] aspect-square outline-0"
-                  :style="{
-                    backgroundPosition: etcUtil.getSpritePosition(21),
-                  }"
-                  @click="scene.events.emit('rage')"></button>
-              </div>
-            </div>
+              @activate="scene.events.emit('rage')" />
           </div>
-
-          <!-- 스킬 -->
         </div>
       </main>
     </div>
@@ -302,6 +281,7 @@
 </template>
 
 <script lang="ts" setup>
+import { THUNDER_COOLTIME } from "~/const"
 import { Enemies } from "~/models/Enemies"
 import { Enforces } from "~/models/Enforces"
 import { Gun } from "~/models/Gun"
@@ -309,6 +289,7 @@ import { Materials } from "~/models/Material"
 import { Player } from "~/models/Player"
 import { PayBack, Sharper } from "~/models/PurchaseItem"
 import { Thunder } from "~/models/Skill"
+import type { StepTutorial } from "~/models/UI"
 import { Weapons, type Weapon } from "~/models/Weapon"
 
 const emit = defineEmits<{
@@ -339,7 +320,6 @@ const materials = ref<Materials>(new Materials())
 const initialRemainnedTime = 3
 const roundTime = 40
 const enemyCountDeadline = 29
-const thunderCoolTime = 160
 
 const round = ref(0)
 const remainnedTime = ref(initialRemainnedTime)
@@ -401,6 +381,8 @@ const isTouchDevice =
   "ontouchstart" in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0
 
 let damageRect: Phaser.GameObjects.Rectangle
+
+const stepTutorial = ref<StepTutorial>()
 
 onMounted(() => {
   if (!phaserContainer.value) return
@@ -549,7 +531,7 @@ onMounted(() => {
 
         cursors = scene.input.keyboard!.createCursorKeys()
 
-        player = new Player(scene, 400, 300, "playerIdle")
+        player = new Player(scene, 960 / 2, 540 / 2, "playerIdle")
         player.createPlayerAnimation()
         player.weapons.setFrame(8)
         player.weaponsEffect.setFrame(8)
@@ -670,7 +652,7 @@ onMounted(() => {
             if (scene.data.get("paused")) return
 
             remainnedTime.value--
-            if (thunderSkillCooldown.value <= thunderCoolTime) thunderSkillCooldown.value++
+            if (thunderSkillCooldown.value <= THUNDER_COOLTIME) thunderSkillCooldown.value++
 
             if (remainnedTime.value % 5 === 0) {
               remainnedEnemies.value = enemies.group.children.size
@@ -1067,7 +1049,16 @@ const rewords = computed(() => ({
 
 const startGame = () => {
   isShowTutorial.value = false
-  resume()
+
+  if (!gameStore.isShowStepTutorial) stepTutorial.value = "start"
+  else
+    scene.time.delayedCall(500, () => {
+      isShowTextEffect.value = `TUTORIAL`
+      scene.time.delayedCall(1200, () => {
+        isShowTextEffect.value = ""
+        stepTutorial.value = "move"
+      })
+    })
 }
 
 const exit = () => {
@@ -1123,6 +1114,16 @@ watch(
   },
   { immediate: true }
 )
+
+watch(stepTutorial, (value) => {
+  if (value === "start") {
+    isShowTextEffect.value = `GAME START`
+    scene.time.delayedCall(1200, () => {
+      isShowTextEffect.value = ``
+      resume()
+    })
+  }
+})
 </script>
 
 <style lang="scss" scoped>

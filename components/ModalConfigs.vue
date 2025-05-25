@@ -3,12 +3,11 @@
     enable-dim-click-close
     hide-close-button
     inner-class="!w-fit !max-w-[unset] | !bg-blue-950"
-    content-wrap-class="!overflow-visible"
     @close="emit('close')">
     <template #content>
       <div
         class="flex flex-col items-center justify-center | text-white | p-[1.5cqw] border-black border-[0.21cqw] rounded-lg">
-        <div class="flex flex-col gap-[0.5cqw] | mb-[1.5cqw]">
+        <div class="flex flex-col gap-[0.5cqw] | mb-[1.5cqw] | w-full">
           <div class="flex justify-between gap-[5cqw] mb-[0.5cqw]">
             <span class="text-outline text-[1.7cqw] font-bold">SOUND</span>
           </div>

@@ -1,43 +1,66 @@
 <template>
-  <div
-    ref="joyStickWrapEl"
-    class="joy-stick-wrap"
-    @touchmove="handleTouchmove">
-    <button
-      v-for="index in 8"
-      :key="index"
-      class="button"
-      :style="{
-        top: `calc(50% - 30px * cos(calc((${index} - 1) * 360deg / 8)))`,
-        left: `calc(50% - 30px * sin(calc((${index} - 1) * 360deg / 8)))`,
-      }"
-      :data-index="index"
-      :class="{ active: activeIndex === index }"
-      @touchstart="activeIndex = undefined"></button>
-    <div
-      class="circle"
-      :style="{
-        top: activeIndex
-          ? `calc(50% - 40px * cos(calc((${activeIndex} - 1) * 360deg / 8)))`
-          : '50%',
-        left: activeIndex
-          ? `calc(50% - 40px * sin(calc((${activeIndex} - 1) * 360deg / 8)))`
-          : '50%',
-      }"></div>
-  </div>
+  <UIDropdown
+    :value="stepTutorial === 'move'"
+    use-arrow
+    prevent-hide-outside
+    :fit-options-parent="false"
+    :position="{
+      x: 'RIGHT',
+    }">
+    <template #button>
+      <div
+        ref="joyStickWrapEl"
+        class="joy-stick-wrap"
+        @touchmove="handleTouchmove">
+        <button
+          v-for="index in 8"
+          :key="index"
+          class="button"
+          :style="{
+            top: `calc(50% - 30px * cos(calc((${index} - 1) * 360deg / 8)))`,
+            left: `calc(50% - 30px * sin(calc((${index} - 1) * 360deg / 8)))`,
+          }"
+          :data-index="index"
+          :class="{ active: activeIndex === index }"
+          @touchstart="activeIndex = undefined"></button>
+        <div
+          class="circle"
+          :style="{
+            top: activeIndex
+              ? `calc(50% - 40px * cos(calc((${activeIndex} - 1) * 360deg / 8)))`
+              : '50%',
+            left: activeIndex
+              ? `calc(50% - 40px * sin(calc((${activeIndex} - 1) * 360deg / 8)))`
+              : '50%',
+          }"></div>
+      </div>
+    </template>
+    <template #options>
+      <div class="p-[0.5cqw] bg-white rounded-lg | flex gap-[0.5cqw]">
+        <p
+          v-t="'StepTutorial1'"
+          class="text-[1.5cqw] whitespace-nowrap text-right font-bold"></p>
+        <button
+          v-t="'Next'"
+          class="relative z-[1] | rounded-lg bg-orange-600 border-[0.2cqw] border-black | px-[1cqw] | text-outline whitespace-nowrap text-white text-[1.2cqw] font-bold"
+          @click="emit('step-next')"></button>
+      </div>
+    </template>
+  </UIDropdown>
 </template>
 
 <script setup lang="ts">
-const joyStickWrapEl = ref<HTMLDivElement>()
+import type { StepTutorial } from "~/models/UI"
+
+defineProps<{
+  stepTutorial?: StepTutorial
+}>()
+const emit = defineEmits<{
+  (e: "step-next"): void
+}>()
 const activeIndex = defineModel<number>()
 
-onMounted(() => {
-  window.addEventListener("touchend", handleTouchend)
-})
-
-onBeforeMount(() => {
-  window.removeEventListener("touchend", handleTouchend)
-})
+const joyStickWrapEl = ref<HTMLDivElement>()
 
 const handleTouchmove = (event: TouchEvent) => {
   if (!joyStickWrapEl.value) return
@@ -78,6 +101,14 @@ const getPos = (el: Element) => {
 
   return { x, y }
 }
+
+onMounted(() => {
+  window.addEventListener("touchend", handleTouchend)
+})
+
+onBeforeMount(() => {
+  window.removeEventListener("touchend", handleTouchend)
+})
 </script>
 
 <style lang="scss" scoped>

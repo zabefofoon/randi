@@ -116,6 +116,7 @@ onMounted(() => {
   gameStore.initCharacters()
   gameStore.initPurchasedItems()
   gameStore.initCollection()
+  gameStore.initShowStepTutorial()
   soundStore.initSounds()
 })
 </script>

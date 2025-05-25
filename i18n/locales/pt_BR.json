@@ -411,5 +411,13 @@
   "Armerbreak": "· Quebra de Armadura: {number}",
   "TutorialDesc1": "Aproxime-se de um inimigo e, quando parar de se mover, você atacará automaticamente.",
   "TutorialDesc2": "Você não pode atacar enquanto se move, então tenha cuidado.",
-  "TutorialDesc3": "Lembre-se: tudo é uma questão de aposta!"
+  "TutorialDesc3": "Lembre-se: tudo é uma questão de aposta!",
+
+  "Next": "Próximo",
+  "StepTutorial1": "Toque aqui para mover seu personagem",
+  "StepTutorial2": "Aposte aqui",
+  "StepTutorial3": "Adquira armas aqui",
+  "StepTutorial4": "Adquira materiais aqui",
+  "StepTutorial5": "Use a habilidade em emergência",
+  "StepTutorial6": "Pressione as setas para mover o personagem"
 }

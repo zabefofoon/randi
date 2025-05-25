@@ -413,5 +413,13 @@
   "Armerbreak": "· 破甲：{number}",
   "TutorialDesc1": "靠近敵人，當你停止移動時，會自動發動攻擊。",
   "TutorialDesc2": "移動時無法攻擊，請小心。",
-  "TutorialDesc3": "記住：一切都關乎賭博！"
+  "TutorialDesc3": "記住：一切都關乎賭博！",
+
+  "Next": "下一步",
+  "StepTutorial1": "點擊這裡移動角色",
+  "StepTutorial2": "在此賭博",
+  "StepTutorial3": "在此抽取武器",
+  "StepTutorial4": "在此抽取材料",
+  "StepTutorial5": "緊急時使用技能",
+  "StepTutorial6": "按方向鍵移動角色"
 }

@@ -413,5 +413,13 @@
   "Armerbreak": "· 护甲破坏: {number}",
   "TutorialDesc1": "靠近敌人，当你停止移动时，会自动发动攻击。",
   "TutorialDesc2": "移动时无法攻击，请小心。",
-  "TutorialDesc3": "记住：一切都关乎赌博！"
+  "TutorialDesc3": "记住：一切都关乎赌博！",
+
+  "Next": "下一步",
+  "StepTutorial1": "点击这里移动角色",
+  "StepTutorial2": "在此赌博",
+  "StepTutorial3": "在此抽取武器",
+  "StepTutorial4": "在此抽取材料",
+  "StepTutorial5": "紧急时使用技能",
+  "StepTutorial6": "按方向键移动角色"
 }

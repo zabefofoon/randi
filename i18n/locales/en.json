@@ -292,5 +292,13 @@
   "Armerbreak": "· Armor Break: {number}",
   "TutorialDesc1": "Move near an enemy, and when you stop moving you’ll automatically attack.",
   "TutorialDesc2": "You can’t attack while moving, so be careful.",
-  "TutorialDesc3": "Remember—it's all about gambling!"
+  "TutorialDesc3": "Remember—it's all about gambling!",
+
+  "Next": "Next",
+  "StepTutorial1": "Tap here to move your character",
+  "StepTutorial2": "Gamble here",
+  "StepTutorial3": "Draw weapons here",
+  "StepTutorial4": "Draw materials here",
+  "StepTutorial5": "Use skill in an emergency",
+  "StepTutorial6": "Press arrow keys to move the character"
 }

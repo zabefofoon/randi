@@ -417,5 +417,13 @@
 
   "TutorialDesc1": "Approche-toi d’un ennemi et, dès que tu t’arrêtes de bouger, tu attaqueras automatiquement.",
   "TutorialDesc2": "Tu ne peux pas attaquer en te déplaçant, alors fais attention.",
-  "TutorialDesc3": "Rappelle-toi : tout est question de pari !"
+  "TutorialDesc3": "Rappelle-toi : tout est question de pari !",
+
+  "Next": "Suivant",
+  "StepTutorial1": "Touchez ici pour déplacer votre personnage",
+  "StepTutorial2": "Jouez ici",
+  "StepTutorial3": "Tirez des armes ici",
+  "StepTutorial4": "Tirez des matériaux ici",
+  "StepTutorial5": "Utilisez la compétence en cas d'urgence",
+  "StepTutorial6": "Appuyez sur les flèches pour déplacer le personnage"
 }

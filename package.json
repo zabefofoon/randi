@@ -36,6 +36,7 @@
     "vite-plugin-stylelint": "^6.0.0"
   },
   "dependencies": {
+    "@floating-ui/vue": "^1.1.6",
     "@nuxt/fonts": "0.11.0",
     "embla-carousel-autoplay": "^8.5.1",
     "embla-carousel-vue": "^8.5.1",

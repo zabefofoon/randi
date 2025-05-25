@@ -416,5 +416,13 @@
   "Armerbreak": "· アーマーブレイク: {number}",
   "TutorialDesc1": "敵に近づき、止まると自動で攻撃します。",
   "TutorialDesc2": "移動中は攻撃できないので注意してください。",
-  "TutorialDesc3": "覚えておいてください：重要なのはギャンブルです！"
+  "TutorialDesc3": "覚えておいてください：重要なのはギャンブルです！",
+
+  "Next": "次へ",
+  "StepTutorial1": "ここをタップしてキャラクターを移動",
+  "StepTutorial2": "ここでギャンブル",
+  "StepTutorial3": "ここで武器を引く",
+  "StepTutorial4": "ここで素材を引く",
+  "StepTutorial5": "緊急時にスキルを使用",
+  "StepTutorial6": "矢印キーでキャラを移動"
 }

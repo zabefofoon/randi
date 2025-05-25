@@ -417,5 +417,13 @@
 
   "TutorialDesc1": "Acércate a un enemigo y, cuando dejes de moverte, atacarás automáticamente.",
   "TutorialDesc2": "No puedes atacar mientras te mueves, así que ten cuidado.",
-  "TutorialDesc3": "Recuerda: ¡todo se trata de apostar!"
+  "TutorialDesc3": "Recuerda: ¡todo se trata de apostar!",
+
+  "Next": "Siguiente",
+  "StepTutorial1": "Toca aquí para mover a tu personaje",
+  "StepTutorial2": "Apuesta aquí",
+  "StepTutorial3": "Obtén armas aquí",
+  "StepTutorial4": "Obtén materiales aquí",
+  "StepTutorial5": "Usa la habilidad en caso de emergencia",
+  "StepTutorial6": "Presiona las flechas para mover al personaje"
 }

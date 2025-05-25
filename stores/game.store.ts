@@ -1,5 +1,11 @@
 import store from "store2"
-import { LOCAL_CHARACTERS, LOCAL_COLLECTION, LOCAL_ITEMS, LOCAL_MONEY } from "~/const"
+import {
+  LOCAL_CHARACTERS,
+  LOCAL_COLLECTION,
+  LOCAL_ITEMS,
+  LOCAL_MONEY,
+  STEP_TUTORIAL,
+} from "~/const"
 import {
   NylonMask,
   PurchaseCharacter,
@@ -121,6 +127,15 @@ export const useGameStore = defineStore("gameStore", () => {
     return collection.value.includes(weaponName)
   }
 
+  const isShowStepTutorial = ref(false)
+  const initShowStepTutorial = () => {
+    isShowStepTutorial.value = store.get(STEP_TUTORIAL) ?? true
+  }
+  const setShowStepTutorial = (value: boolean) => {
+    isShowStepTutorial.value = value
+    store.set(STEP_TUTORIAL, value)
+  }
+
   return {
     rewords,
     setRewords,
@@ -151,5 +166,9 @@ export const useGameStore = defineStore("gameStore", () => {
     initCollection,
     addCollection,
     checkHasCollection,
+
+    isShowStepTutorial,
+    initShowStepTutorial,
+    setShowStepTutorial,
   }
 })

@@ -416,5 +416,13 @@
   "Armerbreak": "· Armor Break: {number}",
   "TutorialDesc1": "Dekatkan diri ke musuh dan, saat kamu berhenti bergerak, kamu akan menyerang secara otomatis.",
   "TutorialDesc2": "Kamu tidak bisa menyerang saat bergerak, jadi berhati-hatilah.",
-  "TutorialDesc3": "Ingat: semuanya tentang berjudi!"
+  "TutorialDesc3": "Ingat: semuanya tentang berjudi!",
+
+  "Next": "Berikutnya",
+  "StepTutorial1": "Ketuk di sini untuk menggerakkan karakter",
+  "StepTutorial2": "Bertaruh di sini",
+  "StepTutorial3": "Dapatkan senjata di sini",
+  "StepTutorial4": "Dapatkan bahan di sini",
+  "StepTutorial5": "Gunakan skill dalam keadaan darurat",
+  "StepTutorial6": "Tekan tombol panah untuk menggerakkan karakter"
 }

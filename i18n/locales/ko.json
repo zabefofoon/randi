@@ -292,5 +292,12 @@
   "Armerbreak": "· 아머브레이크: {number}",
   "TutorialDesc1": "적의 근처로 이동하고, 이동을 멈추면 자동으로 공격을 합니다.",
   "TutorialDesc2": "이동 중에는 공격할 수 없으니 주의하세요.",
-  "TutorialDesc3": "중요한 건 도박!"
+  "TutorialDesc3": "중요한 건 도박!",
+  "Next": "다음",
+  "StepTutorial1": "여길 눌러서 캐릭터 이동",
+  "StepTutorial2": "이곳에서 도박하기",
+  "StepTutorial3": "이곳에서 무기 뽑기",
+  "StepTutorial4": "이곳에서 재료 뽑기",
+  "StepTutorial5": "위급시 스킬 사용",
+  "StepTutorial6": "방향키를 눌러 캐릭터 이동"
 }
