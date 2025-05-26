@@ -107,7 +107,7 @@
         </div>
 
         <h2
-          v-if="runtimeConfig.public.IS_ITCH_MODE"
+          v-if="gameStore.mode === 'demo'"
           class="dissolve | relative z-[1] | mt-[1cqw] | leading-none text-center text-[1.2cqw] font-bold text-outline text-gray-300">
           DEMO
         </h2>
@@ -164,7 +164,6 @@ const emit = defineEmits<{
 
 const i18n = useI18n()
 const { gtag } = useGtag()
-const runtimeConfig = useRuntimeConfig()
 
 const gameStore = useGameStore()
 const soundStore = useSoundStore()

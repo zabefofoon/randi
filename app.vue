@@ -1,6 +1,9 @@
 <template>
   <AppGlobalLoadingContainer />
   <NuxtRouteAnnouncer />
+  <div
+    v-if="!isLoaded"
+    class="fixed top-0 left-0 | w-full h-full | bg-white z-[100]"></div>
   <NuxtPage />
   <ClientOnly>
     <AppSnackbarContainer />
@@ -9,15 +12,37 @@
 <script lang="ts" setup>
 import { useIphoneHistoryDetector } from "./composables/useIphoneHistoryDetector"
 
+const gameStore = useGameStore()
+
 const iphoneHistoryDetector = useIphoneHistoryDetector()
 
+const isLoaded = ref(false)
+const initMode = () => {
+  const isIframe = window.self !== window.top
+
+  if (isIframe) {
+    window.addEventListener("message", (event) => {
+      if (event.data.from === "itch") {
+        gameStore.setMode("demo")
+        isLoaded.value = true
+      }
+    })
+  } else {
+    isLoaded.value = true
+  }
+}
+
 onMounted(() => {
+  initMode()
+
   if (navigator.userAgent.toLowerCase().includes("iphone")) {
     window.addEventListener("touchmove", iphoneHistoryDetector.detectStart)
     window.addEventListener("touchend", iphoneHistoryDetector.detectEnd)
     window.addEventListener("iphoneHistoryBack", iphoneHistoryDetector.historyBackHandler)
     window.addEventListener("touchcancel", iphoneHistoryDetector.historyForwardHandler)
   }
+
+  window.parent.postMessage({ data: "load" }, "*")
 })
 
 onBeforeUnmount(() => {

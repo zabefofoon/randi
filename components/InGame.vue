@@ -299,7 +299,6 @@ const emit = defineEmits<{
 
 const i18n = useI18n()
 const { gtag } = useGtag()
-const runtimeConfig = useRuntimeConfig()
 
 const gameStore = useGameStore()
 const soundStore = useSoundStore()
@@ -321,7 +320,7 @@ const enforces = ref<Enforces>()
 const weapons = ref<Weapons>()
 const materials = ref<Materials>(new Materials())
 
-const clearRound = runtimeConfig.public.IS_ITCH_MODE ? 20 : 60
+const clearRound = gameStore.mode === "demo" ? 20 : 60
 
 const initialRemainnedTime = 3
 const roundTime = 40

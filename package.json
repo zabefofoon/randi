@@ -7,8 +7,7 @@
     "dev": "nuxt dev --host",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "itch:generate": "cross-env IS_ITCH_MODE=true nuxi generate"
+    "postinstall": "nuxt prepare"
   },
   "devDependencies": {
     "@intlify/message-compiler": "^11.1.2",

@@ -17,6 +17,12 @@ import type { Rewords } from "~/models/Rewords"
 
 export const useGameStore = defineStore("gameStore", () => {
   const route = useRoute()
+
+  const mode = ref<"demo" | "app" | "dev">("dev")
+  const setMode = (value: "demo" | "app" | "dev") => {
+    mode.value = value
+  }
+
   const rewords = ref<Rewords>({
     rounds: 0,
     killed: 0,
@@ -137,6 +143,9 @@ export const useGameStore = defineStore("gameStore", () => {
   }
 
   return {
+    mode,
+    setMode,
+
     rewords,
     setRewords,
     characters,

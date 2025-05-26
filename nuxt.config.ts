@@ -2,11 +2,6 @@ import path from "node:path"
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  runtimeConfig: {
-    public: {
-      IS_ITCH_MODE: process.env.IS_ITCH_MODE === "true",
-    },
-  },
   gtag: {
     id: "G-E9262Y0SML",
     enabled: process.env.NODE_ENV === "production",
@@ -92,16 +87,13 @@ export default defineNuxtConfig({
     },
   },
   nitro: {
-    preset: process.env.IS_ITCH_MODE === "true" ? "static" : "github-pages",
+    preset: "github-pages",
     output: {
-      publicDir:
-        process.env.IS_ITCH_MODE === "true"
-          ? path.join(__dirname, "/dist")
-          : path.join(__dirname, "/docs"),
+      publicDir: path.join(__dirname, "/docs"),
     },
   },
   app: {
-    baseURL: process.env.IS_ITCH_MODE === "true" ? "./" : "/randi/",
-    buildAssetsDir: process.env.IS_ITCH_MODE === "true" ? "./" : "assets",
+    baseURL: "/randi/",
+    buildAssetsDir: "assets",
   },
 })
