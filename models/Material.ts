@@ -1,8 +1,8 @@
-// export type Materials = Record<Material["key"], { length: number; info: Material }>
+type StatKey = "str" | "int" | "cul" | "cha" | "vit" | "agi" | "luk" | "wis"
 
-interface MaterialItems {
+interface MaterialItems<T extends { length: number; info: any } = any> {
   length: number
-  info: Material
+  info: T["info"]
 }
 
 export class Materials {
@@ -19,35 +19,88 @@ export class Materials {
     return ["str", "int", "cul", "cha", "vit", "agi", "luk", "wis"] as unknown as Material["key"][]
   }
 
-  calculateStat(stat: keyof ClassToRaw<Materials>) {
-    switch (stat) {
-      case "str":
-        return this["str"].info.physicalDamage * this["str"].length
-      case "int":
-        return this["int"].info.magicalDamage * this["int"].length
-      case "cul":
-        return this["cul"].length / 100
-      case "cha":
-        return this["cha"].length * (this["cha"].info.stun * 100)
-      case "vit":
-        return this["vit"].length * this["vit"].info.splash
-      case "agi":
-        return this["agi"].info.cooltime * this["agi"].length
-      case "luk":
-        return this["luk"].info.armorPenetration * this["luk"].length
-      default:
-        return this["wis"].info.armorPenetration * this["wis"].length
-    }
+  /** 캐시된 스탯 값 */
+  private _cache: Record<StatKey, number> = {
+    str: 0,
+    int: 0,
+    cul: 0,
+    cha: 0,
+    vit: 0,
+    agi: 0,
+    luk: 0,
+    wis: 0,
   }
 
-  increase(stat: keyof ClassToRaw<Materials>, length: number) {
-    this[stat].length += length
+  private _dirty: Record<StatKey, boolean> = {
+    str: true,
+    int: true,
+    cul: true,
+    cha: true,
+    vit: true,
+    agi: true,
+    luk: true,
+    wis: true,
   }
-  decrease(stat: keyof ClassToRaw<Materials>, length: number) {
-    this[stat].length -= length
+  private _anyDirty = true
+
+  private readonly _coef: Record<StatKey, number> = {
+    str: this.str.info.physicalDamage, // 힘 → 물리공격력
+    int: this.int.info.magicalDamage, // 지식 → 마법공격력
+    cul: 1, // 교양 → 슬로우 %
+    cha: this.cha.info.stun * 100, // 카리스마 → 스턴 0.1s *
+    vit: this.vit.info.splash, // 건강 → 스플래시
+    agi: this.agi.info.cooltime, // 민첩 → 쿨타임 감소
+    luk: this.luk.info.armorPenetration, // 운 → 물리관통력
+    wis: this.wis.info.armorPenetration, // 지혜 → 마법관통력
+  }
+  get totalLength() {
+    return (
+      this.str.length +
+      this.int.length +
+      this.cul.length +
+      this.cha.length +
+      this.vit.length +
+      this.agi.length +
+      this.luk.length +
+      this.wis.length
+    )
+  }
+  calculateStat(stat: StatKey): number {
+    if (this._dirty[stat]) {
+      this._cache[stat] = this[stat].length * this._coef[stat]
+      this._dirty[stat] = false
+      // _anyDirty는 여기서 false 로 만들지 않음 (다른 키가 더티일 수도)
+    }
+    return this._cache[stat]
+  }
+
+  increase(stat: StatKey, n = 1) {
+    this[stat].length += n
+    this._dirty[stat] = true
+    this._anyDirty = true
+  }
+  decrease(stat: StatKey, n = 1) {
+    this[stat].length -= n
+    this._dirty[stat] = true
+    this._anyDirty = true
+  }
+
+  getCachedStats() {
+    // ② _anyDirty 가 false면 곧장 캐시 반환 → 루프·함수 호출 0
+    if (!this._anyDirty)
+      return this._cache
+
+      // ③ 더티한 키만 재계산
+    ;(Object.keys(this._dirty) as StatKey[]).forEach((k) => {
+      if (this._dirty[k]) {
+        this._cache[k] = this[k].length * this._coef[k]
+        this._dirty[k] = false
+      }
+    })
+    this._anyDirty = false // 모두 처리됐으니 초기화
+    return this._cache
   }
 }
-
 export abstract class Material {
   key: keyof ClassToRaw<Materials>
 

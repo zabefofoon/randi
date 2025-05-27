@@ -89,7 +89,7 @@ export class Weapons {
   }
 
   weaponHitEnemy(bullet: Phaser.Physics.Arcade.Image, enemy: Enemy) {
-    const weaponData = bullet.getData("weaponData")
+    const weaponData = bullet.weapon
 
     enemy.takeDamage(weaponData, this.materials, this.enforces)
 
@@ -163,15 +163,18 @@ export abstract class Weapon implements WeaponOptions {
     const bullet1 = weapons.bulletPool.getFirstDead(false)
     if (!bullet1) return
 
-    bullet1
-      .enableBody(true, player.x, player.y, true, true) // (x,y, show, activate)
-      .setScale(0.1)
-      .setData("weaponData", weapons.weapons[weaponIndex])
-      .setData("target", enemy)
+    bullet1.enableBody(true, player.x, player.y, true, true)
+
+    bullet1.weapon = weapons.weapons[weaponIndex]!
+    bullet1.target = enemy
 
     if (!bullet1.body) return
-    const angle = Phaser.Math.Angle.Between(bullet1.x, bullet1.y, enemy.x, enemy.y)
-    bullet1.body.setVelocity(Math.cos(angle) * this.speed, Math.sin(angle) * this.speed)
+    const dx = enemy.x - player.x
+    const dy = enemy.y - player.y
+    const len = Math.hypot(dx, dy) || 1
+    const vx = (dx / len) * this.speed
+    const vy = (dy / len) * this.speed
+    bullet1.body.setVelocity(vx, vy)
   }
 
   followEnemy(weapons: Weapons) {
@@ -180,7 +183,7 @@ export abstract class Weapon implements WeaponOptions {
       const bulletObj = bullet as Phaser.Physics.Arcade.Image
       if (!bulletObj.active) return // false 대신 void
 
-      const target = bulletObj.getData("target") as Enemy
+      const target = bulletObj.target as Enemy
       if (!target || !target.active) {
         bulletObj.disableBody(true, true)
         return

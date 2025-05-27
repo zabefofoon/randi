@@ -731,7 +731,7 @@ onMounted(() => {
 
             const playerHP = player.getData("hp") as number
             if (remainnedEnemies.value > enemyCountDeadline) {
-              player.setData("hp", playerHP - 1)
+              player.takeDamage(1)
               scene.cameras.main.shake(100, 0.01)
               damageRect.setAlpha(1 - (playerHP - 1) / 10)
               soundStore.play("attacked")
@@ -746,7 +746,6 @@ onMounted(() => {
 
             if (playerHP < 1) {
               soundStore.play("attacked")
-
               scene.physics.pause()
               isShowGameOverPopup.value = true
             }
@@ -777,7 +776,7 @@ onMounted(() => {
         const scene = this as Phaser.Scene
         if (scene.data.get("paused")) return
         player.handlePlayerMovement(cursors)
-        player.updatePlayerHpBar()
+
         enemies.updateDistances(player.x, player.y)
         enemies.children.forEach((enemy) => {
           enemy.moveEnemyAlongPath(weapons.value!.weapons, materials.value)
@@ -800,93 +799,95 @@ onMounted(() => {
                   99,
                   (materials.value.calculateStat("agi") +
                     allCooltimes +
-                    enforces.value!.aditionnalCooldown / 100) *
+                    enforces.value!.additionalCooldown / 100) *
                     100
                 )
             const isCooltime = weapon.checkIsCooltime(time, cooldown)
 
             if (isCooltime)
-              player.getClosestEnemies(enemies, weapon.targetLength).forEach((enemy) => {
-                if (enemy.distanceWithPlayer && enemy.distanceWithPlayer <= weapon.range) {
-                  weapon.fireHomingWeapon(weapons.value!, index, time, player, enemy)
+              etcUtil
+                .collectNearest(enemies.children, weapon.targetLength, (e) => e.distanceWithPlayer)
+                .forEach((enemy) => {
+                  if (enemy.distanceWithPlayer && enemy.distanceWithPlayer <= weapon.range) {
+                    weapon.fireHomingWeapon(weapons.value!, index, time, player, enemy)
 
-                  if (index === 0) {
-                    if (!player.gun.anims.isPlaying) {
-                      const angleRad = Phaser.Math.Angle.Between(
-                        player.x,
-                        player.y,
-                        enemy.x,
-                        enemy.y
-                      )
-                      const offsetDist = 20
-                      const offsetX = Math.cos(angleRad) * offsetDist
-                      const offsetY = Math.sin(angleRad) * offsetDist
+                    if (index === 0) {
+                      if (!player.gun.anims.isPlaying) {
+                        const angleRad = Phaser.Math.Angle.Between(
+                          player.x,
+                          player.y,
+                          enemy.x,
+                          enemy.y
+                        )
+                        const offsetDist = 20
+                        const offsetX = Math.cos(angleRad) * offsetDist
+                        const offsetY = Math.sin(angleRad) * offsetDist
 
-                      player.gun
-                        .setOrigin(0.1, 0.5)
-                        .setTint(etcUtil.getLevelColorHex(weapon.level))
-                        .setRotation(angleRad + Phaser.Math.DegToRad(0))
-                        .setPosition(player.x + offsetX, player.y + offsetY)
-                        .play("gun-animation")
-                        .once("animationcomplete-gun-animation", () => {
-                          player.gun.setFrame(0)
-                        })
+                        player.gun
+                          .setOrigin(0.1, 0.5)
+                          .setTint(etcUtil.getLevelColorHex(weapon.level))
+                          .setRotation(angleRad + Phaser.Math.DegToRad(0))
+                          .setPosition(player.x + offsetX, player.y + offsetY)
+                          .play("gun-animation")
+                          .once("animationcomplete-gun-animation", () => {
+                            player.gun.setFrame(0)
+                          })
 
-                      soundStore.play("gun")
+                        soundStore.play("gun")
+                      }
                     }
-                  }
-                  if (index === 1) {
-                    if (!player.knife.anims.isPlaying) {
-                      const angleRad = Phaser.Math.Angle.Between(
-                        player.x,
-                        player.y,
-                        enemy.x,
-                        enemy.y
-                      )
-                      const offsetDist = -50
-                      const offsetX = Math.cos(angleRad) * offsetDist
-                      const offsetY = Math.sin(angleRad) * offsetDist
+                    if (index === 1) {
+                      if (!player.knife.anims.isPlaying) {
+                        const angleRad = Phaser.Math.Angle.Between(
+                          player.x,
+                          player.y,
+                          enemy.x,
+                          enemy.y
+                        )
+                        const offsetDist = -50
+                        const offsetX = Math.cos(angleRad) * offsetDist
+                        const offsetY = Math.sin(angleRad) * offsetDist
 
-                      player.knife
-                        .setOrigin(0.1, 0.5)
-                        .setTint(etcUtil.getLevelColorHex(weapon.level))
-                        .setRotation(angleRad + Phaser.Math.DegToRad(0))
-                        .setPosition(player.x + offsetX, player.y + offsetY)
-                        .play("knife-animation")
-                        .once("animationcomplete-knife-animation", () => {
-                          player.knife.setFrame(0)
-                        })
-                      soundStore.play("knife")
-                    }
-                  }
-
-                  if (index === 2) {
-                    if (!player.book.anims.isPlaying) {
-                      player.book
-                        .setTint(etcUtil.getLevelColorHex(weapon.level))
-                        .play("book-animation")
-                        .once("animationcomplete-book-animation", () => {
-                          player.book.setFrame(0)
-                        })
+                        player.knife
+                          .setOrigin(0.1, 0.5)
+                          .setTint(etcUtil.getLevelColorHex(weapon.level))
+                          .setRotation(angleRad + Phaser.Math.DegToRad(0))
+                          .setPosition(player.x + offsetX, player.y + offsetY)
+                          .play("knife-animation")
+                          .once("animationcomplete-knife-animation", () => {
+                            player.knife.setFrame(0)
+                          })
+                        soundStore.play("knife")
+                      }
                     }
 
-                    soundStore.play("book")
-                  }
+                    if (index === 2) {
+                      if (!player.book.anims.isPlaying) {
+                        player.book
+                          .setTint(etcUtil.getLevelColorHex(weapon.level))
+                          .play("book-animation")
+                          .once("animationcomplete-book-animation", () => {
+                            player.book.setFrame(0)
+                          })
+                      }
 
-                  if (index === 3) {
-                    if (!player.ring.anims.isPlaying) {
-                      player.ring
-                        .setTint(etcUtil.getLevelColorHex(weapon.level))
-                        .play("ring-animation")
-                        .once("animationcomplete-ring-animation", () => {
-                          player.ring.setFrame(0)
-                        })
+                      soundStore.play("book")
                     }
 
-                    soundStore.play("ring")
+                    if (index === 3) {
+                      if (!player.ring.anims.isPlaying) {
+                        player.ring
+                          .setTint(etcUtil.getLevelColorHex(weapon.level))
+                          .play("ring-animation")
+                          .once("animationcomplete-ring-animation", () => {
+                            player.ring.setFrame(0)
+                          })
+                      }
+
+                      soundStore.play("ring")
+                    }
                   }
-                }
-              })
+                })
           })
         }
 
@@ -1044,9 +1045,7 @@ watch(activeJoystick, (value) => {
 const rewords = computed(() => ({
   rounds: round.value ? round.value : 0,
   killed: round.value ? killed.value : 0,
-  materials: round.value
-    ? Object.values(materials.value).reduce((acc, current) => acc + current.length, 0)
-    : 0,
+  materials: round.value ? materials.value.totalLength : 0,
   weapons: round.value
     ? weapons.value?.weapons
         .filter((weapon): weapon is Weapon => !!weapon)

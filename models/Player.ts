@@ -1,5 +1,3 @@
-import type { Enemies } from "./Enemies"
-
 export class Player extends Phaser.Physics.Arcade.Sprite {
   maxLife = 5
   knife!: Phaser.GameObjects.Sprite
@@ -10,16 +8,28 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   weaponsEffect!: Phaser.GameObjects.Sprite
   isRage = false
 
+  private hpBarBg!: Phaser.GameObjects.Rectangle
+  private hpBarFill!: Phaser.GameObjects.Rectangle
+  private readonly hpBarOffset = { x: -16, y: -45 }
+
   constructor(scene: Phaser.Scene, x: number, y: number, key: string) {
     super(scene, x, y, key)
 
     scene.add.existing(this)
     scene.physics.add.existing(this)
 
+    // === HP bar ===
+    this.hpBarBg = scene.add.rectangle(0, 0, 32, 4, 0x000000).setOrigin(0)
+    this.hpBarFill = scene.add.rectangle(0, 0, 32, 4, 0xff0000).setOrigin(0)
+    this.hpBarBg.setDepth(3)
+    this.hpBarFill.setDepth(3)
+
+    // 처음 위치 한 번만 계산
+    this.updateHpBarPos()
+
     this.setCollideWorldBounds(true)
       .setData("maxHp", this.maxLife)
       .setData("hp", this.maxLife)
-      .setData("hpBar", scene.add.graphics())
       .setScale(0.6)
       .setDepth(2)
 
@@ -67,22 +77,26 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.ring.setPosition(this.x, this.y)
     this.weapons.setPosition(this.x, this.y + 20)
     this.weaponsEffect.setPosition(this.x, this.y)
+
+    this.updateHpBarPos()
   }
 
-  updatePlayerHpBar() {
-    const hp = this.getData("hp")
-    const maxHp = this.getData("maxHp")
-    const hpBar = this.getData("hpBar") as Phaser.GameObjects.Graphics
-    if (!hpBar) return
+  private updateHpBarPos() {
+    const { x, y } = this
+    this.hpBarBg.setPosition(x + this.hpBarOffset.x, y + this.hpBarOffset.y)
+    this.hpBarFill.setPosition(x + this.hpBarOffset.x, y + this.hpBarOffset.y)
+  }
 
-    hpBar.clear()
+  private drawHp() {
+    const hp = this.getData("hp") as number
+    const ratio = Phaser.Math.Clamp(hp / this.maxLife, 0, 1)
+    this.hpBarFill.displayWidth = 32 * ratio
+  }
 
-    hpBar.fillStyle(0x000000)
-    hpBar.fillRect(this.x - 16, this.y - 45, 32, 4) // width 32, height 4
-
-    const hpPercent = hp / maxHp
-    hpBar.fillStyle(0xff0000)
-    hpBar.fillRect(this.x - 16, this.y - 45, 32 * hpPercent, 4)
+  takeDamage(dmg = 1) {
+    const hp = (this.getData("hp") as number) - dmg
+    this.setData("hp", hp)
+    this.drawHp()
   }
 
   handlePlayerMovement(cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
@@ -116,20 +130,6 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     if (!moving) this.anims.play("turn", true)
-  }
-
-  getClosestEnemies(enemies: Enemies, length: number) {
-    return enemies.children
-      .filter((enemy) => enemy.active)
-      .map((enemy) => ({
-        enemy,
-        dist: enemy.distanceWithPlayer,
-        isBoss: enemy.isBoss ? 0 : 1,
-        hp: enemy.getData("hp") as number,
-      }))
-      .sort((a, b) => a.dist - b.dist)
-      .slice(0, length)
-      .map((e) => e.enemy)
   }
 
   createPlayerAnimation() {

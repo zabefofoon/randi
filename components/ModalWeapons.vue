@@ -265,11 +265,7 @@ const getNextWeapon = (item: NextInfo) => {
 }
 
 const isWeaponGettable = computed(() => {
-  const totalLength = Object.values(props.materials)
-    .map(({ length }) => length)
-    .reduce((acc, current) => acc + current, 0)
-
-  return totalLength >= needLength.value
+  return props.materials.totalLength >= needLength.value
 })
 
 const checkGettable = (item: NextInfo) => {

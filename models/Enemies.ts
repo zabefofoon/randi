@@ -38,15 +38,16 @@ export class Enemies {
 
   updateDistances(px: number, py: number) {
     timeKey++
-    if (timeKey % 2 === 0) return
+    if (timeKey > 5) timeKey = 0
+    if (timeKey % 5 !== 0) return
+
     const list = this.group.getChildren() as Enemy[]
 
     for (let i = 0, n = list.length; i < n; i++) {
       const e = list[i]
       if (!e.active) continue
 
-      const distanceToPlayer = Phaser.Math.Distance.Between(e.x, e.y, px, py)
-      e.setDistanceWithPlayer(distanceToPlayer)
+      e.setDistanceWithPlayer(Phaser.Math.Distance.Between(e.x, e.y, px, py))
     }
   }
 
@@ -111,7 +112,8 @@ export class Enemies {
     materials: Materials,
     enforces: Enforces
   ) {
-    const weapon = bullet.getData("weaponData") as Weapon
+    const weapon = bullet.weapon as Weapon
+
     const r = weapon.splash + materials.calculateStat("vit")
     const rSq = r * r
     const splashId = ++this.scene.data.values.splashSeq
@@ -131,7 +133,7 @@ export class Enemies {
   }
 
   applyStunMany(source: Enemy, bullet: Phaser.Physics.Arcade.Image, materials: Materials) {
-    const weaponData = bullet.getData("weaponData")
+    const weaponData = bullet.weapon
 
     const r = weaponData.splash + materials.calculateStat("vit")
     const rSq = r * r
@@ -193,7 +195,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     if (this.isBoss) {
       hp = this.increaseHP(this.round) * 4
     } else if (this.isRage) {
-      hp = this.increaseHP(this.round) * 2
+      hp = this.increaseHP(this.round) * 3
     } else {
       if (`${this.round}`.endsWith("9")) {
         hp = 1
@@ -397,6 +399,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
   takeDamage(weaponData: Weapon, materials: Materials, enforces: Enforces, distInSplash?: number) {
     const currentHP = this.getData("hp") as number
+    const { str, int, vit, luk, wis } = materials.getCachedStats()
 
     this.physicalDefence -= weaponData.armerBreak
     this.magicalDefence -= weaponData.armerBreak
@@ -405,52 +408,47 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       distInSplash === undefined
         ? this.calculateReducedDamage(
             numberUtil.addPercent(
-              weaponData.physicalDamage +
-                materials.calculateStat("str") +
-                enforces.getAditionnalPlus("physical"),
-              enforces.getAditionnalPercent("physical")
+              weaponData.physicalDamage + str + enforces.additionalPhysicalPlus,
+              enforces.additionalPhysicalPercent
             ),
             this.physicalDefence,
-            weaponData.physicalPenetration + materials.calculateStat("luk")
+            weaponData.physicalPenetration + luk
           )
         : this.calculateReducedDamage(
             numberUtil.addPercent(
               +(
                 weaponData.physicalDamage *
-                Math.min(1, 1 - distInSplash / (weaponData.splash + materials.calculateStat("vit")))
+                Math.min(1, 1 - distInSplash / (weaponData.splash + vit))
               ).toFixed(2) +
-                materials.calculateStat("str") +
-                enforces.getAditionnalPlus("physical"),
-              enforces.getAditionnalPercent("physical")
+                str +
+                enforces.additionalPhysicalPlus,
+              enforces.additionalPhysicalPercent
             ),
             this.physicalDefence,
-            weaponData.physicalPenetration + materials.calculateStat("luk")
+            weaponData.physicalPenetration + luk
           )
 
     const _magicalDamage =
       distInSplash === undefined
         ? this.calculateReducedDamage(
             numberUtil.addPercent(
-              weaponData.magicalDamage +
-                materials.calculateStat("int") +
-                enforces.getAditionnalPlus("magical"),
-              enforces.getAditionnalPercent("magical")
+              weaponData.magicalDamage + int + enforces.additionalMasicalPlus,
+              enforces.additionalMasicalPercent
             ),
             this.magicalDefence,
-            weaponData.magicalDamage + materials.calculateStat("wis")
+            weaponData.magicalDamage + wis
           )
         : this.calculateReducedDamage(
             numberUtil.addPercent(
               +(
-                weaponData.magicalDamage *
-                Math.min(1, 1 - distInSplash / (weaponData.splash + materials.calculateStat("vit")))
+                weaponData.magicalDamage * Math.min(1, 1 - distInSplash / (weaponData.splash + vit))
               ).toFixed(2) +
-                materials.calculateStat("int") +
-                enforces.getAditionnalPlus("magical"),
-              enforces.getAditionnalPercent("magical")
+                int +
+                enforces.additionalMasicalPlus,
+              enforces.additionalMasicalPercent
             ),
             this.magicalDefence,
-            weaponData.magicalDamage + materials.calculateStat("wis")
+            weaponData.magicalDamage + wis
           )
 
     const isTrunkKing =

@@ -7,6 +7,12 @@ export interface EnforceItem {
 export class Enforces {
   items: EnforceItem[]
 
+  additionalPhysicalPlus = 0
+  additionalPhysicalPercent = 0
+  additionalMasicalPlus = 0
+  additionalMasicalPercent = 0
+  additionalCooldown = 0
+
   constructor() {
     this.items = [
       { name: "physical", description: "EnforcePhysical", length: 0, max: 50 },
@@ -28,27 +34,21 @@ export class Enforces {
     if (!this.checkGachable(name)) return
 
     found.length += 1
+    if (found.name === "physical") {
+      if (found.length >= 10) this.additionalPhysicalPercent++
+      else this.additionalPhysicalPlus++
+    } else if (found.name === "magical") {
+      if (found.length >= 10) this.additionalMasicalPercent++
+      else this.additionalMasicalPlus++
+    } else if (found.name === "cooldown") {
+      this.additionalCooldown++
+    }
+
     if (found.length >= 10)
-      if (name === "physical") found.description = "EnforcePhysicalPercent"
-      else if (name === "magical") found.description = "EnforceMagicalPercent"
+      found.description = name === "physical" ? "EnforcePhysicalPercent" : "EnforceMagicalPercent"
   }
 
   getExpense(enforce: EnforceItem) {
     return enforce.length * 10 + 10
-  }
-
-  getAditionnalPlus(type: "physical" | "magical") {
-    const length = this.items.find(({ name }) => name === type)?.length ?? 0
-
-    return length >= 10 ? 10 : length
-  }
-
-  getAditionnalPercent(type: "physical" | "magical") {
-    const length = this.items.find(({ name }) => name === type)?.length ?? 0
-    return length < 10 ? 0 : length
-  }
-
-  get aditionnalCooldown() {
-    return this.items.find(({ name }) => name === "cooldown")?.length ?? 0
   }
 }

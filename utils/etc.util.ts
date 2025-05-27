@@ -68,4 +68,40 @@ export default {
     const mix = Phaser.Display.Color.Interpolate.ColorWithColor(color, src, 1, intensity)
     return Phaser.Display.Color.GetColor(mix.r, mix.g, mix.b)
   },
+
+  collectNearest<T>(
+    iterable: Iterable<T>, // 적 목록
+    k: number, // 최대 갯수
+    getDist: (item: T) => number
+  ): T[] {
+    // 버퍼(길이 k)와 사용된 칸 수
+    const buf: (T & { dist: number })[] = Array(k)
+    let used = 0
+
+    for (const item of iterable) {
+      const d = getDist(item)
+
+      // 아직 k개 미만이면 위치 찾아 삽입
+      if (used < k) {
+        let i = used++
+        while (i > 0 && buf[i - 1].dist > d) {
+          buf[i] = buf[i - 1]
+          --i
+        }
+        buf[i] = Object.assign(item, { dist: d })
+        continue
+      }
+
+      // 버퍼가 꽉 찼으면, 가장 먼 녀석(buf[k-1])보다 가까울 때만 교체
+      if (d < buf[k - 1].dist) {
+        let i = k - 1
+        while (i > 0 && buf[i - 1].dist > d) {
+          buf[i] = buf[i - 1]
+          --i
+        }
+        buf[i] = Object.assign(item, { dist: d })
+      }
+    }
+    return buf.slice(0, used)
+  },
 }
