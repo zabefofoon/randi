@@ -1,67 +1,64 @@
 <template>
-  <div class="w-screen h-screen | flex items-center justify-center | bg-black">
+  <BackgroundPattern>
     <ModalCollectionWeapon
       v-if="isShowWeaponModal"
       :weapon="isShowWeaponModal"
       @close="isShowWeaponModal = undefined"
       @select="selectNextWeapon" />
-    <div
-      class="content | relative | grid place-items-center | aspect-video max-w-full max-h-full | text-white overflow-hidden">
-      <div class="pattern | absolute top-0 left-0 z-[0] | w-full h-full | opacity-40"></div>
-      <div class="flex gap-[1cqw] | relative z-[1] | w-3/4 h-4/5 overflow-hidden">
+
+    <div class="flex gap-[1cqw] | relative z-[1] | w-3/4 h-4/5 overflow-hidden">
+      <div
+        class="w-full h-full | flex flex-col items-center gap-[1cqw] | p-[1cqw] | bg-blue-950 | rounded-lg border-black border-[0.2cqw]">
         <div
-          class="w-full h-full | flex flex-col items-center gap-[1cqw] | p-[1cqw] | bg-blue-950 | rounded-lg border-black border-[0.2cqw]">
-          <div
-            class="w-full h-full overflow-auto | grid grid-cols-7 gap-x-[1cqw] gap-y-[1.5cqw] items-start">
-            <figure
-              v-for="weapon in weapons"
-              :key="weapon.meta.name"
-              v-memo="[]"
-              class="flex flex-col items-center justify-center">
-              <template v-if="gameStore.checkHasCollection(weapon.meta.name)">
+          class="w-full h-full overflow-auto | grid grid-cols-7 gap-x-[1cqw] gap-y-[1.5cqw] items-start">
+          <figure
+            v-for="weapon in weapons"
+            :key="weapon.meta.name"
+            v-memo="[]"
+            class="flex flex-col items-center justify-center">
+            <template v-if="gameStore.checkHasCollection(weapon.meta.name)">
+              <div
+                class="w-full | border-black border-[0.2cqw] rounded-lg"
+                :class="{
+                  'bg-white': weapon.meta.level === 1,
+                  'bg-blue-500': weapon.meta.level === 2,
+                  'bg-purple-600': weapon.meta.level === 3,
+                  'bg-yellow-400': weapon.meta.level === 4,
+                  'bg-fuchsia-400': weapon.meta.level === 5,
+                  'bg-red-400': weapon.meta.level === 6,
+                }"
+                @click="showWeaponModal(weapon)">
                 <div
-                  class="w-full | border-black border-[0.2cqw] rounded-lg"
-                  :class="{
-                    'bg-white': weapon.meta.level === 1,
-                    'bg-blue-500': weapon.meta.level === 2,
-                    'bg-purple-600': weapon.meta.level === 3,
-                    'bg-yellow-400': weapon.meta.level === 4,
-                    'bg-fuchsia-400': weapon.meta.level === 5,
-                    'bg-red-400': weapon.meta.level === 6,
-                  }"
-                  @click="showWeaponModal(weapon)">
-                  <div
-                    class="weapon-sprites | w-full aspect-square"
-                    :style="{ 'background-position': weapon.meta.spritePosition }"
-                    @click="showWeaponModal(weapon)"></div>
-                </div>
-                <figcaption
-                  v-t="weapon.meta.name"
-                  class="text-outline font-bold text-[1.4cqw] text-center"></figcaption>
-              </template>
-              <template v-else>
-                <div
-                  class="w-full aspect-square | border-black border-[0.2cqw] rounded-lg | flex items-center justify-center">
-                  <span class="gasoek-one-regular text-outline text-[5cqw] font-bold">?</span>
-                </div>
-                <figcaption class="text-outline font-bold text-[1.4cqw]">????</figcaption>
-              </template>
-            </figure>
-          </div>
-          <div class="mt-auto | flex items-center gap-[0.5cqw]">
-            <button
-              class="flex flex-col gap-[0.5cqw] | bg-blue-900 rounded-lg"
-              @click="emit('next', 'lobby')">
-              <span
-                v-t="'Back'"
-                class="px-[2cqw] py-[0.5cqw] | border-black border-[0.2cqw] rounded-lg | text-[1.8cqw] font-bold text-outline">
-              </span>
-            </button>
-          </div>
+                  class="weapon-sprites | w-full aspect-square"
+                  :style="{ 'background-position': weapon.meta.spritePosition }"
+                  @click="showWeaponModal(weapon)"></div>
+              </div>
+              <figcaption
+                v-t="weapon.meta.name"
+                class="text-outline font-bold text-[1.4cqw] text-center"></figcaption>
+            </template>
+            <template v-else>
+              <div
+                class="w-full aspect-square | border-black border-[0.2cqw] rounded-lg | flex items-center justify-center">
+                <span class="gasoek-one-regular text-outline text-[5cqw] font-bold">?</span>
+              </div>
+              <figcaption class="text-outline font-bold text-[1.4cqw]">????</figcaption>
+            </template>
+          </figure>
+        </div>
+        <div class="mt-auto | flex items-center gap-[0.5cqw]">
+          <button
+            class="flex flex-col gap-[0.5cqw] | bg-blue-900 rounded-lg"
+            @click="emit('next', 'lobby')">
+            <span
+              v-t="'Back'"
+              class="px-[2cqw] py-[0.5cqw] | border-black border-[0.2cqw] rounded-lg | text-[1.8cqw] font-bold text-outline">
+            </span>
+          </button>
         </div>
       </div>
     </div>
-  </div>
+  </BackgroundPattern>
 </template>
 
 <script setup lang="ts">
@@ -295,27 +292,3 @@ const selectNextWeapon = (weapon: typeof Weapon) => {
   etcUtil.sleep(1).then(() => (isShowWeaponModal.value = weapon))
 }
 </script>
-
-<style lang="scss" scoped>
-.content {
-  background: linear-gradient(to bottom right, rgb(20 20 20) 0%, #540454 25%, rgb(20 20 20) 100%);
-
-  @media (aspect-ratio >= 16 / 9) {
-    width: auto;
-    height: 100%;
-  }
-
-  @media (aspect-ratio <= 16 / 9) {
-    width: 100%;
-    height: auto;
-  }
-
-  .pattern {
-    background: url("/assets/images/pattern.svg");
-    background-color: black;
-    background-repeat: repeat;
-    background-position: center;
-    background-size: 0.5cqw;
-  }
-}
-</style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="w-screen h-screen | flex items-center justify-center | bg-black">
+  <BackgroundDefault>
     <Transition name="fade">
       <Tutorial
         v-if="isShowTutorial"
@@ -82,203 +82,201 @@
       </div>
     </ModalConfigs>
 
-    <div class="content | relative | aspect-video max-w-full max-h-full | overflow-hidden">
-      <main class="relative | w-full h-full | flex flex-col justify-center items-center">
+    <main class="relative | w-full h-full | flex flex-col justify-center items-center">
+      <div
+        class="w-full | flex items-center gap-[0.5cqh] | px-[0.5cqw] | absolute top-[0.5cqw] | text-white font-bold">
+        <div class="flex items-center gap-[1cqw] | bg-black w-fit | px-[0.5cqw] rounded-lg">
+          <span class="text-[1.5cqw]">ROUND {{ round }}</span>
+        </div>
+        <div class="text-[1.2cqw] bg-black w-fit | px-[0.5cqw] rounded-lg">
+          <span
+            :class="{
+              'text-red-500': remainnedEnemies > enemyCountDeadline,
+            }"
+            >{{ remainnedEnemies }}</span
+          >
+          / {{ enemyCountDeadline }}
+        </div>
+      </div>
+
+      <div class="absolute top-[0.5cqw] left-1/2 -translate-x-1/2">
+        <span class="text-white text-[1.5cqw]">00:{{ `${remainnedTime}`.padStart(2, "0") }}</span>
+      </div>
+
+      <div class="absolute top-[0.5cqw] right-[1cqw] | flex items-center gap-[0.5cqw]">
         <div
-          class="w-full | flex items-center gap-[0.5cqh] | px-[0.5cqw] | absolute top-[0.5cqw] | text-white font-bold">
-          <div class="flex items-center gap-[1cqw] | bg-black w-fit | px-[0.5cqw] rounded-lg">
-            <span class="text-[1.5cqw]">ROUND {{ round }}</span>
-          </div>
-          <div class="text-[1.2cqw] bg-black w-fit | px-[0.5cqw] rounded-lg">
-            <span
-              :class="{
-                'text-red-500': remainnedEnemies > enemyCountDeadline,
-              }"
-              >{{ remainnedEnemies }}</span
-            >
-            / {{ enemyCountDeadline }}
-          </div>
-        </div>
-
-        <div class="absolute top-[0.5cqw] left-1/2 -translate-x-1/2">
-          <span class="text-white text-[1.5cqw]">00:{{ `${remainnedTime}`.padStart(2, "0") }}</span>
-        </div>
-
-        <div class="absolute top-[0.5cqw] right-[1cqw] | flex items-center gap-[0.5cqw]">
+          v-for="(enforce, index) in enforces?.items"
+          :key="enforce.name"
+          class="flex items-center | bg-black rounded-lg | pr-[0.5cqw]">
           <div
-            v-for="(enforce, index) in enforces?.items"
-            :key="enforce.name"
+            class="stat-sprites | w-[3cqw] aspect-square"
+            :style="{
+              backgroundPosition: etcUtil.getSpritePosition(12 + index),
+            }"></div>
+          <span class="text-[1.3cqw] text-white">
+            {{ stringUtil.attachComma(enforce.length) }}
+          </span>
+        </div>
+        <!-- 킬 표시 -->
+        <div
+          class="bg-black mt-[0.2cqh] | flex items-center justify-between | pr-[0.5cqw] rounded-lg">
+          <div
+            class="stat-sprites | w-[2.5cqw] aspect-square"
+            :style="{
+              backgroundPosition: etcUtil.getSpritePosition(17),
+            }"></div>
+          <span class="text-[1.3cqw] text-white font-bold text-outline">
+            {{ stringUtil.attachComma(killed) }}
+          </span>
+        </div>
+        <!-- 킬 표시 -->
+
+        <!-- 코인표시 -->
+        <div
+          class="bg-black mt-[0.2cqh] | flex items-center justify-between | pr-[0.5cqw] rounded-lg">
+          <div
+            class="stat-sprites | w-[2.5cqw] aspect-square"
+            :style="{
+              backgroundPosition: etcUtil.getSpritePosition(11),
+            }"></div>
+          <span class="text-[1.3cqw] text-white font-bold text-outline">
+            {{ stringUtil.attachComma(coins) }}
+          </span>
+        </div>
+        <!-- 코인표시 -->
+
+        <!-- 설정버튼 -->
+        <button
+          class="bg-blue-950 | mt-[0.2cqh] pr-[0.5cqw] | flex items-center justify-between | rounded-lg border-black border-[0.25cqw]"
+          @click="showConfigPopup(true)">
+          <div
+            class="stat-sprites | w-[2.5cqw] aspect-square"
+            :style="{
+              backgroundPosition: etcUtil.getSpritePosition(19),
+            }"></div>
+          <span
+            v-t="'Config'"
+            class="text-[1.3cqw] text-white font-bold text-outline"></span>
+        </button>
+        <!-- 설정버튼 -->
+      </div>
+
+      <div class="absolute top-1/2 left-[0.5cqw] -translate-y-1/2">
+        <!-- 스텟표시 -->
+        <div class="grid grid-cols-1 items-start | gap-[0.2cqh]">
+          <div
+            v-for="(key, index) in materials.keys"
+            :key="key"
             class="flex items-center | bg-black rounded-lg | pr-[0.5cqw]">
             <div
               class="stat-sprites | w-[3cqw] aspect-square"
               :style="{
-                backgroundPosition: etcUtil.getSpritePosition(12 + index),
-              }"></div>
-            <span class="text-[1.3cqw] text-white">
-              {{ stringUtil.attachComma(enforce.length) }}
-            </span>
-          </div>
-          <!-- 킬 표시 -->
-          <div
-            class="bg-black mt-[0.2cqh] | flex items-center justify-between | pr-[0.5cqw] rounded-lg">
-            <div
-              class="stat-sprites | w-[2.5cqw] aspect-square"
-              :style="{
-                backgroundPosition: etcUtil.getSpritePosition(17),
-              }"></div>
-            <span class="text-[1.3cqw] text-white font-bold text-outline">
-              {{ stringUtil.attachComma(killed) }}
-            </span>
-          </div>
-          <!-- 킬 표시 -->
-
-          <!-- 코인표시 -->
-          <div
-            class="bg-black mt-[0.2cqh] | flex items-center justify-between | pr-[0.5cqw] rounded-lg">
-            <div
-              class="stat-sprites | w-[2.5cqw] aspect-square"
-              :style="{
-                backgroundPosition: etcUtil.getSpritePosition(11),
-              }"></div>
-            <span class="text-[1.3cqw] text-white font-bold text-outline">
-              {{ stringUtil.attachComma(coins) }}
-            </span>
-          </div>
-          <!-- 코인표시 -->
-
-          <!-- 설정버튼 -->
-          <button
-            class="bg-blue-950 | mt-[0.2cqh] pr-[0.5cqw] | flex items-center justify-between | rounded-lg border-black border-[0.25cqw]"
-            @click="showConfigPopup(true)">
-            <div
-              class="stat-sprites | w-[2.5cqw] aspect-square"
-              :style="{
-                backgroundPosition: etcUtil.getSpritePosition(19),
+                backgroundPosition: etcUtil.getSpritePosition(index),
               }"></div>
             <span
-              v-t="'Config'"
-              class="text-[1.3cqw] text-white font-bold text-outline"></span>
-          </button>
-          <!-- 설정버튼 -->
-        </div>
-
-        <div class="absolute top-1/2 left-[0.5cqw] -translate-y-1/2">
-          <!-- 스텟표시 -->
-          <div class="grid grid-cols-1 items-start | gap-[0.2cqh]">
-            <div
-              v-for="(key, index) in materials.keys"
-              :key="key"
-              class="flex items-center | bg-black rounded-lg | pr-[0.5cqw]">
-              <div
-                class="stat-sprites | w-[3cqw] aspect-square"
-                :style="{
-                  backgroundPosition: etcUtil.getSpritePosition(index),
-                }"></div>
-              <span
-                v-if="isShowMaterialsPopup || isShowWeaponsPopup"
-                class="text-[1.3cqw] text-white | mr-[0.5cqw]">
-                {{ i18n.t(key) }}
-              </span>
-              <span class="text-[1.3cqw] text-white">
-                {{ materials[key].length }}
-              </span>
-            </div>
-          </div>
-          <!-- 스텟표시 -->
-        </div>
-
-        <div class="absolute top-1/2 right-[1cqw] -translate-y-1/2 | flex flex-col gap-[0.5cqw]">
-          <div
-            v-for="(weapon, index) in weapons?.weapons.filter((weapon) => weapon)"
-            :key="`${weapon?.name}_${index}`"
-            class="rounded-lg | border-black border-[0.25cqw]"
-            :class="{
-              'bg-white': !weapon || weapon?.level === 1,
-              'bg-blue-500': weapon?.level === 2,
-              'bg-purple-600': weapon?.level === 3,
-              'bg-yellow-400': weapon?.level === 4,
-              'bg-fuchsia-400': weapon?.level === 5,
-              'bg-red-400': weapon?.level === 6,
-            }">
-            <div
-              class="weapon-sprites | w-[4cqw] aspect-square | rounded-lg"
-              :style="{ 'background-position': weapon?.spritePosition }"></div>
+              v-if="isShowMaterialsPopup || isShowWeaponsPopup"
+              class="text-[1.3cqw] text-white | mr-[0.5cqw]">
+              {{ i18n.t(key) }}
+            </span>
+            <span class="text-[1.3cqw] text-white">
+              {{ materials[key].length }}
+            </span>
           </div>
         </div>
+        <!-- 스텟표시 -->
+      </div>
 
+      <div class="absolute top-1/2 right-[1cqw] -translate-y-1/2 | flex flex-col gap-[0.5cqw]">
         <div
-          ref="phaserContainer"
-          class="w-full h-full mx-auto"></div>
-
-        <VirtualJoystick
-          v-if="isTouchDevice"
-          v-model="activeJoystick"
-          :step-tutorial="stepTutorial"
-          class="absolute bottom-[3cqw] left-[3cqw]"
-          @step-next="stepTutorial = 'gacha'" />
-        <UIDropdown
-          v-else
-          class="absolute bottom-[3cqw] left-[3cqw] pointer-events-none"
-          :value="stepTutorial === 'move'"
-          :style="{
-            opacity: stepTutorial === 'move' ? 1 : 0,
-          }"
-          use-arrow
-          prevent-hide-outside
-          :fit-options-parent="false"
-          :position="{
-            x: 'RIGHT',
+          v-for="(weapon, index) in weapons?.weapons.filter((weapon) => weapon)"
+          :key="`${weapon?.name}_${index}`"
+          class="rounded-lg | border-black border-[0.25cqw]"
+          :class="{
+            'bg-white': !weapon || weapon?.level === 1,
+            'bg-blue-500': weapon?.level === 2,
+            'bg-purple-600': weapon?.level === 3,
+            'bg-yellow-400': weapon?.level === 4,
+            'bg-fuchsia-400': weapon?.level === 5,
+            'bg-red-400': weapon?.level === 6,
           }">
-          <template #button>
-            <img
-              class="w-[16cqw]"
-              src="/assets/images/keyboard.png" />
-          </template>
-          <template #options>
-            <div class="p-[0.5cqw] bg-white rounded-lg | flex gap-[0.5cqw]">
-              <p
-                v-t="'StepTutorial6'"
-                class="text-[1.5cqw] whitespace-nowrap text-right font-bold"></p>
-              <button
-                v-t="'Next'"
-                class="relative z-[1] | rounded-lg bg-orange-600 border-[0.2cqw] border-black | px-[1cqw] | text-outline whitespace-nowrap text-white text-[1.2cqw] font-bold | pointer-events-auto"
-                @click="stepTutorial = 'gacha'"></button>
-            </div>
-          </template>
-        </UIDropdown>
-
-        <div class="flex items-end gap-[1cqw] | absolute bottom-0 right-[1cqw]">
-          <div class="flex gap-[1cqw] | mb-[1cqw]">
-            <InGameGachaButton
-              :step-tutorial="stepTutorial"
-              @show="showGamblePopup(true)"
-              @step-next="stepTutorial = 'weapon'" />
-            <InGameWeaponButton
-              :step-tutorial="stepTutorial"
-              @show="showWeaponsPopup(true)"
-              @step-next="stepTutorial = 'stat'" />
-            <InGameStatButton
-              :step-tutorial="stepTutorial"
-              :select-chance="selectChance"
-              :gacha-chance="gachaChance"
-              @show="showMaterialsPopup(true)"
-              @step-next="stepTutorial = 'skill'" />
-          </div>
-
-          <div class="flex gap-[0.2cqw]">
-            <InGameSkillThunder
-              :step-tutorial="stepTutorial"
-              :cooltime="thunderSkillCooldown"
-              @activate="scene.events.emit('thunder')"
-              @step-next="stepTutorial = 'start'" />
-            <InGameSkillRage
-              v-if="hasRageMode"
-              @activate="scene.events.emit('rage')" />
-          </div>
+          <div
+            class="weapon-sprites | w-[4cqw] aspect-square | rounded-lg"
+            :style="{ 'background-position': weapon?.spritePosition }"></div>
         </div>
-      </main>
-    </div>
-  </div>
+      </div>
+
+      <div
+        ref="phaserContainer"
+        class="w-full h-full mx-auto"></div>
+
+      <VirtualJoystick
+        v-if="isTouchDevice"
+        v-model="activeJoystick"
+        :step-tutorial="stepTutorial"
+        class="absolute bottom-[3cqw] left-[3cqw]"
+        @step-next="stepTutorial = 'gacha'" />
+      <UIDropdown
+        v-else
+        class="absolute bottom-[3cqw] left-[3cqw] pointer-events-none"
+        :value="stepTutorial === 'move'"
+        :style="{
+          opacity: stepTutorial === 'move' ? 1 : 0,
+        }"
+        use-arrow
+        prevent-hide-outside
+        :fit-options-parent="false"
+        :position="{
+          x: 'RIGHT',
+        }">
+        <template #button>
+          <img
+            class="w-[16cqw]"
+            src="/assets/images/keyboard.png" />
+        </template>
+        <template #options>
+          <div class="p-[0.5cqw] bg-white rounded-lg | flex gap-[0.5cqw]">
+            <p
+              v-t="'StepTutorial6'"
+              class="text-[1.5cqw] whitespace-nowrap text-right font-bold"></p>
+            <button
+              v-t="'Next'"
+              class="relative z-[1] | rounded-lg bg-orange-600 border-[0.2cqw] border-black | px-[1cqw] | text-outline whitespace-nowrap text-white text-[1.2cqw] font-bold | pointer-events-auto"
+              @click="stepTutorial = 'gacha'"></button>
+          </div>
+        </template>
+      </UIDropdown>
+
+      <div class="flex items-end gap-[1cqw] | absolute bottom-0 right-[1cqw]">
+        <div class="flex gap-[1cqw] | mb-[1cqw]">
+          <InGameGachaButton
+            :step-tutorial="stepTutorial"
+            @show="showGamblePopup(true)"
+            @step-next="stepTutorial = 'weapon'" />
+          <InGameWeaponButton
+            :step-tutorial="stepTutorial"
+            @show="showWeaponsPopup(true)"
+            @step-next="stepTutorial = 'stat'" />
+          <InGameStatButton
+            :step-tutorial="stepTutorial"
+            :select-chance="selectChance"
+            :gacha-chance="gachaChance"
+            @show="showMaterialsPopup(true)"
+            @step-next="stepTutorial = 'skill'" />
+        </div>
+
+        <div class="flex gap-[0.2cqw]">
+          <InGameSkillThunder
+            :step-tutorial="stepTutorial"
+            :cooltime="thunderSkillCooldown"
+            @activate="scene.events.emit('thunder')"
+            @step-next="stepTutorial = 'start'" />
+          <InGameSkillRage
+            v-if="hasRageMode"
+            @activate="scene.events.emit('rage')" />
+        </div>
+      </div>
+    </main>
+  </BackgroundDefault>
 </template>
 
 <script lang="ts" setup>
@@ -1141,17 +1139,3 @@ watch(stepTutorial, (value) => {
   }
 })
 </script>
-
-<style lang="scss" scoped>
-.content {
-  @media (aspect-ratio >= 16 / 9) {
-    width: auto;
-    height: 100%;
-  }
-
-  @media (aspect-ratio <= 16 / 9) {
-    width: 100%;
-    height: auto;
-  }
-}
-</style>

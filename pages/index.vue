@@ -5,24 +5,26 @@
       @click="fullScreen">
       <i class="icon icon-fullscreen | block text-black text-[5vw]"></i>
     </button>
-    <Lobby
-      v-if="currentScene === 'lobby'"
-      @next="currentScene = $event" />
-    <SelectCharacter
-      v-if="currentScene === 'select'"
-      @next="currentScene = $event" />
-    <InGame
-      v-if="currentScene === 'inGame'"
-      @next="currentScene = $event" />
-    <Result
-      v-if="currentScene === 'result'"
-      @next="currentScene = $event" />
-    <Store
-      v-if="currentScene === 'store'"
-      @next="currentScene = $event" />
-    <Collection
-      v-if="currentScene === 'collection'"
-      @next="currentScene = $event" />
+    <div class="w-screen h-screen | flex items-center justify-center | bg-black">
+      <SceneLobby
+        v-if="currentScene === 'lobby'"
+        @next="currentScene = $event" />
+      <SceneSelectCharacter
+        v-if="currentScene === 'select'"
+        @next="currentScene = $event" />
+      <SceneInGame
+        v-if="currentScene === 'inGame'"
+        @next="currentScene = $event" />
+      <SceneResult
+        v-if="currentScene === 'result'"
+        @next="currentScene = $event" />
+      <SceneStore
+        v-if="currentScene === 'store'"
+        @next="currentScene = $event" />
+      <SceneCollection
+        v-if="currentScene === 'collection'"
+        @next="currentScene = $event" />
+    </div>
   </div>
 </template>
 
