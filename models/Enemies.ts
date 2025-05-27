@@ -197,7 +197,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     } else if (this.isRage) {
       hp = this.increaseHP(this.round) * 3
     } else {
-      if (`${this.round}`.endsWith("9")) {
+      if (`${this.round}`.endsWith("9") && this.round !== 59) {
         hp = 1
         this.setTint(0xffff00)
       } else hp = this.increaseHP(this.round)

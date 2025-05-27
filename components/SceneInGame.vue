@@ -322,7 +322,7 @@ const clearRound = gameStore.mode === "demo" ? 20 : 60
 
 const initialRemainnedTime = 3
 const roundTime = 40
-const enemyCountDeadline = 29
+const enemyCountDeadline = 39
 
 const round = ref(0)
 const remainnedTime = ref(initialRemainnedTime)
@@ -691,11 +691,28 @@ onMounted(() => {
 
                   scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
                 })
+              } else if (round.value === 11) {
+                scene.time.delayedCall(1200, () => {
+                  isShowTextEffect.value = "MORE! MORE!"
+                  soundStore.play("round")
+                  scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
+                })
+              } else if (round.value === 31) {
+                scene.time.delayedCall(1200, () => {
+                  isShowTextEffect.value = "MORE! MORE!"
+                  soundStore.play("round")
+                  scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
+                })
+              } else if (round.value === 59) {
+                scene.time.delayedCall(1200, () => {
+                  isShowTextEffect.value = "INFINITE"
+                  soundStore.play("round")
+                  scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
+                })
               } else if (`${round.value}`.endsWith("9")) {
                 scene.time.delayedCall(1200, () => {
                   isShowTextEffect.value = "BREAKTIME"
                   soundStore.play("round")
-
                   scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
                 })
               } else {
@@ -756,10 +773,15 @@ onMounted(() => {
               isClear = true
             }
 
-            const spawnCondition =
-              round.value > 30
-                ? 41 > remainnedTime.value && remainnedTime.value > 25
-                : 41 > remainnedTime.value && remainnedTime.value > 30
+            let spawnCondition = false
+            if (round.value < 11)
+              spawnCondition = 41 > remainnedTime.value && remainnedTime.value > 30
+            else if (round.value < 31)
+              spawnCondition = 41 > remainnedTime.value && remainnedTime.value > 20
+            else if (round.value < 59)
+              spawnCondition = 41 > remainnedTime.value && remainnedTime.value > 10
+            else if (round.value < 61)
+              spawnCondition = 41 > remainnedTime.value && remainnedTime.value > 1
 
             if (spawnCondition) enemies.spawnEnemy(round.value, coins, 40 - remainnedTime.value)
             if (round.value >= 10 && round.value % 10 === 0 && remainnedTime.value === roundTime)
