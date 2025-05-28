@@ -328,20 +328,15 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     const target = this.pathes[pathIndex]
     const dx = target.x - this.x
     const dy = target.y - this.y
-
     const distSq = dx * dx + dy * dy
 
     // 일정 거리 이내로 도달하면 다음 경로로 전환
     if (distSq < 25) {
-      this.x = target.x
-      this.y = target.y
-
+      this.setPosition(target.x, target.y)
       const next = (pathIndex + 1) % this.pathes.length
       this.setData("pathIndex", next)
 
-      // 방향 갱신은 다음 타겟을 기준으로 결정
-      if (next === 0 || next === 3) this.setFlipX(true)
-      else if (next === 1 || next === 2) this.setFlipX(false)
+      this.setFlipX(next === 0 || next === 3)
       return // 위치 갱신 후 moveTo 생략
     }
 
@@ -353,8 +348,8 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   calculateSpeed(weapons: (Weapon | undefined)[], materials: Materials): number {
     const isAllWeaponActiveLevel = this.scene.data.get("isAllWeaponActive") ?? 0
     const isClose = this.distanceWithPlayer < 150
-
     const baseSpeed = this.isBoss ? 80 : 120
+
     let speed = baseSpeed * window.speed
 
     // 라운드 기반 속도 증가
