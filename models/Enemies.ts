@@ -5,7 +5,6 @@ import type { Materials } from "./Material"
 import type { Weapon } from "./Weapon"
 
 let timeKey = 0
-
 export class Enemies {
   scene: Phaser.Scene
   group: Phaser.Physics.Arcade.Group
@@ -317,62 +316,69 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   }
 
   moveEnemyAlongPath(weapons: (Weapon | undefined)[], materials: Materials) {
+    // 스턴 상태라면 이동 중단
     if (this.remainedStuns.some((item) => item > 0)) {
       this.body?.velocity.set(0, 0)
       return
     }
 
-    const pathIndex = this.getData("pathIndex") as number
+    const pathIndex = this.getData("pathIndex")
     if (pathIndex == null) return
 
     const target = this.pathes[pathIndex]
-    const dx = this.x - target.x
-    const dy = this.y - target.y
+    const dx = target.x - this.x
+    const dy = target.y - this.y
 
-    if (dx * dx + dy * dy < 25) {
+    const distSq = dx * dx + dy * dy
+
+    // 일정 거리 이내로 도달하면 다음 경로로 전환
+    if (distSq < 25) {
       this.x = target.x
       this.y = target.y
 
-      let next = pathIndex + 1
-      if (next >= this.pathes.length) next = 0
+      const next = (pathIndex + 1) % this.pathes.length
+      this.setData("pathIndex", next)
 
-      this.setFlipX([0, 3].includes(next)).setData("pathIndex", next)
+      // 방향 갱신은 다음 타겟을 기준으로 결정
+      if (next === 0 || next === 3) this.setFlipX(true)
+      else if (next === 1 || next === 2) this.setFlipX(false)
+      return // 위치 갱신 후 moveTo 생략
     }
 
-    if (this.active)
-      this.scene.physics.moveTo(this, target.x, target.y, this.calculateSpeed(weapons, materials))
+    // 이동 속도 계산 후 실제 이동 처리
+    const speed = this.calculateSpeed(weapons, materials)
+    this.scene.physics.moveTo(this, target.x, target.y, speed)
   }
 
-  calculateSpeed(weapons: (Weapon | undefined)[], materials: Materials) {
+  calculateSpeed(weapons: (Weapon | undefined)[], materials: Materials): number {
     const isAllWeaponActiveLevel = this.scene.data.get("isAllWeaponActive") ?? 0
+    const isClose = this.distanceWithPlayer < 150
 
-    const slowRange = 150
-    const weaponSlows = weapons.reduce((a, w) => a + (w?.slow ?? 0), 0)
+    const baseSpeed = this.isBoss ? 80 : 120
+    let speed = baseSpeed * window.speed
 
-    const enemySpeed = this.isBoss ? 80 : 120
-    const appliedGameSpeed = enemySpeed * window.speed
-    const appliedRoundSpeed = numberUtil.addPercent(appliedGameSpeed, this.round * 2)
+    // 라운드 기반 속도 증가
+    speed = numberUtil.addPercent(speed, this.round * 2)
 
-    const appliedMaterial =
-      this.distanceWithPlayer < slowRange
-        ? numberUtil.subtractPercent(appliedRoundSpeed, materials.calculateStat("cul"))
-        : appliedRoundSpeed
+    // 거리 내일 경우만 감소 계산
+    if (isClose) {
+      const culStat = materials.calculateStat("cul")
+      const totalWeaponSlow = weapons.reduce((acc, w) => acc + (w?.slow ?? 0), 0)
 
-    const applyWeaponSlow =
-      this.distanceWithPlayer < slowRange
-        ? numberUtil.subtractPercent(appliedMaterial, weaponSlows)
-        : appliedMaterial
+      speed = numberUtil.subtractPercent(speed, culStat)
+      speed = numberUtil.subtractPercent(speed, totalWeaponSlow)
+    }
 
-    const appliedWeaponActive = numberUtil.subtractPercent(
-      applyWeaponSlow,
-      isAllWeaponActiveLevel * 5
-    )
+    // 무기 전체 활성화 효과
+    speed = numberUtil.subtractPercent(speed, isAllWeaponActiveLevel * 5)
 
-    const result = this.getData("slowed")
-      ? numberUtil.subtractPercent(appliedWeaponActive, this.getData("slowed"))
-      : appliedWeaponActive
+    // 개별 디버프(slowed)
+    const slowedPercent = this.getData("slowed") ?? 0
+    if (slowedPercent > 0) {
+      speed = numberUtil.subtractPercent(speed, slowedPercent)
+    }
 
-    return Math.max(1, result)
+    return Math.max(1, Math.floor(speed))
   }
 
   showDamageText(damageValue: number, weapon: Weapon) {

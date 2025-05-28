@@ -3,6 +3,7 @@
     <Transition name="fade">
       <Tutorial
         v-if="isShowTutorial"
+        v-memo="[isShowTutorial, progress]"
         :progress="progress"
         @close="startGame" />
     </Transition>

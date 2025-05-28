@@ -44,14 +44,14 @@ export class Materials {
   private _anyDirty = true
 
   private readonly _coef: Record<StatKey, number> = {
-    str: this.str.info.physicalDamage, // 힘 → 물리공격력
-    int: this.int.info.magicalDamage, // 지식 → 마법공격력
+    str: 1, // 힘 → 물리공격력
+    int: 1, // 지식 → 마법공격력
     cul: 1, // 교양 → 슬로우 %
-    cha: this.cha.info.stun * 100, // 카리스마 → 스턴 0.1s *
-    vit: this.vit.info.splash, // 건강 → 스플래시
-    agi: this.agi.info.cooltime, // 민첩 → 쿨타임 감소
-    luk: this.luk.info.armorPenetration, // 운 → 물리관통력
-    wis: this.wis.info.armorPenetration, // 지혜 → 마법관통력
+    cha: 10, // 카리스마 → 스턴 0.1s *
+    vit: 5, // 건강 → 스플래시
+    agi: 0.01, // 민첩 → 쿨타임 감소
+    luk: 1, // 운 → 물리관통력
+    wis: 1, // 지혜 → 마법관통력
   }
   get totalLength() {
     return (
@@ -66,11 +66,38 @@ export class Materials {
     )
   }
   calculateStat(stat: StatKey): number {
-    if (this._dirty[stat]) {
-      this._cache[stat] = this[stat].length * this._coef[stat]
-      this._dirty[stat] = false
-      // _anyDirty는 여기서 false 로 만들지 않음 (다른 키가 더티일 수도)
+    if (!this._dirty[stat]) return this._cache[stat]
+
+    let len = 0
+    switch (stat) {
+      case "str":
+        len = this.str.length
+        break
+      case "int":
+        len = this.int.length
+        break
+      case "cul":
+        len = this.cul.length
+        break
+      case "cha":
+        len = this.cha.length
+        break
+      case "vit":
+        len = this.vit.length
+        break
+      case "agi":
+        len = this.agi.length
+        break
+      case "luk":
+        len = this.luk.length
+        break
+      case "wis":
+        len = this.wis.length
+        break
     }
+
+    this._cache[stat] = len * this._coef[stat]
+    this._dirty[stat] = false
     return this._cache[stat]
   }
 
