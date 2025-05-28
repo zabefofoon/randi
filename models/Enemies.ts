@@ -174,6 +174,10 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
   thunderEffect!: Phaser.GameObjects.Sprite
 
+  private hpBarBg!: Phaser.GameObjects.Rectangle
+  private hpBarFill!: Phaser.GameObjects.Rectangle
+  private readonly hpBarOffset = { x: -16, y: -30 }
+
   constructor(
     scene: Phaser.Scene,
     x: number,
@@ -236,6 +240,25 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       .setScale(0.9)
       .setDepth(this.depth + 1)
       .setFrame(9)
+
+    this.hpBarBg = scene.add.rectangle(0, 0, 32, 4, 0x000000).setOrigin(0)
+    this.hpBarFill = scene.add.rectangle(0, 0, 32, 4, 0xff0000).setOrigin(0)
+    this.hpBarBg.setDepth(3)
+    this.hpBarFill.setDepth(3)
+    this.updateHpBarPos()
+  }
+
+  updateHpBarPos() {
+    const { x, y } = this
+    this.hpBarBg.setPosition(x + this.hpBarOffset.x, y + this.hpBarOffset.y)
+    this.hpBarFill.setPosition(x + this.hpBarOffset.x, y + this.hpBarOffset.y)
+  }
+
+  private drawHp() {
+    const hp = this.getData("hp") as number
+    const maxHp = this.getData("maxHp") as number
+    const ratio = Phaser.Math.Clamp(hp / maxHp, 0, 1)
+    this.hpBarFill.displayWidth = 32 * ratio
   }
 
   get isRage() {
@@ -261,14 +284,14 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   increaseHP(round: number): number {
     const _round = round - 1
     const roundGroup = Math.ceil(_round / 10)
-    const roundMultiplies = [1, 1, 1.2, 1.5, 3, 6, 15, 10]
+    const roundMultiplies = [1, 1, 1.1, 1.25, 1.5, 3, 5, 10]
     const result = (Math.pow(_round * 2, 2) + 10) * (Math.floor(_round / 10) + 1)
     return Math.ceil(result * (roundMultiplies?.[roundGroup] ?? 1))
   }
 
   increaseDefence(round: number): number {
     const roundGroup = Math.ceil(round / 10)
-    const value = [0, 0, 5, 15, 40, 70, 150, 200][roundGroup]
+    const value = [0, 0, 5, 15, 30, 60, 100, 200][roundGroup]
     return value + round
   }
 
@@ -350,22 +373,6 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       : appliedWeaponActive
 
     return Math.max(1, result)
-  }
-
-  updateEnemyHpBar() {
-    const hp = this.getData("hp")
-    const maxHp = this.getData("maxHp")
-    const hpBar = this.getData("hpBar") as Phaser.GameObjects.Graphics
-    if (!hpBar) return
-
-    hpBar.clear()
-
-    hpBar.fillStyle(0x000000)
-    hpBar.fillRect(this.x - 16, this.y - 30, 32, 4) // width 32, height 4
-
-    const hpPercent = hp / maxHp
-    hpBar.fillStyle(0xff0000)
-    hpBar.fillRect(this.x - 16, this.y - 30, 32 * hpPercent, 4)
   }
 
   showDamageText(damageValue: number, weapon: Weapon) {
@@ -506,7 +513,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     })
 
     this.showDamageText(finalDamage, weaponData)
-
+    this.drawHp()
     if (this.getData("hp") <= 0) this.die()
   }
   applyDot(weaponData: Weapon, totalDamage: number, duration: number, tick = 500) {
@@ -565,5 +572,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.destroy()
     this.activeDots.forEach((t) => t.remove())
     this.stunTimer?.destroy()
+    this.hpBarBg.destroy()
+    this.hpBarFill.destroy()
   }
 }

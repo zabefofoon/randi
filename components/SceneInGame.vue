@@ -803,7 +803,7 @@ onMounted(() => {
         enemies.children.forEach((enemy) => {
           enemy.moveEnemyAlongPath(weapons.value!.weapons, materials.value)
           enemy.applyDecrease(weapons.value!.weapons)
-          enemy.updateEnemyHpBar()
+          enemy.updateHpBarPos()
         })
 
         // 플레이어가 정지상태 && 쿨다운 → 발사
