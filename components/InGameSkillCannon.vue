@@ -9,7 +9,7 @@
       {{ THUNDER_COOLTIME - cooltime }}
     </span>
     <div
-      class="bg-green-600 | grid place-items-center | w-full h-full rounded-[inherit]"
+      class="bg-red-400 | grid place-items-center | w-full h-full rounded-[inherit]"
       :style="{
         'clip-path': `inset(0 0 ${100 - (cooltime / THUNDER_COOLTIME) * 100}%  0)`,
       }"
@@ -20,7 +20,7 @@
       <button
         class="stat-sprites | w-full aspect-square outline-0 | rounded-[inherit]"
         :style="{
-          backgroundPosition: etcUtil.getSpritePosition(21),
+          backgroundPosition: etcUtil.getSpritePosition(23),
           filter: `grayscale(${cooltime < THUNDER_COOLTIME ? 1 : 0})`,
         }"
         @click="emit('activate')"></button>

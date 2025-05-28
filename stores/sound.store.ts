@@ -32,6 +32,7 @@ export const useSoundStore = defineStore("sound", () => {
     nuxt.$sound.registerSound(`${useAssetBase()}assets/sounds/weapons.mp3`, "weapons")
     nuxt.$sound.registerSound(`${useAssetBase()}assets/sounds/round.mp3`, "round")
     nuxt.$sound.registerSound(`${useAssetBase()}assets/sounds/thunder.mp3`, "thunder")
+    nuxt.$sound.registerSound(`${useAssetBase()}assets/sounds/beam.mp3`, "beam")
 
     prepareInstances("door", 3)
     prepareInstances("coin", 8)
@@ -46,6 +47,7 @@ export const useSoundStore = defineStore("sound", () => {
     prepareInstances("weapons", 3)
     prepareInstances("round", 3)
     prepareInstances("thunder", 3)
+    prepareInstances("beam", 3)
   }
 
   const prepareInstances = (id: string, count = 5) => {

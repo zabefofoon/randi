@@ -2,6 +2,7 @@ import Phaser from "phaser"
 import { Character, type PurchaseCharacter } from "./Character"
 import type { Enforces } from "./Enforces"
 import type { Materials } from "./Material"
+import { Blackhole } from "./Skill"
 import type { Weapon } from "./Weapon"
 
 let timeKey = 0
@@ -35,6 +36,18 @@ export class Enemies {
     return this.group.getChildren() as Enemy[]
   }
 
+  applyBlackhole(materials: Materials, enforces: Enforces) {
+    ;[...this.children].forEach((enemy) => {
+      enemy.isBlackholed = true
+      enemy.setData("pathIndex", 0)
+      enemy.takeDamage(Blackhole.of(), materials, enforces)
+    })
+  }
+  removeBlackhole() {
+    this.children.forEach((enemy) => {
+      enemy.isBlackholed = false
+    })
+  }
   updateDistances(px: number, py: number) {
     timeKey++
     if (timeKey > 5) timeKey = 0
@@ -172,6 +185,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   isAppliedDcrease = false
 
   thunderEffect!: Phaser.GameObjects.Sprite
+  isBlackholed = false
 
   private hpBarBg!: Phaser.GameObjects.Rectangle
   private hpBarFill!: Phaser.GameObjects.Rectangle
@@ -197,7 +211,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     let hp = 0
     if (this.isBoss) {
       hp = this.increaseHP(this.round) * 4
-    } else if (this.isRage) {
+    } else if (this.isThunder || this.isRage || this.isBlackhole || this.isCannon) {
       hp = this.increaseHP(this.round) * 3
     } else {
       if (`${this.round}`.endsWith("9") && this.round !== 59) {
@@ -213,7 +227,10 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       .setScale(0.75)
 
     if (this.isBoss) this.setTint(0xff0000)
+    if (this.isThunder) this.setTint(0x0000ff)
     if (this.isRage) this.setTint(0x00ff00)
+    if (this.isBlackhole) this.setTint(0x000000)
+    if (this.isCannon) this.setTint(0xfc036b)
 
     this.physicalDefence = this.isBoss
       ? numberUtil.addPercent(this.increaseDefence(this.round), 130)
@@ -260,8 +277,20 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.hpBarFill.displayWidth = 32 * ratio
   }
 
+  get isThunder() {
+    return this.round === 3 && this.index === 0
+  }
+
   get isRage() {
-    return `${this.round}`.endsWith("5") && this.index === 0
+    return this.round === 18 && this.index === 0
+  }
+
+  get isBlackhole() {
+    return this.round === 33 && this.index === 0
+  }
+
+  get isCannon() {
+    return this.round === 48 && this.index === 0
   }
 
   applyStunOne(weapon: Weapon, materials: Materials) {
@@ -283,14 +312,14 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   increaseHP(round: number): number {
     const _round = round - 1
     const roundGroup = Math.ceil(_round / 10)
-    const roundMultiplies = [1, 1, 1.1, 1.25, 1.5, 3, 5, 10]
+    const roundMultiplies = [1, 1, 1.1, 1.25, 1.5, 4, 8, 10]
     const result = (Math.pow(_round * 2, 2) + 10) * (Math.floor(_round / 10) + 1)
     return Math.ceil(result * (roundMultiplies?.[roundGroup] ?? 1))
   }
 
   increaseDefence(round: number): number {
     const roundGroup = Math.ceil(round / 10)
-    const value = [0, 0, 5, 15, 30, 60, 100, 200][roundGroup]
+    const value = [0, 0, 5, 15, 30, 60, 120, 200][roundGroup]
     return value + round
   }
 
@@ -342,7 +371,11 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     // 이동 속도 계산 후 실제 이동 처리
     const speed = this.calculateSpeed(weapons, materials)
-    this.scene.physics.moveTo(this, target.x, target.y, speed)
+    if (!this.isBlackholed) this.scene.physics.moveTo(this, target.x, target.y, speed)
+    else {
+      const { x, y } = this.pathes[0]
+      this.scene.physics.moveTo(this, x, y, 1500)
+    }
   }
 
   calculateSpeed(weapons: (Weapon | undefined)[], materials: Materials): number {
@@ -488,8 +521,12 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     damage = numberUtil.addPercent(damage, isAllWeaponActiveLevel * 20)
 
-    const finalDamage =
-      weaponData.name === "Thunder" ? Math.ceil((this.getData("maxHp") * 2) / 3) : Math.ceil(damage)
+    let finalDamage = Math.ceil(damage)
+    if (weaponData.name === "Thunder") finalDamage = Math.ceil((this.getData("maxHp") * 2) / 3)
+    else if (weaponData.name === "Blackhole")
+      finalDamage = Math.ceil((this.getData("maxHp") * 1) / 10)
+    else if (weaponData.name === "LaserBeam")
+      finalDamage = Math.ceil((this.getData("maxHp") * 1) / 10)
 
     if (weaponData.dotted) this.applyDot(weaponData, finalDamage, weaponData.dotted * 250, 250)
 
@@ -510,7 +547,10 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.scene.time.delayedCall(100, () => {
       this.clearTint()
       if (this.isBoss) this.setTint(0xff0000)
+      if (this.isThunder) this.setTint(0x0000ff)
       if (this.isRage) this.setTint(0x00ff00)
+      if (this.isBlackhole) this.setTint(0x000000)
+      if (this.isCannon) this.setTint(0xfc036b)
     })
 
     this.showDamageText(finalDamage, weaponData)
@@ -566,7 +606,11 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   die() {
     if (this.isBoss) this.scene.events.emit("boss-die")
     else this.scene.events.emit("enemy-die")
+
+    if (this.isThunder) this.scene.events.emit("thunder-die")
     if (this.isRage) this.scene.events.emit("rage-die")
+    if (this.isBlackhole) this.scene.events.emit("blackhole-die")
+    if (this.isCannon) this.scene.events.emit("cannon-die")
     ;(this.coins as unknown as number) += this.round
     const hpBar = this.getData("hpBar") as Phaser.GameObjects.Graphics
     if (hpBar) hpBar.destroy()

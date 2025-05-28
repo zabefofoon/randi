@@ -265,15 +265,25 @@
             @step-next="stepTutorial = 'skill'" />
         </div>
 
-        <div class="flex gap-[0.2cqw]">
+        <div class="grid grid-cols-2">
           <InGameSkillThunder
+            :has="hasThunder"
             :step-tutorial="stepTutorial"
             :cooltime="thunderSkillCooldown"
             @activate="scene.events.emit('thunder')"
             @step-next="stepTutorial = 'start'" />
           <InGameSkillRage
-            v-if="hasRageMode"
+            :has="hasRageMode"
+            :cooltime="rageSkillCooldown"
             @activate="scene.events.emit('rage')" />
+          <InGameSkillBlackhole
+            :has="hasBlackhole"
+            :cooltime="blackholeSkillCooldown"
+            @activate="scene.events.emit('blackhole')" />
+          <InGameSkillCannon
+            :has="hasCannon"
+            :cooltime="cannonSkillCooldown"
+            @activate="scene.events.emit('beam')" />
         </div>
       </div>
     </main>
@@ -282,6 +292,7 @@
 
 <script lang="ts" setup>
 import { THUNDER_COOLTIME } from "~/const"
+import { BeforeBeam, DogeBeam } from "~/models/Beam"
 import { Enemies } from "~/models/Enemies"
 import { Enforces } from "~/models/Enforces"
 import { Gun } from "~/models/Gun"
@@ -372,8 +383,15 @@ const selectedGambleIndex = ref(0)
 const isAllWeaponEffect = ref(false)
 
 const thunderSkillCooldown = ref(0)
+const rageSkillCooldown = ref(0)
+const blackholeSkillCooldown = ref(0)
+const cannonSkillCooldown = ref(0)
+
 const isRageMode = ref(false)
+const hasThunder = ref(false)
 const hasRageMode = ref(false)
+const hasBlackhole = ref(false)
+const hasCannon = ref(false)
 
 let scene: Phaser.Scene & { dmgPool: Phaser.GameObjects.Group }
 let isBossRemained = false
@@ -432,6 +450,11 @@ onMounted(() => {
         )
         scene.load.image("bullet", `${useAssetBase()}assets/images/bullet.png`)
 
+        scene.load.spritesheet("elden-sprite", `${useAssetBase()}assets/images/elden_ring.png`, {
+          frameWidth: 100,
+          frameHeight: 121,
+        })
+
         scene.load.spritesheet("gun-sprite", `${useAssetBase()}assets/images/gun_sprite.png`, {
           frameWidth: 100,
           frameHeight: 100,
@@ -448,6 +471,7 @@ onMounted(() => {
           frameWidth: 100,
           frameHeight: 100,
         })
+
         scene.load.spritesheet(
           "thunder-sprite",
           `${useAssetBase()}assets/images/thunder_sprite.png`,
@@ -458,6 +482,7 @@ onMounted(() => {
         )
 
         scene.load.image("tiles", `${useAssetBase()}assets/images/mainlevbuild2.png`)
+        scene.load.image("laser-beam", `${useAssetBase()}assets/images/laser_beam.png`)
         scene.load.tilemapTiledJSON("map", `${useAssetBase()}assets/jsons/map.json`)
 
         if (gameStore.checkCharacter(gameStore.selectedCharacter)) {
@@ -564,6 +589,13 @@ onMounted(() => {
           frameRate: 9,
         })
 
+        scene.anims.create({
+          key: "elden-animation",
+          frames: this.anims.generateFrameNumbers("elden-sprite", { start: 0, end: 23 }),
+          frameRate: 15,
+          repeat: -1,
+        })
+
         enforces.value = new Enforces()
         weapons.value = new Weapons(scene, enemies, materials.value, enforces.value)
 
@@ -605,8 +637,27 @@ onMounted(() => {
         scene.events.on("enemy-spawn", () => {
           remainnedEnemies.value++
         })
+        scene.events.on("thunder-die", () => {
+          hasThunder.value = true
+          thunderSkillCooldown.value = 180
+          selectChance.value += 1
+          gachaChance.value += 1
+        })
         scene.events.on("rage-die", () => {
           hasRageMode.value = true
+          rageSkillCooldown.value = 180
+          selectChance.value += 1
+          gachaChance.value += 1
+        })
+        scene.events.on("blackhole-die", () => {
+          hasBlackhole.value = true
+          blackholeSkillCooldown.value = 180
+          selectChance.value += 1
+          gachaChance.value += 1
+        })
+        scene.events.on("cannon-die", () => {
+          hasCannon.value = true
+          cannonSkillCooldown.value = 180
           selectChance.value += 1
           gachaChance.value += 1
         })
@@ -632,7 +683,6 @@ onMounted(() => {
 
         scene.events.on("rage", () => {
           isShowTextEffect.value = `RAGE MODE`
-          hasRageMode.value = false
           scene.time.delayedCall(1200, () => {
             player.weaponsEffect
               .setPosition(player.x, player.y)
@@ -641,6 +691,7 @@ onMounted(() => {
               .play("weapons-animation")
             isRageMode.value = true
             isShowTextEffect.value = ""
+            rageSkillCooldown.value = 0
             scene.cameras.main.shake(100, 0.01)
 
             soundStore.play("thunder")
@@ -659,6 +710,60 @@ onMounted(() => {
           })
         })
 
+        scene.events.on("blackhole", () => {
+          isShowTextEffect.value = `LUNA HOLE`
+          scene.time.delayedCall(1200, () => {
+            enemies.applyBlackhole(materials.value, enforces.value)
+            scene.time.delayedCall(600, () =>
+              enemies.applyBlackhole(materials.value, enforces.value)
+            )
+            scene.time.delayedCall(1200, () =>
+              enemies.applyBlackhole(materials.value, enforces.value)
+            )
+            scene.time.delayedCall(1800, () =>
+              enemies.applyBlackhole(materials.value, enforces.value)
+            )
+            isShowTextEffect.value = ""
+            scene.cameras.main.shake(100, 0.01)
+            blackholeSkillCooldown.value = 0
+
+            soundStore.play("thunder")
+
+            layer1?.setTint(etcUtil.softTint(0x000000, 0.8))
+            layer2?.setTint(etcUtil.softTint(0x000000, 0.8))
+            layer3?.setTint(etcUtil.softTint(0x000000, 0.8))
+            const eldenSprite = scene.add
+              .sprite(150, 110, "elden-sprite")
+              .setTint(0x8403fc)
+              .play("elden-animation")
+
+            scene.time.delayedCall(2000, () => {
+              const ceiled = Math.max(1, Math.ceil(round.value / 10))
+              layer1?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))
+              layer2?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))
+              layer3?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))
+              enemies.removeBlackhole()
+              eldenSprite.destroy()
+            })
+          })
+        })
+        scene.events.on("beam", () => {
+          isShowTextEffect.value = `DOGE BEAM`
+          scene.time.delayedCall(1200, () => {
+            soundStore.play("beam")
+            isShowTextEffect.value = ``
+            cannonSkillCooldown.value = 0
+
+            BeforeBeam.create({
+              scene,
+              player,
+              enemies,
+              materials: materials.value,
+              enforces: enforces.value,
+            }).onComplete(DogeBeam.of)
+          })
+        })
+
         scene.time.addEvent({
           delay: 1000 / window.speed,
           repeat: -1,
@@ -666,7 +771,14 @@ onMounted(() => {
             if (scene.data.get("paused")) return
 
             remainnedTime.value--
-            if (thunderSkillCooldown.value <= THUNDER_COOLTIME) thunderSkillCooldown.value++
+            if (hasThunder.value && thunderSkillCooldown.value <= THUNDER_COOLTIME)
+              thunderSkillCooldown.value++
+            if (hasRageMode.value && rageSkillCooldown.value <= THUNDER_COOLTIME)
+              rageSkillCooldown.value++
+            if (hasBlackhole.value && blackholeSkillCooldown.value <= THUNDER_COOLTIME)
+              blackholeSkillCooldown.value++
+            if (hasCannon.value && cannonSkillCooldown.value <= THUNDER_COOLTIME)
+              cannonSkillCooldown.value++
 
             if (remainnedTime.value % 5 === 0) {
               remainnedEnemies.value = enemies.group.children.size
@@ -685,7 +797,7 @@ onMounted(() => {
 
                   scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
                 })
-              } else if (`${round.value}`.endsWith("5")) {
+              } else if ([3, 18, 33, 48].includes(round.value)) {
                 scene.time.delayedCall(1200, () => {
                   isShowTextEffect.value = "WARNING"
                   soundStore.play("round")

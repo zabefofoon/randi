@@ -61,3 +61,7 @@
 .icon-rotate {
   @include generateIcon("../images/icons/icon_rotate.svg");
 }
+
+.icon-lock {
+  @include generateIcon("../images/icons/icon_lock.svg");
+}

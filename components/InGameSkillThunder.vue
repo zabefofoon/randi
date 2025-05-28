@@ -8,10 +8,17 @@
       x: 'LEFT',
     }">
     <template #button>
-      <div
-        class="relative bg-black w-[8cqw] aspect-square rounded-tl-[5cqw] rounded-tr-[1cqw] rounded-bl-[1cqw] | pl-[0.2cqw] pt-[0.2cqw]">
+      <div class="relative bg-black w-[5cqw] aspect-square rounded-[1cqw] | p-[0.25cqw]">
+        <i
+          v-if="!has"
+          class="icon icon-lock | absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 | text-white | text-[1.6cqw]"></i>
+        <span
+          v-else-if="cooltime < THUNDER_COOLTIME"
+          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 | text-white | text-[1.6cqw]">
+          {{ THUNDER_COOLTIME - cooltime }}
+        </span>
         <div
-          class="grid place-items-center | w-full h-full rounded-tl-[5cqw] rounded-tr-[1cqw] rounded-bl-[1cqw]"
+          class="grid place-items-center | w-full h-full rounded-[inherit]"
           :style="{
             'clip-path':
               stepTutorial === 'skill'
@@ -23,7 +30,7 @@
             'bg-blue-600': cooltime >= THUNDER_COOLTIME,
           }">
           <button
-            class="stat-sprites | mt-[0.5cqw] ml-[0.5cqw] | w-[6.5cqw] aspect-square outline-0"
+            class="stat-sprites | w-full aspect-square outline-0 | rounded-[inherit]"
             :style="{
               backgroundPosition: etcUtil.getSpritePosition(20),
               filter: `grayscale(${cooltime < THUNDER_COOLTIME ? 1 : 0})`,
@@ -52,9 +59,11 @@ import { THUNDER_COOLTIME } from "~/const"
 import type { StepTutorial } from "~/models/UI"
 
 defineProps<{
+  has: boolean
   cooltime: number
   stepTutorial?: StepTutorial
 }>()
+
 const emit = defineEmits<{
   (e: "activate" | "step-next"): void
 }>()
