@@ -8,7 +8,7 @@
       x: 'LEFT',
     }">
     <template #button>
-      <div class="relative bg-black w-[5cqw] aspect-square rounded-[1cqw] | p-[0.25cqw]">
+      <div class="relative bg-black w-[6cqw] aspect-square rounded-[1cqw] | p-[0.25cqw]">
         <i
           v-if="!has"
           class="icon icon-lock | absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 | text-white | text-[1.6cqw]"></i>

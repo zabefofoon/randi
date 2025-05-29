@@ -247,7 +247,9 @@
         </template>
       </UIDropdown>
 
-      <div class="flex items-end gap-[1cqw] | absolute bottom-0 right-[1cqw]">
+      <div
+        v-if="!isSkilling"
+        class="flex items-end gap-[1cqw] | absolute bottom-0 right-[1cqw]">
         <div class="flex gap-[1cqw] | mb-[1cqw]">
           <InGameGachaButton
             :step-tutorial="stepTutorial"
@@ -392,6 +394,7 @@ const hasThunder = ref(false)
 const hasRageMode = ref(false)
 const hasBlackhole = ref(false)
 const hasCannon = ref(false)
+const isSkilling = ref(false)
 
 let scene: Phaser.Scene & { dmgPool: Phaser.GameObjects.Group }
 let isBossRemained = false
@@ -682,6 +685,7 @@ onMounted(() => {
         })
 
         scene.events.on("rage", () => {
+          isSkilling.value = true
           isShowTextEffect.value = `RAGE MODE`
           scene.time.delayedCall(1200, () => {
             player.weaponsEffect
@@ -702,6 +706,7 @@ onMounted(() => {
             scene.time.delayedCall(5000, () => {
               isRageMode.value = false
               player.isRage = false
+              isSkilling.value = false
               const ceiled = Math.max(1, Math.ceil(round.value / 10))
               layer1?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))
               layer2?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))
@@ -711,6 +716,7 @@ onMounted(() => {
         })
 
         scene.events.on("blackhole", () => {
+          isSkilling.value = true
           isShowTextEffect.value = `LUNA HOLE`
           scene.time.delayedCall(1200, () => {
             enemies.applyBlackhole(materials.value, enforces.value)
@@ -744,10 +750,12 @@ onMounted(() => {
               layer3?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))
               enemies.removeBlackhole()
               eldenSprite.destroy()
+              isSkilling.value = false
             })
           })
         })
         scene.events.on("beam", () => {
+          isSkilling.value = true
           isShowTextEffect.value = `DOGE BEAM`
           scene.time.delayedCall(1200, () => {
             soundStore.play("beam")
@@ -761,6 +769,10 @@ onMounted(() => {
               materials: materials.value,
               enforces: enforces.value,
             }).onComplete(DogeBeam.of)
+
+            scene.time.delayedCall(2400, () => {
+              isSkilling.value = false
+            })
           })
         })
 
