@@ -83,12 +83,12 @@
             v-t="'Collection'"
             class="text-outline"></div>
         </button>
-        <button
+        <!-- <button
           class="w-[20cqw] | flex items-center justify-center | relative rounded-lg border-black border-[0.2cqw] | px-[1cqw] | bg-blue-950">
           <div
             v-t="'Review'"
             class="text-outline"></div>
-        </button>
+        </button> -->
         <div class="flex gap-[1cqw] text-[1.2cqw] | mt-[1cqw]">
           <NuxtLink
             class="text-gray-300 underline"
