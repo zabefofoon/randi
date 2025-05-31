@@ -9,13 +9,13 @@
       {{ THUNDER_COOLTIME - cooltime }}
     </span>
     <div
-      class="bg-red-400 | grid place-items-center | w-full h-full rounded-[inherit]"
+      class="grid place-items-center | w-full h-full rounded-[inherit]"
       :style="{
         'clip-path': `inset(0 0 ${100 - (cooltime / THUNDER_COOLTIME) * 100}%  0)`,
       }"
       :class="{
         'bg-gray-700': cooltime < THUNDER_COOLTIME,
-        'bg-blue-600': cooltime >= THUNDER_COOLTIME,
+        'bg-red-400': cooltime >= THUNDER_COOLTIME,
       }">
       <button
         class="stat-sprites | w-full aspect-square outline-0 | rounded-[inherit]"

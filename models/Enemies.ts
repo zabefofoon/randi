@@ -1,10 +1,10 @@
 import Phaser from "phaser"
+import { BLACKHOLE_ROUND, CANNON_ROUND, RAGE_ROUND, THUNDER_ROUND } from "~/const"
 import { Character, type PurchaseCharacter } from "./Character"
 import type { Enforces } from "./Enforces"
 import type { Materials } from "./Material"
 import { Blackhole } from "./Skill"
 import type { Weapon } from "./Weapon"
-
 let timeKey = 0
 export class Enemies {
   scene: Phaser.Scene
@@ -278,19 +278,19 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   }
 
   get isThunder() {
-    return this.round === 3 && this.index === 0
+    return this.round === THUNDER_ROUND && this.index === 0
   }
 
   get isRage() {
-    return this.round === 18 && this.index === 0
+    return this.round === RAGE_ROUND && this.index === 0
   }
 
   get isBlackhole() {
-    return this.round === 33 && this.index === 0
+    return this.round === BLACKHOLE_ROUND && this.index === 0
   }
 
   get isCannon() {
-    return this.round === 48 && this.index === 0
+    return this.round === CANNON_ROUND && this.index === 0
   }
 
   applyStunOne(weapon: Weapon, materials: Materials) {
@@ -312,8 +312,9 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   increaseHP(round: number): number {
     const _round = round - 1
     const roundGroup = Math.ceil(_round / 10)
+    const roundBaseMultiplies = [1, 1.5, 2, 3.5, 4, 5, 6]
     const roundMultiplies = [1, 1, 1.1, 1.25, 1.5, 4, 8, 10]
-    const result = (Math.pow(_round * 2, 2) + 10) * (Math.floor(_round / 10) + 1)
+    const result = (Math.pow(_round * 2, 2) + 10) * roundBaseMultiplies[Math.floor(_round / 10)]
     return Math.ceil(result * (roundMultiplies?.[roundGroup] ?? 1))
   }
 

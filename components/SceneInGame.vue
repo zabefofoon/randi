@@ -293,7 +293,7 @@
 </template>
 
 <script lang="ts" setup>
-import { THUNDER_COOLTIME } from "~/const"
+import { BLACKHOLE_ROUND, CANNON_ROUND, RAGE_ROUND, THUNDER_COOLTIME, THUNDER_ROUND } from "~/const"
 import { BeforeBeam, DogeBeam } from "~/models/Beam"
 import { Enemies } from "~/models/Enemies"
 import { Enforces } from "~/models/Enforces"
@@ -761,6 +761,7 @@ onMounted(() => {
             soundStore.play("beam")
             isShowTextEffect.value = ``
             cannonSkillCooldown.value = 0
+            scene.time.delayedCall(1000, () => scene.cameras.main.shake(2500, 0.005))
 
             BeforeBeam.create({
               scene,
@@ -809,7 +810,9 @@ onMounted(() => {
 
                   scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
                 })
-              } else if ([3, 18, 33, 48].includes(round.value)) {
+              } else if (
+                [THUNDER_ROUND, RAGE_ROUND, BLACKHOLE_ROUND, CANNON_ROUND].includes(round.value)
+              ) {
                 scene.time.delayedCall(1200, () => {
                   isShowTextEffect.value = "WARNING"
                   soundStore.play("round")

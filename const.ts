@@ -29,4 +29,9 @@ export const LAST_ACCESS = "lastAccess"
 export const STEP_TUTORIAL = "stepTutorial"
 export const LOCAL_GTAG_COOKIE = "gtag"
 
-export const THUNDER_COOLTIME = 160
+export const THUNDER_COOLTIME = 1
+
+export const THUNDER_ROUND = 3
+export const RAGE_ROUND = 13
+export const BLACKHOLE_ROUND = 23
+export const CANNON_ROUND = 33
