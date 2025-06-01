@@ -1,5 +1,3 @@
-import path from "node:path"
-
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   runtimeConfig: {
@@ -93,11 +91,15 @@ export default defineNuxtConfig({
       },
     },
   },
+  // nitro: {
+  //   preset: "github-pages",
+  //   output: {
+  //     publicDir: path.join(__dirname, "/docs"),
+  //   },
+  // },
   nitro: {
-    preset: "github-pages",
-    output: {
-      publicDir: path.join(__dirname, "/docs"),
-    },
+    preset: "netlify",
+    compressPublicAssets: true,
   },
   app: {
     baseURL: "/randi/",
