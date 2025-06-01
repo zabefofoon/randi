@@ -2,6 +2,12 @@ import path from "node:path"
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  runtimeConfig: {
+    public: {
+      adminId: import.meta.env.ADMIN_ID,
+      adminPassword: import.meta.env.ADMIN_PASSWORD,
+    },
+  },
   gtag: {
     id: "G-E9262Y0SML",
     enabled: process.env.NODE_ENV === "production",

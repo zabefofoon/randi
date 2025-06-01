@@ -6,6 +6,9 @@
       <i class="icon icon-fullscreen | block text-black text-[5vw]"></i>
     </button>
     <div class="w-screen h-screen | flex items-center justify-center | bg-black">
+      <SceneLogin
+        v-if="currentScene === 'login'"
+        @next="currentScene = $event" />
       <SceneLobby
         v-if="currentScene === 'lobby'"
         @next="currentScene = $event" />
@@ -30,7 +33,7 @@
 
 <script lang="ts" setup>
 import store from "store2"
-import { LAST_ACCESS } from "~/const"
+import { COOKIE_LOGGED_IN, LAST_ACCESS } from "~/const"
 const TODAY = new Date().toISOString().slice(0, 10)
 
 const i18n = useI18n()
@@ -40,7 +43,7 @@ const gameStore = useGameStore()
 const soundStore = useSoundStore()
 
 const currentScene = ref<
-  "lobby" | "select" | "inGame" | "store" | "collection" | "result" | "setting"
+  "login" | "lobby" | "select" | "inGame" | "store" | "collection" | "result" | "setting"
 >("lobby")
 
 const fullScreen = async () => {
@@ -67,8 +70,13 @@ const checkFirstAccessToday = () => {
   const lastAccess = store.get(LAST_ACCESS)
   return !lastAccess || TODAY > lastAccess
 }
-
+const checkNeedLogin = () => {
+  if (window.self !== window.top) return
+  if (useCookie(COOKIE_LOGGED_IN).value === "authed") return
+  currentScene.value = "login"
+}
 onMounted(() => {
+  checkNeedLogin()
   soundStore.preloadSounds()
 
   if (checkFirstAccessToday()) {

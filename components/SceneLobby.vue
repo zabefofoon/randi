@@ -108,7 +108,12 @@
       <h2
         v-if="gameStore.mode === 'demo'"
         class="dissolve | relative z-[1] | mt-[1cqw] | leading-none text-center text-[1.2cqw] font-bold text-outline text-gray-300">
-        DEMO
+        v{{ packageJson.version }} - DEMO
+      </h2>
+      <h2
+        v-else
+        class="dissolve | relative z-[1] | mt-[1cqw] | leading-none text-center text-[1.2cqw] font-bold text-outline text-gray-300">
+        v{{ packageJson.version }}
       </h2>
     </main>
 
@@ -117,6 +122,8 @@
 </template>
 
 <script setup lang="ts">
+import packageJson from "~/package.json"
+
 const emit = defineEmits<{
   (e: "next", scene: "inGame" | "select" | "store" | "collection"): void
 }>()

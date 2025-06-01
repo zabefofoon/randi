@@ -21,6 +21,11 @@ jobs:
         with:
           version: 8
 
+      - name: Make Env
+        run: |
+          touch ./.env
+          echo "${{ secrets.ADMIN }}" > ./.env
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:

@@ -19,6 +19,7 @@ export const WEAPON_LENGTH = 100
 export const PROFILES_LENGTH = 1
 export const PURCHASE_LENGTH = 2
 
+export const COOKIE_LOGGED_IN = "isLoggedIn"
 export const LOCAL_MONEY = "currentMoney"
 export const LOCAL_CHARACTERS = "characters"
 export const LOCAL_ITEMS = "purchasedItems"
