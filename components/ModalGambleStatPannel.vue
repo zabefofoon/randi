@@ -7,7 +7,7 @@
           :key="index"
           ref="cardEls"
           class="flip-card">
-          <div class="flip-card-inner | relative | w-[7cqw] aspect-[3/4]">
+          <div class="flip-card-inner | relative | w-[10cqw] aspect-[3/4]">
             <div
               class="flip-card-front | grid place-items-center | absolute top-0 left-0 | w-full h-full | border-[0.2cqw] border-black rounded-lg | bg-blue-900">
               <div
@@ -26,9 +26,9 @@
                     getCardBack(results[index - 1]).spriteIndex
                   ),
                 }"></div>
-              <p class="text-[1.5cqw] font-bold text-outline | -translate-y-[0.5cqw]">
-                {{ getCardBack(results[index - 1]).label }}
-              </p>
+              <p
+                v-t="getCardBack(results[index - 1]).label"
+                class="text-[1.3cqw] font-bold text-outline | -translate-y-[0.5cqw] text-center"></p>
             </div>
           </div>
         </figure>
@@ -64,7 +64,6 @@ const props = defineProps<{
 const coins = defineModel<number>("coins", { default: 0 })
 const gamblings = defineModel<number>("gamblings", { default: 0 })
 
-const i18n = useI18n()
 const soundStore = useSoundStore()
 
 const cardEls = ref<HTMLDivElement[]>()
@@ -76,7 +75,7 @@ const getCardBack = (index: number) => {
   Object.keys(props.materials)
 
   const spriteIndex = index === -1 ? 16 : index
-  const label = index === -1 ? i18n.t("NoLuck") : Object.keys(props.materials)[index]
+  const label = index === -1 ? "NoLuck" : Object.keys(props.materials)[index]
 
   return {
     spriteIndex,

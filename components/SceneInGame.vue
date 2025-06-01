@@ -175,7 +175,7 @@
                 backgroundPosition: etcUtil.getSpritePosition(index),
               }"></div>
             <span
-              v-if="isShowMaterialsPopup || isShowWeaponsPopup"
+              v-if="isShowMaterialsPopup || isShowWeaponsPopup || isShowGamblePopup"
               class="text-[1.3cqw] text-white | mr-[0.5cqw]">
               {{ i18n.t(key) }}
             </span>
@@ -232,7 +232,7 @@
         <template #button>
           <img
             class="w-[16cqw]"
-            src="/assets/images/keyboard.png" />
+            src="/assets/images/keyboard.webp" />
         </template>
         <template #options>
           <div class="p-[0.5cqw] bg-white rounded-lg | flex gap-[0.5cqw]">

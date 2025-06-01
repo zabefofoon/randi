@@ -26,7 +26,7 @@
       <button
         v-for="unit in units"
         :key="unit"
-        class="w-full flex-1 select-none | flex items-center justify-center gap-[2cqw] | px-[1cqw] py-[0.5cqw] | border-black border-[0.2cqw] rounded-lg | disabled:bg-gray-800 disabled:text-gray-500"
+        class="w-full flex-1 select-none | flex items-center justify-center gap-[2cqw] | px-[1cqw] py-[1cqw] | border-black border-[0.2cqw] rounded-lg | disabled:bg-gray-800 disabled:text-gray-500"
         :class="{
           'bg-purple-500': unit === 10,
           'bg-yellow-400': unit === 100,

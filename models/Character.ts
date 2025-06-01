@@ -42,7 +42,7 @@ export class TrunkKing extends Character {
     name: "TrunkKing",
     description: "TrunkKingDescription",
     specificity: "TrunkKingSpecificity",
-    price: 2000,
+    price: 20000,
   }
   constructor() {
     super(TrunkKing.meta)

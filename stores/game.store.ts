@@ -127,7 +127,7 @@ export const useGameStore = defineStore("gameStore", () => {
   const collection = ref<string[]>([])
   const initCollection = () => {
     collection.value = store.get(LOCAL_COLLECTION)
-      ? JSON.parse(decrypted(store.get(LOCAL_COLLECTION))) || []
+      ? JSON.parse(decrypted(store.get(LOCAL_COLLECTION)) || "[]") || []
       : []
   }
   const addCollection = (weaponName: string) => {
