@@ -5,7 +5,7 @@
       @click="fullScreen">
       <i class="icon icon-fullscreen | block text-black text-[5vw]"></i>
     </button>
-    <div class="w-screen h-screen | flex items-center justify-center | bg-black">
+    <div class="w-screen h-screen | flex items-center justify-center | bg-black overflow-hidden">
       <SceneLogin
         v-if="currentScene === 'login'"
         @next="currentScene = $event" />

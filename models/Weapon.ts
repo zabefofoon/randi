@@ -172,8 +172,8 @@ export abstract class Weapon implements WeaponOptions {
     const dx = enemy.x - player.x
     const dy = enemy.y - player.y
     const len = Math.hypot(dx, dy) || 1
-    const vx = (dx / len) * this.speed
-    const vy = (dy / len) * this.speed
+    const vx = (dx / len) * this.speed * window.speed
+    const vy = (dy / len) * this.speed * window.speed
     bullet1.body.setVelocity(vx, vy)
   }
 

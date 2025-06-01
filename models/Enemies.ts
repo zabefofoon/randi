@@ -371,7 +371,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     // 이동 속도 계산 후 실제 이동 처리
-    const speed = this.calculateSpeed(weapons, materials)
+    const speed = this.calculateSpeed(weapons, materials) * window.speed
     if (!this.isBlackholed) this.scene.physics.moveTo(this, target.x, target.y, speed)
     else {
       const { x, y } = this.pathes[0]
@@ -384,7 +384,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     const isClose = this.distanceWithPlayer < 150
     const baseSpeed = this.isBoss ? 80 : 120
 
-    let speed = baseSpeed * window.speed
+    let speed = baseSpeed
 
     // 라운드 기반 속도 증가
     speed = numberUtil.addPercent(speed, this.round * 2)

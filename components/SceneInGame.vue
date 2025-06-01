@@ -146,6 +146,56 @@
         </div>
         <!-- 코인표시 -->
 
+        <UIDropdown
+          :fit-options-parent="false"
+          :position="{
+            y: 'BOTTOM',
+          }">
+          <template #button="{ showOptions }">
+            <button
+              class="flex items-center justify-center | min-w-[4cqw] | bg-orange-700 | py-[0.25cqw] px-[0.5cqw] mt-[0.2cqh] | rounded-lg border-black border-[0.25cqw]"
+              @click="showOptions(true)">
+              <span class="font-bold text-white text-outline text-[1.3cqw]">
+                x{{ gameSpeed === 1.1 ? 1 : gameSpeed }}
+              </span>
+            </button>
+          </template>
+          <template #options="{ showOptions }">
+            <div class="flex flex-col | bg-blue-950 rounded-lg border-black border-[0.25cqw]">
+              <button
+                class="py-[0.25cqw] px-[1cqw] | whitespace-nowrap font-bold text-outline text-white text-[1.3cqw]"
+                :class="{ '!bg-blue-900': gameSpeed === 1.1 }"
+                @click="changeSpeed(1.1, showOptions)">
+                x1
+              </button>
+              <button
+                class="py-[0.25cqw] px-[1cqw] | whitespace-nowrap font-bold text-outline text-white text-[1.3cqw]"
+                :class="{ '!bg-blue-900': gameSpeed === 1.5 }"
+                @click="changeSpeed(1.5, showOptions)">
+                x1.5
+              </button>
+              <button
+                class="py-[0.25cqw] px-[1cqw] | whitespace-nowrap font-bold text-outline text-white text-[1.3cqw]"
+                :class="{ '!bg-blue-900': gameSpeed === 2 }"
+                @click="changeSpeed(2, showOptions)">
+                x2
+              </button>
+              <button
+                class="py-[0.25cqw] px-[1cqw] | whitespace-nowrap font-bold text-outline text-white text-[1.3cqw]"
+                :class="{ '!bg-blue-900': gameSpeed === 2.5 }"
+                @click="changeSpeed(2.5, showOptions)">
+                x2.5
+              </button>
+              <button
+                class="py-[0.25cqw] px-[1cqw] | whitespace-nowrap font-bold text-outline text-white text-[1.3cqw]"
+                :class="{ '!bg-blue-900': gameSpeed === 3 }"
+                @click="changeSpeed(3, showOptions)">
+                x3
+              </button>
+            </div>
+          </template>
+        </UIDropdown>
+
         <!-- 설정버튼 -->
         <button
           class="bg-blue-950 | mt-[0.2cqh] pr-[0.5cqw] | flex items-center justify-between | rounded-lg border-black border-[0.25cqw]"
@@ -320,6 +370,7 @@ const isShowTutorial = ref(true)
 const progress = ref(0)
 
 const phaserContainer = ref<HTMLDivElement>()
+const gameSpeed = ref(1.1)
 
 let game: Phaser.Game
 
@@ -410,6 +461,8 @@ const isTouchDevice =
 let damageRect: Phaser.GameObjects.Rectangle
 
 const stepTutorial = ref<StepTutorial>()
+
+let mainTimerEvent: Phaser.Time.TimerEvent
 
 onMounted(() => {
   if (!phaserContainer.value) return
@@ -540,6 +593,14 @@ onMounted(() => {
       },
       create(this: Phaser.Scene) {
         scene = this as Phaser.Scene & { dmgPool: Phaser.GameObjects.Group }
+
+        scene.keys = scene.input.keyboard?.addKeys({
+          up: Phaser.Input.Keyboard.KeyCodes.W,
+          down: Phaser.Input.Keyboard.KeyCodes.S,
+          left: Phaser.Input.Keyboard.KeyCodes.A,
+          right: Phaser.Input.Keyboard.KeyCodes.D,
+        })
+
         scene.data.set("splashSeq", 0)
         // scene.physics.world.timeScale = 0.5
         damageRect = scene.add
@@ -777,147 +838,10 @@ onMounted(() => {
           })
         })
 
-        scene.time.addEvent({
-          delay: 1000 / window.speed,
-          repeat: -1,
-          callback: () => {
-            if (scene.data.get("paused")) return
-
-            remainnedTime.value--
-            if (hasThunder.value && thunderSkillCooldown.value <= THUNDER_COOLTIME)
-              thunderSkillCooldown.value++
-            if (hasRageMode.value && rageSkillCooldown.value <= THUNDER_COOLTIME)
-              rageSkillCooldown.value++
-            if (hasBlackhole.value && blackholeSkillCooldown.value <= THUNDER_COOLTIME)
-              blackholeSkillCooldown.value++
-            if (hasCannon.value && cannonSkillCooldown.value <= THUNDER_COOLTIME)
-              cannonSkillCooldown.value++
-
-            if (remainnedTime.value % 5 === 0) {
-              remainnedEnemies.value = enemies.group.children.size
-            }
-
-            if (remainnedTime.value < 0) {
-              round.value++
-
-              isShowTextEffect.value = `ROUND ${round.value}`
-              soundStore.play("round")
-
-              if (round.value % 10 === 0) {
-                scene.time.delayedCall(1200, () => {
-                  isShowTextEffect.value = "EMERGENCY"
-                  soundStore.play("round")
-
-                  scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
-                })
-              } else if (
-                [THUNDER_ROUND, RAGE_ROUND, BLACKHOLE_ROUND, CANNON_ROUND].includes(round.value)
-              ) {
-                scene.time.delayedCall(1200, () => {
-                  isShowTextEffect.value = "WARNING"
-                  soundStore.play("round")
-
-                  scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
-                })
-              } else if (round.value === 11) {
-                scene.time.delayedCall(1200, () => {
-                  isShowTextEffect.value = "MORE! MORE!"
-                  soundStore.play("round")
-                  scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
-                })
-              } else if (round.value === 31) {
-                scene.time.delayedCall(1200, () => {
-                  isShowTextEffect.value = "MORE! MORE!"
-                  soundStore.play("round")
-                  scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
-                })
-              } else if (round.value === 59) {
-                scene.time.delayedCall(1200, () => {
-                  isShowTextEffect.value = "INFINITE"
-                  soundStore.play("round")
-                  scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
-                })
-              } else if (`${round.value}`.endsWith("9")) {
-                scene.time.delayedCall(1200, () => {
-                  isShowTextEffect.value = "BREAKTIME"
-                  soundStore.play("round")
-                  scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
-                })
-              } else {
-                scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
-              }
-
-              remainnedTime.value = roundTime
-
-              if (round.value !== 1) {
-                if (round.value < 20) {
-                  if (round.value % 5 === 0) {
-                    gachaChance.value = gachaChance.value + 2
-                    selectChance.value = selectChance.value + 1
-                  } else gachaChance.value = gachaChance.value + 3
-                } else if (round.value < 40) {
-                  if (round.value % 5 === 0) {
-                    gachaChance.value = gachaChance.value + 2
-                    selectChance.value = selectChance.value + 2
-                  } else gachaChance.value = gachaChance.value + 4
-                } else {
-                  if (round.value % 5 === 0) {
-                    gachaChance.value = gachaChance.value + 2
-                    selectChance.value = selectChance.value + 3
-                  } else gachaChance.value = gachaChance.value + 5
-                }
-              }
-              if (isBossRemained) {
-                scene.physics.pause()
-                isShowTextEffect.value = ""
-                isShowGameOverPopup.value = true
-              }
-            }
-
-            const playerHP = player.getData("hp") as number
-            if (remainnedEnemies.value > enemyCountDeadline) {
-              player.takeDamage(1)
-              scene.cameras.main.shake(100, 0.01)
-              damageRect.setAlpha(1 - (playerHP - 1) / 10)
-              soundStore.play("attacked")
-
-              scene.tweens.add({
-                targets: damageRect,
-                alpha: 0,
-                duration: 200,
-                ease: "Sine.easeOut",
-              })
-            }
-
-            if (playerHP < 1) {
-              soundStore.play("attacked")
-              scene.physics.pause()
-              isShowGameOverPopup.value = true
-            }
-
-            if (round.value === clearRound && remainnedTime.value === 0) {
-              scene.physics.pause()
-              isShowGameClearPopup.value = true
-              isClear = true
-            }
-
-            let spawnCondition = false
-            if (round.value < 11)
-              spawnCondition = 41 > remainnedTime.value && remainnedTime.value > 30
-            else if (round.value < 31)
-              spawnCondition = 41 > remainnedTime.value && remainnedTime.value > 20
-            else if (round.value < 59)
-              spawnCondition = 41 > remainnedTime.value && remainnedTime.value > 10
-            else if (round.value < 61)
-              spawnCondition = 41 > remainnedTime.value && remainnedTime.value > 1
-
-            if (spawnCondition) enemies.spawnEnemy(round.value, coins, 40 - remainnedTime.value)
-            if (round.value >= 10 && round.value % 10 === 0 && remainnedTime.value === roundTime)
-              setTimeout(() => {
-                enemies.spawnBoss(round.value, coins)
-                isBossRemained = true
-              }, 500)
-          },
+        mainTimerEvent = scene.time.addEvent({
+          delay: 1000 / speed,
+          loop: true,
+          callback: mainTimerCallback,
         })
 
         pause()
@@ -925,7 +849,7 @@ onMounted(() => {
       update(this: Phaser.Scene, time: number) {
         const scene = this as Phaser.Scene
         if (scene.data.get("paused")) return
-        player.handlePlayerMovement(cursors)
+        player.handlePlayerMovement(cursors, scene.keys)
 
         enemies.updateDistances(player.x, player.y)
         enemies.children.forEach((enemy) => {
@@ -1148,6 +1072,151 @@ const allAttackAnimation = async () => {
   await etcUtil.sleep(1000)
   resume()
   player.weapons.setPosition(player.x, player.y).play("weapons-animation2")
+}
+
+const changeSpeed = (speed: number, showOptions: (value?: boolean) => void) => {
+  window.speed = speed
+  gameSpeed.value = speed
+
+  mainTimerEvent.destroy()
+  mainTimerEvent = scene.time.addEvent({
+    delay: 1000 / speed,
+    loop: true,
+    callback: mainTimerCallback,
+  })
+
+  showOptions(false)
+}
+
+const mainTimerCallback = () => {
+  if (scene.data.get("paused")) return
+
+  remainnedTime.value--
+  if (hasThunder.value && thunderSkillCooldown.value <= THUNDER_COOLTIME)
+    thunderSkillCooldown.value++
+  if (hasRageMode.value && rageSkillCooldown.value <= THUNDER_COOLTIME) rageSkillCooldown.value++
+  if (hasBlackhole.value && blackholeSkillCooldown.value <= THUNDER_COOLTIME)
+    blackholeSkillCooldown.value++
+  if (hasCannon.value && cannonSkillCooldown.value <= THUNDER_COOLTIME) cannonSkillCooldown.value++
+
+  if (remainnedTime.value % 5 === 0) {
+    remainnedEnemies.value = enemies.group.children.size
+  }
+
+  if (remainnedTime.value < 0) {
+    round.value++
+
+    isShowTextEffect.value = `ROUND ${round.value}`
+    soundStore.play("round")
+
+    if (round.value % 10 === 0) {
+      scene.time.delayedCall(1200, () => {
+        isShowTextEffect.value = "EMERGENCY"
+        soundStore.play("round")
+
+        scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
+      })
+    } else if ([THUNDER_ROUND, RAGE_ROUND, BLACKHOLE_ROUND, CANNON_ROUND].includes(round.value)) {
+      scene.time.delayedCall(1200, () => {
+        isShowTextEffect.value = "WARNING"
+        soundStore.play("round")
+
+        scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
+      })
+    } else if (round.value === 11) {
+      scene.time.delayedCall(1200, () => {
+        isShowTextEffect.value = "MORE! MORE!"
+        soundStore.play("round")
+        scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
+      })
+    } else if (round.value === 31) {
+      scene.time.delayedCall(1200, () => {
+        isShowTextEffect.value = "MORE! MORE!"
+        soundStore.play("round")
+        scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
+      })
+    } else if (round.value === 59) {
+      scene.time.delayedCall(1200, () => {
+        isShowTextEffect.value = "INFINITE"
+        soundStore.play("round")
+        scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
+      })
+    } else if (`${round.value}`.endsWith("9")) {
+      scene.time.delayedCall(1200, () => {
+        isShowTextEffect.value = "BREAKTIME"
+        soundStore.play("round")
+        scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
+      })
+    } else {
+      scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
+    }
+
+    remainnedTime.value = roundTime
+
+    if (round.value !== 1) {
+      if (round.value < 20) {
+        if (round.value % 5 === 0) {
+          gachaChance.value = gachaChance.value + 2
+          selectChance.value = selectChance.value + 1
+        } else gachaChance.value = gachaChance.value + 3
+      } else if (round.value < 40) {
+        if (round.value % 5 === 0) {
+          gachaChance.value = gachaChance.value + 2
+          selectChance.value = selectChance.value + 2
+        } else gachaChance.value = gachaChance.value + 4
+      } else {
+        if (round.value % 5 === 0) {
+          gachaChance.value = gachaChance.value + 2
+          selectChance.value = selectChance.value + 3
+        } else gachaChance.value = gachaChance.value + 5
+      }
+    }
+    if (isBossRemained) {
+      scene.physics.pause()
+      isShowTextEffect.value = ""
+      isShowGameOverPopup.value = true
+    }
+  }
+
+  const playerHP = player.getData("hp") as number
+  if (remainnedEnemies.value > enemyCountDeadline) {
+    player.takeDamage(1)
+    scene.cameras.main.shake(100, 0.01)
+    damageRect.setAlpha(1 - (playerHP - 1) / 10)
+    soundStore.play("attacked")
+
+    scene.tweens.add({
+      targets: damageRect,
+      alpha: 0,
+      duration: 200,
+      ease: "Sine.easeOut",
+    })
+  }
+
+  if (playerHP < 1) {
+    soundStore.play("attacked")
+    scene.physics.pause()
+    isShowGameOverPopup.value = true
+  }
+
+  if (round.value === clearRound && remainnedTime.value === 0) {
+    scene.physics.pause()
+    isShowGameClearPopup.value = true
+    isClear = true
+  }
+
+  let spawnCondition = false
+  if (round.value < 11) spawnCondition = 41 > remainnedTime.value && remainnedTime.value > 30
+  else if (round.value < 31) spawnCondition = 41 > remainnedTime.value && remainnedTime.value > 20
+  else if (round.value < 59) spawnCondition = 41 > remainnedTime.value && remainnedTime.value > 10
+  else if (round.value < 61) spawnCondition = 41 > remainnedTime.value && remainnedTime.value > 1
+
+  if (spawnCondition) enemies.spawnEnemy(round.value, coins, 40 - remainnedTime.value)
+  if (round.value >= 10 && round.value % 10 === 0 && remainnedTime.value === roundTime)
+    setTimeout(() => {
+      enemies.spawnBoss(round.value, coins)
+      isBossRemained = true
+    }, 500)
 }
 
 onBeforeUnmount(() => {

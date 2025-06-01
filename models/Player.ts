@@ -99,33 +99,46 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.drawHp()
   }
 
-  handlePlayerMovement(cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
+  handlePlayerMovement(
+    cursors: Phaser.Types.Input.Keyboard.CursorKeys,
+    wasd: {
+      up: Phaser.Input.Keyboard.Key
+      down: Phaser.Input.Keyboard.Key
+      left: Phaser.Input.Keyboard.Key
+      right: Phaser.Input.Keyboard.Key
+    }
+  ) {
     const speed = this.isRage ? 170 * window.speed : 120 * window.speed
     let moving = false
 
-    if (cursors.left.isDown) {
+    const left = cursors.left.isDown || wasd.left.isDown
+    const right = cursors.right.isDown || wasd.right.isDown
+    const up = cursors.up.isDown || wasd.up.isDown
+    const down = cursors.down.isDown || wasd.down.isDown
+
+    if (left) {
       this.setVelocityX(-speed)
       this.anims.play("work", true)
       this.setFlipX(false)
       moving = true
-    } else if (cursors.right.isDown) {
+    } else if (right) {
       this.setVelocityX(speed)
       this.anims.play("work", true)
       this.setFlipX(true)
       moving = true
-    } else if (!cursors.left.isDown && !cursors.right.isDown) {
+    } else {
       this.setVelocityX(0)
     }
 
-    if (cursors.up.isDown) {
+    if (up) {
       this.setVelocityY(-speed)
       this.anims.play("work", true)
       moving = true
-    } else if (cursors.down.isDown) {
+    } else if (down) {
       this.setVelocityY(speed)
       this.anims.play("work", true)
       moving = true
-    } else if (!cursors.up.isDown && !cursors.down.isDown) {
+    } else {
       this.setVelocityY(0)
     }
 
