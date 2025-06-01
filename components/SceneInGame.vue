@@ -1278,6 +1278,8 @@ watch(
 )
 
 watch(stepTutorial, (value) => {
+  soundStore.play("equip")
+
   if (value === "start") {
     isShowTextEffect.value = `GAME START`
     scene.time.delayedCall(1200, () => {

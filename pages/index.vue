@@ -41,6 +41,7 @@ const { gtag } = useGtag()
 const snackbarStore = useSnackbarStore()
 const gameStore = useGameStore()
 const soundStore = useSoundStore()
+const crypto = useCrypto()
 
 const currentScene = ref<
   "login" | "lobby" | "select" | "inGame" | "store" | "collection" | "result" | "setting"
@@ -67,10 +68,11 @@ const fullScreen = async () => {
 }
 
 const checkFirstAccessToday = () => {
-  const lastAccess = store.get(LAST_ACCESS)
+  const lastAccess = crypto.decrypted(store.get(LAST_ACCESS))
   return !lastAccess || TODAY > lastAccess
 }
 const checkNeedLogin = () => {
+  if (import.meta.dev) return
   if (window.self !== window.top) return
   if (useCookie(COOKIE_LOGGED_IN).value === "authed") return
   currentScene.value = "login"
@@ -88,7 +90,7 @@ onMounted(() => {
     gameStore.setCurrentMoney(gameStore.currentMoney + 1000)
   }
 
-  store.set(LAST_ACCESS, TODAY)
+  store.set(LAST_ACCESS, crypto.encrypted(TODAY))
 })
 watch(currentScene, (scene) =>
   setTimeout(() => {

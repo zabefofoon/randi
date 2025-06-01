@@ -46,7 +46,6 @@ const formDatas = ref({
 })
 
 const login = () => {
-  console.log(runtimeConig.public)
   if (formDatas.value.id !== runtimeConig.public.adminId) return
   if (formDatas.value.password !== runtimeConig.public.adminPassword) return
   useCookie(COOKIE_LOGGED_IN, { maxAge: 3600, secure: !import.meta.dev }).value = "authed"

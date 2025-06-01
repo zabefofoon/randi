@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     public: {
       adminId: import.meta.env.ADMIN_ID,
       adminPassword: import.meta.env.ADMIN_PASSWORD,
+      cryptoKey: import.meta.env.CRYPTO_KEY,
     },
   },
   gtag: {

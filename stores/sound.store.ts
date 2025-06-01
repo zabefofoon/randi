@@ -113,8 +113,8 @@ export const useSoundStore = defineStore("sound", () => {
   }
 
   const initSounds = () => {
-    useBGMSound.value = store.get(LOCAL_SOUND_BGM)
-    useEffectSound.value = store.get(LOCAL_SOUND_EFFECT)
+    useBGMSound.value = store.get(LOCAL_SOUND_BGM) ?? true
+    useEffectSound.value = store.get(LOCAL_SOUND_EFFECT) ?? true
   }
 
   return {

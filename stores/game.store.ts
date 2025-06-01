@@ -17,6 +17,7 @@ import type { Rewords } from "~/models/Rewords"
 
 export const useGameStore = defineStore("gameStore", () => {
   const route = useRoute()
+  const { encrypted, decrypted } = useCrypto()
 
   const mode = ref<"demo" | "app" | "dev">("dev")
   const setMode = (value: "demo" | "app" | "dev") => {
@@ -55,7 +56,9 @@ export const useGameStore = defineStore("gameStore", () => {
     item?.type === "character"
 
   const initCharacters = () => {
-    const savedCharacters = store.get(LOCAL_CHARACTERS) ?? ["nylonMask"]
+    const savedCharacters = store.get(LOCAL_CHARACTERS)
+      ? JSON.parse(decrypted(store.get(LOCAL_CHARACTERS)) || '["nylonMask"]')
+      : ["nylonMask"]
 
     RELEASED_CHARACTERS.forEach((releasedCharacter, index) => {
       characters.value[index] = savedCharacters.includes(releasedCharacter.meta.id)
@@ -66,37 +69,41 @@ export const useGameStore = defineStore("gameStore", () => {
   const addCharacter = () => {
     if (checkCharacter(selectedCharacter.value)) return
 
-    const savedCharacters = store.get(LOCAL_CHARACTERS) ?? ["nylonMask"]
+    const savedCharacters = store.get(LOCAL_CHARACTERS)
+      ? JSON.parse(decrypted(store.get(LOCAL_CHARACTERS)) || "{}")
+      : ["nylonMask"]
 
     savedCharacters[selectedCharacterIndex.value] = selectedCharacter.value.character.meta.id
-    store.set(LOCAL_CHARACTERS, savedCharacters)
+    store.set(LOCAL_CHARACTERS, encrypted(JSON.stringify(savedCharacters)))
     characters.value[selectedCharacterIndex.value] = selectedCharacter.value.character
   }
 
   const currentMoney = ref(0)
   const setCurrentMoney = (money: number) => {
     currentMoney.value = money
-    store.set(LOCAL_MONEY, currentMoney.value)
+    store.set(LOCAL_MONEY, encrypted(`${currentMoney.value}`))
   }
   const initMoney = () => {
-    currentMoney.value = store.get(LOCAL_MONEY) ?? 0
+    currentMoney.value = store.get(LOCAL_MONEY) ? +decrypted(store.get(LOCAL_MONEY)) || 0 : 0
   }
 
   const purchasedItems = ref<PurchasedItem>({})
   const initPurchasedItems = () => {
-    purchasedItems.value = store.get(LOCAL_ITEMS) ?? {}
+    purchasedItems.value = store.get(LOCAL_ITEMS)
+      ? JSON.parse(decrypted(store.get(LOCAL_ITEMS)) || "{}")
+      : {}
   }
   const addPurchaseItem = (item: typeof PurchaseItem) => {
     if (!purchasedItems.value[item.meta.id]) purchasedItems.value[item.meta.id] = 1
     else purchasedItems.value[item.meta.id]++
 
-    store.set(LOCAL_ITEMS, purchasedItems.value)
+    store.set(LOCAL_ITEMS, encrypted(JSON.stringify(purchasedItems.value)))
   }
   const spendPurchaseItem = (item: typeof PurchaseItem) => {
     if (!purchasedItems.value[item.meta.id]) purchasedItems.value[item.meta.id] = 0
     else purchasedItems.value[item.meta.id]--
 
-    store.set(LOCAL_ITEMS, purchasedItems.value)
+    store.set(LOCAL_ITEMS, encrypted(JSON.stringify(purchasedItems.value)))
   }
 
   const selectedPurchaseItems = ref<string[]>([])
@@ -119,13 +126,15 @@ export const useGameStore = defineStore("gameStore", () => {
 
   const collection = ref<string[]>([])
   const initCollection = () => {
-    collection.value = store.get(LOCAL_COLLECTION) ?? []
+    collection.value = store.get(LOCAL_COLLECTION)
+      ? JSON.parse(decrypted(store.get(LOCAL_COLLECTION))) || []
+      : []
   }
   const addCollection = (weaponName: string) => {
     if (checkHasCollection(weaponName)) return
 
     collection.value.push(weaponName)
-    store.set(LOCAL_COLLECTION, collection.value)
+    store.set(LOCAL_COLLECTION, encrypted(JSON.stringify(collection.value)))
   }
 
   const checkHasCollection = (weaponName: string) => {
@@ -139,6 +148,7 @@ export const useGameStore = defineStore("gameStore", () => {
   }
   const setShowStepTutorial = (value: boolean) => {
     isShowStepTutorial.value = value
+
     store.set(STEP_TUTORIAL, value)
   }
 

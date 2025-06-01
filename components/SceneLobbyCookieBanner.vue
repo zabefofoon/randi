@@ -48,6 +48,8 @@ const { gtag } = useGtag()
 const isShowCookieBanner = ref(false)
 
 const initGtagBanner = () => {
+  if (import.meta.dev) return
+
   const saved = store.get(LOCAL_GTAG_COOKIE) ?? false
   isShowCookieBanner.value = !saved
 }
