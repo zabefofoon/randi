@@ -65,7 +65,9 @@
   "TrunkKing": "Trunk King",
   "TrunkKingDescription": "Средних лет белый мужчина с красной шеей. Славится колоссальной силой.",
   "TrunkKingSpecificity": "* Физическая атака ↑1 % каждый раунд",
-
+  "ChimeraHayashiRice": "Chimera Hayashi Rice",
+  "ChimeraHayashiRiceDescription": "Разъярённая темнокожая женщина. Несмотря на внушительную фигуру, она обладает выдающимся интеллектом.",
+  "ChimeraHayashiRiceSpecificity": "* Увеличивает магическую атаку на 1 % каждый раунд",
   "Gun": "Пистолет",
   "GunDesc": "«Знакомый всем 9-мм выстрел.»",
 

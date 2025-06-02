@@ -83,19 +83,6 @@
       </div>
 
       <div class="absolute top-[0.5cqw] right-[1cqw] | flex items-center gap-[0.5cqw]">
-        <div
-          v-for="(enforce, index) in enforces?.items"
-          :key="enforce.name"
-          class="flex items-center | bg-black rounded-lg | pr-[0.5cqw]">
-          <div
-            class="stat-sprites | w-[3cqw] aspect-square"
-            :style="{
-              backgroundPosition: etcUtil.getSpritePosition(12 + index),
-            }"></div>
-          <span class="text-[1.3cqw] text-white">
-            {{ stringUtil.attachComma(enforce.length) }}
-          </span>
-        </div>
         <!-- 킬 표시 -->
         <div
           class="bg-black mt-[0.2cqh] | flex items-center justify-between | pr-[0.5cqw] rounded-lg">
@@ -215,7 +202,24 @@
         <!-- 스텟표시 -->
       </div>
 
-      <div class="absolute top-1/2 right-[1cqw] -translate-y-1/2 | flex flex-col gap-[0.5cqw]">
+      <div class="absolute top-[5cqw] right-[1cqw] | flex flex-col gap-[0.5cqw]">
+        <div
+          v-for="(enforce, index) in enforces?.items"
+          :key="enforce.name"
+          class="flex items-center | bg-black rounded-lg | pr-[0.5cqw]">
+          <div
+            class="stat-sprites | w-[3cqw] aspect-square"
+            :style="{
+              backgroundPosition: etcUtil.getSpritePosition(12 + index),
+            }"></div>
+          <span class="text-[1.3cqw] text-white">
+            {{ stringUtil.attachComma(enforce.length) }}
+          </span>
+        </div>
+      </div>
+
+      <div
+        class="absolute top-[calc(50%+1cqw)] right-[1cqw] -translate-y-1/2 | flex flex-col gap-[0.5cqw]">
         <div
           v-for="(weapon, index) in weapons?.weapons.filter((weapon) => weapon)"
           :key="`${weapon?.name}_${index}`"
@@ -229,7 +233,7 @@
             'bg-red-400': weapon?.level === 6,
           }">
           <div
-            class="weapon-sprites | w-[4cqw] aspect-square | rounded-lg"
+            class="weapon-sprites | w-[3.5cqw] aspect-square | rounded-lg"
             :style="{ 'background-position': weapon?.spritePosition }"></div>
         </div>
       </div>

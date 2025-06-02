@@ -60,8 +60,13 @@ export const useGameStore = defineStore("gameStore", () => {
       ? JSON.parse(decrypted(store.get(LOCAL_CHARACTERS)) || '["nylonMask"]')
       : ["nylonMask"]
 
+    const savedCharactersArr =
+      typeof savedCharacters === "object" ? Object.values(savedCharacters) : savedCharacters
+
+    if (savedCharactersArr[0] !== "nylonMask") savedCharactersArr.unshift("nylonMask")
+
     RELEASED_CHARACTERS.forEach((releasedCharacter, index) => {
-      characters.value[index] = savedCharacters.includes(releasedCharacter.meta.id)
+      characters.value[index] = savedCharactersArr.includes(releasedCharacter.meta.id)
         ? releasedCharacter
         : PurchaseCharacter.of(releasedCharacter)
     })

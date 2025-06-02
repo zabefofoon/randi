@@ -65,7 +65,9 @@
   "TrunkKing": "Trunk King",
   "TrunkKingDescription": "ชายผิวขาววัยกลางคนคอแดง แข็งแรงเหลือเชื่อ",
   "TrunkKingSpecificity": "* โจมตีกายภาพ +1% ทุก ๆ รอบ",
-
+  "ChimeraHayashiRice": "Chimera Hayashi Rice",
+  "ChimeraHayashiRiceDescription": "หญิงผิวสีที่โกรธเกรี้ยว แม้จะมีร่างกายใหญ่โต แต่เธอก็ฉลาดเป็นเลิศ",
+  "ChimeraHayashiRiceSpecificity": "* เพิ่มพลังโจมตีเวทมนตร์ 1% ทุก ๆ รอบ",
   "Gun": "ปืนพก",
   "GunDesc": "“กระสุน 9 มม. ที่ทุกคนคุ้นเคย”",
 

@@ -40,7 +40,7 @@
     </ModalConfigs>
 
     <img
-      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full | select-none pointer-events-none"
+      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full object-cover | select-none pointer-events-none"
       src="/assets/images/main.webp" />
 
     <main

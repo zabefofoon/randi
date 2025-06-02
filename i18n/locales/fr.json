@@ -65,7 +65,9 @@
   "TrunkKing": "Trunk King",
   "TrunkKingDescription": "Homme blanc d’âge moyen au cou rouge. Connu pour sa force impressionnante.",
   "TrunkKingSpecificity": "* Puissance physique +1 % à chaque manche",
-
+  "ChimeraHayashiRice": "Chimera Hayashi Rice",
+  "ChimeraHayashiRiceDescription": "Femme noire en colère. Malgré sa carrure imposante, elle possède une intelligence remarquable.",
+  "ChimeraHayashiRiceSpecificity": "* Augmente l'attaque magique de 1 % à chaque manche",
   "Gun": "Pistolet",
   "GunDesc": "« Une cartouche de 9 mm, connue de tous. »",
 

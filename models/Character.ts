@@ -49,6 +49,19 @@ export class TrunkKing extends Character {
   }
 }
 
+export class ChimeraHayashiRice extends Character {
+  static override readonly meta: CharacterOptions = {
+    id: "chimeraHayashiRice",
+    name: "ChimeraHayashiRice",
+    description: "ChimeraHayashiRiceDescription",
+    specificity: "ChimeraHayashiRiceSpecificity",
+    price: 20000,
+  }
+  constructor() {
+    super(ChimeraHayashiRice.meta)
+  }
+}
+
 export class PurchaseCharacter {
   type = "purchase"
   constructor(public readonly character: typeof Character) {}
@@ -58,4 +71,4 @@ export class PurchaseCharacter {
   }
 }
 
-export const RELEASED_CHARACTERS = [NylonMask, TrunkKing]
+export const RELEASED_CHARACTERS = [NylonMask, TrunkKing, ChimeraHayashiRice]

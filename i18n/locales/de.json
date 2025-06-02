@@ -65,7 +65,9 @@
   "TrunkKing": "Trunk King",
   "TrunkKingDescription": "Ein mittelalter weißer Mann mit rotem Hals. Berüchtigt für enorme Stärke.",
   "TrunkKingSpecificity": "* Physischer Angriff steigt jede Runde um 1 %",
-
+  "ChimeraHayashiRice": "Chimera Hayashi Rice",
+  "ChimeraHayashiRiceDescription": "Zornige schwarze Frau. Trotz ihres massigen Körperbaus besitzt sie einen herausragenden Verstand.",
+  "ChimeraHayashiRiceSpecificity": "* Erhöht den Magieangriff jede Runde um 1 %",
   "Gun": "Pistole",
   "GunDesc": "„Eine vertraute 9-mm-Patrone für jedermann.“",
 

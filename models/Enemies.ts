@@ -499,6 +499,10 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       Character.checkCharacter(this.selectedCharacter) &&
       this.selectedCharacter.meta.id === "trunkKing"
 
+    const isChimeraHayashiRice =
+      Character.checkCharacter(this.selectedCharacter) &&
+      this.selectedCharacter.meta.id === "chimeraHayashiRice"
+
     let damage =
       numberUtil.addPercent(_physicalDamage, weaponData.physicalAllPercent) +
       numberUtil.addPercent(_magicalDamage, weaponData.magicalAllPercent)
@@ -511,6 +515,17 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
             this.round
           )
         ) + numberUtil.addPercent(_magicalDamage, weaponData.magicalAllPercent)
+    }
+
+    if (isChimeraHayashiRice) {
+      damage =
+        numberUtil.addPercent(_physicalDamage, weaponData.physicalAllPercent) +
+        Math.round(
+          numberUtil.addPercent(
+            numberUtil.addPercent(_physicalDamage, weaponData.magicalAllPercent),
+            this.round
+          )
+        )
     }
 
     let isCritical = false
