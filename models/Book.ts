@@ -337,7 +337,7 @@ export class Map extends Weapon {
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 5),
     criticalChance: 0.2,
-    criticalDamage: 2,
+    criticalDamage: 3,
     dotted: 0,
     armerBreak: 0,
   }
@@ -721,7 +721,7 @@ export class TreasureMap extends Weapon {
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 11),
     criticalChance: 0.2,
-    criticalDamage: 3,
+    criticalDamage: 4,
     dotted: 0,
     armerBreak: 0,
   }
@@ -776,7 +776,7 @@ export class EvacuationMap extends Weapon {
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 12),
     criticalChance: 0.2,
-    criticalDamage: 2,
+    criticalDamage: 3,
     dotted: 1,
     armerBreak: 0,
   }
@@ -950,7 +950,7 @@ export class Revelation extends Weapon {
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 15),
     criticalChance: 0.2,
-    criticalDamage: 3,
+    criticalDamage: 4,
     dotted: 0,
     armerBreak: 0,
   }
@@ -1005,7 +1005,7 @@ export class Labtop extends Weapon {
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 16),
     criticalChance: 0.2,
-    criticalDamage: 3,
+    criticalDamage: 4,
     dotted: 0,
     armerBreak: 0,
   }
@@ -1225,7 +1225,7 @@ export class OrderForm extends Weapon {
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 20),
     criticalChance: 0.2,
-    criticalDamage: 3,
+    criticalDamage: 4,
     dotted: 0,
     armerBreak: 0,
   }
@@ -1280,7 +1280,7 @@ export class Grimoire extends Weapon {
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 21),
     criticalChance: 0.2,
-    criticalDamage: 3,
+    criticalDamage: 4,
     dotted: 3,
     armerBreak: 0,
   }
@@ -1325,7 +1325,7 @@ export class TabletPC extends Weapon {
     index: 2,
     spritePosition: etcUtil.getWeaponSpritePosition(2, 22),
     criticalChance: 0.2,
-    criticalDamage: 3,
+    criticalDamage: 4,
     dotted: 0,
     armerBreak: 15,
   }

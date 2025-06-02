@@ -192,7 +192,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   private readonly hpBarOffset = { x: -16, y: -30 }
 
   constructor(
-    scene: Phaser.Scene,
+    scene: Phaser.Scene & { dmgPool: Phaser.GameObjects.Group },
     x: number,
     y: number,
     public isBoss: boolean,
@@ -410,7 +410,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     return Math.max(1, Math.floor(speed))
   }
 
-  showDamageText(damageValue: number, weapon: Weapon) {
+  showDamageText(damageValue: number, weapon: Weapon, isCritical: boolean) {
     const tintColors = [0xffffff, 0x2563eb, 0x9333ea, 0xeab308, 0xe879f9, 0xf87171]
 
     const text = this.scene.dmgPool.getFirstDead(false) as Phaser.GameObjects.BitmapText
@@ -421,10 +421,12 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       .setActive(true)
       .setVisible(true)
       .setText(`-${damageValue}`)
-      .setTint(tintColors[colorIndex])
       .setPosition(this.x, this.y - weapon.index * 8)
       .setAlpha(1)
       .setDepth(10)
+
+    if (isCritical) text.setScale(1.5).setTint(0xff0000)
+    else text.setScale(1).setTint(tintColors[colorIndex])
 
     this.scene.tweens.add({
       targets: text,
@@ -511,12 +513,13 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
         ) + numberUtil.addPercent(_magicalDamage, weaponData.magicalAllPercent)
     }
 
+    let isCritical = false
     if (weaponData.criticalChance > 0) {
-      const random = Phaser.Math.FloatBetween(0, 1)
-      damage =
-        random < weaponData.criticalChance
-          ? Math.ceil(damage * weaponData.criticalDamage)
-          : Math.ceil(damage)
+      if (Phaser.Math.FloatBetween(0, 1) >= weaponData.criticalChance) damage = Math.ceil(damage)
+      else {
+        damage = Math.ceil(damage * weaponData.criticalDamage)
+        isCritical = true
+      }
     }
     const isAllWeaponActiveLevel = this.scene.data.get("isAllWeaponActive") ?? 0
 
@@ -554,7 +557,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       if (this.isCannon) this.setTint(0xfc036b)
     })
 
-    this.showDamageText(finalDamage, weaponData)
+    this.showDamageText(finalDamage, weaponData, isCritical)
     this.drawHp()
     if (this.getData("hp") <= 0) this.die()
   }

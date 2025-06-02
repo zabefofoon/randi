@@ -151,8 +151,8 @@ export class CutterKnife extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 2),
-    criticalChance: 0.15, // 0.1이 10%
-    criticalDamage: 2, // 3배
+    criticalChance: 0.15,
+    criticalDamage: 3,
     dotted: 0,
     armerBreak: 0,
   }
@@ -342,7 +342,7 @@ export class Hammer extends Weapon {
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 5),
     criticalChance: 0.2,
-    criticalDamage: 2,
+    criticalDamage: 3,
     dotted: 0,
     armerBreak: 0,
   }
@@ -406,7 +406,7 @@ export class AX extends Weapon {
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 6),
     criticalChance: 0.15,
-    criticalDamage: 2,
+    criticalDamage: 3,
     dotted: 0,
     armerBreak: 0,
   }
@@ -598,7 +598,7 @@ export class SwissArmyKnife extends Weapon {
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 9),
     criticalChance: 0.1,
-    criticalDamage: 2,
+    criticalDamage: 3,
     dotted: 1,
     armerBreak: 5,
   }
@@ -662,7 +662,7 @@ export class Fist extends Weapon {
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 10),
     criticalChance: 0.15,
-    criticalDamage: 3,
+    criticalDamage: 4,
     dotted: 0,
     armerBreak: 0,
   }
@@ -726,7 +726,7 @@ export class CrossCutSaw extends Weapon {
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 11),
     criticalChance: 0.2,
-    criticalDamage: 2,
+    criticalDamage: 3,
     dotted: 0,
     armerBreak: 5,
   }
@@ -845,7 +845,7 @@ export class Machete extends Weapon {
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 13),
     criticalChance: 0.15,
-    criticalDamage: 2,
+    criticalDamage: 3,
     dotted: 0,
     armerBreak: 5,
   }
@@ -1065,7 +1065,7 @@ export class BlessedSword extends Weapon {
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 18),
     criticalChance: 0.2,
-    criticalDamage: 3,
+    criticalDamage: 4,
     dotted: 0,
     armerBreak: 10,
   }
@@ -1175,7 +1175,7 @@ export class DualBlade extends Weapon {
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 19),
     criticalChance: 0.1,
-    criticalDamage: 3,
+    criticalDamage: 4,
     dotted: 0,
     armerBreak: 0,
   }
@@ -1375,7 +1375,7 @@ export class LaserSword extends Weapon {
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 23),
     criticalChance: 0.3,
-    criticalDamage: 3,
+    criticalDamage: 4,
     dotted: 0,
     armerBreak: 15,
   }

@@ -278,7 +278,7 @@ export class AirGun extends Weapon {
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 4),
     criticalChance: 0.2,
-    criticalDamage: 2,
+    criticalDamage: 3,
     dotted: 0,
     armerBreak: 0,
   }
@@ -726,7 +726,7 @@ export class SilentKiller extends Weapon {
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 11),
     criticalChance: 0.2,
-    criticalDamage: 3,
+    criticalDamage: 4,
     dotted: 0,
     armerBreak: 0,
   }
@@ -1019,7 +1019,7 @@ export class SilverBulletGun extends Weapon {
     index: 0,
     spritePosition: etcUtil.getWeaponSpritePosition(0, 16),
     criticalChance: 0.2,
-    criticalDamage: 3,
+    criticalDamage: 4,
     dotted: 0,
     armerBreak: 10,
   }

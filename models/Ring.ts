@@ -212,7 +212,7 @@ export class SilverRing extends Weapon {
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 3),
     criticalChance: 0.1,
-    criticalDamage: 2,
+    criticalDamage: 3,
     dotted: 0,
     armerBreak: 0,
   }
@@ -468,7 +468,7 @@ export class GoldRing extends Weapon {
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 7),
     criticalChance: 0.2,
-    criticalDamage: 2,
+    criticalDamage: 3,
     dotted: 0,
     armerBreak: 0,
   }
@@ -953,7 +953,7 @@ export class DiamondRing extends Weapon {
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 15),
     criticalChance: 0.2,
-    criticalDamage: 3,
+    criticalDamage: 4,
     dotted: 0,
     armerBreak: 0,
   }
@@ -1283,7 +1283,7 @@ export class BornRing extends Weapon {
     index: 3,
     spritePosition: etcUtil.getWeaponSpritePosition(3, 21),
     criticalChance: 0.2,
-    criticalDamage: 3,
+    criticalDamage: 4,
     dotted: 3,
     armerBreak: 0,
   }
