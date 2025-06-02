@@ -48,6 +48,8 @@ const currentScene = ref<
 >("lobby")
 
 const fullScreen = async () => {
+  if (window.self !== window.top) return
+
   const elem = document.documentElement
   if (elem.requestFullscreen) {
     elem.requestFullscreen()

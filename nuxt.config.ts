@@ -8,11 +8,28 @@ export default defineNuxtConfig({
     },
   },
   gtag: {
-    id: "G-E9262Y0SML",
+    tags: [
+      {
+        id: "G-E9262Y0SML",
+        config: {
+          cookie_flags: "SameSite=None;Secure",
+        },
+      },
+      {
+        id: "G-CMSQZZ307F",
+        config: {
+          cookie_flags: "SameSite=None;Secure",
+        },
+      },
+      {
+        id: "G-NK7S9LLVE3",
+        config: {
+          cookie_flags: "SameSite=None;Secure",
+        },
+      },
+    ],
     enabled: process.env.NODE_ENV === "production",
-    config: {
-      cookie_flags: "SameSite=None;Secure",
-    },
+
     initCommands: [
       // Setup up consent mode
       [
