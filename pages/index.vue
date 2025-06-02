@@ -44,7 +44,7 @@ const soundStore = useSoundStore()
 const crypto = useCrypto()
 
 const currentScene = ref<
-  "login" | "lobby" | "select" | "inGame" | "store" | "collection" | "result" | "setting"
+  "login" | "lobby" | "select" | "inGame" | "store" | "collection" | "result"
 >("lobby")
 
 const fullScreen = async () => {
@@ -104,7 +104,31 @@ watch(currentScene, (scene) =>
       soundStore.play("door")
     }
 
-    gtag("event", "씬", { scene })
+    let sceneName
+    switch (scene) {
+      case "select":
+        sceneName = "캐릭터선택"
+        break
+      case "collection":
+        sceneName = "도감"
+        break
+      case "login":
+        sceneName = "로그인"
+        break
+      case "lobby":
+        sceneName = "로비"
+        break
+      case "inGame":
+        sceneName = "인게임"
+        break
+      case "store":
+        sceneName = "상점"
+        break
+      case "result":
+        sceneName = "보상"
+        break
+    }
+    gtag("event", `씬(${sceneName})`)
   })
 )
 </script>

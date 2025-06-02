@@ -817,7 +817,7 @@ onMounted(() => {
         })
 
         mainTimerEvent = scene.time.addEvent({
-          delay: 1000 / speed,
+          delay: 1000,
           loop: true,
           callback: mainTimerCallback,
         })
@@ -1314,7 +1314,7 @@ watch(
 )
 
 watch(stepTutorial, (value) => {
-  if (value) soundStore.play("equip")
+  if (value && value !== "start") soundStore.play("equip")
 
   if (value === "start") {
     isShowTextEffect.value = `GAME START`
