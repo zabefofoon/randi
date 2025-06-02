@@ -509,20 +509,23 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     if (isTrunkKing) {
       damage =
+        3 +
         Math.round(
           numberUtil.addPercent(
             numberUtil.addPercent(_physicalDamage, weaponData.physicalAllPercent),
             this.round
           )
-        ) + numberUtil.addPercent(_magicalDamage, weaponData.magicalAllPercent)
+        ) +
+        numberUtil.addPercent(_magicalDamage, weaponData.magicalAllPercent)
     }
 
     if (isChimeraHayashiRice) {
       damage =
+        3 +
         numberUtil.addPercent(_physicalDamage, weaponData.physicalAllPercent) +
         Math.round(
           numberUtil.addPercent(
-            numberUtil.addPercent(_physicalDamage, weaponData.magicalAllPercent),
+            numberUtil.addPercent(_magicalDamage, weaponData.magicalAllPercent),
             this.round
           )
         )

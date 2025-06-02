@@ -36,6 +36,9 @@
         <slot name="buttons"></slot>
       </div>
     </div>
+    <div class="effect">
+      <slot name="effect"></slot>
+    </div>
   </div>
 </template>
 
@@ -106,6 +109,14 @@ defineExpose({
     width: 100%;
     height: 100%;
     background-color: rgb(0 0 0 / 50%);
+  }
+
+  .effect {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   }
 
   .inner {
