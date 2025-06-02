@@ -43,28 +43,6 @@
       v-if="isShowConfigPopup"
       @close="showConfigPopup(false)">
       <div class="w-full | border-t border-gray-900 border-[1px] | my-[1cqw]"></div>
-      <div class="flex flex-col gap-[0.5cqw] | w-full">
-        <div class="flex justify-between gap-[5cqw] mb-[0.5cqw]">
-          <span class="text-outline text-[1.7cqw] font-bold">TUTORIAL</span>
-        </div>
-        <div class="flex justify-between gap-[5cqw]">
-          <span class="text-outline text-[1.7cqw] font-bold">TUTORIAL</span>
-
-          <button
-            class="grid place-items-center | relative | px-[2cqw] py-[0.5cqw] | border-black border-[0.21cqw] rounded-lg | leading-none"
-            :class="{
-              'bg-amber-500': gameStore.isShowStepTutorial,
-              'bg-blue-900': !gameStore.isShowStepTutorial,
-            }"
-            @click="gameStore.setShowStepTutorial(!gameStore.isShowStepTutorial)">
-            <span class="text-outline text-[1.7cqw] font-bold | min-w-[5cqw]">
-              <template v-if="gameStore.isShowStepTutorial">ON</template>
-              <template v-else>OFF</template>
-            </span>
-          </button>
-        </div>
-      </div>
-      <div class="w-full | border-t border-gray-900 border-[1px] | my-[1cqw]"></div>
       <div class="w-full | flex flex-col gap-[0.5cqw]">
         <button
           class="grid place-items-center | relative bg-orange-700 | px-[2cqw] py-[0.5cqw] | border-black border-[0.21cqw] rounded-lg | leading-none"
@@ -1308,22 +1286,11 @@ watch(isShowConfigPopup, (value) => {
   if (value) pause()
   else resume()
 })
-// watch(isShowMaterialsPopup, (value) => {
-//   if (value) pause()
-//   else resume()
-// })
+
 watch(isShowWeaponsPopup, (value) => {
   if (!value && isAllWeaponEffect.value) allAttackAnimation()
-  // if (value) pause()
-  // else {
-  //   resume()
-  //   if (isAllWeaponEffect.value) allAttackAnimation()
-  // }
 })
-// watch(isShowGamblePopup, (value) => {
-//   if (value) pause()
-//   else resume()
-// })
+
 watch(isShowGameOverPopup, (value) => {
   if (!value) exit()
   else pause()
@@ -1347,13 +1314,14 @@ watch(
 )
 
 watch(stepTutorial, (value) => {
-  soundStore.play("equip")
+  if (value) soundStore.play("equip")
 
   if (value === "start") {
     isShowTextEffect.value = `GAME START`
     scene.time.delayedCall(1200, () => {
       isShowTextEffect.value = ``
       stepTutorial.value = undefined
+      gameStore.setShowStepTutorial(false)
       resume()
     })
   }

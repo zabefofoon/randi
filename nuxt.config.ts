@@ -10,6 +10,9 @@ export default defineNuxtConfig({
   gtag: {
     id: "G-E9262Y0SML",
     enabled: process.env.NODE_ENV === "production",
+    config: {
+      cookie_flags: "SameSite=None;Secure",
+    },
     initCommands: [
       // Setup up consent mode
       [

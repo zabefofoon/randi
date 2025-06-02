@@ -71,12 +71,13 @@
         class="dissolve | flex flex-col items-center gap-[0.5cqw] | mt-[2cqw] | font-bold text-[2.5cqw] text-white">
         <button
           class="min-w-[20cqw] | flex items-center justify-center | relative rounded-lg border-black border-[0.2cqw] | px-[1cqw] | bg-orange-700"
-          @click="emit('next', 'select')">
+          @click="gameStore.isShowStepTutorial ? emit('next', 'inGame') : emit('next', 'select')">
           <div
             v-t="'GameStart'"
             class="text-outline"></div>
         </button>
         <button
+          v-if="!gameStore.isShowStepTutorial"
           class="w-[20cqw] | flex items-center justify-center | relative rounded-lg border-black border-[0.2cqw] | px-[1cqw] | bg-blue-950"
           @click="emit('next', 'collection')">
           <div
