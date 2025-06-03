@@ -35,4 +35,4 @@ export const THUNDER_COOLTIME = 160
 export const THUNDER_ROUND = 3
 export const RAGE_ROUND = 13
 export const BLACKHOLE_ROUND = 23
-export const CANNON_ROUND = 33
+export const CANNON_ROUND = 43

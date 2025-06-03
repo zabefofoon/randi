@@ -709,11 +709,11 @@ onMounted(() => {
         })
         scene.events.on("thunder", () => {
           isShowTextEffect.value = `THUNDER`
+          thunderSkillCooldown.value = 0
 
           scene.time.delayedCall(1200, () => {
             isShowTextEffect.value = ""
             scene.cameras.main.shake(100, 0.01)
-            thunderSkillCooldown.value = 0
             soundStore.play("thunder")
             ;[...enemies.children].forEach((enemy) => {
               enemy.thunderEffect
@@ -730,6 +730,8 @@ onMounted(() => {
         scene.events.on("rage", () => {
           isSkilling.value = true
           isShowTextEffect.value = `RAGE MODE`
+          rageSkillCooldown.value = 0
+
           scene.time.delayedCall(1200, () => {
             player.weaponsEffect
               .setPosition(player.x, player.y)
@@ -738,7 +740,6 @@ onMounted(() => {
               .play("weapons-animation")
             isRageMode.value = true
             isShowTextEffect.value = ""
-            rageSkillCooldown.value = 0
             scene.cameras.main.shake(100, 0.01)
 
             soundStore.play("thunder")
@@ -761,6 +762,8 @@ onMounted(() => {
         scene.events.on("blackhole", () => {
           isSkilling.value = true
           isShowTextEffect.value = `LUNA HOLE`
+          blackholeSkillCooldown.value = 0
+
           scene.time.delayedCall(1200, () => {
             enemies.applyBlackhole(materials.value, enforces.value)
             scene.time.delayedCall(600, () =>
@@ -774,7 +777,6 @@ onMounted(() => {
             )
             isShowTextEffect.value = ""
             scene.cameras.main.shake(100, 0.01)
-            blackholeSkillCooldown.value = 0
 
             soundStore.play("thunder")
 
@@ -800,10 +802,11 @@ onMounted(() => {
         scene.events.on("beam", () => {
           isSkilling.value = true
           isShowTextEffect.value = `DOGE BEAM`
+          cannonSkillCooldown.value = 0
+
           scene.time.delayedCall(1200, () => {
             soundStore.play("beam")
             isShowTextEffect.value = ``
-            cannonSkillCooldown.value = 0
             scene.time.delayedCall(1000, () => scene.cameras.main.shake(2500, 0.005))
 
             BeforeBeam.create({
