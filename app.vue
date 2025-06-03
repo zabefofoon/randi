@@ -11,9 +11,11 @@
 </template>
 <script lang="ts" setup>
 import { useIphoneHistoryDetector } from "./composables/useIphoneHistoryDetector"
+import { LOADING_APP } from "./const"
 
 const gameStore = useGameStore()
-
+const route = useRoute()
+const globalLoadingStore = useGlobalLoadingStore()
 const iphoneHistoryDetector = useIphoneHistoryDetector()
 
 const isLoaded = ref(false)
@@ -30,6 +32,14 @@ const initMode = () => {
   } else {
     isLoaded.value = true
   }
+}
+
+if (route.query.platform) globalLoadingStore.setGlobalCoverLoading(LOADING_APP)
+
+window.fromApp = (os: "android" | "ios") => {
+  gameStore.setMode(os)
+  isLoaded.value = true
+  globalLoadingStore.deleteGlobalCoverLoading(LOADING_APP)
 }
 
 onMounted(() => {

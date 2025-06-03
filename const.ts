@@ -11,6 +11,7 @@ export const CAROUSEL_AUTOPLAY_DELAY = 2000
 export const GLOBAL_SPINNER_DELAY = 100
 export const LOADING_SSR = "ssr"
 export const LOADING_COVER = "loadingCover"
+export const LOADING_APP = "app"
 
 export const SPRITE_LENGTH = 23
 

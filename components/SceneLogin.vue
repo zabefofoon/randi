@@ -39,6 +39,7 @@ const emit = defineEmits<{
 }>()
 const runtimeConig = useRuntimeConfig()
 const authStore = useAuthStore()
+const gameStore = useGameStore()
 
 const formDatas = ref({
   id: "",
@@ -52,4 +53,11 @@ const login = () => {
   authStore.setIsLoggedIn(true)
   emit("next", "lobby")
 }
+
+watch(
+  () => gameStore.mode,
+  (mode) => {
+    if (["android", "ios"].includes(mode)) emit("next", "lobby")
+  }
+)
 </script>

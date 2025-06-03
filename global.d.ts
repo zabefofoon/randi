@@ -1,5 +1,6 @@
 declare global {
   interface Window {
+    fromApp: (os: "android" | "ios") => void
     speed: number
     createjs: {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

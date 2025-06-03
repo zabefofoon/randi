@@ -77,6 +77,7 @@ const checkNeedLogin = () => {
   if (import.meta.dev) return
   if (window.self !== window.top) return
   if (useCookie(COOKIE_LOGGED_IN).value === "authed") return
+
   currentScene.value = "login"
 }
 onMounted(() => {

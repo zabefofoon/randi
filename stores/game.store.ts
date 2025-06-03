@@ -19,8 +19,8 @@ export const useGameStore = defineStore("gameStore", () => {
   const route = useRoute()
   const { encrypted, decrypted } = useCrypto()
 
-  const mode = ref<"demo" | "app" | "dev">("dev")
-  const setMode = (value: "demo" | "app" | "dev") => {
+  const mode = ref<"demo" | "ios" | "android" | "dev">("dev")
+  const setMode = (value: "demo" | "ios" | "android" | "dev") => {
     mode.value = value
   }
 
