@@ -49,7 +49,7 @@ const formDatas = ref({
 const login = () => {
   if (formDatas.value.id !== runtimeConig.public.adminId) return
   if (formDatas.value.password !== runtimeConig.public.adminPassword) return
-  useCookie(COOKIE_LOGGED_IN, { maxAge: 3600, secure: !import.meta.dev }).value = "authed"
+  useCookie(COOKIE_LOGGED_IN, { maxAge: 3600 }).value = "authed"
   authStore.setIsLoggedIn(true)
   emit("next", "lobby")
 }

@@ -41,10 +41,11 @@ onMounted(() => {
   justify-content: center;
   width: 100%;
   height: 100vh;
-  background: white;
+  background: black;
 
   .loading {
     font-size: 24px;
+    color: white;
   }
 }
 
