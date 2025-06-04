@@ -1,5 +1,6 @@
 type StatKey = "str" | "int" | "cul" | "cha" | "vit" | "agi" | "luk" | "wis"
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 interface MaterialItems<T extends { length: number; info: any } = any> {
   length: number
   info: T["info"]

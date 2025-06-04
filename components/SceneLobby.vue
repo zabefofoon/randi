@@ -133,6 +133,7 @@ const i18n = useI18n()
 
 const gameStore = useGameStore()
 const soundStore = useSoundStore()
+const switchLocalePath = useSwitchLocalePath()
 
 const isShowConfigPopup = ref(false)
 const showConfigPopup = (value: boolean) => {
@@ -140,7 +141,9 @@ const showConfigPopup = (value: boolean) => {
   if (value) soundStore.play("select")
 }
 const setLocale = (locale: typeof i18n.locale.value) => {
-  i18n.setLocale(locale)
+  const path = switchLocalePath(locale)
+  navigateTo(path, { replace: true })
+
   window.appChannel.postMessage(
     JSON.stringify({
       type: "setLocale",
