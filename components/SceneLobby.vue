@@ -30,7 +30,7 @@
                 :key="locale.code"
                 class="w-full | text-outline font-bold text-[1.5cqw] | py-[0.5cqw] | border-dotted border-b border-black"
                 :class="{ 'border-0': index === i18n.locales.value.length - 1 }"
-                @click="i18n.setLocale(locale.code)">
+                @click="setLocale(locale.code)">
                 {{ locale.name }}
               </button>
             </div>
@@ -138,6 +138,15 @@ const isShowConfigPopup = ref(false)
 const showConfigPopup = (value: boolean) => {
   isShowConfigPopup.value = value
   if (value) soundStore.play("select")
+}
+const setLocale = (locale: typeof i18n.locale.value) => {
+  i18n.setLocale(locale)
+  window.appChannel.postMessage(
+    JSON.stringify({
+      type: "setLocale",
+      locale,
+    })
+  )
 }
 
 onMounted(() => {
