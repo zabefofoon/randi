@@ -140,6 +140,15 @@
         </div>
         <div class="flex flex-col items-center gap-[0.4cqw]">
           <button
+            v-if="gameStore.isApp && !isShownAds"
+            class="w-full max-w-[33%] | px-[1cqw] py-[0.2cqw] | border-[0.2cqw] border-black rounded-full | bg-orange-700"
+            @click="getAdBonus">
+            <span
+              v-t="'AdBonus'"
+              class="block | text-[1.8cqw] font-bold text-outline"></span>
+          </button>
+          <button
+            v-else
             class="w-full max-w-[33%] | px-[1cqw] py-[0.2cqw] | border-[0.2cqw] border-black rounded-full | bg-orange-700"
             @click="emit('next', 'lobby')">
             <span
@@ -178,6 +187,7 @@ const bonus = ref(0)
 const total = ref(0)
 
 const isShowClear = ref(false)
+const isShownAds = ref(false)
 
 const isBonusCharacter = computed(() => {
   return (
@@ -213,6 +223,30 @@ const transitionNumberInterval = (
   return requestAnimationFrame(tick)
 }
 
+const getAdBonus = () => {
+  window.appChannel?.postMessage(
+    JSON.stringify({
+      type: "getAdBonus",
+    })
+  )
+}
+let totalRewordMoney = 0
+window.grantAdBonus = () => {
+  if (isShownAds.value === true) return
+  const duration = 500
+  transitionNumberInterval(
+    total,
+    Math.max(500 + total.value, Math.ceil(total.value * 1.2)),
+    duration
+  )
+
+  gameStore.setCurrentMoney(
+    gameStore.currentMoney + Math.max(500 + total.value, Math.ceil(total.value * 1.2))
+  )
+
+  isShownAds.value = true
+}
+
 onMounted(async () => {
   const clearReward = gameStore.rewords.isClear
 
@@ -223,7 +257,8 @@ onMounted(async () => {
     ? Math.ceil(numberUtil.addPercent(_total, 30))
     : _total
 
-  gameStore.setCurrentMoney(gameStore.currentMoney + appliedharacterBonus)
+  totalRewordMoney = gameStore.currentMoney + appliedharacterBonus
+  gameStore.setCurrentMoney(totalRewordMoney)
   await etcUtil.sleep(300)
 
   const duration = 500

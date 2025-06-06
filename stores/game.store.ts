@@ -23,6 +23,7 @@ export const useGameStore = defineStore("gameStore", () => {
   const setMode = (value: "demo" | "ios" | "android" | "dev") => {
     mode.value = value
   }
+  const isApp = computed(() => ["android", "ios"].includes(mode.value))
 
   const rewords = ref<Rewords>({
     rounds: 0,
@@ -160,6 +161,7 @@ export const useGameStore = defineStore("gameStore", () => {
   return {
     mode,
     setMode,
+    isApp,
 
     rewords,
     setRewords,

@@ -53,6 +53,11 @@ onMounted(() => {
   }
 
   window.parent.postMessage({ data: "load" }, "*")
+  window.appChannel?.postMessage(
+    JSON.stringify({
+      type: "load",
+    })
+  )
 })
 
 onBeforeUnmount(() => {

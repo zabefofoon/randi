@@ -73,6 +73,7 @@ const checkFirstAccessToday = () => {
   const lastAccess = crypto.decrypted(store.get(LAST_ACCESS))
   return !lastAccess || TODAY > lastAccess
 }
+
 const checkNeedLogin = () => {
   if (import.meta.dev) return
   if (window.self !== window.top) return
@@ -81,6 +82,11 @@ const checkNeedLogin = () => {
 
   currentScene.value = "login"
 }
+
+window.startGame = () => {
+  currentScene.value = "inGame"
+}
+
 onMounted(() => {
   checkNeedLogin()
   soundStore.preloadSounds()
@@ -96,6 +102,7 @@ onMounted(() => {
 
   store.set(LAST_ACCESS, crypto.encrypted(TODAY))
 })
+
 watch(currentScene, (scene) =>
   setTimeout(() => {
     if (scene === "inGame") {

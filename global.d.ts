@@ -3,6 +3,8 @@ declare global {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     appChannel: any
     fromApp: (os: "android" | "ios") => void
+    startGame: () => void
+    grantAdBonus: () => void
     speed: number
     createjs: {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

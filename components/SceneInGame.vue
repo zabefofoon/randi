@@ -461,6 +461,12 @@ onMounted(() => {
 
   gtag("event", "캐릭터 사용", { name: gameStore.selectCharacter.name })
 
+  window.appChannel?.postMessage(
+    JSON.stringify({
+      type: "startGame",
+    })
+  )
+
   game = new Phaser.Game({
     pixelArt: true,
     antialias: false,

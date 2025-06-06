@@ -100,7 +100,7 @@
           </button>
           <button
             class="flex flex-col gap-[0.5cqw]"
-            @click="emit('next', 'inGame')">
+            @click="goNext()">
             <span
               v-t="'Start'"
               class="bg-orange-700 | px-[2cqw] py-[0.5cqw] | border-black border-[0.2cqw] rounded-lg | text-[1.5cqw] font-bold text-outline">
@@ -139,6 +139,17 @@ const goPrev = () => {
     if (gameStore.checkSelectedPurchaseItem(item)) gameStore.addPurchaseItem(item)
   })
   emit("next", "select")
+}
+
+const goNext = () => {
+  if (!gameStore.isApp) emit("next", "inGame")
+  else {
+    window.appChannel?.postMessage(
+      JSON.stringify({
+        type: "showAd",
+      })
+    )
+  }
 }
 
 onMounted(() => {

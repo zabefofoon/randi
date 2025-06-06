@@ -144,7 +144,7 @@ const setLocale = (locale: typeof i18n.locale.value) => {
   const path = switchLocalePath(locale)
   navigateTo(path, { replace: true })
 
-  window.appChannel.postMessage(
+  window.appChannel?.postMessage(
     JSON.stringify({
       type: "setLocale",
       locale,
