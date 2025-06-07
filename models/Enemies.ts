@@ -23,7 +23,7 @@ export class Enemies {
     const gameHeight = scene.scale.height
 
     this.pathes = [
-      { x: gameWidth * 0.15, y: gameHeight * 0.2 },
+      { x: gameWidth * 0.15, y: gameHeight * 0.18 },
       { x: gameWidth * 0.15, y: gameHeight * 0.78 },
       { x: gameWidth * 0.87, y: gameHeight * 0.78 },
       { x: gameWidth * 0.87, y: gameHeight * 0.18 },
@@ -189,7 +189,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
   private hpBarBg!: Phaser.GameObjects.Rectangle
   private hpBarFill!: Phaser.GameObjects.Rectangle
-  private readonly hpBarOffset = { x: -16, y: -30 }
+  private readonly hpBarOffset = { x: -16, y: -26 }
 
   constructor(
     scene: Phaser.Scene & { dmgPool: Phaser.GameObjects.Group },
@@ -226,7 +226,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       .setData("hpBar", this.scene.add.graphics())
       .setScale(0.75)
 
-    if (this.isBoss) this.setTint(0xff0000)
+    if (this.isBoss) this.setTint(0xff0000).setScale(0.9)
     if (this.isThunder) this.setTint(0x0000ff)
     if (this.isRage) this.setTint(0x00ff00)
     if (this.isBlackhole) this.setTint(0x000000)

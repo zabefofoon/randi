@@ -65,7 +65,16 @@
       <div
         class="w-full | flex items-center gap-[0.5cqh] | px-[0.5cqw] | absolute top-[0.5cqw] | text-white font-bold">
         <div class="flex items-center gap-[1cqw] | bg-black w-fit | px-[0.5cqw] rounded-lg">
-          <span class="text-[1.5cqw]">ROUND {{ round }}</span>
+          <span
+            v-if="isBossRound"
+            class="text-[1.5cqw] text-red-600">
+            BOSS ROUND
+          </span>
+          <span
+            v-else
+            class="text-[1.5cqw]">
+            ROUND {{ round }}
+          </span>
         </div>
         <div class="text-[1.2cqw] bg-black w-fit | px-[0.5cqw] rounded-lg">
           <span
@@ -1268,6 +1277,10 @@ const rewords = computed(() => ({
   gamblings: round.value ? gamblings.value : 0,
   isClear: isClear ? 1 : 0,
 }))
+
+const isBossRound = computed(() => {
+  return round.value !== 0 && round.value % 10 === 0
+})
 
 const startGame = () => {
   isShowTutorial.value = false
