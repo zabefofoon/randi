@@ -134,5 +134,7 @@ export const useSoundStore = defineStore("sound", () => {
     toggleEffect,
 
     initSounds,
+
+    bgmInstance,
   }
 })

@@ -499,6 +499,8 @@ onMounted(() => {
     })
   )
 
+  document.addEventListener("visibilitychange", handleVisibility)
+
   game = new Phaser.Game({
     pixelArt: true,
     antialias: false,
@@ -996,6 +998,18 @@ onMounted(() => {
     },
   })
 })
+
+onBeforeUnmount(() => {
+  document.removeEventListener("visibilitychange", handleVisibility)
+})
+
+const handleVisibility = () => {
+  if (!soundStore.useBGMSound) return
+  soundStore.bgmInstance.volume =
+    document.visibilityState === "visible"
+      ? (soundStore.bgmInstance.volume = 0.1)
+      : (soundStore.bgmInstance.volume = 0.001)
+}
 
 const allAttack = async () => {
   if (!weapons.value) return
