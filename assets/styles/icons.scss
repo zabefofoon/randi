@@ -65,3 +65,11 @@
 .icon-lock {
   @include generateIcon("../images/icons/icon_lock.svg");
 }
+
+.icon-heart {
+  @include generateIcon("../images/icons/icon_heart.svg");
+}
+
+.icon-heart-outline {
+  @include generateIcon("../images/icons/icon_heart_outline.svg");
+}

@@ -85,6 +85,27 @@
           >
           / {{ enemyCountDeadline }}
         </div>
+        <div class="relative text-white">
+          <div class="flex items-center | text-[1.3cqw]">
+            <i
+              v-for="index in 5"
+              :key="index"
+              class="icon icon-heart | opacity-0 | text-red-500"
+              :class="{
+                '!opacity-100': index <= remainnedLife,
+              }"></i>
+          </div>
+          <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 | flex items-center | text-[1.3cqw]">
+            <i
+              v-for="index in 5"
+              :key="index"
+              class="icon icon-heart-outline | opacity-0"
+              :class="{
+                '!opacity-100': index > remainnedLife,
+              }"></i>
+          </div>
+        </div>
       </div>
 
       <div class="absolute top-[0.5cqw] left-1/2 -translate-x-1/2">
@@ -454,6 +475,8 @@ let damageRect: Phaser.GameObjects.Rectangle
 const stepTutorial = ref<StepTutorial>()
 
 let mainTimerEvent: Phaser.Time.TimerEvent
+
+const remainnedLife = ref(5)
 
 onMounted(() => {
   if (!phaserContainer.value) return
@@ -1184,6 +1207,7 @@ const mainTimerCallback = () => {
     scene.cameras.main.shake(100, 0.01)
     damageRect.setAlpha(1 - (playerHP - 1) / 10)
     soundStore.play("attacked")
+    remainnedLife.value--
 
     scene.tweens.add({
       targets: damageRect,
@@ -1193,7 +1217,7 @@ const mainTimerCallback = () => {
     })
   }
 
-  if (playerHP < 1) {
+  if (playerHP < 2) {
     soundStore.play("attacked")
     scene.physics.pause()
     isShowGameOverPopup.value = true
