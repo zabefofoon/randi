@@ -40,10 +40,6 @@
         <p
           v-t="'StepTutorial1'"
           class="text-[1.5cqw] whitespace-nowrap text-right font-bold"></p>
-        <button
-          v-t="'Next'"
-          class="relative z-[1] | rounded-lg bg-orange-600 border-[0.2cqw] border-black | px-[1cqw] | text-outline whitespace-nowrap text-white text-[1.2cqw] font-bold"
-          @click="emit('step-next')"></button>
       </div>
     </template>
   </UIDropdown>
@@ -55,9 +51,7 @@ import type { StepTutorial } from "~/models/UI"
 defineProps<{
   stepTutorial?: StepTutorial
 }>()
-const emit = defineEmits<{
-  (e: "step-next"): void
-}>()
+
 const activeIndex = defineModel<number>()
 
 const joyStickWrapEl = ref<HTMLDivElement>()

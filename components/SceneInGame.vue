@@ -298,8 +298,7 @@
         v-if="isTouchDevice"
         v-model="activeJoystick"
         :step-tutorial="stepTutorial"
-        class="absolute bottom-[3cqw] left-[3cqw]"
-        @step-next="stepTutorial = 'gacha'" />
+        class="absolute bottom-[3cqw] left-[3cqw]" />
       <UIDropdown
         v-else
         class="absolute bottom-[3cqw] left-[3cqw] pointer-events-none"
