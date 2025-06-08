@@ -486,7 +486,7 @@ const isTouchDevice =
 
 let damageRect: Phaser.GameObjects.Rectangle
 
-const stepTutorial = ref<StepTutorial>()
+const stepTutorial = ref<StepTutorial>(gameStore.isShowStepTutorial ? "move" : "")
 
 let mainTimerEvent: Phaser.Time.TimerEvent
 
