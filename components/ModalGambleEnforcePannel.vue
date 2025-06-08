@@ -36,14 +36,36 @@
           </span>
         </div>
 
-        <button
-          class="w-full select-none | bg-orange-700 | border-black border-[0.2cqw] rounded-lg | my-[1cqw] px-[0.5cqw] | disabled:bg-gray-800 disabled:text-gray-500"
-          :disabled="enforces.getExpense(enforce) > coins || !enforces.checkGachable(enforce.name)"
-          @click="gacha(enforce, index)">
-          <span
-            v-t="'MaterialGatcha'"
-            class="block | font-bold text-[1.8cqw] text-outline"></span>
-        </button>
+        <UIDropdown
+          class="w-full"
+          :value="index === 0 && stepTutorial === 'gacha-enforce'"
+          use-arrow
+          prevent-hide-outside
+          :fit-options-parent="false"
+          :position="{
+            x: 'RIGHT',
+            y: 'TOP',
+          }">
+          <template #button>
+            <button
+              class="w-full select-none | bg-orange-700 | border-black border-[0.2cqw] rounded-lg | my-[1cqw] px-[0.5cqw] | disabled:bg-gray-800 disabled:text-gray-500"
+              :disabled="
+                enforces.getExpense(enforce) > coins || !enforces.checkGachable(enforce.name)
+              "
+              @click="gacha(enforce, index)">
+              <span
+                v-t="'MaterialGatcha'"
+                class="block | font-bold text-[1.8cqw] text-outline"></span>
+            </button>
+          </template>
+          <template #options>
+            <div class="p-[0.5cqw] bg-white rounded-lg | flex gap-[0.5cqw]">
+              <p
+                v-t="'StepTutorial11'"
+                class="text-[1.5cqw] whitespace-nowrap text-right font-bold text-black"></p>
+            </div>
+          </template>
+        </UIDropdown>
       </figure>
     </div>
   </div>
@@ -52,6 +74,7 @@
 <script setup lang="ts">
 import type { EnforceItem, Enforces } from "~/models/Enforces"
 import { Sharper } from "~/models/PurchaseItem"
+import type { StepTutorial } from "~/models/UI"
 
 const props = defineProps<{
   enforces: Enforces
@@ -59,6 +82,7 @@ const props = defineProps<{
 
 const coins = defineModel<number>("coins", { default: 0 })
 const gamblings = defineModel<number>("gamblings", { default: 0 })
+const stepTutorial = defineModel<StepTutorial>("stepTutorial")
 
 const gameStore = useGameStore()
 const soundStore = useSoundStore()
@@ -66,6 +90,7 @@ const soundStore = useSoundStore()
 const cardEl = ref<HTMLDivElement[]>()
 
 const gacha = (enforce: EnforceItem, index: number) => {
+  if (gameStore.isShowStepTutorial && stepTutorial.value !== "gacha-enforce") return
   if (!cardEl.value) return
 
   coins.value = coins.value - props.enforces.getExpense(enforce)
@@ -93,7 +118,12 @@ const gacha = (enforce: EnforceItem, index: number) => {
     el.addEventListener("animationend", () => el.classList.remove("fail-animate"), { once: true })
   }
   soundStore.play("coin")
+  if (stepTutorial.value === "gacha-enforce") stepTutorial.value = "gacha-stat"
 }
+
+onMounted(() => {
+  if (stepTutorial.value === "gacha-enforces") stepTutorial.value = "gacha-enforce"
+})
 </script>
 <style lang="scss" scoped>
 .success-animate {

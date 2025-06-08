@@ -48,7 +48,7 @@
         <button
           v-t="'Next'"
           class="relative z-[1] | rounded-lg bg-orange-600 border-[0.2cqw] border-black | px-[1cqw] | text-outline whitespace-nowrap text-white text-[1.2cqw] font-bold"
-          @click="emit('step-next')"></button>
+          @click="stepTutorial = 'complete'"></button>
       </div>
     </template>
   </UIDropdown>
@@ -61,10 +61,11 @@ import type { StepTutorial } from "~/models/UI"
 defineProps<{
   has: boolean
   cooltime: number
-  stepTutorial?: StepTutorial
 }>()
 
 const emit = defineEmits<{
   (e: "activate" | "step-next"): void
 }>()
+
+const stepTutorial = defineModel<StepTutorial>("stepTutorial")
 </script>

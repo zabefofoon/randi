@@ -35,22 +35,38 @@
             </figcaption>
           </figure>
         </div>
-        <div class="flex gap-[2cqw]">
-          <button
-            v-if="selectChance > 0"
-            class="grid place-items-center | relative bg-amber-500 | mt-[2cqw] px-[1.5cqw] py-[0.5cqw] | border-black border-[0.14cqw] rounded-lg | leading-none">
-            <span
-              v-t="'MaterialSelectable'"
-              class="text-outline text-[1.7cqw] font-bold"></span>
-            <div
-              v-if="selectChance > 0"
-              class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2">
-              <span
-                class="grid place-items-center | w-[2.5cqw] aspect-square | rounded-full border-black border-[0.14cqw] | bg-red-500 | text-[1.5cqw] text-outline font-bold">
-                {{ selectChance }}
-              </span>
-            </div>
-          </button>
+        <div class="flex gap-[1cqw]">
+          <UIDropdown
+            :value="stepTutorial === 'stat-select'"
+            use-arrow
+            prevent-hide-outside
+            :fit-options-parent="false">
+            <template #button>
+              <button
+                v-if="selectChance > 0"
+                class="grid place-items-center | relative bg-amber-500 | mt-[2cqw] px-[1.5cqw] py-[0.5cqw] | border-black border-[0.14cqw] rounded-lg | leading-none">
+                <span
+                  v-t="'MaterialSelectable'"
+                  class="text-outline text-[1.7cqw] font-bold"></span>
+                <div
+                  v-if="selectChance > 0"
+                  class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2">
+                  <span
+                    class="grid place-items-center | w-[2.5cqw] aspect-square | rounded-full border-black border-[0.14cqw] | bg-red-500 | text-[1.5cqw] text-outline font-bold">
+                    {{ selectChance }}
+                  </span>
+                </div>
+              </button>
+            </template>
+            <template #options>
+              <div class="p-[0.5cqw] bg-white rounded-lg | flex gap-[0.5cqw]">
+                <p
+                  v-t="'StepTutorial8'"
+                  class="text-[1.5cqw] whitespace-nowrap text-right font-bold text-black"></p>
+              </div>
+            </template>
+          </UIDropdown>
+
           <button
             v-if="gachaChance > 0 && gameStore.checkSelectedPurchaseItem(Joker)"
             class="grid place-items-center | relative bg-green-700 | mt-[2cqw] px-[1.5cqw] py-[0.5cqw] | border-black border-[0.14cqw] rounded-lg | leading-none"
@@ -72,26 +88,41 @@
               </span>
             </div>
           </button>
-          <button
-            class="grid place-items-center | relative | mt-[2cqw] px-[1.5cqw] py-[0.5cqw] | border-black border-[0.14cqw] rounded-lg | leading-none"
-            :class="{
-              'bg-orange-700': gachaChance > 0,
-              'bg-gray-700': gachaChance < 1,
-            }"
-            :disabled="gachaChance < 1"
-            @click="gacha">
-            <span
-              v-t="'MaterialGatcha'"
-              class="text-outline text-[1.7cqw] font-bold"></span>
-            <div
-              v-if="gachaChance > 0"
-              class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2">
-              <span
-                class="grid place-items-center | w-[2.5cqw] aspect-square | rounded-full border-black border-[0.14cqw] | bg-red-500 | text-[1.5cqw] text-outline font-bold">
-                {{ gachaChance }}
-              </span>
-            </div>
-          </button>
+          <UIDropdown
+            :value="stepTutorial === 'stat-random'"
+            use-arrow
+            prevent-hide-outside
+            :fit-options-parent="false">
+            <template #button>
+              <button
+                class="grid place-items-center | relative | mt-[2cqw] px-[1.5cqw] py-[0.5cqw] | border-black border-[0.14cqw] rounded-lg | leading-none"
+                :class="{
+                  'bg-orange-700': gachaChance > 0,
+                  'bg-gray-700': gachaChance < 1,
+                }"
+                :disabled="gachaChance < 1"
+                @click="gacha">
+                <span
+                  v-t="'MaterialGatcha'"
+                  class="text-outline text-[1.7cqw] font-bold"></span>
+                <div
+                  v-if="gachaChance > 0"
+                  class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2">
+                  <span
+                    class="grid place-items-center | w-[2.5cqw] aspect-square | rounded-full border-black border-[0.14cqw] | bg-red-500 | text-[1.5cqw] text-outline font-bold">
+                    {{ gachaChance }}
+                  </span>
+                </div>
+              </button>
+            </template>
+            <template #options>
+              <div class="p-[0.5cqw] bg-white rounded-lg | flex gap-[0.5cqw]">
+                <p
+                  v-t="'StepTutorial7'"
+                  class="text-[1.5cqw] whitespace-nowrap text-right font-bold text-black"></p>
+              </div>
+            </template>
+          </UIDropdown>
         </div>
       </div>
     </template>
@@ -101,6 +132,7 @@
 <script setup lang="ts">
 import type { Materials } from "~/models/Material"
 import { Joker } from "~/models/PurchaseItem"
+import type { StepTutorial } from "~/models/UI"
 
 const props = defineProps<{
   materials: Materials
@@ -112,6 +144,7 @@ const emit = defineEmits<{
 
 const gachaChance = defineModel<number>("gachaChance", { default: 0 })
 const selectChance = defineModel<number>("selectChance", { default: 0 })
+const stepTutorial = defineModel<StepTutorial>("stepTutorial")
 
 const i18n = useI18n()
 const { gtag } = useGtag()
@@ -138,9 +171,14 @@ const gacha = () => {
     etcUtil.restartAnimation(el)
     el.addEventListener("animationend", () => el?.classList.remove("pop-animate"), { once: true })
   }
+
+  if (stepTutorial.value === "stat-random" && gachaChance.value <= 1)
+    stepTutorial.value = "stat-select"
 }
 
 const select = (index: number) => {
+  if (gameStore.isShowStepTutorial && stepTutorial.value !== "stat-select") return
+
   if (selectChance.value < 1) return
   const selectedMaterialKey = Object.keys(props.materials)[index] as keyof ClassToRaw<Materials>
   props.materials.increase(selectedMaterialKey, 1)
@@ -153,6 +191,8 @@ const select = (index: number) => {
     etcUtil.restartAnimation(el)
     el.addEventListener("animationend", () => el?.classList.remove("pop-animate"))
   }
+
+  if (stepTutorial.value === "stat-select") stepTutorial.value = "weapon"
 }
 
 const useJoker = () => {
@@ -172,6 +212,7 @@ const initJokerLength = () => {
 
 onMounted(() => {
   initJokerLength()
+  if (stepTutorial.value === "stat") stepTutorial.value = "stat-random"
 })
 </script>
 <style lang="scss" scoped>

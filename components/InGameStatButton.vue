@@ -14,7 +14,9 @@
           'bg-amber-500': selectChance > 0,
           'bg-blue-950': selectChance <= 0,
         }"
-        @click="emit('show')">
+        @click="
+          gameStore.isShowStepTutorial ? stepTutorial === 'stat' && emit('show') : emit('show')
+        ">
         <div
           class="stat-sprites | w-[3cqw] aspect-square"
           :style="{
@@ -39,10 +41,6 @@
         <p
           v-t="'StepTutorial4'"
           class="text-[1.5cqw] whitespace-nowrap text-right font-bold"></p>
-        <button
-          v-t="'Next'"
-          class="relative z-[1] | rounded-lg bg-orange-600 border-[0.2cqw] border-black | px-[1cqw] | text-outline whitespace-nowrap text-white text-[1.2cqw] font-bold"
-          @click="emit('step-next')"></button>
       </div>
     </template>
   </UIDropdown>
@@ -58,6 +56,8 @@ defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: "show" | "step-next"): void
+  (e: "show"): void
 }>()
+
+const gameStore = useGameStore()
 </script>

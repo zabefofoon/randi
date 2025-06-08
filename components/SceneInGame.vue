@@ -13,6 +13,7 @@
       v-model:selected-index="selectedGambleIndex"
       v-model:coins="coins"
       v-model:gamblings="gamblings"
+      v-model:step-tutorial="stepTutorial"
       :weapons="weapons"
       :materials="materials"
       :enforces="enforces"
@@ -21,6 +22,7 @@
       v-if="weapons && isShowWeaponsPopup"
       v-model:selected-index="selectedWeaponIndex"
       v-model:is-all-weapon-effect="isAllWeaponEffect"
+      v-model:step-tutorial="stepTutorial"
       :weapons="weapons"
       :materials="materials"
       @close="showWeaponsPopup(false)" />
@@ -28,6 +30,7 @@
       v-if="isShowMaterialsPopup"
       v-model:gacha-chance="gachaChance"
       v-model:select-chance="selectChance"
+      v-model:step-tutorial="stepTutorial"
       :materials="materials"
       @close="showMaterialsPopup(false)" />
     <ModalTextEffect
@@ -62,6 +65,25 @@
     </ModalConfigs>
 
     <main class="relative | w-full h-full | flex flex-col justify-center items-center">
+      <Transition name="fade">
+        <div
+          v-if="stepTutorial === 'kill'"
+          class="absolute top-[5cqw]">
+          <p
+            class="bg-white text-[1.8cqw] text-center font-bold | p-[0.5cqw] | rounded-lg"
+            v-html="i18n.t('StepTutorial14')"></p>
+        </div>
+      </Transition>
+      <Transition name="fade">
+        <div
+          v-if="stepTutorial === 'complete'"
+          class="absolute top-[5cqw]">
+          <p
+            class="bg-white text-[1.8cqw] text-center font-bold | p-[0.5cqw] | rounded-lg"
+            v-html="i18n.t('StepTutorial15')"></p>
+        </div>
+      </Transition>
+
       <div
         class="w-full | flex items-center gap-[0.5cqh] | px-[0.5cqw] | absolute top-[0.5cqw] | text-white font-bold">
         <div class="flex items-center gap-[1cqw] | bg-black w-fit | px-[0.5cqw] rounded-lg">
@@ -301,10 +323,6 @@
             <p
               v-t="'StepTutorial6'"
               class="text-[1.5cqw] whitespace-nowrap text-right font-bold"></p>
-            <button
-              v-t="'Next'"
-              class="relative z-[1] | rounded-lg bg-orange-600 border-[0.2cqw] border-black | px-[1cqw] | text-outline whitespace-nowrap text-white text-[1.2cqw] font-bold | pointer-events-auto"
-              @click="stepTutorial = 'gacha'"></button>
           </div>
         </template>
       </UIDropdown>
@@ -315,27 +333,23 @@
         <div class="flex gap-[1cqw] | mb-[1cqw]">
           <InGameGachaButton
             :step-tutorial="stepTutorial"
-            @show="showGamblePopup(true)"
-            @step-next="stepTutorial = 'weapon'" />
+            @show="showGamblePopup(true)" />
           <InGameWeaponButton
             :step-tutorial="stepTutorial"
-            @show="showWeaponsPopup(true)"
-            @step-next="stepTutorial = 'stat'" />
+            @show="showWeaponsPopup(true)" />
           <InGameStatButton
             :step-tutorial="stepTutorial"
             :select-chance="selectChance"
             :gacha-chance="gachaChance"
-            @show="showMaterialsPopup(true)"
-            @step-next="stepTutorial = 'skill'" />
+            @show="showMaterialsPopup(true)" />
         </div>
 
         <div class="grid grid-cols-2">
           <InGameSkillThunder
+            v-model:step-tutorial="stepTutorial"
             :has="hasThunder"
-            :step-tutorial="stepTutorial"
             :cooltime="thunderSkillCooldown"
-            @activate="scene.events.emit('thunder')"
-            @step-next="stepTutorial = 'start'" />
+            @activate="scene.events.emit('thunder')" />
           <InGameSkillRage
             :has="hasRageMode"
             :cooltime="rageSkillCooldown"
@@ -719,6 +733,8 @@ onMounted(() => {
           killed.value++
           remainnedEnemies.value--
           coins.value += round.value
+
+          if (stepTutorial.value === "kill") stepTutorial.value = "stat"
         })
         scene.events.on("enemy-spawn", () => {
           remainnedEnemies.value++
@@ -863,13 +879,16 @@ onMounted(() => {
           })
         })
 
+        scene.events.on("player-move", () => {
+          if (stepTutorial.value === "move") stepTutorial.value = "kill"
+          scene.data.set("stepTutorial", "kill")
+        })
+
         mainTimerEvent = scene.time.addEvent({
           delay: 1000,
           loop: true,
           callback: mainTimerCallback,
         })
-
-        pause()
       },
       update(this: Phaser.Scene, time: number) {
         const scene = this as Phaser.Scene
@@ -1128,7 +1147,8 @@ const changeSpeed = (speed: number, showOptions: (value?: boolean) => void) => {
 const mainTimerCallback = () => {
   if (scene.data.get("paused")) return
 
-  remainnedTime.value--
+  if (!stepTutorial.value) remainnedTime.value--
+
   if (hasThunder.value && thunderSkillCooldown.value <= THUNDER_COOLTIME)
     thunderSkillCooldown.value++
   if (hasRageMode.value && rageSkillCooldown.value <= THUNDER_COOLTIME) rageSkillCooldown.value++
@@ -1330,6 +1350,7 @@ const startGame = () => {
       scene.time.delayedCall(1200, () => {
         isShowTextEffect.value = ""
         stepTutorial.value = "move"
+        scene.data.set("stepTutorial", "move")
       })
     })
 }
@@ -1380,11 +1401,14 @@ watch(
 watch(stepTutorial, (value) => {
   if (value && value !== "start") soundStore.play("equip")
 
+  if (value === "kill") enemies.spawnEnemy(1, coins, 0)
+  if (value === "complete") setTimeout(() => (stepTutorial.value = "start"), 1500)
+
   if (value === "start") {
-    isShowTextEffect.value = `GAME START`
+    isShowTextEffect.value = "GAME START"
     scene.time.delayedCall(1200, () => {
-      isShowTextEffect.value = ``
-      stepTutorial.value = undefined
+      isShowTextEffect.value = ""
+      stepTutorial.value = ""
       gameStore.setShowStepTutorial(false)
       resume()
     })

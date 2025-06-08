@@ -86,77 +86,101 @@
               v-if="selectedWeapon"
               :weapon="selectedWeapon" />
             <div class="flex flex-col | w-full | mt-[1cqw]">
-              <button
-                v-for="item in selectedWeapon?.nexts"
-                :key="item.cls.meta?.name"
-                class="select-none flex items-center gap-[1cqw] | mt-[1cqw] | px-[1cqw] py-[0.2cqw] | border-black border-[0.2cqw] rounded-lg disabled:bg-gray-700 overflow-hidden"
-                :class="{
-                  'bg-white': item.cls.meta?.level === 1,
-                  'bg-blue-500': item.cls.meta?.level === 2,
-                  'bg-purple-600': item.cls.meta?.level === 3,
-                  'bg-yellow-500': item.cls.meta?.level === 4,
-                  'bg-fuchsia-400': item.cls.meta?.level === 5,
-                  'bg-red-400': item.cls.meta?.level === 6,
-                }"
-                :disabled="!checkGettable(item)"
-                @click="getNextWeapon(item)">
-                <div
-                  class="rounded-lg"
-                  :class="{
-                    'bg-white': item.cls.meta?.level === 1,
-                    'bg-blue-600': item.cls.meta?.level === 2,
-                    'bg-purple-700': item.cls.meta?.level === 3,
-                    'bg-yellow-600': item.cls.meta?.level === 4,
-                    'bg-fuchsia-500': item.cls.meta?.level === 5,
-                    'bg-red-500': item.cls.meta?.level === 6,
-                    '!bg-gray-700': !checkGettable(item),
+              <template
+                v-for="(item, nextIndex) in selectedWeapon?.nexts"
+                :key="item.cls.meta?.name">
+                <UIDropdown
+                  :value="nextIndex === 0 && stepTutorial === 'weapon-select'"
+                  use-arrow
+                  prevent-hide-outside
+                  :fit-options-parent="false"
+                  :position="{
+                    y: 'TOP',
                   }">
-                  <div
-                    v-if="gameStore.checkHasCollection(item.cls.meta.name)"
-                    class="weapon-sprites | w-[4cqw] aspect-square | rounded-lg border-black border-[0.2cqw]"
-                    :style="{ 'background-position': item.cls.meta.spritePosition }"></div>
-                  <div
-                    v-else
-                    class="w-[4cqw] aspect-square | rounded-lg border-black border-[0.2cqw] | flex items-center justify-center">
-                    <span class="gasoek-one-regular font-bold text-[2cqw]">?</span>
-                  </div>
-                </div>
-
-                <div class="flex flex-col gap-[0.2cqw]">
-                  <div class="flex items-center gap-[0.5cqw]">
-                    <span class="text-outline text-[1.5cqw] font-bold">
-                      Lv.{{ item.cls.meta.level }} <span v-t="item.cls.meta?.name"></span>
-                    </span>
-                    <span
-                      v-if="getNeedLevel(item)"
-                      class="text-[1.2cqw] | font-bold text-outline"
+                  <template #button>
+                    <button
+                      class="w-full | select-none flex items-center gap-[1cqw] | mt-[1cqw] | px-[1cqw] py-[0.2cqw] | border-black border-[0.2cqw] rounded-lg disabled:bg-gray-700 overflow-hidden"
                       :class="{
-                        'text-red-500': !checkHasLevel(item),
-                      }">
-                      ({{ getNeedLevel(item) }})
-                    </span>
-                  </div>
-                  <div class="flex | text-outline text-[1.3cqw] text-left font-bold">
-                    <div
-                      v-for="(material, index) in item.materials"
-                      :key="material.key"
-                      class="flex | whitespace-nowrap">
-                      <span v-if="index !== 0">&nbsp;+&nbsp;</span>
-                      <span
+                        'bg-white': item.cls.meta?.level === 1,
+                        'bg-blue-500': item.cls.meta?.level === 2,
+                        'bg-purple-600': item.cls.meta?.level === 3,
+                        'bg-yellow-500': item.cls.meta?.level === 4,
+                        'bg-fuchsia-400': item.cls.meta?.level === 5,
+                        'bg-red-400': item.cls.meta?.level === 6,
+                      }"
+                      :disabled="!checkGettable(item)"
+                      @click="getNextWeapon(item)">
+                      <div
+                        class="rounded-lg"
                         :class="{
-                          'text-red-500': materials[material.key].length < material.length,
+                          'bg-white': item.cls.meta?.level === 1,
+                          'bg-blue-600': item.cls.meta?.level === 2,
+                          'bg-purple-700': item.cls.meta?.level === 3,
+                          'bg-yellow-600': item.cls.meta?.level === 4,
+                          'bg-fuchsia-500': item.cls.meta?.level === 5,
+                          'bg-red-500': item.cls.meta?.level === 6,
+                          '!bg-gray-700': !checkGettable(item),
                         }">
-                        {{
-                          i18n.t("NeedMaterialUnit", {
-                            key: i18n.t(material.key),
-                            length: material.length,
-                          })
-                        }}
-                      </span>
+                        <div
+                          v-if="gameStore.checkHasCollection(item.cls.meta.name)"
+                          class="weapon-sprites | w-[4cqw] aspect-square | rounded-lg border-black border-[0.2cqw]"
+                          :style="{ 'background-position': item.cls.meta.spritePosition }"></div>
+                        <div
+                          v-else
+                          class="w-[4cqw] aspect-square | rounded-lg border-black border-[0.2cqw] | flex items-center justify-center">
+                          <span class="gasoek-one-regular font-bold text-[2cqw]">?</span>
+                        </div>
+                      </div>
+
+                      <div class="flex flex-col gap-[0.2cqw]">
+                        <div class="flex items-center gap-[0.5cqw]">
+                          <span class="text-outline text-[1.5cqw] font-bold">
+                            Lv.{{ item.cls.meta.level }} <span v-t="item.cls.meta?.name"></span>
+                          </span>
+                          <span
+                            v-if="getNeedLevel(item)"
+                            class="text-[1.2cqw] | font-bold text-outline"
+                            :class="{
+                              'text-red-500': !checkHasLevel(item),
+                            }">
+                            ({{ getNeedLevel(item) }})
+                          </span>
+                        </div>
+                        <div class="flex | text-outline text-[1.3cqw] text-left font-bold">
+                          <div
+                            v-for="(material, index) in item.materials"
+                            :key="material.key"
+                            class="flex | whitespace-nowrap">
+                            <span v-if="index !== 0">&nbsp;+&nbsp;</span>
+                            <span
+                              :class="{
+                                'text-red-500': materials[material.key].length < material.length,
+                              }">
+                              {{
+                                i18n.t("NeedMaterialUnit", {
+                                  key: i18n.t(material.key),
+                                  length: material.length,
+                                })
+                              }}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </button>
+                  </template>
+                  <template #options>
+                    <div class="p-[0.5cqw] bg-white rounded-lg | flex gap-[0.5cqw]">
+                      <p
+                        v-t="'StepTutorial9'"
+                        class="text-[1.5cqw] whitespace-nowrap text-right font-bold text-black"></p>
+                      <button
+                        v-t="'Next'"
+                        class="relative z-[1] | rounded-lg bg-orange-600 border-[0.2cqw] border-black | px-[1cqw] | text-outline whitespace-nowrap text-white text-[1.2cqw] font-bold"
+                        @click="stepTutorial = 'gacha'"></button>
                     </div>
-                  </div>
-                </div>
-              </button>
+                  </template>
+                </UIDropdown>
+              </template>
             </div>
           </div>
           <button
@@ -188,6 +212,7 @@ import type { Gun } from "~/models/Gun"
 import { ButterKnife } from "~/models/Knife"
 import type { Materials } from "~/models/Material"
 import { Ring } from "~/models/Ring"
+import type { StepTutorial } from "~/models/UI"
 import type { NextInfo, Weapons } from "~/models/Weapon"
 
 const props = defineProps<{
@@ -201,6 +226,7 @@ const emit = defineEmits<{
 
 const selectedIndex = defineModel<number>("selectedIndex", { default: 0 })
 const isAllWeaponEffect = defineModel<boolean>("isAllWeaponEffect", { default: false })
+const stepTutorial = defineModel<StepTutorial>("stepTutorial")
 
 const i18n = useI18n()
 const { gtag } = useGtag()
@@ -305,6 +331,7 @@ const loadAllAttack = () => {
 
 onMounted(() => {
   minLevel = props.weapons.minLevel
+  if (stepTutorial.value === "weapon") stepTutorial.value = "weapon-select"
 })
 
 watch(selectedIndex, () => soundStore.play("select"))

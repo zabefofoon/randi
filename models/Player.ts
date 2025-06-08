@@ -121,11 +121,13 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       this.anims.play("work", true)
       this.setFlipX(false)
       moving = true
+      if (this.scene.data.get("stepTutorial") === "move") this.scene.events.emit("player-move")
     } else if (right) {
       this.setVelocityX(speed)
       this.anims.play("work", true)
       this.setFlipX(true)
       moving = true
+      if (this.scene.data.get("stepTutorial") === "move") this.scene.events.emit("player-move")
     } else {
       this.setVelocityX(0)
     }
@@ -134,10 +136,12 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       this.setVelocityY(-speed)
       this.anims.play("work", true)
       moving = true
+      if (this.scene.data.get("stepTutorial") === "move") this.scene.events.emit("player-move")
     } else if (down) {
       this.setVelocityY(speed)
       this.anims.play("work", true)
       moving = true
+      if (this.scene.data.get("stepTutorial") === "move") this.scene.events.emit("player-move")
     } else {
       this.setVelocityY(0)
     }

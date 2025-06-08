@@ -23,4 +23,21 @@ export interface PlayableMusic {
   name?: string
 }
 
-export type StepTutorial = "move" | "gacha" | "weapon" | "stat" | "skill" | "start"
+export type StepTutorial =
+  | "move"
+  | "kill"
+  | "stat"
+  | "stat-random"
+  | "stat-select"
+  | "gacha"
+  | "gacha-coin"
+  | "gacha-enforces"
+  | "gacha-enforce"
+  | "weapon"
+  | "weapon-select"
+  | "gacha-stat"
+  | "gacha-stat-do"
+  | "skill"
+  | "complete"
+  | "start"
+  | ""

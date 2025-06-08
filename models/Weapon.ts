@@ -191,7 +191,10 @@ export abstract class Weapon implements WeaponOptions {
 
       const ang = Phaser.Math.Angle.Between(bulletObj.x, bulletObj.y, target.x, target.y)
       const body = bulletObj.body as Phaser.Physics.Arcade.Body
-      body.setVelocity(Math.cos(ang) * this.speed, Math.sin(ang) * this.speed)
+      body.setVelocity(
+        Math.cos(ang) * (this.speed * window.speed),
+        Math.sin(ang) * (this.speed * window.speed)
+      )
 
       // 화면 밖 검사
       if (bulletObj.x < 0 || bulletObj.x > 960 || bulletObj.y < 0 || bulletObj.y > 540)
