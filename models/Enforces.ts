@@ -44,8 +44,10 @@ export class Enforces {
       this.additionalCooldown++
     }
 
-    if (found.length >= 10)
-      found.description = name === "physical" ? "EnforcePhysicalPercent" : "EnforceMagicalPercent"
+    if (found.length >= 10) {
+      if (name === "physical") found.description = "EnforcePhysicalPercent"
+      if (name === "magical") found.description = "EnforceMagicalPercent"
+    }
   }
 
   getExpense(enforce: EnforceItem) {
