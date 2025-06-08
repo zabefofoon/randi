@@ -888,6 +888,8 @@ onMounted(() => {
           loop: true,
           callback: mainTimerCallback,
         })
+
+        if (!gameStore.isShowStepTutorial) pause()
       },
       update(this: Phaser.Scene, time: number) {
         const scene = this as Phaser.Scene
