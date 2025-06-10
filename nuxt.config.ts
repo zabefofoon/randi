@@ -1,5 +1,18 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  pwa: {
+    strategies: "injectManifest",
+    srcDir: "public",
+    filename: "sw.js",
+
+    injectManifest: {
+      globPatterns: ["**/*.{js,css,html,png,svg,json,woff2,webp,ico,xml,mp3,gif}"],
+      // 👇 index.html을 강제로 포함 (해시가 없으므로 revision:null)
+      additionalManifestEntries: [{ url: "/randi/index.html", revision: null }],
+    },
+
+    registerType: "autoUpdate",
+  },
   runtimeConfig: {
     public: {
       adminId: import.meta.env.ADMIN_ID,
@@ -61,6 +74,7 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "@nuxt/fonts",
     "nuxt-gtag",
+    "@vite-pwa/nuxt",
   ],
   i18n: {
     strategy: "prefix_and_default",
@@ -117,6 +131,7 @@ export default defineNuxtConfig({
   //     publicDir: path.join(__dirname, "/docs"),
   //   },
   // },
+
   nitro: {
     preset: "netlify",
     compressPublicAssets: true,
