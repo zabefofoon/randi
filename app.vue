@@ -4,6 +4,17 @@
   <div
     v-if="!isLoaded"
     class="fixed top-0 left-0 | w-full h-full | bg-white z-[100]"></div>
+
+  <Transition name="fade">
+    <div
+      v-if="isShowReloadForUpdate"
+      class="fixed top-[5cqh] left-1/2 -translate-x-1/2 z-50">
+      <p
+        class="bg-blue-900/80 | text-white text-[15px] text-center | p-[0.5cqw] rounded-lg"
+        v-html="i18n.t('AppUpdate')"></p>
+    </div>
+  </Transition>
+
   <NuxtPage />
   <ClientOnly>
     <AppSnackbarContainer />
@@ -15,6 +26,8 @@ import { LOADING_APP } from "./const"
 
 const gameStore = useGameStore()
 const route = useRoute()
+const i18n = useI18n()
+
 const globalLoadingStore = useGlobalLoadingStore()
 const iphoneHistoryDetector = useIphoneHistoryDetector()
 
@@ -36,10 +49,11 @@ const initMode = () => {
 
 if (route.query.platform) globalLoadingStore.setGlobalCoverLoading(LOADING_APP)
 
+const isShowReloadForUpdate = ref(false)
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.addEventListener("controllerchange", () => {
-    // 새 SW가 컨트롤러가 되었음 → 페이지 갱신
-    window.location.reload()
+    isShowReloadForUpdate.value = true
+    etcUtil.sleep(2000).then(() => location.reload())
   })
 }
 
