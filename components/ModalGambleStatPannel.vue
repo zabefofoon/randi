@@ -122,7 +122,7 @@ const gacha = async () => {
 
   for (let i = 0; i < cardEls.value.length; i++) {
     const r = Math.random() // 0 이상 1 미만의 실수
-    const failProbability = stepTutorial.value === "gacha-stat-do" ? false : r < 0.8
+    const failProbability = stepTutorial.value === "gacha-stat-do" ? false : r < 0.85
     if (failProbability) results.value[i] = -1
     else results.value[i] = Math.floor(Math.random() * 8)
 
