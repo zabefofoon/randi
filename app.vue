@@ -36,6 +36,13 @@ const initMode = () => {
 
 if (route.query.platform) globalLoadingStore.setGlobalCoverLoading(LOADING_APP)
 
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    // 새 SW가 컨트롤러가 되었음 → 페이지 갱신
+    window.location.reload()
+  })
+}
+
 window.fromApp = (os: "android" | "ios") => {
   gameStore.setMode(os)
   isLoaded.value = true

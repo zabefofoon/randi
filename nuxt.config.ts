@@ -1,3 +1,5 @@
+const buildId = Date.now().toString()
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   pwa: {
@@ -8,7 +10,7 @@ export default defineNuxtConfig({
     injectManifest: {
       globPatterns: ["**/*.{js,css,html,png,svg,json,woff2,webp,ico,xml,mp3,gif}"],
       // 👇 index.html을 강제로 포함 (해시가 없으므로 revision:null)
-      additionalManifestEntries: [{ url: "/randi/index.html", revision: null }],
+      additionalManifestEntries: [{ url: "/randi/index.html", revision: buildId }],
     },
 
     registerType: "autoUpdate",
