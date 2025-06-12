@@ -5,16 +5,24 @@
       :weapon="isShowWeaponModal"
       @close="isShowWeaponModal = undefined"
       @select="selectNextWeapon" />
-
+    <div class="absolute right-[1cqw] top-[1cqw] | flex items-center">
+      <div
+        class="stat-sprites | w-[2.5cqw] aspect-square"
+        :style="{
+          backgroundPosition: etcUtil.getSpritePosition(11),
+        }"></div>
+      <span class="text-outline font-bold text-[1.5cqw] -mt-[0.2cqw]">
+        {{ stringUtil.attachComma(gameStore.currentMoney) }}
+      </span>
+    </div>
     <div class="flex gap-[1cqw] | relative z-[1] | w-3/4 h-4/5 overflow-hidden">
       <div
         class="w-full h-full | flex flex-col items-center gap-[1cqw] | p-[1cqw] | bg-blue-950 | rounded-lg border-black border-[0.2cqw]">
         <div
-          class="w-full h-full overflow-auto | grid grid-cols-7 gap-x-[1cqw] gap-y-[1.5cqw] items-start">
+          class="w-full h-full overflow-auto | grid grid-cols-7 gap-x-[1cqw] gap-y-[1.5cqw] items-start | p-[1cqw]">
           <figure
             v-for="weapon in weapons"
             :key="weapon.meta.name"
-            v-memo="[]"
             class="flex flex-col items-center justify-center">
             <template v-if="gameStore.checkHasCollection(weapon.meta.name)">
               <div
@@ -29,9 +37,17 @@
                 }"
                 @click="showWeaponModal(weapon)">
                 <div
-                  class="weapon-sprites | w-full aspect-square"
+                  class="weapon-sprites | relative | w-full aspect-square"
                   :style="{ 'background-position': weapon.meta.spritePosition }"
-                  @click="showWeaponModal(weapon)"></div>
+                  @click="showWeaponModal(weapon)">
+                  <div
+                    v-if="weapon.meta.enforce"
+                    class="absolute top-[0] right-[0] translate-x-1/2 -translate-y-1/2 z-[1] | flex items-center justify-center | bg-amber-500 | rounded-full border-[0.2cqw] border-black | w-[2.3cqw] aspect-square">
+                    <span class="text-[1.1cqw] font-bold text-outline">
+                      {{ weapon.meta.enforce }}
+                    </span>
+                  </div>
+                </div>
               </div>
               <figcaption
                 v-t="weapon.meta.name"
@@ -179,7 +195,7 @@ const emit = defineEmits<{
 }>()
 const gameStore = useGameStore()
 
-const weapons = shallowRef<(typeof Weapon)[]>([
+const weapons = ref<(typeof Weapon)[]>([
   Gun,
   ShotGun,
   DoubleGun,
@@ -281,7 +297,7 @@ const weapons = shallowRef<(typeof Weapon)[]>([
   Tattoo,
   FourLeafClover,
 ])
-
+const weaponKeys = ref<Record<(typeof Weapon)["meta"]["name"], number>>({})
 const isShowWeaponModal = ref<typeof Weapon>()
 const showWeaponModal = (weapon: typeof Weapon) => {
   isShowWeaponModal.value = weapon

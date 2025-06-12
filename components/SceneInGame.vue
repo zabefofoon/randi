@@ -905,10 +905,11 @@ onMounted(() => {
 
         // 플레이어가 정지상태 && 쿨다운 → 발사
         if (isRageMode.value ? true : player.isIdle) {
-          const allCooltimes = weapons.value!.weapons.reduce(
-            (acc, current) => acc + (current?.allCooltime ?? 0),
-            0
-          )
+          const allCooltimes = weapons.value!.weapons.reduce((acc, current) => {
+            const allCooltime = current?.allCooltime ?? 0
+            const enforcedAllCooltime = current?.enforcedAllCooltime ?? 0
+            return acc + allCooltime + enforcedAllCooltime
+          }, 0)
           weapons.value!.weapons.forEach((weapon, index) => {
             if (!weapon) return
 
@@ -925,7 +926,11 @@ onMounted(() => {
 
             if (isCooltime)
               etcUtil
-                .collectNearest(enemies.children, weapon.targetLength, (e) => e.distanceWithPlayer)
+                .collectNearest(
+                  enemies.children,
+                  weapon.targetLength + weapon.enforcedTargetLength,
+                  (e) => e.distanceWithPlayer
+                )
                 .forEach((enemy) => {
                   if (enemy.distanceWithPlayer && enemy.distanceWithPlayer <= weapon.range) {
                     weapon.fireHomingWeapon(weapons.value!, index, time, player, enemy)

@@ -3,6 +3,7 @@
     enable-dim-click-close
     hide-close-button
     inner-class="!max-w-[60cqw] | !bg-transparent"
+    content-wrap-class="!overflow-visible"
     @close="emit('close')">
     <template #content>
       <div class="flex items-center gap-[1cqw]">
@@ -23,7 +24,7 @@
                 'bg-red-400': weapon?.level === 6,
               }">
               <div
-                class="box-content border-[0.2cqw] | w-[5cqw] aspect-square | rounded-lg | grid place-content-center"
+                class="box-content | relative | border-[0.2cqw] | w-[5cqw] aspect-square | rounded-lg | grid place-content-center"
                 :class="{
                   'weapon-sprites': weapon,
                   'border-orange-500': selectedIndex === index,
@@ -32,9 +33,16 @@
                 :style="{ 'background-position': weapon?.spritePosition }">
                 <span
                   v-if="!weapon"
-                  class="font-bold text-[3cqw]"
-                  >?</span
-                >
+                  class="font-bold text-[3cqw]">
+                  ?
+                </span>
+                <div
+                  v-if="weapon?.enforce"
+                  class="absolute top-[0] right-[0] translate-x-1/2 -translate-y-1/2 z-[1] | flex items-center justify-center | bg-amber-500 | rounded-full border-[0.2cqw] border-black | w-[2.3cqw] aspect-square">
+                  <span class="text-[1.1cqw] text-white font-bold text-outline">
+                    {{ weapon.enforce }}
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -71,6 +79,11 @@
               }">
               <template v-if="selectedWeapon?.name">
                 Lv.{{ selectedWeapon.level }} <span v-t="selectedWeapon.name"></span>
+                <span
+                  v-if="selectedWeapon.enforce"
+                  class="text-amber-500 text-[1.5cqw]">
+                  &nbsp;(+ {{ selectedWeapon.enforce }})
+                </span>
               </template>
               <template v-else>????</template>
             </h2>
