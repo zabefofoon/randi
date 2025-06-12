@@ -1334,7 +1334,7 @@ const rewords = computed(() => ({
         .filter((weapon): weapon is Weapon => !!weapon)
         .reduce((acc, current) => acc + current.level * 15, 0) ?? 0
     : 0,
-  coins: round.value ? coins.value : 0,
+  coins: round.value ? Math.ceil(coins.value / 3) : 0,
   enforces: round.value
     ? enforces.value?.items.reduce((acc, current) => acc + current.length, 0) ?? 0
     : 0,
