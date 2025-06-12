@@ -36,13 +36,20 @@
           <div class="flex flex-col gap-[0.5cqw]">
             <p class="text-outline text-[1.8cqw] font-bold">
               Lv.{{ weapon.meta.level }} <span v-t="weapon.meta.name"></span>
+              <span
+                v-if="weapon.meta.enforce"
+                class="text-amber-500 text-[1.5cqw]">
+                (+ {{ weapon.meta.enforce }})
+              </span>
             </p>
             <p
               v-t="weapon.meta.description"
               class="text-outline text-[1.5cqw] font-bold"></p>
           </div>
         </figure>
-        <WeaponCharacteristic :weapon="weapon.meta" />
+        <WeaponCharacteristic
+          :key="weapon.meta.enforce"
+          :weapon="weapon.meta" />
         <div class="flex flex-col gap-[0.5cqw] | mt-[1cqw]">
           <button
             v-for="next in weaponInstance?.nexts"
@@ -81,7 +88,11 @@
                   v-t="next.cls.meta.description"
                   class="text-[1.3cqw]"></span>
               </div>
-              <span v-else> ???? </span>
+              <span
+                v-else
+                class="text-[1.3cqw]">
+                ????
+              </span>
             </div>
           </button>
         </div>
@@ -133,7 +144,6 @@ const emit = defineEmits<{
 
 const gameStore = useGameStore()
 const soundStore = useSoundStore()
-
 const weaponInstance = ref<Gun>()
 const weaponThumbnailEl = ref<HTMLDivElement>()
 
