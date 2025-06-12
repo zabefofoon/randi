@@ -182,6 +182,70 @@ export abstract class Weapon implements WeaponOptions {
     Object.assign(this, weapon)
   }
 
+  checkIsCooltime(time: number, cooldown: number) {
+    return (
+      time >
+      this.lastAttackTime +
+        Math.max(200, this.cooltime - (this.cooltime * cooldown) / 100) / window.speed
+    )
+  }
+
+  fireHomingWeapon(
+    weapons: Weapons,
+    weaponIndex: number,
+    currentTime: number,
+    player: Player,
+    enemy: Enemy
+  ) {
+    this.lastAttackTime = currentTime
+
+    const bullet1 = weapons.bulletPool.getFirstDead(false)
+    if (!bullet1) return
+
+    bullet1.enableBody(true, player.x, player.y, true, true)
+
+    bullet1.weapon = weapons.weapons[weaponIndex]!
+    bullet1.target = enemy
+
+    if (!bullet1.body) return
+    const dx = enemy.x - player.x
+    const dy = enemy.y - player.y
+    const len = Math.hypot(dx, dy) || 1
+    const vx = (dx / len) * this.speed * window.speed
+    const vy = (dy / len) * this.speed * window.speed
+    bullet1.body.setVelocity(vx, vy)
+  }
+
+  followEnemy(weapons: Weapons) {
+    const children = weapons.bulletPool.getChildren()
+    for (const bullet of children) {
+      const bulletObj = bullet as Phaser.Physics.Arcade.Image
+      if (!bulletObj.active) return // false 대신 void
+
+      const target = bulletObj.target as Enemy
+      if (!target || !target.active) {
+        bulletObj.disableBody(true, true)
+        return
+      }
+
+      const ang = Phaser.Math.Angle.Between(bulletObj.x, bulletObj.y, target.x, target.y)
+      const body = bulletObj.body as Phaser.Physics.Arcade.Body
+      body.setVelocity(
+        Math.cos(ang) * (this.speed * window.speed),
+        Math.sin(ang) * (this.speed * window.speed)
+      )
+
+      // 화면 밖 검사
+      if (bulletObj.x < 0 || bulletObj.x > 960 || bulletObj.y < 0 || bulletObj.y > 540)
+        bulletObj.disableBody(true, true)
+    }
+  }
+
+  setIndex(index: number) {
+    this.index = index
+    return this
+  }
+
   static setEnforce(value: number) {
     this.meta.enforce = value
 
