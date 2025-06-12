@@ -210,7 +210,8 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     let hp = 0
     if (this.isBoss) {
-      hp = this.increaseHP(this.round) * 4
+      const additional = [1, 1, 3, 5, 10, 15][this.round / 10 - 1]
+      hp = this.increaseHP(this.round) * 4 * additional
     } else if (this.isThunder || this.isRage || this.isBlackhole || this.isCannon) {
       hp = this.increaseHP(this.round) * 3
     } else {
@@ -313,7 +314,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     const _round = round - 1
     const roundGroup = Math.ceil(_round / 10)
     const roundBaseMultiplies = [1, 1.5, 2, 3.5, 4, 5, 6]
-    const roundMultiplies = [1, 1, 1.1, 1.25, 1.5, 4, 8, 10]
+    const roundMultiplies = [1, 1, 1.1, 1.25, 1.5, 4, 15, 30]
     const result = (Math.pow(_round * 2, 2) + 10) * roundBaseMultiplies[Math.floor(_round / 10)]
     return Math.ceil(result * (roundMultiplies?.[roundGroup] ?? 1))
   }

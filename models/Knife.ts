@@ -780,8 +780,8 @@ export class CrowBar extends Weapon {
     allCooltime: 0,
     index: 1,
     spritePosition: etcUtil.getWeaponSpritePosition(1, 12),
-    criticalChance: 0,
-    criticalDamage: 0,
+    criticalChance: 0.15,
+    criticalDamage: 2,
     dotted: 0,
     armerBreak: 0,
   }
