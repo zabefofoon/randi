@@ -153,7 +153,10 @@ const enforceWeapon = (weapon: typeof Weapon) => {
 
   if (!weaponThumbnailEl.value) return
 
-  const successProbability = (10 - Math.floor(Math.ceil(weapon.meta.enforce ?? 0) / 10)) / 10
+  const successProbability = Math.min(
+    0.5,
+    (10 - Math.floor(Math.ceil(weapon.meta.enforce ?? 0) / 10)) / 10
+  )
   if (Math.random() < successProbability) {
     const enforced = weapon.meta.enforce ?? 0
     weapon.setEnforce(enforced + 1)
