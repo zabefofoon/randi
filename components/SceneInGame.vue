@@ -489,6 +489,18 @@ let mainTimerEvent: Phaser.Time.TimerEvent
 
 const remainnedLife = ref(5)
 
+type Key = "gun" | "knife" | "book" | "ring"
+
+const pools: Record<Key, Phaser.Sound.WebAudioSound[]> = {
+  gun: [],
+  knife: [],
+  book: [],
+  ring: [],
+}
+const nextIdx: Record<Key, number> = { gun: 0, knife: 0, book: 0, ring: 0 }
+
+const playedThisFrame = new Set<Key>()
+
 onMounted(() => {
   if (!phaserContainer.value) return
   window.speed = 1.1
@@ -623,9 +635,18 @@ onMounted(() => {
         scene.load.once("complete", () => {
           isGameReady.value = true
         })
+
+        scene.load.audio("gun", [`${useAssetBase()}assets/sounds/gun.mp3`])
+        scene.load.audio("knife", [`${useAssetBase()}assets/sounds/knife.mp3`])
+        scene.load.audio("book", [`${useAssetBase()}assets/sounds/book.mp3`])
+        scene.load.audio("ring", [`${useAssetBase()}assets/sounds/ring.mp3`])
       },
       create(this: Phaser.Scene) {
         scene = this as Phaser.Scene & { dmgPool: Phaser.GameObjects.Group }
+        scene.sound.pauseOnBlur = false
+
+        if (soundStore.useEffectSound) scene.sound.setVolume(1)
+        else scene.sound.setVolume(0)
 
         scene.keys = scene.input.keyboard?.addKeys({
           up: Phaser.Input.Keyboard.KeyCodes.W,
@@ -888,41 +909,54 @@ onMounted(() => {
         })
 
         if (!gameStore.isShowStepTutorial) pause()
+
+        function preparePool(key: Key, size = 8) {
+          for (let i = 0; i < size; i++) pools[key].push(scene.sound.add(key))
+        }
+        preparePool("gun", 8)
+        preparePool("knife", 8)
+        preparePool("book", 8)
+        preparePool("ring", 8)
+
+        scene.events.on("postupdate", () => playedThisFrame.clear())
       },
       update(this: Phaser.Scene, time: number) {
         const scene = this as Phaser.Scene
         if (scene.data.get("paused")) return
         player.handlePlayerMovement(cursors, scene.keys)
+        const weaponList = weapons.value!.weapons
+
+        const f = scene.game.loop.frame
 
         enemies.updateDistances(player.x, player.y)
         enemies.children.forEach((enemy) => {
-          enemy.moveEnemyAlongPath(weapons.value!.weapons, materials.value)
-          enemy.applyDecrease(weapons.value!.weapons)
-          enemy.updateHpBarPos()
+          if ((f & 1) === 0) enemy.updateHpBarPos()
+
+          enemy.moveEnemyAlongPath(weaponList, materials.value)
+          enemy.applyDecrease(weaponList)
         })
 
         // 플레이어가 정지상태 && 쿨다운 → 발사
-        if (isRageMode.value ? true : player.isIdle) {
-          const allCooltimes = weapons.value!.weapons.reduce((acc, current) => {
+        if (isRageMode.value || player.isIdle) {
+          const allCooltimes = weaponList.reduce((acc, current) => {
             const allCooltime = current?.allCooltime ?? 0
             const enforcedAllCooltime = current?.enforcedAllCooltime ?? 0
             return acc + allCooltime + enforcedAllCooltime
           }, 0)
-          weapons.value!.weapons.forEach((weapon, index) => {
+
+          const baseCooldownFactor = Math.min(
+            99,
+            (materials.value.calculateStat("agi") +
+              allCooltimes +
+              enforces.value!.additionalCooldown / 100) *
+              100
+          )
+          const cooldown = isRageMode.value ? 99 : baseCooldownFactor
+
+          weaponList.forEach((weapon, index) => {
             if (!weapon) return
 
-            const cooldown = isRageMode.value
-              ? 99
-              : Math.min(
-                  99,
-                  (materials.value.calculateStat("agi") +
-                    allCooltimes +
-                    enforces.value!.additionalCooldown / 100) *
-                    100
-                )
-            const isCooltime = weapon.checkIsCooltime(time, cooldown)
-
-            if (isCooltime)
+            if (weapon.checkIsCooltime(time, cooldown))
               etcUtil
                 .collectNearest(
                   enemies.children,
@@ -951,11 +985,9 @@ onMounted(() => {
                           .setRotation(angleRad + Phaser.Math.DegToRad(0))
                           .setPosition(player.x + offsetX, player.y + offsetY)
                           .play("gun-animation")
-                          .once("animationcomplete-gun-animation", () => {
-                            player.gun.setFrame(0)
-                          })
+                          .once("animationcomplete-gun-animation", () => player.gun.setFrame(0))
 
-                        soundStore.play("gun")
+                        playSfx("gun")
                       }
                     }
                     if (index === 1) {
@@ -976,10 +1008,9 @@ onMounted(() => {
                           .setRotation(angleRad + Phaser.Math.DegToRad(0))
                           .setPosition(player.x + offsetX, player.y + offsetY)
                           .play("knife-animation")
-                          .once("animationcomplete-knife-animation", () => {
-                            player.knife.setFrame(0)
-                          })
-                        soundStore.play("knife")
+                          .once("animationcomplete-knife-animation", () => player.knife.setFrame(0))
+
+                        playSfx("knife")
                       }
                     }
 
@@ -988,12 +1019,10 @@ onMounted(() => {
                         player.book
                           .setTint(etcUtil.getLevelColorHex(weapon.level))
                           .play("book-animation")
-                          .once("animationcomplete-book-animation", () => {
-                            player.book.setFrame(0)
-                          })
+                          .once("animationcomplete-book-animation", () => player.book.setFrame(0))
                       }
 
-                      soundStore.play("book")
+                      playSfx("book")
                     }
 
                     if (index === 3) {
@@ -1001,22 +1030,16 @@ onMounted(() => {
                         player.ring
                           .setTint(etcUtil.getLevelColorHex(weapon.level))
                           .play("ring-animation")
-                          .once("animationcomplete-ring-animation", () => {
-                            player.ring.setFrame(0)
-                          })
+                          .once("animationcomplete-ring-animation", () => player.ring.setFrame(0))
                       }
 
-                      soundStore.play("ring")
+                      playSfx("ring")
                     }
                   }
                 })
+            if ((f & 1) === 0) weapon.followEnemy(weapons.value!)
           })
         }
-
-        weapons.value!.weapons.forEach((weapon) => {
-          if (!weapon) return
-          weapon.followEnemy(weapons.value!)
-        })
       },
     },
   })
@@ -1049,7 +1072,7 @@ const allAttack = async () => {
 
     if (targets.length) {
       if (i === 0) {
-        soundStore.play("gun")
+        playSfx("gun")
 
         player.gun
           .setPosition(player.x + 20, player.y)
@@ -1060,7 +1083,7 @@ const allAttack = async () => {
       }
 
       if (i === 1) {
-        soundStore.play("knife")
+        playSfx("knife")
 
         player.knife
           .setPosition(player.x + 20, player.y)
@@ -1070,8 +1093,7 @@ const allAttack = async () => {
           })
       }
       if (i === 2) {
-        soundStore.play("book")
-
+        playSfx("book")
         player.book
           .setPosition(player.x, player.y)
           .play("book-animation")
@@ -1080,8 +1102,7 @@ const allAttack = async () => {
           })
       }
       if (i === 3) {
-        soundStore.play("ring")
-
+        playSfx("ring")
         player.ring
           .setPosition(player.x, player.y)
           .play("ring-animation")
@@ -1285,6 +1306,26 @@ onBeforeUnmount(() => {
   if (game) game.destroy(true)
 })
 
+function playSfx(key: Key, volume = 1) {
+  if (playedThisFrame.has(key)) return
+
+  const list = pools[key]
+  let idx = nextIdx[key]
+
+  for (let i = 0; i < list.length; i++) {
+    const snd = list[idx]
+    idx = (idx + 1) % list.length
+
+    if (!snd.isPlaying) {
+      snd.setVolume(volume)
+      snd.play()
+      nextIdx[key] = idx
+      playedThisFrame.add(key)
+      break
+    }
+  }
+}
+
 watch(activeJoystick, (value) => {
   cursors.up.isDown = false
   cursors.left.isDown = false
@@ -1418,4 +1459,12 @@ watch(stepTutorial, (value) => {
     })
   }
 })
+
+watch(
+  () => soundStore.useEffectSound,
+  (value) => {
+    if (value) scene.sound.setVolume(1)
+    else scene.sound.setVolume(0)
+  }
+)
 </script>
