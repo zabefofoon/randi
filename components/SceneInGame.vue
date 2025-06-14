@@ -441,8 +441,6 @@ const showGamblePopup = (value: boolean) => {
 }
 const isShowConfigPopup = ref(false)
 const showConfigPopup = (value: boolean) => {
-  if (stepTutorial.value) return
-
   isShowConfigPopup.value = value
   if (value) soundStore.play("select")
 }
