@@ -416,6 +416,8 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   }
 
   showDamageText(damageValue: number, weapon: Weapon, isCritical: boolean) {
+    if (window.showDamage === false) return
+
     const tintColors = [0xffffff, 0x2563eb, 0x9333ea, 0xeab308, 0xe879f9, 0xf87171]
 
     const text = this.scene.dmgPool.getFirstDead(false) as Phaser.GameObjects.BitmapText

@@ -116,6 +116,7 @@ import {
   LOCAL_ENFORCE_WEAPONS,
   LOCAL_ITEMS,
   LOCAL_MONEY,
+  LOCAL_SHOW_DAMAGE,
   STEP_TUTORIAL,
 } from "~/const"
 import {
@@ -384,6 +385,13 @@ export const useGameStore = defineStore("gameStore", () => {
     store.set(LOCAL_ENFORCE_WEAPONS, encrypted(JSON.stringify(enforceWeapons)))
   }
 
+  const useShowDamage = ref(store.get(LOCAL_SHOW_DAMAGE) ?? true)
+  const toggleDamage = () => {
+    useShowDamage.value = !useShowDamage.value
+    store.set(LOCAL_SHOW_DAMAGE, useShowDamage.value)
+    window.showDamage = useShowDamage.value
+  }
+
   return {
     mode,
     setMode,
@@ -425,5 +433,8 @@ export const useGameStore = defineStore("gameStore", () => {
 
     initWeaponEnforce,
     increaseEnforceWeapon,
+
+    useShowDamage,
+    toggleDamage,
   }
 })

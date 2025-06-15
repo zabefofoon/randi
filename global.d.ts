@@ -1,5 +1,6 @@
 declare global {
   interface Window {
+    showDamage: boolean
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     appChannel: any
     fromApp: (os: "android" | "ios") => void

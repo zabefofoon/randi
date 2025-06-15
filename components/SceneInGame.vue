@@ -46,6 +46,25 @@
       v-if="isShowConfigPopup"
       @close="showConfigPopup(false)">
       <div class="w-full | border-t border-gray-900 border-[1px] | my-[1cqw]"></div>
+      <div class="flex gap-[5cqw] mb-[0.5cqw] | w-full">
+        <span class="text-outline text-[1.7cqw] font-bold">OPTIMIZE</span>
+      </div>
+      <div class="flex justify-between gap-[5cqw]">
+        <span class="text-outline text-[1.7cqw] font-bold">DAMAGE</span>
+        <button
+          class="grid place-items-center | relative | px-[2cqw] py-[0.5cqw] | border-black border-[0.21cqw] rounded-lg | leading-none"
+          :class="{
+            'bg-amber-500': gameStore.useShowDamage,
+            'bg-blue-900': !gameStore.useShowDamage,
+          }"
+          @click="gameStore.toggleDamage()">
+          <span class="text-outline text-[1.7cqw] font-bold | min-w-[5cqw]">
+            <template v-if="gameStore.useShowDamage">ON</template>
+            <template v-else>OFF</template>
+          </span>
+        </button>
+      </div>
+      <div class="w-full | border-t border-gray-900 border-[1px] | my-[1cqw]"></div>
       <div class="w-full | flex flex-col gap-[0.5cqw]">
         <button
           class="grid place-items-center | relative bg-orange-700 | px-[2cqw] py-[0.5cqw] | border-black border-[0.21cqw] rounded-lg | leading-none"
@@ -368,7 +387,8 @@
 </template>
 
 <script lang="ts" setup>
-import { BLACKHOLE_ROUND, CANNON_ROUND, RAGE_ROUND, THUNDER_COOLTIME, THUNDER_ROUND } from "~/const"
+import store from "store2"
+import { BLACKHOLE_ROUND, CANNON_ROUND, LOCAL_SHOW_DAMAGE, RAGE_ROUND, THUNDER_COOLTIME, THUNDER_ROUND } from "~/const"
 import { BeforeBeam, DogeBeam } from "~/models/Beam"
 import { Enemies } from "~/models/Enemies"
 import { Enforces } from "~/models/Enforces"
@@ -639,6 +659,7 @@ onMounted(() => {
         scene.load.audio("ring", [`${useAssetBase()}assets/sounds/ring.mp3`])
       },
       create(this: Phaser.Scene) {
+        window.showDamage = store.get(LOCAL_SHOW_DAMAGE) ?? true
         scene = this as Phaser.Scene & { dmgPool: Phaser.GameObjects.Group }
         scene.sound.pauseOnBlur = false
 
@@ -926,10 +947,11 @@ onMounted(() => {
         const weaponList = weapons.value!.weapons
 
         const f = scene.game.loop.frame
+        const isMobile = window.innerWidth < 720
 
         enemies.updateDistances(player.x, player.y)
         enemies.children.forEach((enemy) => {
-          if ((f & 1) === 0) enemy.updateHpBarPos()
+          if (!isMobile || (f & 1) === 0) enemy.updateHpBarPos()
 
           enemy.moveEnemyAlongPath(weaponList, materials.value)
           enemy.applyDecrease(weaponList)
