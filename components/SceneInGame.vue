@@ -474,10 +474,7 @@ let scene: Phaser.Scene & { dmgPool: Phaser.GameObjects.Group }
 let isBossRemained = false
 let isClear = false
 
-let layer1: Phaser.Tilemaps.TilemapLayer | undefined
-let layer2: Phaser.Tilemaps.TilemapLayer | undefined
-let layer3: Phaser.Tilemaps.TilemapLayer | undefined
-
+let bakedBg: Phaser.GameObjects.Image
 const isTouchDevice =
   "ontouchstart" in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0
 
@@ -584,7 +581,7 @@ onMounted(() => {
 
         scene.load.image("tiles", `${useAssetBase()}assets/images/mainlevbuild2.png`)
         scene.load.image("laser-beam", `${useAssetBase()}assets/images/laser_beam.png`)
-        scene.load.tilemapTiledJSON("map", `${useAssetBase()}assets/jsons/map.json`)
+        scene.load.tilemapTiledJSON("map", `${useAssetBase()}assets/jsons/map2.json`)
 
         if (gameStore.checkCharacter(gameStore.selectedCharacter)) {
           scene.load.spritesheet(
@@ -681,9 +678,19 @@ onMounted(() => {
         const map = scene.make.tilemap({ key: "map" })
         const tileset = map.addTilesetImage("mainlevbuild2", "tiles")
         if (tileset) {
-          layer1 = map.createLayer("layer1", tileset, 0, 0) ?? undefined
-          layer2 = map.createLayer("layer2", tileset, 0, 0) ?? undefined
-          layer3 = map.createLayer("layer3", tileset, 0, 0) ?? undefined
+          const rt = this.make.renderTexture({
+            width: 960,
+            height: 540,
+          })
+
+          const layer1 = map.createLayer("layer1", tileset, 0, 0) ?? undefined
+          if (layer1) {
+            rt.draw(layer1)
+            layer1.destroy()
+          }
+
+          rt.saveTexture("bakedBG")
+          bakedBg = this.add.image(0, 0, "bakedBG").setOrigin(0)
         }
 
         cursors = scene.input.keyboard!.createCursorKeys()
@@ -817,18 +824,14 @@ onMounted(() => {
             scene.cameras.main.shake(100, 0.01)
 
             soundStore.play("thunder")
-            layer1?.setTint(etcUtil.softTint(0x00ff00, 0.7))
-            layer2?.setTint(etcUtil.softTint(0x00ff00, 0.7))
-            layer3?.setTint(etcUtil.softTint(0x00ff00, 0.7))
+            bakedBg?.setTint(etcUtil.softTint(0x00ff00, 0.7))
             player.isRage = true
             scene.time.delayedCall(5000, () => {
               isRageMode.value = false
               player.isRage = false
               isSkilling.value = false
               const ceiled = Math.max(1, Math.ceil(round.value / 10))
-              layer1?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))
-              layer2?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))
-              layer3?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))
+              bakedBg?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))
             })
           })
         })
@@ -854,9 +857,7 @@ onMounted(() => {
 
             soundStore.play("thunder")
 
-            layer1?.setTint(etcUtil.softTint(0x000000, 0.8))
-            layer2?.setTint(etcUtil.softTint(0x000000, 0.8))
-            layer3?.setTint(etcUtil.softTint(0x000000, 0.8))
+            bakedBg?.setTint(etcUtil.softTint(0x000000, 0.8))
             const eldenSprite = scene.add
               .sprite(150, 110, "elden-sprite")
               .setTint(0x8403fc)
@@ -864,9 +865,7 @@ onMounted(() => {
 
             scene.time.delayedCall(2000, () => {
               const ceiled = Math.max(1, Math.ceil(round.value / 10))
-              layer1?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))
-              layer2?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))
-              layer3?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))
+              bakedBg?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))
               enemies.removeBlackhole()
               eldenSprite.destroy()
               isSkilling.value = false
@@ -1436,9 +1435,7 @@ watch(
     if (isRageMode.value) return
 
     const ceiled = Math.max(1, Math.ceil(round / 10))
-    layer1?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))
-    layer2?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))
-    layer3?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))
+    bakedBg?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))
   },
   { immediate: true }
 )
