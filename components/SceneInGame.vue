@@ -680,11 +680,11 @@ onMounted(() => {
 
         const map = scene.make.tilemap({ key: "map" })
         const tileset = map.addTilesetImage("mainlevbuild2", "tiles")
-        const tileset2 = map.addTilesetImage("mainlevbuild2", "tiles")
-        const tileset3 = map.addTilesetImage("mainlevbuild2", "tiles")
-        if (tileset) layer1 = map.createLayer("layer1", tileset, 0, 0) ?? undefined
-        if (tileset2) layer2 = map.createLayer("layer2", tileset2, 0, 0) ?? undefined
-        if (tileset3) layer3 = map.createLayer("layer3", tileset3, 0, 0) ?? undefined
+        if (tileset) {
+          layer1 = map.createLayer("layer1", tileset, 0, 0) ?? undefined
+          layer2 = map.createLayer("layer2", tileset, 0, 0) ?? undefined
+          layer3 = map.createLayer("layer3", tileset, 0, 0) ?? undefined
+        }
 
         cursors = scene.input.keyboard!.createCursorKeys()
 

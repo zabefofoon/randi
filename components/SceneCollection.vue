@@ -297,7 +297,7 @@ const weapons = ref<(typeof Weapon)[]>([
   Tattoo,
   FourLeafClover,
 ])
-const weaponKeys = ref<Record<(typeof Weapon)["meta"]["name"], number>>({})
+
 const isShowWeaponModal = ref<typeof Weapon>()
 const showWeaponModal = (weapon: typeof Weapon) => {
   isShowWeaponModal.value = weapon
