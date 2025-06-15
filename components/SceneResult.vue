@@ -148,6 +148,14 @@
               class="block | text-[1.8cqw] font-bold text-outline"></span>
           </button>
           <button
+            v-else-if="gameStore.mode === 'android'"
+            class="w-full max-w-[33%] | px-[1cqw] py-[0.2cqw] | border-[0.2cqw] border-black rounded-full | bg-orange-700 | flex justify-center items-center"
+            @click="postReview">
+            <span
+              v-t="'Review'"
+              class="block | text-[1.8cqw] font-bold text-outline"></span>
+          </button>
+          <button
             v-else
             class="w-full max-w-[33%] | px-[1cqw] py-[0.2cqw] | border-[0.2cqw] border-black rounded-full | bg-orange-700"
             @click="emit('next', 'lobby')">
@@ -246,6 +254,13 @@ window.grantAdBonus = () => {
 
   isShownAds.value = true
 }
+
+const postReview = () =>
+  window.appChannel?.postMessage(
+    JSON.stringify({
+      type: "review",
+    })
+  )
 
 onMounted(async () => {
   const clearReward = gameStore.rewords.isClear
