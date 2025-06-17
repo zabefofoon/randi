@@ -213,6 +213,14 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   private hpBarFill!: Phaser.GameObjects.Rectangle
   private readonly hpBarOffset = { x: -16, y: -26 }
 
+  private activeDotsMap: Map<
+    string,
+    {
+      weaponId: string
+      timer: Phaser.Time.TimerEvent
+    }
+  > = new Map()
+
   constructor(
     scene: Phaser.Scene & { dmgPool: Phaser.GameObjects.Group },
     x: number,
@@ -653,14 +661,17 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     const ticks = Math.ceil(duration / tick)
     const dmgPerTick = Math.ceil(totalDamage / ticks)
 
+    // 이미 Dot이 걸려 있다면 제거
+    const existing = this.activeDotsMap.get(weaponData.name)
+    if (existing) existing.timer.remove()
+
     const timer = this.scene.time.addEvent({
       delay: tick,
       repeat: ticks - 1,
       callback: () => this.takeDotDamage(weaponData, dmgPerTick, timer),
-      callbackScope: this,
     })
 
-    this.activeDots.push(timer)
+    this.activeDotsMap.set(weaponData.name, { weaponId: weaponData.name, timer })
   }
 
   takeDotDamage(weaponData: Weapon, amount: number, event: Phaser.Time.TimerEvent) {
@@ -669,9 +680,8 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     const hp = this.getData("hp") as number
 
     this.setData("hp", hp - amount)
-    this.showDamageText(amount, weaponData)
-    if (event.getRepeatCount() === 0)
-      this.activeDots = this.activeDots.filter((t) => t.repeatCount !== 0)
+    this.showDamageText(amount, weaponData, false)
+    if (event.getRepeatCount() === 0) this.activeDotsMap.delete(weaponData.name)
 
     if (this.getData("hp") <= 0) this.die()
   }
