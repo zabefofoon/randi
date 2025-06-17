@@ -112,7 +112,6 @@ export class Weapons {
 
     enemy.takeDamage(weaponData, this.materials, this.enforces)
 
-    this.enemies.applyStunMany(enemy, bullet, this.materials)
     this.enemies.applySplashDamage(enemy, bullet, this.materials, this.enforces)
     enemy.applyStunOne(weaponData, this.materials)
 

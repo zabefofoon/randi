@@ -388,7 +388,14 @@
 
 <script lang="ts" setup>
 import store from "store2"
-import { BLACKHOLE_ROUND, CANNON_ROUND, LOCAL_SHOW_DAMAGE, RAGE_ROUND, THUNDER_COOLTIME, THUNDER_ROUND } from "~/const"
+import {
+BLACKHOLE_ROUND,
+CANNON_ROUND,
+LOCAL_SHOW_DAMAGE,
+RAGE_ROUND,
+THUNDER_COOLTIME,
+THUNDER_ROUND,
+} from "~/const"
 import { BeforeBeam, DogeBeam } from "~/models/Beam"
 import { Enemies } from "~/models/Enemies"
 import { Enforces } from "~/models/Enforces"
@@ -1328,6 +1335,7 @@ onBeforeUnmount(() => {
 })
 
 function playSfx(key: Key, volume = 1) {
+  if (!soundStore.useEffectSound) return
   if (playedThisFrame.has(key)) return
 
   const list = pools[key]

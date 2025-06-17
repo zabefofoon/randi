@@ -12,6 +12,7 @@ export class Enemies {
   pathes: { x: number; y: number }[]
   baseSpeed: number
 
+  private splashZonePool: Phaser.GameObjects.Group
   constructor(
     scene: Phaser.Scene,
     private selectedCharacter: typeof Character | PurchaseCharacter
@@ -21,6 +22,23 @@ export class Enemies {
 
     const gameWidth = scene.scale.width
     const gameHeight = scene.scale.height
+
+    this.splashZonePool = this.scene.add.group({
+      classType: Phaser.GameObjects.Zone,
+      maxSize: 80,
+      runChildUpdate: false,
+    })
+
+    for (let i = 0; i < 50; i++) {
+      const zone = this.scene.add.zone(0, 0, 1, 1)
+      this.scene.physics.add.existing(zone)
+      const body = zone.body as Phaser.Physics.Arcade.Body
+      body.setAllowGravity(false)
+      body.setEnable(false)
+
+      zone.setActive(false).setVisible(false)
+      this.splashZonePool.add(zone)
+    }
 
     this.pathes = [
       { x: gameWidth * 0.15, y: gameHeight * 0.18 },
@@ -34,6 +52,12 @@ export class Enemies {
   }
   get children() {
     return this.group.getChildren() as Enemy[]
+  }
+
+  private getSplashZone(): Phaser.GameObjects.Zone {
+    const zone = this.splashZonePool.getFirstDead(false) as Phaser.GameObjects.Zone
+    if (!zone) return this.scene.add.zone(0, 0, 1, 1)
+    return zone
   }
 
   applyBlackhole(materials: Materials, enforces: Enforces) {
@@ -125,50 +149,48 @@ export class Enemies {
     enforces: Enforces
   ) {
     const weapon = bullet.weapon as Weapon
-
-    const r = weapon.splash + weapon.enforcedSplash + materials.calculateStat("vit")
-    const rSq = r * r
+    const vit = materials.calculateStat("vit")
+    const radius = weapon.splash + weapon.enforcedSplash + vit
     const splashId = ++this.scene.data.values.splashSeq
 
-    for (const enemy of this.children) {
-      if (!enemy.active || enemy === source) continue
+    const zone = this.getSplashZone()
+    zone.setPosition(source.x - source.width / 2, source.y - source.height / 2)
+    zone.setSize(radius, radius)
+    zone.setActive(true)
 
-      const dx = enemy.x - bullet.x
-      const dy = enemy.y - bullet.y
-      if (dx * dx + dy * dy > rSq) continue
+    const body = zone.body as Phaser.Physics.Arcade.Body
+    body.setEnable(true)
+    body.setCircle(radius)
 
-      if (enemy.lastSplashId !== splashId) {
-        enemy.lastSplashId = splashId
-        enemy.takeDamage(weapon, materials, enforces, Math.sqrt(dx * dx + dy * dy))
-      }
-    }
-  }
+    const overlapCollider = this.scene.physics.add.overlap(zone, this.group, (zone, enemy) => {
+      const e = enemy as Enemy
+      if (!e.active) return
+      if (e.lastSplashId === splashId) return
 
-  applyStunMany(source: Enemy, bullet: Phaser.Physics.Arcade.Image, materials: Materials) {
-    const weaponData = bullet.weapon
+      e.remainedStuns[weapon.index] = Math.min(
+        weapon.stunMany + weapon.enforcedStunMany,
+        source.remainedStuns[weapon.index] + weapon.stunMany + weapon.enforcedStunMany
+      )
 
-    const r = weaponData.splash + weaponData.enforcedSplash + materials.calculateStat("vit")
-    const rSq = r * r
-    const splashId = ++this.scene.data.values.splashSeq
+      if (e === source) return
 
-    source.remainedStuns[weaponData.index] = Math.min(
-      weaponData.stunMany + weaponData.enforcedStunMany,
-      source.remainedStuns[weaponData.index] + weaponData.stunMany + weaponData.enforcedStunMany
-    )
+      e.lastSplashId = splashId
 
-    for (const enemy of this.children) {
-      if (!enemy.active || enemy === source) continue
+      const dist = Phaser.Math.Distance.Between(
+        e.x,
+        e.y,
+        source.x - source.width / 2,
+        source.y - source.height / 2
+      )
+      e.takeDamage(weapon, materials, enforces, dist)
+    })
 
-      const dx = enemy.x - bullet.x
-      const dy = enemy.y - bullet.y
-      if (dx * dx + dy * dy > rSq) continue
-
-      if (enemy.lastSplashId !== splashId)
-        enemy.remainedStuns[weaponData.index] = Math.min(
-          weaponData.stunMany + weaponData.enforcedStunMany,
-          source.remainedStuns[weaponData.index] + weaponData.stunMany + weaponData.enforcedStunMany
-        )
-    }
+    this.scene.time.delayedCall(30, () => {
+      overlapCollider.destroy()
+      body.setEnable(false)
+      zone.setActive(false)
+      zone.setPosition(-9999, -9999)
+    })
   }
 }
 
