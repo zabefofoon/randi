@@ -17,7 +17,7 @@ precacheAndRoute(self.__WB_MANIFEST || [])
 
 cleanupOutdatedCaches()
 
-registerRoute(new NavigationRoute(createHandlerBoundToURL("/index.html")))
+registerRoute(new NavigationRoute(createHandlerBoundToURL("/")))
 
 registerRoute(
     // 매치 함수

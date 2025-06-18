@@ -10,7 +10,11 @@ export default defineNuxtConfig({
     injectManifest: {
       globPatterns: ["**/*.{js,css,html,png,svg,json,woff2,webp,ico,xml,mp3,gif}"],
       // 👇 index.html을 강제로 포함 (해시가 없으므로 revision:null)
-      additionalManifestEntries: [{ url: "/randi/index.html", revision: buildId }],
+      additionalManifestEntries: [
+        { url: "/randi/index.html", revision: buildId },
+        { url: "/randi/", revision: buildId },
+        { url: "/", revision: buildId }
+      ],
     },
 
     registerType: "autoUpdate",

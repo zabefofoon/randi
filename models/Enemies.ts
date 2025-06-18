@@ -167,10 +167,12 @@ export class Enemies {
       if (!e.active) return
       if (e.lastSplashId === splashId) return
 
-      e.remainedStuns[weapon.index] = Math.min(
-        weapon.stunMany + weapon.enforcedStunMany,
-        source.remainedStuns[weapon.index] + weapon.stunMany + weapon.enforcedStunMany
-      )
+      if (weapon.stunMany) {
+        e.remainedStuns[weapon.index] = Math.min(
+          weapon.stunMany + weapon.enforcedStunMany,
+          source.remainedStuns[weapon.index] + weapon.stunMany + weapon.enforcedStunMany
+        )
+      }
 
       if (e === source) return
 
@@ -182,7 +184,7 @@ export class Enemies {
         source.x - source.width / 2,
         source.y - source.height / 2
       )
-      e.takeDamage(weapon, materials, enforces, dist)
+      e.takeDamage(weapon, materials, enforces, Math.floor(dist))
     })
 
     this.scene.time.delayedCall(30, () => {
@@ -622,7 +624,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     else if (weaponData.name === "LaserBeam")
       finalDamage = Math.ceil((this.getData("maxHp") * 1) / 10)
 
-    if (weaponData.dotted)
+    if (weaponData.dotted && finalDamage > 0)
       this.applyDot(
         weaponData,
         finalDamage,
@@ -641,6 +643,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.hitSlowTimer = undefined
       })
     }
+
     this.setData("hp", currentHP - finalDamage)
 
     this.setTintFill(0xff0000)
@@ -652,8 +655,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       if (this.isBlackhole) this.setTint(0x000000)
       if (this.isCannon) this.setTint(0xfc036b)
     })
-
-    this.showDamageText(finalDamage, weaponData, isCritical)
+    if (finalDamage > 0) this.showDamageText(finalDamage, weaponData, isCritical)
     this.drawHp()
     if (this.getData("hp") <= 0) this.die()
   }
