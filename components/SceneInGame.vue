@@ -389,12 +389,12 @@
 <script lang="ts" setup>
 import store from "store2"
 import {
-BLACKHOLE_ROUND,
-CANNON_ROUND,
-LOCAL_SHOW_DAMAGE,
-RAGE_ROUND,
-THUNDER_COOLTIME,
-THUNDER_ROUND,
+  BLACKHOLE_ROUND,
+  CANNON_ROUND,
+  LOCAL_SHOW_DAMAGE,
+  RAGE_ROUND,
+  THUNDER_COOLTIME,
+  THUNDER_ROUND,
 } from "~/const"
 import { BeforeBeam, DogeBeam } from "~/models/Beam"
 import { Enemies } from "~/models/Enemies"
@@ -669,6 +669,10 @@ onMounted(() => {
         window.showDamage = store.get(LOCAL_SHOW_DAMAGE) ?? true
         scene = this as Phaser.Scene & { dmgPool: Phaser.GameObjects.Group }
         scene.sound.pauseOnBlur = false
+
+        scene.physics.world.useTree = true
+        scene.physics.world.tree.maxObjects = 32
+        scene.physics.world.tree.maxDepth = 4
 
         if (soundStore.useEffectSound) scene.sound.setVolume(1)
         else scene.sound.setVolume(0)

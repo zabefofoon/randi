@@ -12,7 +12,9 @@ export class Enemies {
   pathes: { x: number; y: number }[]
   baseSpeed: number
 
-  private splashZonePool: Phaser.GameObjects.Group
+  private splashZone!: Phaser.GameObjects.Zone
+  private currentSplashId = 0
+
   constructor(
     scene: Phaser.Scene,
     private selectedCharacter: typeof Character | PurchaseCharacter
@@ -23,23 +25,6 @@ export class Enemies {
     const gameWidth = scene.scale.width
     const gameHeight = scene.scale.height
 
-    this.splashZonePool = this.scene.add.group({
-      classType: Phaser.GameObjects.Zone,
-      maxSize: 80,
-      runChildUpdate: false,
-    })
-
-    for (let i = 0; i < 50; i++) {
-      const zone = this.scene.add.zone(0, 0, 1, 1)
-      this.scene.physics.add.existing(zone)
-      const body = zone.body as Phaser.Physics.Arcade.Body
-      body.setAllowGravity(false)
-      body.setEnable(false)
-
-      zone.setActive(false).setVisible(false)
-      this.splashZonePool.add(zone)
-    }
-
     this.pathes = [
       { x: gameWidth * 0.15, y: gameHeight * 0.18 },
       { x: gameWidth * 0.15, y: gameHeight * 0.78 },
@@ -49,15 +34,11 @@ export class Enemies {
     this.baseSpeed = 160
 
     this.createDamageTextPool(400)
+
+    this.initSplashSystem()
   }
   get children() {
     return this.group.getChildren() as Enemy[]
-  }
-
-  private getSplashZone(): Phaser.GameObjects.Zone {
-    const zone = this.splashZonePool.getFirstDead(false) as Phaser.GameObjects.Zone
-    if (!zone) return this.scene.add.zone(0, 0, 1, 1)
-    return zone
   }
 
   applyBlackhole(materials: Materials, enforces: Enforces) {
@@ -142,6 +123,49 @@ export class Enemies {
     this.scene.events.emit("enemy-spawn")
   }
 
+  private initSplashSystem() {
+    // Zone 본체
+    this.splashZone = this.scene.add.zone(-9999, -9999, 1, 1)
+    this.scene.physics.add.existing(this.splashZone, false)
+    ;(this.splashZone.body as Phaser.Physics.Arcade.Body).setAllowGravity(false).setEnable(false)
+
+    // 고정 overlap
+    this.scene.physics.add.overlap(
+      this.splashZone,
+      this.group,
+      this.handleSplashHit, // ↓ 콜백
+      undefined,
+      this
+    )
+  }
+
+  private startSplash(source: Enemy, weapon: Weapon, materials: Materials, enforces: Enforces) {
+    const vit = materials.calculateStat("vit")
+    const radius = (weapon.splash + weapon.enforcedSplash + vit) / 2
+    const splashId = ++this.currentSplashId // 고유 ID
+
+    this.splashZone._src = source
+    this.splashZone._weapon = weapon
+    this.splashZone._materials = materials
+    this.splashZone._enforces = enforces
+    this.splashZone._sid = splashId
+
+    // 위치·사이즈·활성화
+    this.splashZone
+      .setPosition(source.x, source.y)
+      .setSize(radius * 2, radius * 2)
+      .setActive(true)
+
+    const body = this.splashZone.body as Phaser.Physics.Arcade.Body
+    body.setEnable(true).setCircle(radius)
+
+    // 30 ms 뒤 비활성화
+    this.scene.time.delayedCall(30, () => {
+      body.setEnable(false)
+      this.splashZone.setActive(false).setPosition(-9999, -9999)
+    })
+  }
+
   applySplashDamage(
     source: Enemy,
     bullet: Phaser.Physics.Arcade.Image,
@@ -149,50 +173,44 @@ export class Enemies {
     enforces: Enforces
   ) {
     const weapon = bullet.weapon as Weapon
-    const vit = materials.calculateStat("vit")
-    const radius = (weapon.splash + weapon.enforcedSplash + vit) / 2
-    const splashId = ++this.scene.data.values.splashSeq
+    this.startSplash(source, weapon, materials, enforces)
+  }
 
-    const zone = this.getSplashZone()
-    zone.setPosition(source.x - source.width / 2, source.y - source.height / 2)
-    zone.setSize(radius, radius)
-    zone.setActive(true)
+  /* ----------------------------------- */
+  /* 4) 고정 overlap 콜백                */
+  /* ----------------------------------- */
+  private handleSplashHit = (
+    zoneObj: Phaser.GameObjects.Zone,
+    enemyObj: Phaser.GameObjects.GameObject
+  ) => {
+    const e = enemyObj as Enemy
+    if (!e.active) return
 
-    const body = zone.body as Phaser.Physics.Arcade.Body
-    body.setEnable(true)
-    body.setCircle(radius)
+    const z: any = zoneObj
+    const source = z._src as Enemy
+    const weapon = z._weapon as Weapon
+    const materials = z._materials as Materials
+    const enforces = z._enforces as Enforces
+    const splashId = z._sid as number
 
-    const overlapCollider = this.scene.physics.add.overlap(zone, this.group, (zone, enemy) => {
-      const e = enemy as Enemy
-      if (!e.active) return
-      if (e.lastSplashId === splashId) return
+    /* 같은 Splash 중복 차단 */
+    if (e.lastSplashId === splashId) return
+    e.lastSplashId = splashId
 
-      if (weapon.stunMany) {
-        e.remainedStuns[weapon.index] = Math.min(
-          weapon.stunMany + weapon.enforcedStunMany,
-          source.remainedStuns[weapon.index] + weapon.stunMany + weapon.enforcedStunMany
-        )
-      }
-
-      if (e === source) return
-
-      e.lastSplashId = splashId
-
-      const dist = Phaser.Math.Distance.Between(
-        e.x,
-        e.y,
-        source.x - source.width / 2,
-        source.y - source.height / 2
+    /* 스턴 처리 */
+    if (weapon.stunMany) {
+      e.remainedStuns[weapon.index] = Math.min(
+        weapon.stunMany + weapon.enforcedStunMany,
+        source.remainedStuns[weapon.index] + weapon.stunMany + weapon.enforcedStunMany
       )
-      e.takeDamage(weapon, materials, enforces, Math.floor(dist))
-    })
+    }
 
-    this.scene.time.delayedCall(30, () => {
-      overlapCollider.destroy()
-      body.setEnable(false)
-      zone.setActive(false)
-      zone.setPosition(-9999, -9999)
-    })
+    /* 직격(source) 본인은 제외 */
+    if (e === source) return
+
+    /* 데미지 */
+    const dist = Phaser.Math.Distance.Between(e.x, e.y, source.x, source.y)
+    e.takeDamage(weapon, materials, enforces, Math.floor(dist))
   }
 }
 
@@ -506,7 +524,8 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
                 (weaponData.physicalDamage + weaponData.enforcedPhysicalDamage) *
                 Math.min(
                   1,
-                  1 - distInSplash / (weaponData.splash + weaponData.enforcedSplash + vit)
+                  1 -
+                    distInSplash / Math.max(1, weaponData.splash + weaponData.enforcedSplash + vit)
                 )
               ).toFixed(2) +
                 str +
@@ -536,7 +555,8 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
                 (weaponData.magicalDamage + weaponData.enforcedMagicalDamage) *
                 Math.min(
                   1,
-                  1 - distInSplash / (weaponData.splash + weaponData.enforcedSplash + vit)
+                  1 -
+                    distInSplash / Math.max(1, weaponData.splash + weaponData.enforcedSplash + vit)
                 )
               ).toFixed(2) +
                 int +
