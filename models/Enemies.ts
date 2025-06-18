@@ -150,7 +150,7 @@ export class Enemies {
   ) {
     const weapon = bullet.weapon as Weapon
     const vit = materials.calculateStat("vit")
-    const radius = weapon.splash + weapon.enforcedSplash + vit
+    const radius = (weapon.splash + weapon.enforcedSplash + vit) / 2
     const splashId = ++this.scene.data.values.splashSeq
 
     const zone = this.getSplashZone()
