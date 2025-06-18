@@ -8,7 +8,7 @@ export default defineNuxtConfig({
     filename: "sw.js",
 
     injectManifest: {
-      globPatterns: ["**/*.{js,css,html,png,svg,json,woff2,woff,webp,ico,xml,mp3,gif}"],
+      globPatterns: ["**/*.{js,css,html,png,svg,json,woff2,webp,ico,xml,mp3,gif}"],
       // 👇 index.html을 강제로 포함 (해시가 없으므로 revision:null)
       additionalManifestEntries: [{ url: "/randi/index.html", revision: buildId }],
     },
