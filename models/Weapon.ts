@@ -114,6 +114,7 @@ export class Weapons {
 
     this.enemies.applySplashDamage(enemy, bullet, this.materials, this.enforces)
     enemy.applyStunOne(weaponData, this.materials)
+    enemy.applySlowOne(weaponData, this.materials)
 
     bullet.disableBody(true, true)
   }

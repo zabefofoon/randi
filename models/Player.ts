@@ -72,15 +72,11 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 
   override preUpdate(time: number, delta: number) {
     super.preUpdate(time, delta)
-    const f = this.scene.game.loop.frame
-    const isMobile = window.innerWidth < 720
-    if (!isMobile || (f & 1) === 0) {
-      this.book.setPosition(this.x, this.y)
-      this.ring.setPosition(this.x, this.y)
-      this.weapons.setPosition(this.x, this.y + 20)
-      this.weaponsEffect.setPosition(this.x, this.y)
-      this.updateHpBarPos()
-    }
+    this.book.setPosition(this.x, this.y)
+    this.ring.setPosition(this.x, this.y)
+    this.weapons.setPosition(this.x, this.y + 20)
+    this.weaponsEffect.setPosition(this.x, this.y)
+    this.updateHpBarPos()
   }
 
   private updateHpBarPos() {

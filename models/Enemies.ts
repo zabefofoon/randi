@@ -197,16 +197,11 @@ export class Enemies {
     if (e.lastSplashId === splashId) return
     e.lastSplashId = splashId
 
-    /* 스턴 처리 */
-    if (weapon.stunMany) {
-      e.remainedStuns[weapon.index] = Math.min(
-        weapon.stunMany + weapon.enforcedStunMany,
-        source.remainedStuns[weapon.index] + weapon.stunMany + weapon.enforcedStunMany
-      )
-    }
-
     /* 직격(source) 본인은 제외 */
     if (e === source) return
+
+    /* 스턴 처리 */
+    if (weapon.stunMany) e.applyStunOne(weapon, materials)
 
     /* 데미지 */
     const dist = Phaser.Math.Distance.Between(e.x, e.y, source.x, source.y)
@@ -214,32 +209,47 @@ export class Enemies {
   }
 }
 
+interface Dot {
+  weapon: Weapon // 어떤 무기 효과인지
+  dmgPerTick: number // 한 번에 입힐 데미지
+  ticksRemaining: number // 남은 타격 횟수
+  interval: number // 타격 간격(ms)
+  elapsed: number // 지난 시간 누적(ms)
+}
+
+interface Stun {
+  sourceWeapon: Weapon // 어떤 무기인가
+  stacks: number // 남은 스턴 스택
+  interval: number // 스택 소모 간격(ms)
+  elapsed: number // 누적 시간(ms)
+}
+
+interface Slow {
+  sourceWeapon: Weapon
+  slowPercent: number // 한 스택당 얼마 % 느려질지
+  ticksRemaining: number // 남은 스택 수
+  interval: number // 스택 소모 간격(ms)
+  elapsed: number // 누적 시간(ms)
+}
+
 export class Enemy extends Phaser.Physics.Arcade.Sprite {
   pathes: { x: number; y: number }[]
   physicalDefence = 0
   magicalDefence = 0
-  private hitSlowTimer?: Phaser.Time.TimerEvent
   distanceWithPlayer = 0
   lastSplashId = 0
-  private activeDots: Phaser.Time.TimerEvent[] = []
-  remainedStuns = [0, 0, 0, 0]
-  stunTimer?: Phaser.Time.TimerEvent
   isAppliedDcrease = false
 
   thunderEffect!: Phaser.GameObjects.Sprite
   isBlackholed = false
 
+  dots: Dot[] = []
+  stuns: Stun[] = []
+  slows: Slow[] = []
+
   private hpBarBg!: Phaser.GameObjects.Rectangle
   private hpBarFill!: Phaser.GameObjects.Rectangle
   private readonly hpBarOffset = { x: -16, y: -26 }
-
-  private activeDotsMap: Map<
-    string,
-    {
-      weaponId: string
-      timer: Phaser.Time.TimerEvent
-    }
-  > = new Map()
 
   constructor(
     scene: Phaser.Scene & { dmgPool: Phaser.GameObjects.Group },
@@ -295,13 +305,6 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     this.anims.play("enemy-walk")
 
-    this.stunTimer = this.scene.time.addEvent({
-      delay: 100,
-      repeat: -1,
-      callback: () => this.clearStunStack(),
-      callbackScope: this,
-    })
-
     this.thunderEffect = this.scene.add
       .sprite(x, y, "thunder-sprite", 0)
       .setScale(0.9)
@@ -344,22 +347,6 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     return this.round === CANNON_ROUND && this.index === 0
   }
 
-  applyStunOne(weapon: Weapon, materials: Materials) {
-    const stunValue = weapon.stun + weapon.enforcedStun + materials.calculateStat("cha")
-
-    this.remainedStuns[weapon.index] = Math.min(
-      stunValue,
-      this.remainedStuns[weapon.index] + stunValue
-    )
-  }
-
-  clearStunStack() {
-    this.remainedStuns.forEach((item, index) => {
-      if (item < 1) return
-      this.remainedStuns[index] -= 100
-    })
-  }
-
   increaseHP(round: number): number {
     const _round = round - 1
     const roundGroup = Math.ceil(_round / 10)
@@ -398,7 +385,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
   moveEnemyAlongPath(weapons: (Weapon | undefined)[], materials: Materials) {
     // 스턴 상태라면 이동 중단
-    if (this.remainedStuns.some((item) => item > 0)) {
+    if (this.stuns.some((s) => s.stacks > 0)) {
       this.body?.velocity.set(0, 0)
       return
     }
@@ -456,11 +443,8 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     // 무기 전체 활성화 효과
     speed = numberUtil.subtractPercent(speed, isAllWeaponActiveLevel * 5)
 
-    // 개별 디버프(slowed)
-    const slowedPercent = this.getData("slowed") ?? 0
-    if (slowedPercent > 0) {
-      speed = numberUtil.subtractPercent(speed, slowedPercent)
-    }
+    const totalSlow = this.slows.reduce((sum, s) => sum + s.slowPercent, 0)
+    if (totalSlow > 0) speed = numberUtil.subtractPercent(speed, totalSlow)
 
     return Math.max(1, Math.floor(speed))
   }
@@ -498,7 +482,13 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     })
   }
 
-  takeDamage(weaponData: Weapon, materials: Materials, enforces: Enforces, distInSplash?: number) {
+  takeDamage(
+    weaponData: Weapon,
+    materials: Materials,
+    enforces: Enforces,
+    distInSplash?: number,
+    isDot?: boolean
+  ) {
     const currentHP = this.getData("hp") as number
     const { str, int, vit, luk, wis } = materials.getCachedStats()
 
@@ -644,25 +634,11 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     else if (weaponData.name === "LaserBeam")
       finalDamage = Math.ceil((this.getData("maxHp") * 1) / 10)
 
-    if (weaponData.dotted && finalDamage > 0)
-      this.applyDot(
-        weaponData,
-        finalDamage,
-        (weaponData.dotted + weaponData.enforcedDotted) * 250,
-        250
-      )
-
-    if (weaponData.slowOne) {
-      const slowed = this.getData("slowed")
-      this.setData("slowed", slowed + weaponData.slowOne + weaponData.enforcedSlowOne)
-
-      this.hitSlowTimer?.remove()
-
-      this.hitSlowTimer = this.scene.time.delayedCall(500, () => {
-        this.setData("slowed", 0)
-        this.hitSlowTimer = undefined
-      })
+    if (!isDot && weaponData.dotted && finalDamage > 0) {
+      this.applyDot(weaponData, finalDamage, weaponData.dotted + weaponData.enforcedDotted, 250)
     }
+
+    if (weaponData.slowOne) this.applySlowOne(weaponData, materials)
 
     this.setData("hp", currentHP - finalDamage)
 
@@ -679,33 +655,124 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.drawHp()
     if (this.getData("hp") <= 0) this.die()
   }
-  applyDot(weaponData: Weapon, totalDamage: number, duration: number, tick = 500) {
-    const ticks = Math.ceil(duration / tick)
-    const dmgPerTick = Math.ceil(totalDamage / ticks)
 
-    // 이미 Dot이 걸려 있다면 제거
-    const existing = this.activeDotsMap.get(weaponData.name)
-    if (existing) existing.timer.remove()
+  applyDot(weapon: Weapon, totalDamage: number, tickCount: number, tickInterval = 250) {
+    const dmgPerTick = Math.ceil(totalDamage / tickCount)
+    const existing = this.dots.find((d) => d.weapon === weapon)
 
-    const timer = this.scene.time.addEvent({
-      delay: tick,
-      repeat: ticks - 1,
-      callback: () => this.takeDotDamage(weaponData, dmgPerTick, timer),
-    })
-
-    this.activeDotsMap.set(weaponData.name, { weaponId: weaponData.name, timer })
+    if (existing) {
+      // 이미 걸려 있으면 횟수·피해·누적 시간 초기화
+      existing.ticksRemaining = tickCount
+      existing.dmgPerTick = dmgPerTick
+      existing.elapsed = 0
+    } else {
+      // 새로 추가
+      this.dots.push({
+        weapon,
+        dmgPerTick,
+        ticksRemaining: tickCount,
+        interval: tickInterval,
+        elapsed: 0,
+      })
+    }
   }
 
-  takeDotDamage(weaponData: Weapon, amount: number, event: Phaser.Time.TimerEvent) {
-    if (!this.active) return
+  applyStunOne(weapon: Weapon, materials: Materials) {
+    const stunValue =
+      ((weapon.stun || weapon.stunMany) + weapon.enforcedStun + materials.calculateStat("cha")) /
+      window.speed
 
-    const hp = this.getData("hp") as number
+    if (!stunValue) return
 
-    this.setData("hp", hp - amount)
-    this.showDamageText(amount, weaponData, false)
-    if (event.getRepeatCount() === 0) this.activeDotsMap.delete(weaponData.name)
+    const tickInterval = 100
+    const stacks = Math.ceil(stunValue / tickInterval)
+    const existing = this.stuns.find((s) => s.sourceWeapon === weapon)
+    if (existing) {
+      existing.stacks += stacks
+      existing.elapsed = 0
+    } else {
+      this.stuns.push({
+        sourceWeapon: weapon,
+        stacks,
+        interval: tickInterval, // 100ms 당 1스택 소모
+        elapsed: 0,
+      })
+    }
+  }
 
-    if (this.getData("hp") <= 0) this.die()
+  applySlowOne(weapon: Weapon, materials: Materials) {
+    // 무기 + 캐릭터 스텟으로 최종 slow 퍼센트 계산
+    const slowPercent = weapon.slowOne + weapon.enforcedSlowOne + materials.calculateStat("cul")
+    if (slowPercent <= 0) return
+
+    const duration = 500 / window.speed
+    const interval = 100
+    const ticks = Math.ceil(duration / interval)
+
+    const existing = this.slows.find((s) => s.sourceWeapon === weapon)
+    if (existing) {
+      existing.ticksRemaining = ticks
+      existing.slowPercent = slowPercent
+      existing.elapsed = 0
+    } else {
+      this.slows.push({
+        sourceWeapon: weapon,
+        slowPercent,
+        ticksRemaining: ticks,
+        interval,
+        elapsed: 0,
+      })
+    }
+  }
+
+  updateDots(delta: number, materials: Materials, enforces: Enforces) {
+    for (let i = this.dots.length - 1; i >= 0; i--) {
+      const d = this.dots[i]
+
+      d.elapsed += delta
+
+      // interval(ms) 만큼 누적될 때마다 한 번씩 데미지 적용
+      while (d.elapsed >= d.interval && d.ticksRemaining > 0) {
+        d.elapsed -= d.interval
+        d.ticksRemaining--
+
+        // 실제 데미지 함수 호출 (Splash 거리 인자 없이)
+        this.takeDamage(d.weapon, materials, enforces, undefined, true)
+
+        // 남은 횟수 0이 되면 배열에서 제거
+        if (d.ticksRemaining === 0) {
+          this.dots.splice(i, 1)
+        }
+      }
+    }
+  }
+
+  updateStuns(delta: number) {
+    for (let i = this.stuns.length - 1; i >= 0; i--) {
+      const s = this.stuns[i]
+      s.elapsed += delta
+      while (s.elapsed >= s.interval && s.stacks > 0) {
+        s.elapsed -= s.interval
+        s.stacks--
+      }
+      if (s.stacks <= 0) {
+        this.stuns.splice(i, 1)
+      }
+    }
+  }
+
+  updateSlows(delta: number) {
+    for (let i = this.slows.length - 1; i >= 0; i--) {
+      const s = this.slows[i]
+      s.elapsed += delta
+      while (s.elapsed >= s.interval && s.ticksRemaining > 0) {
+        s.elapsed -= s.interval
+        s.ticksRemaining--
+      }
+      if (s.ticksRemaining <= 0) {
+        this.slows.splice(i, 1)
+      }
+    }
   }
 
   calculateReducedDamage(damage: number, defense: number, penetration = 0): number {
@@ -739,8 +806,6 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     const hpBar = this.getData("hpBar") as Phaser.GameObjects.Graphics
     if (hpBar) hpBar.destroy()
     this.destroy()
-    this.activeDots.forEach((t) => t.remove())
-    this.stunTimer?.destroy()
     this.hpBarBg.destroy()
     this.hpBarFill.destroy()
   }

@@ -19,7 +19,7 @@ export class Thunder extends Weapon {
     targetLength: 1,
 
     splash: 0,
-    stun: 0,
+    stun: 1000,
     stunMany: 0,
     slow: 0,
     slowOne: 0,

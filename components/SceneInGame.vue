@@ -834,8 +834,10 @@ onMounted(() => {
                 .setFrame(9)
                 .play("thunder-animation")
 
-              enemy.remainedStuns[0] = 1000 // 스턴
-              enemy.takeDamage(Thunder.of(), materials.value, enforces.value!)
+              // enemy.remainedStuns[0] = 1000 // 스턴
+              const thunder = Thunder.of()
+              enemy.applyStunOne(thunder, materials.value)
+              enemy.takeDamage(thunder, materials.value, enforces.value!)
             })
           })
         })
@@ -951,19 +953,18 @@ onMounted(() => {
 
         scene.events.on("postupdate", () => playedThisFrame.clear())
       },
-      update(this: Phaser.Scene, time: number) {
+      update(this: Phaser.Scene, time: number, delta: number) {
         const scene = this as Phaser.Scene
         if (scene.data.get("paused")) return
         player.handlePlayerMovement(cursors, scene.keys)
         const weaponList = weapons.value!.weapons
 
-        const f = scene.game.loop.frame
-        const isMobile = window.innerWidth < 720
-
         enemies.updateDistances(player.x, player.y)
         enemies.children.forEach((enemy) => {
-          if (!isMobile || (f & 1) === 0) enemy.updateHpBarPos()
-
+          enemy.updateHpBarPos()
+          enemy.updateDots(delta, materials.value, enforces.value)
+          enemy.updateStuns(delta)
+          enemy.updateSlows(delta)
           enemy.moveEnemyAlongPath(weaponList, materials.value)
           enemy.applyDecrease(weaponList)
         })
@@ -1069,7 +1070,7 @@ onMounted(() => {
                     }
                   }
                 })
-            if ((f & 1) === 0) weapon.followEnemy(weapons.value!)
+            weapon.followEnemy(weapons.value!)
           })
         }
       },
