@@ -418,7 +418,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   }
 
   calculateSpeed(weapons: (Weapon | undefined)[], materials: Materials): number {
-    const isAllWeaponActiveLevel = this.scene.data.get("isAllWeaponActive") ?? 0
+    const isAllWeaponActiveLevel = this.scene.data?.get("isAllWeaponActive") ?? 0
     const isClose = this.distanceWithPlayer < 150
     const baseSpeed = this.isBoss ? 80 : 120
 
@@ -623,7 +623,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
         isCritical = true
       }
     }
-    const isAllWeaponActiveLevel = this.scene.data.get("isAllWeaponActive") ?? 0
+    const isAllWeaponActiveLevel = this.scene.data?.get("isAllWeaponActive") ?? 0
 
     damage = numberUtil.addPercent(damage, isAllWeaponActiveLevel * 20)
 
