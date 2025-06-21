@@ -35,7 +35,7 @@
                 :class="
                   gameStore.selectedCharacterIndex === index
                     ? 'border-orange-500 bg-orange-500'
-                    : 'border-black bg-gray-950'
+                    : 'border-black bg-gray-900'
                 ">
                 <div
                   class="profile-sprites | w-full h-full"
