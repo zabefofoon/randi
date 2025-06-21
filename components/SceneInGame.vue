@@ -1000,7 +1000,8 @@ onMounted(() => {
                 .collectNearest(
                   enemies.children,
                   weapon.targetLength + weapon.enforcedTargetLength,
-                  (e) => e.distanceWithPlayer
+                  (e) => e.distanceWithPlayer,
+                  gameStore.selectedCharacter.meta.id
                 )
                 .forEach((enemy) => {
                   const range =
