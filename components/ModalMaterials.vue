@@ -66,7 +66,20 @@
               </div>
             </template>
           </UIDropdown>
-
+          <button
+            v-if="jokerLength"
+            class="grid place-items-center | relative bg-green-700 | mt-[2cqw] px-[1.5cqw] py-[0.5cqw] | border-black border-[0.14cqw] rounded-lg | leading-none"
+            @click="useJoker">
+            <span
+              v-t="'Joker'"
+              class="text-outline text-[1.7cqw] font-bold"></span>
+            <div class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2">
+              <span
+                class="grid place-items-center | w-[2.5cqw] aspect-square | rounded-full border-black border-[0.14cqw] | bg-red-500 | text-[1.5cqw] text-outline font-bold">
+                {{ jokerLength }}
+              </span>
+            </div>
+          </button>
           <UIDropdown
             :value="stepTutorial === 'stat-random'"
             use-arrow
@@ -102,20 +115,6 @@
               </div>
             </template>
           </UIDropdown>
-          <button
-            v-if="jokerLength"
-            class="grid place-items-center | relative bg-green-700 | mt-[2cqw] px-[1.5cqw] py-[0.5cqw] | border-black border-[0.14cqw] rounded-lg | leading-none"
-            @click="useJoker">
-            <span
-              v-t="'Joker'"
-              class="text-outline text-[1.7cqw] font-bold"></span>
-            <div class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2">
-              <span
-                class="grid place-items-center | w-[2.5cqw] aspect-square | rounded-full border-black border-[0.14cqw] | bg-red-500 | text-[1.5cqw] text-outline font-bold">
-                {{ jokerLength }}
-              </span>
-            </div>
-          </button>
         </div>
       </div>
     </template>
