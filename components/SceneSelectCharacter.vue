@@ -38,20 +38,11 @@
                     : 'border-black bg-gray-950'
                 ">
                 <div
-                  v-if="character?.type === 'character'"
                   class="profile-sprites | w-full h-full"
                   :style="{
                     backgroundPosition: etcUtil.getProfileSpritePosition(index),
+                    filter: character?.type === 'purchase' ? 'brightness(0) blur(3px)' : '',
                   }"></div>
-
-                <div
-                  v-else-if="character?.type === 'purchase'"
-                  class="text-outline gasoek-one-regular | text-[8cqw]">
-                  ?
-                </div>
-                <div
-                  v-else
-                  class="text-outline gasoek-one-regular | text-[8cqw]"></div>
               </div>
             </button>
           </UICarouselSlide>
