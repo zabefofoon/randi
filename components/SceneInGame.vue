@@ -31,6 +31,7 @@
       v-model:gacha-chance="gachaChance"
       v-model:select-chance="selectChance"
       v-model:step-tutorial="stepTutorial"
+      v-model:joker-length="jokerLength"
       :materials="materials"
       @close="showMaterialsPopup(false)" />
     <ModalTextEffect
@@ -402,7 +403,7 @@ import { Enforces } from "~/models/Enforces"
 import { Gun } from "~/models/Gun"
 import { Materials } from "~/models/Material"
 import { Player } from "~/models/Player"
-import { PayBack, Sharper } from "~/models/PurchaseItem"
+import { Joker, PayBack, Sharper } from "~/models/PurchaseItem"
 import { Thunder } from "~/models/Skill"
 import type { StepTutorial } from "~/models/UI"
 import { Weapons, type Weapon } from "~/models/Weapon"
@@ -497,6 +498,8 @@ const hasBlackhole = ref(false)
 const hasCannon = ref(false)
 const isSkilling = ref(false)
 
+const jokerLength = ref(0)
+
 let scene: Phaser.Scene & { dmgPool: Phaser.GameObjects.Group }
 let isBossRemained = false
 let isClear = false
@@ -533,9 +536,16 @@ onMounted(() => {
     gtag("event", "상점 아이템 사용", { name: "페이백" })
     gameStore.spendPurchaseItem(PayBack)
   }
+
   if (gameStore.checkSelectedPurchaseItem(Sharper)) {
     gtag("event", "상점 아이템 사용", { name: "타짜" })
     gameStore.spendPurchaseItem(Sharper)
+  }
+
+  if (gameStore.checkSelectedPurchaseItem(Joker)) {
+    gtag("event", "상점 아이템 사용", { name: "조커" })
+    gameStore.spendPurchaseItem(Joker)
+    jokerLength.value = 5
   }
 
   gtag("event", "캐릭터 사용", { name: gameStore.selectCharacter.name })

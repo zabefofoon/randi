@@ -69,6 +69,7 @@ export default {
     return Phaser.Display.Color.GetColor(mix.r, mix.g, mix.b)
   },
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   collectNearest<T extends Record<string, any>>(
     iterable: Iterable<T>,
     k: number,

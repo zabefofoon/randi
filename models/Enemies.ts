@@ -186,6 +186,7 @@ export class Enemies {
     const e = enemyObj as Enemy
     if (!e.active) return
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const z: any = zoneObj
     const source = z._src as Enemy
     const weapon = z._weapon as Weapon

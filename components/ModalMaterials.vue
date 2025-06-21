@@ -67,27 +67,6 @@
             </template>
           </UIDropdown>
 
-          <button
-            v-if="gachaChance > 0 && gameStore.checkSelectedPurchaseItem(Joker)"
-            class="grid place-items-center | relative bg-green-700 | mt-[2cqw] px-[1.5cqw] py-[0.5cqw] | border-black border-[0.14cqw] rounded-lg | leading-none"
-            @click="useJoker">
-            <div
-              class="purchase-sprites | absolute top-[-0.5cqw] right-[-0.5cqw] | w-[2cqw] aspect-square shrink-0"
-              :style="{
-                backgroundPosition: etcUtil.getPurchaseSpritePosition(Joker.meta.spriteIndex),
-              }"></div>
-            <span
-              v-t="'Joker'"
-              class="text-outline text-[1.7cqw] font-bold"></span>
-            <div
-              v-if="jokerLength > 0"
-              class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2">
-              <span
-                class="grid place-items-center | w-[2.5cqw] aspect-square | rounded-full border-black border-[0.14cqw] | bg-red-500 | text-[1.5cqw] text-outline font-bold">
-                {{ jokerLength }}
-              </span>
-            </div>
-          </button>
           <UIDropdown
             :value="stepTutorial === 'stat-random'"
             use-arrow
@@ -123,6 +102,20 @@
               </div>
             </template>
           </UIDropdown>
+          <button
+            v-if="jokerLength"
+            class="grid place-items-center | relative bg-green-700 | mt-[2cqw] px-[1.5cqw] py-[0.5cqw] | border-black border-[0.14cqw] rounded-lg | leading-none"
+            @click="useJoker">
+            <span
+              v-t="'Joker'"
+              class="text-outline text-[1.7cqw] font-bold"></span>
+            <div class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2">
+              <span
+                class="grid place-items-center | w-[2.5cqw] aspect-square | rounded-full border-black border-[0.14cqw] | bg-red-500 | text-[1.5cqw] text-outline font-bold">
+                {{ jokerLength }}
+              </span>
+            </div>
+          </button>
         </div>
       </div>
     </template>
@@ -131,7 +124,6 @@
 
 <script setup lang="ts">
 import type { Materials } from "~/models/Material"
-import { Joker } from "~/models/PurchaseItem"
 import type { StepTutorial } from "~/models/UI"
 
 const props = defineProps<{
@@ -145,15 +137,14 @@ const emit = defineEmits<{
 const gachaChance = defineModel<number>("gachaChance", { default: 0 })
 const selectChance = defineModel<number>("selectChance", { default: 0 })
 const stepTutorial = defineModel<StepTutorial>("stepTutorial")
+const jokerLength = defineModel<number>("jokerLength", { default: 0 })
 
 const i18n = useI18n()
-const { gtag } = useGtag()
 
 const gameStore = useGameStore()
 const soundStore = useSoundStore()
 
 const materialRefs = ref<HTMLElement[]>([])
-const jokerLength = ref(0)
 
 const gacha = () => {
   if (gachaChance.value < 1) return
@@ -202,16 +193,9 @@ const useJoker = () => {
 
   soundStore.play("stat")
   jokerLength.value--
-  gameStore.spendPurchaseItem(Joker)
-  gtag("event", "상점 아이템 사용", { name: "조커" })
-}
-const initJokerLength = () => {
-  if (gameStore.checkSelectedPurchaseItem(Joker))
-    jokerLength.value = gameStore.purchasedItems[Joker.meta.id]
 }
 
 onMounted(() => {
-  initJokerLength()
   if (stepTutorial.value === "stat") stepTutorial.value = "stat-random"
 })
 </script>

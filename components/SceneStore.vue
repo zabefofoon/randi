@@ -31,15 +31,7 @@
             <div class="w-full font-bold text-outline">
               <h4 class="text-[1.5cqw]">
                 {{ i18n.t(purchaseItem.meta.name) }}
-                <span
-                  v-if="gameStore.purchasedItems[purchaseItem.meta.id]"
-                  class="text-[1.2cqw]">
-                  {{
-                    i18n.t("HavePurchaseItem", {
-                      length: gameStore.purchasedItems[purchaseItem.meta.id] || 0,
-                    })
-                  }}
-                </span>
+                {{ purchaseItem.meta.id === "joker" ? "x5" : "" }}
               </h4>
               <p
                 v-t="purchaseItem.meta.description"
@@ -47,6 +39,7 @@
             </div>
             <div class="flex gap-[0.5cqw]">
               <button
+                v-if="!gameStore.purchasedItems[purchaseItem.meta.id]"
                 class="shrink-0 w-[10cqw] | flex justify-center items-center | pr-[1cqw] py-[0.3cqw] | border-black border-[0.2cqw] rounded-lg"
                 :class="{
                   'bg-gray-700': purchaseItem.meta.price > gameStore.currentMoney,
@@ -63,29 +56,10 @@
                   {{ stringUtil.attachComma(purchaseItem.meta.price) }}
                 </p>
               </button>
-              <button
-                class="shrink-0 w-[10cqw] | flex justify-center items-center | py-[0.3cqw] | border-black border-[0.2cqw] rounded-lg"
-                :class="{
-                  'bg-gray-700': !gameStore.purchasedItems[purchaseItem.meta.id],
-                  'bg-green-700':
-                    !gameStore.checkSelectedPurchaseItem(purchaseItem) &&
-                    gameStore.purchasedItems[purchaseItem.meta.id] > 0,
-                  '!bg-blue-900': gameStore.checkSelectedPurchaseItem(purchaseItem),
-                }"
-                :disabled="
-                  !gameStore.purchasedItems[purchaseItem.meta.id] &&
-                  !gameStore.checkSelectedPurchaseItem(purchaseItem)
-                "
-                @click="togglePurchaseItem(purchaseItem)">
-                <p
-                  v-if="gameStore.checkSelectedPurchaseItem(purchaseItem)"
-                  v-t="'UnusePurchase'"
-                  class="text-outline text-[1.5cqw] font-bold"></p>
-                <p
-                  v-else
-                  v-t="'UsePurchase'"
-                  class="text-outline text-[1.5cqw] font-bold"></p>
-              </button>
+              <UIToggle
+                v-if="gameStore.purchasedItems[purchaseItem.meta.id]"
+                :value="gameStore.checkSelectedPurchaseItem(purchaseItem)"
+                @update:model-value="togglePurchaseItem(purchaseItem)" />
             </div>
           </div>
         </div>

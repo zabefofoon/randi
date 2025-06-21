@@ -13,7 +13,7 @@ export default defineNuxtConfig({
       additionalManifestEntries: [
         { url: "/randi/index.html", revision: buildId },
         { url: "/randi/", revision: buildId },
-        { url: "/", revision: buildId }
+        { url: "/", revision: buildId },
       ],
     },
 
@@ -137,7 +137,7 @@ export default defineNuxtConfig({
       meta: [
         {
           name: "viewport",
-          content: "initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=no;",
+          content: "initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no",
         },
       ],
     },
