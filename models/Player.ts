@@ -12,7 +12,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   private hpBarFill!: Phaser.GameObjects.Rectangle
   private readonly hpBarOffset = { x: -16, y: -45 }
 
-  constructor(scene: Phaser.Scene, x: number, y: number, key: string) {
+  constructor(scene: Phaser.Scene, x: number, y: number, key: string, private characterId: string) {
     super(scene, x, y, key)
 
     scene.add.existing(this)
@@ -115,13 +115,13 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     const down = cursors.down.isDown || wasd.down.isDown
 
     if (left) {
-      this.setVelocityX(-speed)
+      if (this.characterId !== "dogeTower") this.setVelocityX(-speed)
       this.anims.play("work", true)
       this.setFlipX(false)
       moving = true
       if (this.scene.data.get("stepTutorial") === "move") this.scene.events.emit("player-move")
     } else if (right) {
-      this.setVelocityX(speed)
+      if (this.characterId !== "dogeTower") this.setVelocityX(speed)
       this.anims.play("work", true)
       this.setFlipX(true)
       moving = true
@@ -131,12 +131,12 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     if (up) {
-      this.setVelocityY(-speed)
+      if (this.characterId !== "dogeTower") this.setVelocityY(-speed)
       this.anims.play("work", true)
       moving = true
       if (this.scene.data.get("stepTutorial") === "move") this.scene.events.emit("player-move")
     } else if (down) {
-      this.setVelocityY(speed)
+      if (this.characterId !== "dogeTower") this.setVelocityY(speed)
       this.anims.play("work", true)
       moving = true
       if (this.scene.data.get("stepTutorial") === "move") this.scene.events.emit("player-move")

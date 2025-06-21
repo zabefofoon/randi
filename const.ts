@@ -17,7 +17,7 @@ export const SPRITE_LENGTH = 23
 
 export const WEAPON_LENGTH = 100
 
-export const PROFILES_LENGTH = 2
+export const PROFILES_LENGTH = 3
 export const PURCHASE_LENGTH = 2
 
 export const COOKIE_LOGGED_IN = "isLoggedIn"

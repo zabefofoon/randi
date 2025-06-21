@@ -727,7 +727,13 @@ onMounted(() => {
 
         cursors = scene.input.keyboard!.createCursorKeys()
 
-        player = new Player(scene, 960 / 2, 540 / 2, "playerIdle")
+        player = new Player(
+          scene,
+          960 / 2,
+          540 / 2,
+          "playerIdle",
+          gameStore.selectedCharacter.meta.id
+        )
         player.createPlayerAnimation()
         player.weapons.setFrame(8)
         player.weaponsEffect.setFrame(8)
@@ -997,7 +1003,9 @@ onMounted(() => {
                   (e) => e.distanceWithPlayer
                 )
                 .forEach((enemy) => {
-                  if (enemy.distanceWithPlayer && enemy.distanceWithPlayer <= weapon.range) {
+                  const range =
+                    gameStore.selectedCharacter.meta.id === "dogeTower" ? 960 : weapon.range
+                  if (enemy.distanceWithPlayer && enemy.distanceWithPlayer <= range) {
                     weapon.fireHomingWeapon(weapons.value!, index, time, player, enemy)
 
                     if (index === 0) {

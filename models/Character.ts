@@ -62,6 +62,19 @@ export class ChimeraHayashiRice extends Character {
   }
 }
 
+export class DogeTower extends Character {
+  static override readonly meta: CharacterOptions = {
+    id: "dogeTower",
+    name: "DogeTower",
+    description: "DogeTowerDescription",
+    specificity: "DogeTowerSpecificity",
+    price: 50000,
+  }
+  constructor() {
+    super(DogeTower.meta)
+  }
+}
+
 export class PurchaseCharacter {
   type = "purchase"
   constructor(public readonly character: typeof Character) {}
@@ -71,4 +84,4 @@ export class PurchaseCharacter {
   }
 }
 
-export const RELEASED_CHARACTERS = [NylonMask, TrunkKing, ChimeraHayashiRice]
+export const RELEASED_CHARACTERS = [NylonMask, TrunkKing, ChimeraHayashiRice, DogeTower]

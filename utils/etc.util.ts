@@ -69,39 +69,35 @@ export default {
     return Phaser.Display.Color.GetColor(mix.r, mix.g, mix.b)
   },
 
-  collectNearest<T>(
-    iterable: Iterable<T>, // 적 목록
-    k: number, // 최대 갯수
+  collectNearest<T extends Record<string, any>>(
+    iterable: Iterable<T>,
+    k: number,
     getDist: (item: T) => number
   ): T[] {
-    // 버퍼(길이 k)와 사용된 칸 수
-    const buf: (T & { dist: number })[] = Array(k)
-    let used = 0
+    const high: (T & { dist: number })[] = [] // isBoss
+    const mid: (T & { dist: number })[] = [] // Skill enemy
+    const low: (T & { dist: number })[] = [] // 일반 적
 
     for (const item of iterable) {
-      const d = getDist(item)
+      const dist = getDist(item)
+      const enriched = Object.assign(item, { dist })
 
-      // 아직 k개 미만이면 위치 찾아 삽입
-      if (used < k) {
-        let i = used++
-        while (i > 0 && buf[i - 1].dist > d) {
-          buf[i] = buf[i - 1]
-          --i
-        }
-        buf[i] = Object.assign(item, { dist: d })
-        continue
-      }
-
-      // 버퍼가 꽉 찼으면, 가장 먼 녀석(buf[k-1])보다 가까울 때만 교체
-      if (d < buf[k - 1].dist) {
-        let i = k - 1
-        while (i > 0 && buf[i - 1].dist > d) {
-          buf[i] = buf[i - 1]
-          --i
-        }
-        buf[i] = Object.assign(item, { dist: d })
+      if (item.isBoss) {
+        this.insertSorted(high, enriched)
+      } else if (item.isThunder || item.isRage || item.isBlackhole || item.isCannon) {
+        this.insertSorted(mid, enriched)
+      } else {
+        this.insertSorted(low, enriched)
       }
     }
-    return buf.slice(0, used)
+
+    // 우선순위대로 최대 k개까지 추출
+    return [...high, ...mid, ...low].slice(0, k)
+  },
+
+  insertSorted<T extends { dist: number }>(arr: T[], item: T) {
+    let i = arr.length
+    while (i > 0 && arr[i - 1].dist > item.dist) i--
+    arr.splice(i, 0, item)
   },
 }
