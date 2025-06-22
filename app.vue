@@ -72,9 +72,7 @@ window.fromApp = (os: "android" | "ios") => {
   globalLoadingStore.deleteGlobalCoverLoading(LOADING_APP)
 }
 
-const reload = () => {
-  location.reload()
-}
+const reload = () => location.reload()
 
 onMounted(() => {
   initMode()
@@ -87,6 +85,7 @@ onMounted(() => {
   }
 
   window.parent.postMessage({ data: "load" }, "*")
+
   window.appChannel?.postMessage(
     JSON.stringify({
       type: "load",
