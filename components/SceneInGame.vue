@@ -39,7 +39,8 @@
       :text="isShowTextEffect" />
     <ModalGameOver
       v-if="isShowGameOverPopup"
-      @close="isShowGameOverPopup = false" />
+      :reason="isShowGameOverPopup"
+      @close="isShowGameOverPopup = undefined" />
     <ModalGameClear
       v-if="isShowGameClearPopup"
       @close="isShowGameClearPopup = false" />
@@ -405,7 +406,7 @@ import { Materials } from "~/models/Material"
 import { Player } from "~/models/Player"
 import { Joker, PayBack, Sharper } from "~/models/PurchaseItem"
 import { Thunder } from "~/models/Skill"
-import type { StepTutorial } from "~/models/UI"
+import type { GameOverReason, StepTutorial } from "~/models/UI"
 import { Weapons, type Weapon } from "~/models/Weapon"
 
 const emit = defineEmits<{
@@ -459,7 +460,7 @@ const showWeaponsPopup = (value: boolean) => {
   if (value) soundStore.play("select")
 }
 
-const isShowGameOverPopup = ref(false)
+const isShowGameOverPopup = ref<GameOverReason>()
 const isShowGameClearPopup = ref(false)
 
 const isShowGamblePopup = ref(false)
@@ -1308,7 +1309,7 @@ const mainTimerCallback = () => {
     if (isBossRemained) {
       scene.physics.pause()
       isShowTextEffect.value = ""
-      isShowGameOverPopup.value = true
+      isShowGameOverPopup.value = "boss-alive"
     }
   }
 
@@ -1331,7 +1332,7 @@ const mainTimerCallback = () => {
   if (playerHP < 2) {
     soundStore.play("attacked")
     scene.physics.pause()
-    isShowGameOverPopup.value = true
+    isShowGameOverPopup.value = "enemy-over"
   }
 
   if (round.value === clearRound && remainnedTime.value === 0) {

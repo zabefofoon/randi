@@ -41,3 +41,5 @@ export type StepTutorial =
   | "complete"
   | "start"
   | ""
+
+export type GameOverReason = "enemy-over" | "boss-alive"
