@@ -1,4 +1,5 @@
 <template>
+  <!-- <VitePwaManifest /> -->
   <AppGlobalLoadingContainer />
   <NuxtRouteAnnouncer />
   <div
@@ -20,7 +21,7 @@
         <button
           v-t="'Accept'"
           class="rounded-lg border-black border-[0.2cqw] | w-full bg-orange-700"
-          @click="reload()"></button>
+          @click="updateServiceWorker"></button>
       </div>
     </div>
   </Transition>
@@ -52,19 +53,10 @@ const initMode = () => {
         isLoaded.value = true
       }
     })
-  } else {
-    isLoaded.value = true
-  }
+  } else isLoaded.value = true
 }
 
 if (route.query.platform) globalLoadingStore.setGlobalCoverLoading(LOADING_APP)
-
-const isShowReloadForUpdate = ref(false)
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.addEventListener("controllerchange", () => {
-    isShowReloadForUpdate.value = true
-  })
-}
 
 window.fromApp = (os: "android" | "ios") => {
   gameStore.setMode(os)
@@ -72,9 +64,14 @@ window.fromApp = (os: "android" | "ios") => {
   globalLoadingStore.deleteGlobalCoverLoading(LOADING_APP)
 }
 
-const reload = () => location.reload()
+const isShowReloadForUpdate = ref(false)
+let waitingWorker: ServiceWorker
 
-onMounted(() => {
+const updateServiceWorker = () => {
+  if (waitingWorker) waitingWorker.postMessage({ type: "SKIP_WAITING" })
+}
+
+onMounted(async () => {
   initMode()
 
   if (navigator.userAgent.toLowerCase().includes("iphone")) {
@@ -91,6 +88,34 @@ onMounted(() => {
       type: "load",
     })
   )
+
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      location.reload()
+    })
+
+    const registration = await navigator.serviceWorker.getRegistration()
+    if (!registration) return
+
+    if (registration.waiting) {
+      isShowReloadForUpdate.value = true
+
+      waitingWorker = registration.waiting
+      return
+    }
+
+    registration.addEventListener("updatefound", () => {
+      const newSW = registration.installing
+      if (!newSW) return
+
+      newSW.addEventListener("statechange", () => {
+        if (newSW.state === "installed" && navigator.serviceWorker.controller) {
+          isShowReloadForUpdate.value = true
+          waitingWorker = newSW
+        }
+      })
+    })
+  }
 })
 
 onBeforeUnmount(() => {
