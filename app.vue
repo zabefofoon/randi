@@ -8,10 +8,20 @@
   <Transition name="fade">
     <div
       v-if="isShowReloadForUpdate"
-      class="fixed top-[5cqh] left-1/2 -translate-x-1/2 z-50">
+      class="flex flex-col gap-[0.5cqw] | fixed top-[5cqh] left-1/2 -translate-x-1/2 z-50">
       <p
-        class="bg-blue-900/80 | text-white text-[15px] text-center | p-[0.5cqw] rounded-lg"
+        class="bg-blue-900/80 | font-bold text-white text-[1.6cqw] text-center | p-[0.5cqw] | rounded-lg border-black border-[0.2cqw]"
         v-html="i18n.t('AppUpdate')"></p>
+      <div class="flex items-center gap-[0.2cqw] | text-white text-[1.3cqw] font-bold">
+        <button
+          v-t="'Decline'"
+          class="rounded-lg border-black border-[0.2cqw] | w-full bg-blue-900"
+          @click="isShowReloadForUpdate = false"></button>
+        <button
+          v-t="'Accept'"
+          class="rounded-lg border-black border-[0.2cqw] | w-full bg-orange-700"
+          @click="reload()"></button>
+      </div>
     </div>
   </Transition>
 
@@ -53,7 +63,6 @@ const isShowReloadForUpdate = ref(false)
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.addEventListener("controllerchange", () => {
     isShowReloadForUpdate.value = true
-    etcUtil.sleep(2000).then(() => location.reload())
   })
 }
 
@@ -61,6 +70,10 @@ window.fromApp = (os: "android" | "ios") => {
   gameStore.setMode(os)
   isLoaded.value = true
   globalLoadingStore.deleteGlobalCoverLoading(LOADING_APP)
+}
+
+const reload = () => {
+  location.reload()
 }
 
 onMounted(() => {
