@@ -109,25 +109,12 @@
         class="w-full | flex items-center gap-[0.5cqh] | px-[0.5cqw] | absolute top-[0.5cqw] | text-white font-bold">
         <div class="flex items-center gap-[1cqw] | bg-black w-fit | px-[0.5cqw] rounded-lg">
           <span
-            v-if="isBossRound"
-            class="text-[1.5cqw] text-red-600">
-            BOSS ROUND
-          </span>
-          <span
-            v-else
-            class="text-[1.5cqw]">
-            ROUND {{ round }}
-          </span>
+            ref="roundTimeEl"
+            class="text-[1.5cqw]"></span>
         </div>
-        <div class="text-[1.2cqw] bg-black w-fit | px-[0.5cqw] rounded-lg">
-          <span
-            :class="{
-              'text-red-500': remainnedEnemies > enemyCountDeadline,
-            }"
-            >{{ remainnedEnemies }}</span
-          >
-          / {{ enemyCountDeadline }}
-        </div>
+        <div
+          ref="remainedEnemiesEl"
+          class="text-[1.2cqw] bg-black w-fit | px-[0.5cqw] rounded-lg"></div>
         <div class="relative text-white">
           <div class="flex items-center | text-[1.3cqw]">
             <i
@@ -152,7 +139,11 @@
       </div>
 
       <div class="absolute top-[0.5cqw] left-1/2 -translate-x-1/2">
-        <span class="text-white text-[1.5cqw]">00:{{ `${remainnedTime}`.padStart(2, "0") }}</span>
+        <span
+          ref="remainedTimeEl"
+          class="text-white text-[1.5cqw]">
+          00:{{ `${remainedTime}`.padStart(2, "0") }}
+        </span>
       </div>
 
       <div class="absolute top-[0.5cqw] right-[1cqw] | flex items-center gap-[0.5cqw]">
@@ -164,8 +155,10 @@
             :style="{
               backgroundPosition: etcUtil.getSpritePosition(17),
             }"></div>
-          <span class="text-[1.3cqw] text-white font-bold text-outline">
-            {{ stringUtil.attachComma(killed) }}
+          <span
+            ref="killedEl"
+            class="text-[1.3cqw] text-white font-bold text-outline">
+            {{ killed }}
           </span>
         </div>
         <!-- 킬 표시 -->
@@ -442,10 +435,14 @@ const clearRound = gameStore.mode === "demo" ? 20 : 60
 const initialRemainnedTime = 3
 const roundTime = 40
 const enemyCountDeadline = 39
+let currentRound = 0
+const roundTimeEl = ref<HTMLSpanElement>()
 
-const round = ref(0)
-const remainnedTime = ref(initialRemainnedTime)
-const remainnedEnemies = ref(0)
+let remainedTime = initialRemainnedTime
+const remainedTimeEl = ref<HTMLSpanElement>()
+
+let remainedEnemies = 0
+const remainedEnemiesEl = ref<HTMLDivElement>()
 const activeJoystick = ref<number>()
 
 const isShowMaterialsPopup = ref(false)
@@ -479,7 +476,8 @@ const isShowTextEffect = ref("")
 const gachaChance = ref(2)
 const selectChance = ref(1)
 const coins = ref(20)
-const killed = ref(0)
+let killed = 0
+const killedEl = ref<HTMLDivElement>()
 const gamblings = ref(0)
 
 const selectedWeaponIndex = ref(0)
@@ -791,6 +789,11 @@ onMounted(() => {
         walls.create(918, 30, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(10, 480).refreshBody()
         walls.create(33, 499, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(895, 10).refreshBody()
 
+        if (roundTimeEl.value) roundTimeEl.value.innerText = `ROUND ${currentRound}`
+
+        if (remainedEnemiesEl.value)
+          remainedEnemiesEl.value.innerHTML = `${remainedEnemies} / ${enemyCountDeadline}`
+
         scene.physics.add.collider(player, walls)
 
         // ===== 탄환(Gun) 그룹 생성 =====
@@ -801,17 +804,30 @@ onMounted(() => {
           isBossRemained = false
           selectChance.value += 1
           gachaChance.value += 2
-          coins.value += round.value * 10
+          coins.value += currentRound * 10
         })
         scene.events.on("enemy-die", () => {
-          killed.value++
-          remainnedEnemies.value--
-          coins.value += round.value
+          killed++
+          if (killedEl.value) killedEl.value.innerText = `${stringUtil.attachComma(killed)}`
+          remainedEnemies--
+          if (remainedEnemiesEl.value)
+            remainedEnemiesEl.value.innerHTML =
+              remainedEnemies > enemyCountDeadline
+                ? `<span class="text-red-500">${remainedEnemies}</span> / ${enemyCountDeadline}`
+                : `${remainedEnemies} / ${enemyCountDeadline}`
+
+          coins.value += currentRound
 
           if (stepTutorial.value === "kill") stepTutorial.value = "stat"
         })
         scene.events.on("enemy-spawn", () => {
-          remainnedEnemies.value++
+          remainedEnemies++
+
+          if (remainedEnemiesEl.value)
+            remainedEnemiesEl.value.innerHTML =
+              remainedEnemies > enemyCountDeadline
+                ? `<span class="text-red-500">${remainedEnemies}</span> / ${enemyCountDeadline}`
+                : `${remainedEnemies} / ${enemyCountDeadline}`
         })
         scene.events.on("thunder-die", () => {
           hasThunder.value = true
@@ -881,7 +897,7 @@ onMounted(() => {
               isRageMode.value = false
               player.isRage = false
               isSkilling.value = false
-              const ceiled = Math.max(1, Math.ceil(round.value / 10))
+              const ceiled = Math.max(1, Math.ceil(currentRound / 10))
               bakedBg?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))
             })
           })
@@ -915,7 +931,7 @@ onMounted(() => {
               .play("elden-animation")
 
             scene.time.delayedCall(2000, () => {
-              const ceiled = Math.max(1, Math.ceil(round.value / 10))
+              const ceiled = Math.max(1, Math.ceil(currentRound / 10))
               bakedBg?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))
               enemies.removeBlackhole()
               eldenSprite.destroy()
@@ -1222,10 +1238,19 @@ const changeSpeed = (speed: number, showOptions: (value?: boolean) => void) => {
   showOptions(false)
 }
 
+const updateRemainedTime = () => {
+  if (!remainedTimeEl.value) return
+
+  remainedTimeEl.value.innerText = `00:${remainedTime.toString().padStart(2, "0")}`
+}
+
 const mainTimerCallback = () => {
   if (scene.data.get("paused")) return
 
-  if (!stepTutorial.value) remainnedTime.value--
+  if (!stepTutorial.value) {
+    remainedTime--
+    updateRemainedTime()
+  }
 
   if (hasThunder.value && thunderSkillCooldown.value <= THUNDER_COOLTIME)
     thunderSkillCooldown.value++
@@ -1234,49 +1259,60 @@ const mainTimerCallback = () => {
     blackholeSkillCooldown.value++
   if (hasCannon.value && cannonSkillCooldown.value <= THUNDER_COOLTIME) cannonSkillCooldown.value++
 
-  if (remainnedTime.value % 5 === 0) {
-    remainnedEnemies.value = enemies.group.children.size
+  if (remainedTime % 5 === 0) {
+    remainedEnemies = enemies.group.children.size
   }
 
-  if (remainnedTime.value < 0) {
-    round.value++
+  if (remainedTime < 0) {
+    currentRound++
+    if (!isRageMode.value) {
+      const ceiled = Math.max(1, Math.ceil(currentRound / 10))
+      bakedBg?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))
+    }
 
-    isShowTextEffect.value = `ROUND ${round.value}`
+    if (roundTimeEl.value) {
+      roundTimeEl.value.innerHTML =
+        currentRound % 10 === 0
+          ? `<span class="text-red-500">BOSS ROUND</span>`
+          : `ROUND ${currentRound}`
+    }
+
+    isShowTextEffect.value = `ROUND ${currentRound}`
     soundStore.play("round")
 
-    if (round.value % 10 === 0) {
+    if (currentRound % 10 === 0) {
       scene.time.delayedCall(1200, () => {
         isShowTextEffect.value = "EMERGENCY"
         soundStore.play("round")
 
         scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
       })
-    } else if ([THUNDER_ROUND, RAGE_ROUND, BLACKHOLE_ROUND, CANNON_ROUND].includes(round.value)) {
+    } else if ([THUNDER_ROUND, RAGE_ROUND, BLACKHOLE_ROUND, CANNON_ROUND].includes(currentRound)) {
       scene.time.delayedCall(1200, () => {
         isShowTextEffect.value = "WARNING"
         soundStore.play("round")
 
         scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
       })
-    } else if (round.value === 11) {
+    } else if (currentRound === 11) {
       scene.time.delayedCall(1200, () => {
         isShowTextEffect.value = "MORE! MORE!"
         soundStore.play("round")
         scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
       })
-    } else if (round.value === 31) {
+    } else if (currentRound === 31) {
       scene.time.delayedCall(1200, () => {
         isShowTextEffect.value = "MORE! MORE!"
         soundStore.play("round")
         scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
       })
-    } else if (round.value === 59) {
+    } else if (currentRound === 59) {
       scene.time.delayedCall(1200, () => {
         isShowTextEffect.value = "INFINITE"
         soundStore.play("round")
         scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
       })
-    } else if (`${round.value}`.endsWith("9")) {
+    } else if (`${currentRound}`.endsWith("9")) {
       scene.time.delayedCall(1200, () => {
         isShowTextEffect.value = "BREAKTIME"
         soundStore.play("round")
@@ -1286,21 +1322,22 @@ const mainTimerCallback = () => {
       scene.time.delayedCall(1200, () => (isShowTextEffect.value = ""))
     }
 
-    remainnedTime.value = roundTime
+    remainedTime = roundTime
+    updateRemainedTime()
 
-    if (round.value !== 1) {
-      if (round.value < 20) {
-        if (round.value % 5 === 0) {
+    if (currentRound !== 1) {
+      if (currentRound < 20) {
+        if (currentRound % 5 === 0) {
           gachaChance.value = gachaChance.value + 2
           selectChance.value = selectChance.value + 1
         } else gachaChance.value = gachaChance.value + 3
-      } else if (round.value < 40) {
-        if (round.value % 5 === 0) {
+      } else if (currentRound < 40) {
+        if (currentRound % 5 === 0) {
           gachaChance.value = gachaChance.value + 2
           selectChance.value = selectChance.value + 2
         } else gachaChance.value = gachaChance.value + 4
       } else {
-        if (round.value % 5 === 0) {
+        if (currentRound % 5 === 0) {
           gachaChance.value = gachaChance.value + 2
           selectChance.value = selectChance.value + 3
         } else gachaChance.value = gachaChance.value + 5
@@ -1314,7 +1351,7 @@ const mainTimerCallback = () => {
   }
 
   const playerHP = player.getData("hp") as number
-  if (remainnedEnemies.value > enemyCountDeadline) {
+  if (remainedEnemies > enemyCountDeadline) {
     player.takeDamage(1)
     scene.cameras.main.shake(100, 0.01)
     damageRect.setAlpha(1 - (playerHP - 1) / 10)
@@ -1335,22 +1372,22 @@ const mainTimerCallback = () => {
     isShowGameOverPopup.value = "enemy-over"
   }
 
-  if (round.value === clearRound && remainnedTime.value === 0) {
+  if (currentRound === clearRound && remainedTime === 0) {
     scene.physics.pause()
     isShowGameClearPopup.value = true
     isClear = true
   }
 
   let spawnCondition = false
-  if (round.value < 11) spawnCondition = 41 > remainnedTime.value && remainnedTime.value > 30
-  else if (round.value < 31) spawnCondition = 41 > remainnedTime.value && remainnedTime.value > 20
-  else if (round.value < 59) spawnCondition = 41 > remainnedTime.value && remainnedTime.value > 10
-  else if (round.value < 61) spawnCondition = 41 > remainnedTime.value && remainnedTime.value > 1
+  if (currentRound < 11) spawnCondition = 41 > remainedTime && remainedTime > 30
+  else if (currentRound < 31) spawnCondition = 41 > remainedTime && remainedTime > 20
+  else if (currentRound < 59) spawnCondition = 41 > remainedTime && remainedTime > 10
+  else if (currentRound < 61) spawnCondition = 41 > remainedTime && remainedTime > 1
 
-  if (spawnCondition) enemies.spawnEnemy(round.value, coins, 40 - remainnedTime.value)
-  if (round.value >= 10 && round.value % 10 === 0 && remainnedTime.value === roundTime)
+  if (spawnCondition) enemies.spawnEnemy(currentRound, coins, 40 - remainedTime)
+  if (currentRound >= 10 && currentRound % 10 === 0 && remainedTime === roundTime)
     setTimeout(() => {
-      enemies.spawnBoss(round.value, coins)
+      enemies.spawnBoss(currentRound, coins)
       isBossRemained = true
     }, 500)
 }
@@ -1419,25 +1456,21 @@ watch(activeJoystick, (value) => {
 })
 
 const rewords = computed(() => ({
-  rounds: round.value ? round.value : 0,
-  killed: round.value ? killed.value : 0,
-  materials: round.value ? materials.value.totalLength : 0,
-  weapons: round.value
+  rounds: currentRound ? currentRound : 0,
+  killed: currentRound ? killed : 0,
+  materials: currentRound ? materials.value.totalLength : 0,
+  weapons: currentRound
     ? weapons.value?.weapons
         .filter((weapon): weapon is Weapon => !!weapon)
         .reduce((acc, current) => acc + current.level * 15, 0) ?? 0
     : 0,
-  coins: round.value ? Math.ceil(coins.value / 3) : 0,
-  enforces: round.value
+  coins: currentRound ? Math.ceil(coins.value / 3) : 0,
+  enforces: currentRound
     ? enforces.value?.items.reduce((acc, current) => acc + current.length, 0) ?? 0
     : 0,
-  gamblings: round.value ? gamblings.value : 0,
+  gamblings: currentRound ? gamblings.value : 0,
   isClear: isClear ? 1 : 0,
 }))
-
-const isBossRound = computed(() => {
-  return round.value !== 0 && round.value % 10 === 0
-})
 
 const startGame = () => {
   isShowTutorial.value = false
@@ -1483,17 +1516,6 @@ watch(isShowGameClearPopup, (value) => {
   if (!value) exit()
   else pause()
 })
-
-watch(
-  round,
-  (round) => {
-    if (isRageMode.value) return
-
-    const ceiled = Math.max(1, Math.ceil(round / 10))
-    bakedBg?.setTint(etcUtil.softTint(etcUtil.getLevelColorHex(ceiled), 0.7))
-  },
-  { immediate: true }
-)
 
 watch(stepTutorial, (value) => {
   if (value && value !== "start") soundStore.play("equip")
