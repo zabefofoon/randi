@@ -141,7 +141,7 @@ export class Enemies {
 
   private startSplash(source: Enemy, weapon: Weapon, materials: Materials, enforces: Enforces) {
     const vit = materials.calculateStat("vit")
-    const radius = (weapon.splash + weapon.enforcedSplash + vit) / 2
+    const radius = ((weapon.splash + weapon.enforcedSplash + vit) / 2) * window.scale
     const splashId = ++this.currentSplashId // 고유 ID
 
     this.splashZone._src = source
@@ -250,7 +250,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
   private hpBarBg!: Phaser.GameObjects.Rectangle
   private hpBarFill!: Phaser.GameObjects.Rectangle
-  private readonly hpBarOffset = { x: -16, y: -26 }
+  private readonly hpBarOffset = { x: -16 * window.scale, y: -26 * window.scale }
 
   constructor(
     scene: Phaser.Scene & { dmgPool: Phaser.GameObjects.Group },
@@ -286,9 +286,9 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       .setData("pathIndex", 0)
       .setData("maxHp", hp)
       .setData("hpBar", this.scene.add.graphics())
-      .setScale(0.75)
+      .setScale(0.75 * window.scale)
 
-    if (this.isBoss) this.setTint(0xff0000).setScale(0.9)
+    if (this.isBoss) this.setTint(0xff0000).setScale(0.9 * window.scale)
     if (this.isThunder) this.setTint(0x0000ff)
     if (this.isRage) this.setTint(0x00ff00)
     if (this.isBlackhole) this.setTint(0x000000)
@@ -308,12 +308,16 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     this.thunderEffect = this.scene.add
       .sprite(x, y, "thunder-sprite", 0)
-      .setScale(0.9)
+      .setScale(0.9 * window.scale)
       .setDepth(this.depth + 1)
       .setFrame(9)
 
-    this.hpBarBg = scene.add.rectangle(0, 0, 32, 4, 0x000000).setOrigin(0)
-    this.hpBarFill = scene.add.rectangle(0, 0, 32, 4, 0xff0000).setOrigin(0)
+    this.hpBarBg = scene.add
+      .rectangle(0, 0, 32 * window.scale, 4 * window.scale, 0x000000)
+      .setOrigin(0)
+    this.hpBarFill = scene.add
+      .rectangle(0, 0, 32 * window.scale, 4 * window.scale, 0xff0000)
+      .setOrigin(0)
     this.hpBarBg.setDepth(3)
     this.hpBarFill.setDepth(3)
     this.updateHpBarPos()
@@ -329,7 +333,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     const hp = this.getData("hp") as number
     const maxHp = this.getData("maxHp") as number
     const ratio = Phaser.Math.Clamp(hp / maxHp, 0, 1)
-    this.hpBarFill.displayWidth = 32 * ratio
+    this.hpBarFill.displayWidth = 32 * ratio * window.scale
   }
 
   get isThunder() {
@@ -410,7 +414,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     // 이동 속도 계산 후 실제 이동 처리
-    const speed = this.calculateSpeed(weapons, materials) * window.speed
+    const speed = this.calculateSpeed(weapons, materials) * window.speed * window.scale
     if (!this.isBlackholed) this.scene.physics.moveTo(this, target.x, target.y, speed)
     else {
       const { x, y } = this.pathes[0]
@@ -467,12 +471,12 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       .setAlpha(1)
       .setDepth(10)
 
-    if (isCritical) text.setScale(1.5).setTint(0xff0000)
-    else text.setScale(1).setTint(tintColors[colorIndex])
+    if (isCritical) text.setScale(1.5 * window.scale).setTint(0xff0000)
+    else text.setScale(window.scale).setTint(tintColors[colorIndex])
 
     this.scene?.tweens.add({
       targets: text,
-      y: this.y - 20 - weapon.index * 8,
+      y: this.y - 20 * window.scale - weapon.index * 8,
       alpha: 0,
       duration: 800,
       ease: "Sine.easeOut",

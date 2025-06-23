@@ -158,7 +158,6 @@
           <span
             ref="killedEl"
             class="text-[1.3cqw] text-white font-bold text-outline">
-            {{ killed }}
           </span>
         </div>
         <!-- 킬 표시 -->
@@ -384,12 +383,12 @@
 <script lang="ts" setup>
 import store from "store2"
 import {
-  BLACKHOLE_ROUND,
-  CANNON_ROUND,
-  LOCAL_SHOW_DAMAGE,
-  RAGE_ROUND,
-  THUNDER_COOLTIME,
-  THUNDER_ROUND,
+BLACKHOLE_ROUND,
+CANNON_ROUND,
+LOCAL_SHOW_DAMAGE,
+RAGE_ROUND,
+THUNDER_COOLTIME,
+THUNDER_ROUND,
 } from "~/const"
 import { BeforeBeam, DogeBeam } from "~/models/Beam"
 import { Enemies } from "~/models/Enemies"
@@ -557,12 +556,14 @@ onMounted(() => {
 
   document.addEventListener("visibilitychange", handleVisibility)
 
+  window.scale = window.innerWidth < 720 ? 0.5 : 1
+
   game = new Phaser.Game({
     pixelArt: true,
     antialias: false,
     type: Phaser.AUTO,
-    width: 960,
-    height: 540,
+    width: 960 * window.scale,
+    height: 540 * window.scale,
     parent: phaserContainer.value,
     scale: {
       mode: Phaser.Scale.FIT,
@@ -582,6 +583,7 @@ onMounted(() => {
           `${useAssetBase()}assets/fonts/bit_map_text.png`,
           `${useAssetBase()}assets/fonts/bit_map_text.xml`
         )
+        scene.load.image("map", `${useAssetBase()}assets/jsons/map2.png`)
         scene.load.image("bullet", `${useAssetBase()}assets/images/bullet.png`)
 
         scene.load.spritesheet("elden-sprite", `${useAssetBase()}assets/images/elden_ring.png`, {
@@ -615,9 +617,7 @@ onMounted(() => {
           }
         )
 
-        scene.load.image("tiles", `${useAssetBase()}assets/images/mainlevbuild2.png`)
         scene.load.image("laser-beam", `${useAssetBase()}assets/images/laser_beam.png`)
-        scene.load.tilemapTiledJSON("map", `${useAssetBase()}assets/jsons/map2.json`)
 
         if (gameStore.checkCharacter(gameStore.selectedCharacter)) {
           scene.load.spritesheet(
@@ -683,6 +683,8 @@ onMounted(() => {
         scene.physics.world.tree.maxObjects = 32
         scene.physics.world.tree.maxDepth = 4
 
+        bakedBg = scene.add.image(0, 0, "map").setScale(window.scale).setOrigin(0)
+
         if (soundStore.useEffectSound) scene.sound.setVolume(1)
         else scene.sound.setVolume(0)
 
@@ -716,30 +718,12 @@ onMounted(() => {
           scene.dmgPool.add(t)
         }
 
-        const map = scene.make.tilemap({ key: "map" })
-        const tileset = map.addTilesetImage("mainlevbuild2", "tiles")
-        if (tileset) {
-          const rt = this.make.renderTexture({
-            width: 960,
-            height: 540,
-          })
-
-          const layer1 = map.createLayer("layer1", tileset, 0, 0) ?? undefined
-          if (layer1) {
-            rt.draw(layer1)
-            layer1.destroy()
-          }
-
-          rt.saveTexture("bakedBG")
-          bakedBg = this.add.image(0, 0, "bakedBG").setOrigin(0)
-        }
-
         cursors = scene.input.keyboard!.createCursorKeys()
 
         player = new Player(
           scene,
-          960 / 2,
-          540 / 2,
+          (960 / 2) * window.scale,
+          (540 / 2) * window.scale,
           "playerIdle",
           gameStore.selectedCharacter.meta.id
         )
@@ -775,24 +759,86 @@ onMounted(() => {
         weapons.value.weapons.forEach(() => group.add(scene.add.circle(0, 0, 0, 0xff0000, 0.1)))
 
         const walls = scene.physics.add.staticGroup()
-        walls.create(160, 130, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(10, 90).refreshBody()
-        walls.create(160, 310, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(10, 90).refreshBody()
-        walls.create(160, 390, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(270, 10).refreshBody()
-        walls.create(525, 390, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(290, 10).refreshBody()
-        walls.create(805, 315, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(10, 90).refreshBody()
-        walls.create(805, 130, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(10, 80).refreshBody()
-        walls.create(160, 130, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(275, 10).refreshBody()
-        walls.create(530, 130, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(285, 10).refreshBody()
+        walls
+          .create(160 * window.scale, 130 * window.scale, "")
+          .setAlpha(0)
+          .setOrigin(0, 0)
+          .setDisplaySize(10 * window.scale, 90 * window.scale)
+          .refreshBody()
+        walls
+          .create(160 * window.scale, 310 * window.scale, "")
+          .setAlpha(0)
+          .setOrigin(0, 0)
+          .setDisplaySize(10 * window.scale, 90 * window.scale)
+          .refreshBody()
+        walls
+          .create(160 * window.scale, 390 * window.scale, "")
+          .setAlpha(0)
+          .setOrigin(0, 0)
+          .setDisplaySize(270 * window.scale, 10 * window.scale)
+          .refreshBody()
+        walls
+          .create(525 * window.scale, 390 * window.scale, "")
+          .setAlpha(0)
+          .setOrigin(0, 0)
+          .setDisplaySize(290 * window.scale, 10 * window.scale)
+          .refreshBody()
+        walls
+          .create(805 * window.scale, 315 * window.scale, "")
+          .setAlpha(0)
+          .setOrigin(0, 0)
+          .setDisplaySize(10 * window.scale, 90 * window.scale)
+          .refreshBody()
+        walls
+          .create(805 * window.scale, 130 * window.scale, "")
+          .setAlpha(0)
+          .setOrigin(0, 0)
+          .setDisplaySize(10 * window.scale, 80 * window.scale)
+          .refreshBody()
+        walls
+          .create(160 * window.scale, 130 * window.scale, "")
+          .setAlpha(0)
+          .setOrigin(0, 0)
+          .setDisplaySize(275 * window.scale, 10 * window.scale)
+          .refreshBody()
+        walls
+          .create(530 * window.scale, 130 * window.scale, "")
+          .setAlpha(0)
+          .setOrigin(0, 0)
+          .setDisplaySize(285 * window.scale, 10 * window.scale)
+          .refreshBody()
 
-        walls.create(33, 30, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(895, 10).refreshBody()
-        walls.create(33, 30, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(10, 480).refreshBody()
-        walls.create(918, 30, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(10, 480).refreshBody()
-        walls.create(33, 499, "").setAlpha(0).setOrigin(0, 0).setDisplaySize(895, 10).refreshBody()
+        walls
+          .create(33 * window.scale, 30 * window.scale, "")
+          .setAlpha(0)
+          .setOrigin(0, 0)
+          .setDisplaySize(895 * window.scale, 10 * window.scale)
+          .refreshBody()
+        walls
+          .create(33 * window.scale, 30 * window.scale, "")
+          .setAlpha(0)
+          .setOrigin(0, 0)
+          .setDisplaySize(10 * window.scale, 480 * window.scale)
+          .refreshBody()
+        walls
+          .create(918 * window.scale, 30 * window.scale, "")
+          .setAlpha(0)
+          .setOrigin(0, 0)
+          .setDisplaySize(10 * window.scale, 480 * window.scale)
+          .refreshBody()
+        walls
+          .create(33 * window.scale, 499 * window.scale, "")
+          .setAlpha(0)
+          .setOrigin(0, 0)
+          .setDisplaySize(895 * window.scale, 10 * window.scale)
+          .refreshBody()
 
         if (roundTimeEl.value) roundTimeEl.value.innerText = `ROUND ${currentRound}`
 
         if (remainedEnemiesEl.value)
           remainedEnemiesEl.value.innerHTML = `${remainedEnemies} / ${enemyCountDeadline}`
+
+        if (killedEl.value) killedEl.value.innerText = stringUtil.attachComma(killed)
 
         scene.physics.add.collider(player, walls)
 
@@ -808,7 +854,8 @@ onMounted(() => {
         })
         scene.events.on("enemy-die", () => {
           killed++
-          if (killedEl.value) killedEl.value.innerText = `${stringUtil.attachComma(killed)}`
+          if (killedEl.value) killedEl.value.innerText = stringUtil.attachComma(killed)
+
           remainedEnemies--
           if (remainedEnemiesEl.value)
             remainedEnemiesEl.value.innerHTML =
@@ -926,7 +973,8 @@ onMounted(() => {
 
             bakedBg?.setTint(etcUtil.softTint(0x000000, 0.8))
             const eldenSprite = scene.add
-              .sprite(150, 110, "elden-sprite")
+              .sprite(150 * window.scale, 110 * window.scale, "elden-sprite")
+              .setScale(window.scale)
               .setTint(0x8403fc)
               .play("elden-animation")
 
@@ -1032,7 +1080,9 @@ onMounted(() => {
                 )
                 .forEach((enemy) => {
                   const range =
-                    gameStore.selectedCharacter.meta.id === "dogeTower" ? 960 : weapon.range
+                    (gameStore.selectedCharacter.meta.id === "dogeTower"
+                      ? 960 * window.scale
+                      : weapon.range) * window.scale
                   if (enemy.distanceWithPlayer && enemy.distanceWithPlayer <= range) {
                     weapon.fireHomingWeapon(weapons.value!, index, time, player, enemy)
 
@@ -1044,7 +1094,7 @@ onMounted(() => {
                           enemy.x,
                           enemy.y
                         )
-                        const offsetDist = 20
+                        const offsetDist = 20 * window.scale
                         const offsetX = Math.cos(angleRad) * offsetDist
                         const offsetY = Math.sin(angleRad) * offsetDist
 
@@ -1067,7 +1117,7 @@ onMounted(() => {
                           enemy.x,
                           enemy.y
                         )
-                        const offsetDist = -50
+                        const offsetDist = -50 * window.scale
                         const offsetX = Math.cos(angleRad) * offsetDist
                         const offsetY = Math.sin(angleRad) * offsetDist
 

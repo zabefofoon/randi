@@ -10,7 +10,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 
   private hpBarBg!: Phaser.GameObjects.Rectangle
   private hpBarFill!: Phaser.GameObjects.Rectangle
-  private readonly hpBarOffset = { x: -16, y: -45 }
+  private readonly hpBarOffset = { x: -16 * window.scale, y: -45 * window.scale }
 
   constructor(scene: Phaser.Scene, x: number, y: number, key: string, private characterId: string) {
     super(scene, x, y, key)
@@ -19,8 +19,12 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     scene.physics.add.existing(this)
 
     // === HP bar ===
-    this.hpBarBg = scene.add.rectangle(0, 0, 32, 4, 0x000000).setOrigin(0)
-    this.hpBarFill = scene.add.rectangle(0, 0, 32, 4, 0xff0000).setOrigin(0)
+    this.hpBarBg = scene.add
+      .rectangle(0, 0, 32 * window.scale, 4 * window.scale, 0x000000)
+      .setOrigin(0)
+    this.hpBarFill = scene.add
+      .rectangle(0, 0, 32 * window.scale, 4 * window.scale, 0xff0000)
+      .setOrigin(0)
     this.hpBarBg.setDepth(3)
     this.hpBarFill.setDepth(3)
 
@@ -30,39 +34,39 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.setCollideWorldBounds(true)
       .setData("maxHp", this.maxLife)
       .setData("hp", this.maxLife)
-      .setScale(0.6)
+      .setScale(0.6 * window.scale)
       .setDepth(2)
 
     this.body?.setSize(50, 120).setOffset(40, 0)
 
     this.gun = scene.add
       .sprite(x, y, "gun-sprite", 0)
-      .setScale(0.75)
+      .setScale(0.75 * window.scale)
       .setDepth(this.depth + 1)
 
     this.knife = scene.add
       .sprite(x, y, "knife-sprite", 0)
-      .setScale(1.5)
+      .setScale(1.5 * window.scale)
       .setDepth(this.depth + 1)
 
     this.book = scene.add
       .sprite(x, y, "book-sprite", 0)
-      .setScale(0.75)
+      .setScale(0.75 * window.scale)
       .setDepth(this.depth + 1)
 
     this.ring = scene.add
       .sprite(x, y, "ring-sprite", 0)
-      .setScale(0.5)
+      .setScale(0.5 * window.scale)
       .setDepth(this.depth + 1)
 
     this.weapons = scene.add
       .sprite(x, y, "weapons-animation2", 0)
-      .setScale(1)
+      .setScale(window.scale)
       .setDepth(this.depth + 1)
 
     this.weaponsEffect = scene.add
       .sprite(x, y, "weapons-animation", 0)
-      .setScale(1)
+      .setScale(window.scale)
       .setDepth(this.depth + 1)
   }
 
@@ -74,7 +78,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     super.preUpdate(time, delta)
     this.book.setPosition(this.x, this.y)
     this.ring.setPosition(this.x, this.y)
-    this.weapons.setPosition(this.x, this.y + 20)
+    this.weapons.setPosition(this.x, this.y + 20 * window.scale)
     this.weaponsEffect.setPosition(this.x, this.y)
     this.updateHpBarPos()
   }
@@ -106,7 +110,9 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       right: Phaser.Input.Keyboard.Key
     }
   ) {
-    const speed = this.isRage ? 170 * window.speed : 120 * window.speed
+    const speed = this.isRage
+      ? 170 * window.speed * window.scale
+      : 120 * window.speed * window.scale
     let moving = false
 
     const left = cursors.left.isDown || wasd.left.isDown

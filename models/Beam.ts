@@ -31,7 +31,9 @@ export class BeforeBeam {
 
   constructor(private context: BeamContext) {
     this.lineGraphic = this.context.scene.add.graphics({ lineStyle: { width: 1, color: 0xff0000 } })
-    this.maxLength = this.context.player.flipX ? 960 - this.context.player.x : this.context.player.x
+    this.maxLength = this.context.player.flipX
+      ? 960 * window.scale - this.context.player.x
+      : this.context.player.x
     this.event = this.context.scene.time.addEvent({
       delay: 16,
       loop: true,
@@ -121,6 +123,7 @@ export class DogeBeam {
     this.beamImage = this.createLaserImage()
       .setRotation(Phaser.Math.DegToRad(angleDeg))
       .setOrigin(0, 0.5)
+      .setScale(window.scale)
       .setBlendMode(Phaser.BlendModes.ADD)
 
     this.event = this.context.scene.time.addEvent({

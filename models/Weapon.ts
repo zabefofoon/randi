@@ -236,7 +236,12 @@ export abstract class Weapon implements WeaponOptions {
       )
 
       // 화면 밖 검사
-      if (bulletObj.x < 0 || bulletObj.x > 960 || bulletObj.y < 0 || bulletObj.y > 540)
+      if (
+        bulletObj.x < 0 ||
+        bulletObj.x > 960 * window.scale ||
+        bulletObj.y < 0 ||
+        bulletObj.y > 540 * window.scale
+      )
         bulletObj.disableBody(true, true)
     }
   }
