@@ -419,7 +419,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   }
 
   calculateSpeed(weapons: (Weapon | undefined)[], materials: Materials): number {
-    const isAllWeaponActiveLevel = this.scene.data?.get?.("isAllWeaponActive") ?? 0
+    const isAllWeaponActiveLevel = this.scene?.data?.get?.("isAllWeaponActive") ?? 0
     const isClose = this.distanceWithPlayer < 150
     const baseSpeed = this.isBoss ? 80 : 120
 
@@ -455,7 +455,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     const tintColors = [0xffffff, 0x2563eb, 0x9333ea, 0xeab308, 0xe879f9, 0xf87171]
 
-    const text = this.scene.dmgPool.getFirstDead(false) as Phaser.GameObjects.BitmapText
+    const text = this.scene?.dmgPool.getFirstDead(false) as Phaser.GameObjects.BitmapText
     if (!text) return
 
     const colorIndex = Math.min(weapon.level - 1, tintColors.length - 1)
@@ -470,7 +470,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     if (isCritical) text.setScale(1.5).setTint(0xff0000)
     else text.setScale(1).setTint(tintColors[colorIndex])
 
-    this.scene.tweens.add({
+    this.scene?.tweens.add({
       targets: text,
       y: this.y - 20 - weapon.index * 8,
       alpha: 0,
@@ -624,7 +624,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
         isCritical = true
       }
     }
-    const isAllWeaponActiveLevel = this.scene.data?.get?.("isAllWeaponActive") ?? 0
+    const isAllWeaponActiveLevel = this.scene?.data?.get?.("isAllWeaponActive") ?? 0
 
     damage = numberUtil.addPercent(damage, isAllWeaponActiveLevel * 20)
 
@@ -644,7 +644,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.setData("hp", currentHP - finalDamage)
 
     this.setTintFill(0xff0000)
-    this.scene.time.delayedCall(100, () => {
+    this.scene?.time.delayedCall(100, () => {
       this.clearTint()
       if (this.isBoss) this.setTint(0xff0000)
       if (this.isThunder) this.setTint(0x0000ff)
