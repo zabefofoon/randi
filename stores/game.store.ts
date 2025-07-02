@@ -112,6 +112,7 @@ import {
 
 import {
   LOCAL_CHARACTERS,
+  LOCAL_CLEAR,
   LOCAL_COLLECTION,
   LOCAL_ENFORCE_WEAPONS,
   LOCAL_ITEMS,
@@ -124,6 +125,7 @@ import {
   PurchaseCharacter,
   RELEASED_CHARACTERS,
   type Character,
+  type ClearCount,
 } from "~/models/Character"
 import type { PurchaseItem, PurchasedItem } from "~/models/PurchaseItem"
 import type { Rewords } from "~/models/Rewords"
@@ -392,6 +394,30 @@ export const useGameStore = defineStore("gameStore", () => {
     window.showDamage = useShowDamage.value
   }
 
+  const clearCount = ref<ClearCount>()
+  const increaseClearCount = (characterId: Character["id"]) => {
+    if (!clearCount.value)
+      clearCount.value = {
+        nylonMask: 0,
+        trunkKing: 0,
+        chimeraHayashiRice: 0,
+        dogeTower: 0,
+      }
+    clearCount.value[characterId]++
+    store.set(LOCAL_CLEAR, encrypted(JSON.stringify(clearCount.value)))
+  }
+  const initClearCount = () => {
+    clearCount.value = JSON.parse(
+      decrypted(store.get(LOCAL_CLEAR)) ||
+        JSON.stringify({
+          nylonMask: 0,
+          trunkKing: 0,
+          chimeraHayashiRice: 0,
+          dogeTower: 0,
+        })
+    )
+  }
+
   return {
     mode,
     setMode,
@@ -436,5 +462,9 @@ export const useGameStore = defineStore("gameStore", () => {
 
     useShowDamage,
     toggleDamage,
+
+    clearCount,
+    increaseClearCount,
+    initClearCount,
   }
 })

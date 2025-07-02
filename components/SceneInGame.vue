@@ -383,12 +383,12 @@
 <script lang="ts" setup>
 import store from "store2"
 import {
-BLACKHOLE_ROUND,
-CANNON_ROUND,
-LOCAL_SHOW_DAMAGE,
-RAGE_ROUND,
-THUNDER_COOLTIME,
-THUNDER_ROUND,
+  BLACKHOLE_ROUND,
+  CANNON_ROUND,
+  LOCAL_SHOW_DAMAGE,
+  RAGE_ROUND,
+  THUNDER_COOLTIME,
+  THUNDER_ROUND,
 } from "~/const"
 import { BeforeBeam, DogeBeam } from "~/models/Beam"
 import { Enemies } from "~/models/Enemies"
@@ -1426,6 +1426,7 @@ const mainTimerCallback = () => {
     scene.physics.pause()
     isShowGameClearPopup.value = true
     isClear = true
+    gameStore.increaseClearCount(gameStore.selectedCharacter.meta.id)
   }
 
   let spawnCondition = false

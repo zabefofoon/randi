@@ -159,6 +159,8 @@ onMounted(() => {
   gameStore.initCollection()
   gameStore.initShowStepTutorial()
   gameStore.initWeaponEnforce()
+  gameStore.initWeaponEnforce()
+  gameStore.initClearCount()
   soundStore.initSounds()
 })
 </script>

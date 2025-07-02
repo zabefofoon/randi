@@ -85,3 +85,5 @@ export class PurchaseCharacter {
 }
 
 export const RELEASED_CHARACTERS = [NylonMask, TrunkKing, ChimeraHayashiRice, DogeTower]
+
+export type ClearCount = Record<Character["id"], number>

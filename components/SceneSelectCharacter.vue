@@ -27,7 +27,7 @@
             class="p-[1cqw]"
             style="width: calc(25% + 0.25cqw)">
             <button
-              class="w-full aspect-square"
+              class="w-full aspect-square | relative"
               :disabled="!character"
               @click="selectCharacter(character)">
               <div
@@ -44,6 +44,13 @@
                     filter: character?.type === 'purchase' ? 'brightness(0) blur(3px)' : '',
                   }"></div>
               </div>
+              <p
+                v-if="gameStore.clearCount?.[character?.meta?.id]"
+                class="absolute bottom-[0.5cqw] left-[0.5cqw] |">
+                <span class="font-bold text-[1.2cqw] text-outline">
+                  *CLEAR {{ stringUtil.attachComma(gameStore.clearCount?.[character?.meta?.id]) }}
+                </span>
+              </p>
             </button>
           </UICarouselSlide>
         </UICarousel>

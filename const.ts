@@ -32,6 +32,7 @@ export const LAST_ACCESS = "lastAccess"
 export const STEP_TUTORIAL = "stepTutorial2"
 export const LOCAL_GTAG_COOKIE = "gtag"
 export const LOCAL_SHOW_DAMAGE = "showDamage"
+export const LOCAL_CLEAR = "clear"
 
 export const THUNDER_COOLTIME = 160
 
